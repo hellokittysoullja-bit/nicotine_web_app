@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Breakup — расстаться с никотином</title>
+<meta name="description" content="Сигареты, вейп, пакетики. Ник — это никотин, и Breakup помогает перестать ему отвечать.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#5E4F2C">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2C2616">
+<meta property="og:title" content="Breakup — расстаться с никотином">
+<meta property="og:description" content="Ник пишет тебе каждый раз, когда тебя ломает. Пора расстаться.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%2329A9EE'/%3E%3Ccircle cx='22' cy='21' r='5' fill='%23FFC94D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;700;800&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+  Breakup v4, «Ник затянул тебе небо».
+  Цвет по docs/research/color-evidence.md, но применён по задаче экрана:
+  - Главный экран должен притягивать. Приятнее всего яркие насыщенные цвета, и бирюзово-синий
+    нравится сильнее всего именно насыщенным (Valdez & Mehrabian 1994; Wilms & Oberfeld 2018;
+    Palmer & Schloss 2010). Отсюда яркое небо.
+  - Дымка Ника — тёмный приглушённый жёлто-коричневый (семейство 448C), самое нелюбимое семейство.
+    Это абстрактный цвет, а не изображение дыма: реалистичный дым сам вызывает тягу.
+  - Янтарное солнце появляется только как награда за действие.
+  - Низкая насыщенность остаётся за экраном тяги («Волна»), а не за витриной.
+*/
+:root{
+  --sky-top:#1E9BEA;
+  --sky-mid:#4EC0F4;
+  --sky-low:#BFEAFB;
+  --sun:#FFC94D;
+  --haze-a:#5E4F2C;
+  --haze-b:#3E3520;
+  --nick:#4A412A;
+  --nick-text:#F1ECDD;
+  --ink:#06243F;
+  --cream:#FBF4E2;
+  --page:#F1F8FB;
+  --text:#0E2A3D;
+  --muted:#46606F;
+  --me:#0B6F86;
+  --me-text:#FFFFFF;
+  --control:#6F8794;
+  --reward:#B66A00;
+  --f-display:"Geologica","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --ease-in-out:cubic-bezier(.77,0,.175,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --sky-top:#081A3D;--sky-mid:#123A78;--sky-low:#2A64A8;--sun:#E7B34A;
+  --haze-a:#2C2616;--haze-b:#1C180E;--ink:#F3F7FB;--page:#0B1626;--text:#E3EDF5;--muted:#9DB2C3;
+  --me:#5ACBE0;--me-text:#05232B;--control:#6B8396;--reward:#F0B84A;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --sky-top:#081A3D;--sky-mid:#123A78;--sky-low:#2A64A8;--sun:#E7B34A;
+  --haze-a:#2C2616;--haze-b:#1C180E;--ink:#F3F7FB;--page:#0B1626;--text:#E3EDF5;--muted:#9DB2C3;
+  --me:#5ACBE0;--me-text:#05232B;--control:#6B8396;--reward:#F0B84A;color-scheme:dark}
+
+*{box-sizing:border-box;margin:0}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--text);font-family:var(--f-body);font-size:1.0625rem;line-height:1.55}
+button,a,[role="button"]{touch-action:manipulation}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;user-select:none;-webkit-user-select:none}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:8px}
+.gutter{padding-inline:max(1.25rem,env(safe-area-inset-left)) max(1.25rem,env(safe-area-inset-right))}
+.wrap{max-width:76rem;margin:0 auto}
+
+/* ── Первый экран: небо, затянутое Ником ── */
+.hero{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;color:var(--ink);
+  background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 55%,var(--sky-low) 100%)}
+.sun{position:absolute;right:-12vmax;bottom:-16vmax;width:62vmax;height:62vmax;border-radius:50%;z-index:-2;
+  background:radial-gradient(circle,var(--sun) 0%,color-mix(in oklab,var(--sun) 55%,transparent) 22%,transparent 60%);
+  opacity:0;transform:scale(.85);transition:opacity 1.4s var(--ease-out) .25s,transform 1.6s var(--ease-out) .25s}
+.haze{position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(38% 46% at 78% 52%,color-mix(in oklab,var(--haze-b) 92%,transparent) 0%,color-mix(in oklab,var(--haze-a) 70%,transparent) 45%,transparent 100%),
+    radial-gradient(30% 34% at 92% 88%,color-mix(in oklab,var(--haze-a) 70%,transparent),transparent 100%),
+    radial-gradient(26% 30% at 62% 20%,color-mix(in oklab,var(--haze-a) 45%,transparent),transparent 100%);
+  transition:opacity 1.2s var(--ease-in-out)}
+.hero.clear .haze{opacity:0}
+.hero.clear .sun{opacity:1;transform:none}
+.hero-inner{position:relative;min-height:100svh;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:3rem;align-items:center;
+  padding-block:calc(5.5rem + env(safe-area-inset-top)) 4rem}
+header.top{position:absolute;inset:0 0 auto 0;z-index:2;padding-top:env(safe-area-inset-top)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:4.5rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--f-display);font-weight:800;font-size:1.375rem;color:inherit;text-decoration:none;letter-spacing:-.02em}
+.brand i{width:1.6rem;height:1.6rem;border-radius:50%;background:linear-gradient(160deg,#5FD0FF,#1E9BEA);box-shadow:inset -.35rem -.35rem 0 var(--sun)}
+.login{display:inline-flex;align-items:center;min-height:2.75rem;padding-inline:.75rem;color:inherit;font-weight:600;text-decoration:none}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(3rem,8.4vw,7.25rem);line-height:.92;letter-spacing:-.035em;text-wrap:balance;transition:color .6s ease}
+.hero .lead{font-size:clamp(1.125rem,1.6vw,1.375rem);max-width:30rem;margin-top:1.5rem;opacity:.92}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3.5rem;padding:0 2rem;border-radius:1rem;font-weight:600;font-size:1.125rem;
+  transition:transform .14s var(--ease-out),background-color .2s ease,color .2s ease}
+.btn:active{transform:scale(.97)}
+.btn-break{margin-top:2.25rem;background:var(--ink);color:#FFFFFF}
+:root[data-theme="dark"] .btn-break{color:#06243F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-break{color:#06243F}}
+.hero.clear .btn-break{display:none}
+
+/* Сообщения Ника — висят в дымке */
+.notes{display:flex;flex-direction:column;gap:.6rem;align-self:center;grid-column:2;grid-row:1}
+.hero.clear .notes{visibility:hidden;transition:visibility 0s .35s}
+.note{display:grid;grid-template-columns:2.5rem 1fr;gap:.75rem;align-items:start;background:var(--nick);color:var(--nick-text);
+  border-radius:1.25rem;padding:.85rem 1rem;box-shadow:0 1rem 2.5rem color-mix(in oklab,var(--haze-b) 45%,transparent);
+  opacity:0;transform:translateY(-.75rem) scale(.97);animation:drop .32s var(--ease-out) forwards}
+.note:nth-child(2){animation-delay:.7s}.note:nth-child(3){animation-delay:1.4s}
+@keyframes drop{to{opacity:1;transform:none}}
+.note .av{width:2.5rem;height:2.5rem;border-radius:50%;background:#6A5C3A;display:grid;place-items:center;font-family:var(--f-display);font-weight:800}
+.note b{display:flex;justify-content:space-between;font-weight:600;font-size:.875rem;opacity:.75}
+.note p{font-size:1.0625rem;line-height:1.35;margin-top:.1rem}
+.hero.clear .note{animation:none;opacity:0;transform:translateX(-2rem);transition:opacity .2s ease,transform .2s var(--ease-out)}
+.hero.clear .note:nth-child(2){transition-delay:.05s}.hero.clear .note:nth-child(3){transition-delay:.1s}
+
+/* После расставания: первый вопрос прямо на небе */
+.after{display:none;align-self:center;grid-column:2;grid-row:1;background:color-mix(in oklab,#FFFFFF 86%,transparent);color:#0E2A3D;border-radius:1.5rem;padding:1.5rem;
+  box-shadow:0 1.5rem 3rem color-mix(in oklab,#0B4F86 25%,transparent)}
+:root[data-theme="dark"] .after{background:#0F2546;color:#E3EDF5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .after{background:#0F2546;color:#E3EDF5}}
+.hero.clear .after{display:block;animation:rise .3s var(--ease-out) .55s both}
+@keyframes rise{from{opacity:0;transform:translateY(.75rem)}to{opacity:1;transform:none}}
+.after .me{display:inline-block;background:var(--me);color:var(--me-text);border-radius:1.1rem 1.1rem .35rem 1.1rem;padding:.55rem 1rem;font-weight:500;margin-bottom:1rem}
+.after h2{font-family:var(--f-display);font-weight:700;font-size:1.5rem;letter-spacing:-.02em;margin-bottom:.9rem}
+.opts{display:grid;gap:.5rem}
+.opt{display:flex;align-items:center;gap:.75rem;min-height:3.25rem;padding:0 1rem;border:2px solid var(--control);border-radius:1rem;font-weight:500;text-align:left;
+  transition:border-color .15s ease,transform .12s var(--ease-out)}
+.opt:active{transform:scale(.98)}
+.opt .dot{width:1.1rem;height:1.1rem;border-radius:50%;border:2px solid var(--control);flex:none}
+.opt[aria-checked="true"]{border-color:var(--me)}
+.opt[aria-checked="true"] .dot{border:6px solid var(--me)}
+@media (hover:hover) and (pointer:fine){.opt:hover{border-color:currentColor}.btn-break:hover{filter:brightness(1.15)}}
+
+/* ── Деньги ── */
+.money{padding-block:6rem 5rem;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:3rem;align-items:end}
+.money h2,.brain h2{font-family:var(--f-display);font-weight:800;font-size:clamp(2.25rem,4.6vw,3.75rem);line-height:.98;letter-spacing:-.03em;text-wrap:balance}
+.money p{color:var(--muted);margin-top:1rem;max-width:28rem}
+.calc label{display:block;font-weight:600;margin-bottom:.5rem}
+.calc input[type=range]{width:100%;accent-color:var(--me);height:2.75rem}
+.year{font-family:var(--f-display);font-weight:800;font-size:clamp(4rem,11vw,8.5rem);line-height:.9;letter-spacing:-.045em;color:var(--reward);font-variant-numeric:tabular-nums;margin-top:1rem}
+.year-note{color:var(--muted);margin-top:.5rem}
+
+/* ── Мозг ── */
+.brain{padding-block:5rem 6rem;border-top:1px solid color-mix(in oklab,var(--control) 40%,transparent)}
+.brain-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:3rem;align-items:center;margin-top:2.5rem}
+.brain canvas{width:100%;aspect-ratio:16/10;display:block}
+.brain .wk{font-family:var(--f-display);font-weight:700;font-size:1.75rem;letter-spacing:-.02em}
+.brain .txt{margin-top:.75rem;max-width:30rem}
+.brain input[type=range]{width:100%;accent-color:var(--me);height:2.75rem;margin-top:1.25rem}
+.src{color:var(--muted);font-size:.875rem;margin-top:1rem}
+footer{border-top:1px solid color-mix(in oklab,var(--control) 40%,transparent);padding-block:1.75rem calc(2.5rem + env(safe-area-inset-bottom));color:var(--muted);font-size:.9rem;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+
+@media (max-width:860px){
+  .hero-inner{grid-template-columns:minmax(0,1fr);gap:2rem;align-content:start;padding-top:calc(5rem + env(safe-area-inset-top))}
+  .notes{grid-column:1;grid-row:1}
+  .after{grid-column:1;grid-row:1}
+  .hero-inner>div:first-child{grid-row:2}
+  .haze{background:radial-gradient(80% 34% at 50% 26%,color-mix(in oklab,var(--haze-b) 90%,transparent) 0%,color-mix(in oklab,var(--haze-a) 65%,transparent) 50%,transparent 100%)}
+  .money,.brain-grid{grid-template-columns:minmax(0,1fr);gap:1.5rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .note{animation:none;opacity:1;transform:none}
+  .haze,.sun,.hero h1{transition-duration:.2s;transition-delay:0s}
+  .sun{transform:none}
+  .hero.clear .after{animation:none}
+}
+</style>
+</head>
+<body>
+<section class="hero" id="hero" aria-labelledby="h">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="haze" aria-hidden="true"></div>
+  <header class="top gutter"><div class="wrap">
+    <a class="brand" href="#"><i aria-hidden="true"></i><span lang="en">Breakup</span></a>
+    <a class="login" href="#">Войти</a>
+  </div></header>
+  <div class="gutter"><div class="wrap hero-inner">
+    <div>
+      <h1 id="h">Пора расстаться с Ником</h1>
+      <p class="lead">Ник — это никотин. Он пишет каждый раз, когда тебя ломает, и обещает спокойствие. Breakup помогает перестать отвечать.</p>
+      <button class="btn btn-break" id="break">Расстаться</button>
+    </div>
+    <div class="notes" aria-live="polite">
+      <div class="note"><span class="av" aria-hidden="true">Н</span><div><b><span>Ник</span><span>сейчас</span></b><p>не спишь? 🙂</p></div></div>
+      <div class="note"><span class="av" aria-hidden="true">Н</span><div><b><span>Ник</span><span>сейчас</span></b><p>одну. чисто вспомнить, как нам было хорошо</p></div></div>
+      <div class="note"><span class="av" aria-hidden="true">Н</span><div><b><span>Ник</span><span>сейчас</span></b><p>ты же без меня не справишься</p></div></div>
+    </div>
+    <div class="after" id="after" tabindex="-1" aria-labelledby="q">
+      <span class="me">Мы расстались. Не пиши.</span>
+      <h2 id="q">Что у тебя с Ником?</h2>
+      <div class="opts" role="radiogroup" aria-labelledby="q">
+        <button class="opt" role="radio" aria-checked="false" id="o-cig"><span class="dot" aria-hidden="true"></span>Сигареты</button>
+        <button class="opt" role="radio" aria-checked="false" id="o-vape"><span class="dot" aria-hidden="true"></span>Вейп</button>
+        <button class="opt" role="radio" aria-checked="false" id="o-pouch"><span class="dot" aria-hidden="true"></span>Никотиновые пакетики</button>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<main class="gutter"><div class="wrap">
+  <section class="money" aria-labelledby="m-h">
+    <div>
+      <h2 id="m-h">Вот сколько он у тебя забирает</h2>
+      <p>Подвинь ползунок под свои траты. Эти деньги Breakup будет копить на цель, которую ты выберешь сам.</p>
+    </div>
+    <div class="calc">
+      <label for="spend">В день на никотин: <span id="spend-v">$4</span></label>
+      <input type="range" id="spend" min="1" max="20" step="0.5" value="4">
+      <div class="year" id="year" aria-live="polite">$1 460</div>
+      <div class="year-note" id="year-note">в год. За пять лет — $7 300.</div>
+    </div>
+  </section>
+
+  <section class="brain" aria-labelledby="b-h">
+    <h2 id="b-h">Твой мозг перестаёт его ждать</h2>
+    <div class="brain-grid">
+      <canvas id="brain" width="960" height="600" role="img" aria-label="Схема никотиновых рецепторов: лишние рецепторы гаснут по неделям"></canvas>
+      <div>
+        <div class="wk" id="wk">Неделя 4</div>
+        <p class="txt" id="wk-t"></p>
+        <label for="week" class="src" style="display:block;margin-top:1.25rem">Неделя без никотина</label>
+        <input type="range" id="week" min="0" max="12" value="4">
+        <p class="src">Схема иллюстративная. Данные: Cosgrove и соавторы, 2009, Archives of General Psychiatry, ПЭТ-исследование: избыток никотиновых рецепторов держится около 4 недель и к 6–12 неделям приходит к уровню некурящих.</p>
+      </div>
+    </div>
+  </section>
+</div></main>
+
+<footer class="gutter"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:.5rem 1.5rem">
+  <span>18+</span>
+  <span>Breakup помогает бросить и не заменяет врача. Никотинозаместительную терапию обсуди с врачом.</span>
+</div></footer>
+
+<script>
+const hero = document.getElementById('hero');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.getElementById('break').addEventListener('click', () => {
+  hero.classList.add('clear');
+  setTimeout(() => document.getElementById('after').focus({ preventScroll: true }), reduce ? 0 : 600);
+});
+document.querySelectorAll('.opt').forEach(o => o.addEventListener('click', () => {
+  document.querySelectorAll('.opt').forEach(x => x.setAttribute('aria-checked', String(x === o)));
+}));
+
+// Деньги
+const fmt = n => '$' + Math.round(n).toLocaleString('ru-RU');
+const spend = document.getElementById('spend');
+function money(){ const d = +spend.value; document.getElementById('spend-v').textContent = '$' + (d % 1 ? d.toFixed(1) : d);
+  document.getElementById('year').textContent = fmt(d * 365);
+  document.getElementById('year-note').textContent = 'в год. За пять лет — ' + fmt(d * 365 * 5) + '.'; }
+spend.addEventListener('input', money); money();
+
+// Мозг: базовые рецепторы и лишние, которые гаснут
+const EXTRA = [1,1,.96,.92,.86,.66,.42,.3,.2,.12,.06,.02,0];
+const TEXT = ['День расставания. Рецепторов больше, чем у некурящего: мозг вырастил их под постоянный никотин.',
+ 'Неделя 1. Пик ломки. Раздражение и тяга — это голодные рецепторы, а не ты.',
+ 'Неделя 2. Ломка спадает. Тяга от привычных мест ещё приходит, это ожидаемо.',
+ 'Неделя 3. Физической тяги меньше. Ник давит привычками: кофе, перерыв, дорога домой.',
+ 'Неделя 4. Лишние рецепторы ещё на месте. Тяга от ситуаций может усилиться на 2–8 неделе — это не откат.',
+ 'Неделя 5. Рецепторов становится меньше.', 'Неделя 6. Мозг заметно ближе к уровню некурящих.',
+ 'Неделя 7. Большая часть лишних рецепторов ушла.', 'Неделя 8. Старые триггеры становятся обычными моментами дня.',
+ 'Неделя 9. Почти норма.', 'Неделя 10. Почти норма. Держи план на праздники и стресс.', 'Неделя 11. Практически уровень некурящего.',
+ 'Неделя 12. Рецепторы на уровне некурящего. Расставание случилось и в мозге.'];
+const cv = document.getElementById('brain'), ctx = cv.getContext('2d');
+let seed = 11; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+const dots = []; while (dots.length < 300) { const x = rnd()*2-1, y = rnd()*2-1;
+  const inside = ((x+.43)**2)/.33 + y*y/.62 < 1 || ((x-.43)**2)/.33 + y*y/.62 < 1;
+  if (inside && Math.abs(x) > .04) dots.push({ x, y, extra: dots.length % 4 === 0, t: rnd() }); }
+function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function draw(){ const w = +document.getElementById('week').value, e = EXTRA[w];
+  ctx.clearRect(0,0,cv.width,cv.height);
+  const me = css('--me'), nick = '#8A7647';
+  for (const d of dots){ if (d.extra && d.t > e) continue;
+    ctx.fillStyle = d.extra ? nick : me; ctx.globalAlpha = d.extra ? .95 : .8;
+    ctx.beginPath(); ctx.arc(cv.width/2 + d.x*cv.width*.44, cv.height/2 + d.y*cv.height*.42, d.extra ? 9 : 7, 0, Math.PI*2); ctx.fill(); }
+  ctx.globalAlpha = 1;
+  document.getElementById('wk').textContent = w === 0 ? 'День расставания' : 'Неделя ' + w;
+  document.getElementById('wk-t').textContent = TEXT[w].replace(/^[^.]+\.\s/, ''); }
+document.getElementById('week').addEventListener('input', draw); draw();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+</script>
+</body>
+</html>
