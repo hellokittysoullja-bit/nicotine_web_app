@@ -35,7 +35,7 @@
 :root{
   --sky-top:#1E9BEA;--sky-mid:#4EC0F4;--sky-low:#BFEAFB;
   --sun:#FFC94D;--sun-core:#FFE08A;
-  --cl-back-top:#7A6C49;--cl-back-bot:#463D26;--cl-mid-top:#9C8A5C;--cl-mid-bot:#4A412A;--cl-front-top:#B3A06F;--cl-front-bot:#5E5235;
+  --cl-back-top:#7A6C49;--cl-back-bot:#463D26;--cl-mid-top:#9C8A5C;--cl-mid-bot:#4A412A;--cl-front-top:#9A8C64;--cl-front-bot:#5E5235;
   --nick:#4A412A;--nick-2:#6A5C3A;--nick-text:#EEE9DA;--nick-line:#4A412A;
   --ink:#06243F;--on-ink:#FFFFFF;
   --page:#F3F6F6;--text:#132125;--muted:#4B5A5E;
@@ -56,14 +56,14 @@
   --ink:#F3F7FB;--on-ink:#06243F;--page:#121819;--text:#E2EBEB;--muted:#9EAFB1;
   --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E2EBEB;
   --card:#18222A;--control:#647476;--rule:#26302F;--reward:#D9A23E;--chip:#16306A;--chip-text:#F3F7FB;--chip-ring:rgba(243,247,251,.28);
-  --calm:#0F2226;--calm-2:#163036;--nick-line:#A8956A;color-scheme:dark}}
+  --calm:#0B1D21;--calm-2:#163036;--calm-edge:#1F3338;--nick-line:#A8956A;color-scheme:dark}}
 :root[data-theme="dark"]{
   --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sun:#E7B34A;--sun-core:#F3CF7A;
   --cl-back-top:#4E4530;--cl-back-bot:#2A2516;--cl-mid-top:#6E6243;--cl-mid-bot:#3A3320;--cl-front-top:#86774F;--cl-front-bot:#463D27;
   --ink:#F3F7FB;--on-ink:#06243F;--page:#121819;--text:#E2EBEB;--muted:#9EAFB1;
   --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E2EBEB;
   --card:#18222A;--control:#647476;--rule:#26302F;--reward:#D9A23E;--chip:#16306A;--chip-text:#F3F7FB;--chip-ring:rgba(243,247,251,.28);
-  --calm:#0F2226;--calm-2:#163036;--nick-line:#A8956A;color-scheme:dark}
+  --calm:#0B1D21;--calm-2:#163036;--calm-edge:#1F3338;--nick-line:#A8956A;color-scheme:dark}
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;overscroll-behavior-y:none;scroll-padding-top:1rem}
@@ -84,7 +84,6 @@ main :focus-visible,footer :focus-visible{outline-color:var(--text)}
 .brand{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--f-display);font-weight:800;font-size:1.3125rem;letter-spacing:-.03em;color:inherit;text-decoration:none}
 .mark{width:1.75rem;height:1.75rem;flex:none;overflow:visible}
 .mark .m-cloud{transition:transform .6s var(--ease-out),opacity .4s ease}
-.hero.free .mark .m-cloud{transform:translateX(9px);opacity:0}
 
 /* ── Первый экран ── */
 .hero{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;color:var(--ink);touch-action:pan-y;
@@ -100,8 +99,6 @@ main :focus-visible,footer :focus-visible{outline-color:var(--text)}
 .hero.free .sun::before{opacity:1;transform:none}
 .hero.dragging{user-select:none;-webkit-user-select:none}
 #smog{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;overflow:visible;transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
-#smog{animation:drift 26s ease-in-out infinite alternate;will-change:transform}
-@keyframes drift{from{translate:-8px 0}to{translate:10px 0}}
 .hero.free #smog{opacity:0;transform:translateX(var(--wind,40vw))}
 
 header.top{position:absolute;inset:0 0 auto 0;z-index:3;padding-top:env(safe-area-inset-top)}
@@ -114,9 +111,9 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .hero-inner > *{pointer-events:auto}
 .copy{grid-column:1;grid-row:1/3;align-self:center;max-width:46rem;padding-top:2rem}
 .hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(3.1rem,7vw,6.5rem);line-height:.95;letter-spacing:-.04em;text-wrap:balance;display:grid}
-.hero h1 span{grid-area:1/1;align-self:end;transition:opacity .22s ease,filter .22s ease}
+.hero h1 span{grid-area:1/1;align-self:start;transition:opacity .22s ease,filter .22s ease}
 .lead{display:grid}.lead span{grid-area:1/1;transition:opacity .22s ease}.lead .after-l{opacity:0}.hero.free .lead .before-l{opacity:0}.hero.free .lead .after-l{opacity:1}
-.hero h1 .after-h{opacity:0;filter:blur(4px);line-height:1}
+.hero h1 .after-h{opacity:0;filter:blur(4px);line-height:1;align-self:end}
 .hero.free h1 .before-h{opacity:0;filter:blur(4px)}
 .hero.free h1 .after-h{opacity:1;filter:none}
 .lead{font-size:clamp(1.125rem,1.45vw,1.3125rem);line-height:1.5;max-width:31rem;margin-top:1.6rem;text-wrap:pretty}
@@ -143,7 +140,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .who .st{font-size:.875rem;opacity:.85}
 .bubbles{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.2rem}
 .b{max-width:min(100%,21rem);background:var(--nick);color:var(--nick-text);padding:.62rem .95rem .66rem;font-size:1.0625rem;line-height:1.35;
-  border-radius:1.25rem;
+  border-radius:1.25rem;box-shadow:inset 0 0 0 1px rgba(238,233,218,.18);
   opacity:0;transform:translateY(.4rem) scale(.97);transform-origin:left bottom;
   transition:opacity .22s var(--ease-out),transform .22s var(--ease-out),filter .2s ease}
 .b.last{border-bottom-left-radius:.375rem}
@@ -189,7 +186,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .big{font-family:var(--f-display);font-weight:800;font-size:clamp(2.35rem,5.2vw,4.5rem);line-height:1;letter-spacing:-.035em;text-wrap:balance}
 .sub{color:var(--muted);margin-top:1.25rem;max-width:30rem;font-size:1.125rem;text-wrap:pretty}
 .src{color:var(--muted);font-size:.875rem;line-height:1.5;margin-top:1.25rem;max-width:34rem;text-wrap:pretty}
-.rv{opacity:0;transform:translateY(1rem);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
+.rv{opacity:0;transform:translateY(.5rem);transition:opacity .26s var(--ease-out),transform .26s var(--ease-out)}
 .rv.seen{opacity:1;transform:none}
 
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2.75rem;background:transparent;color:var(--act);--p:20%;cursor:pointer}
@@ -205,24 +202,25 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 2px var(-
 input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--page),0 0 0 4px var(--act)}
 
 /* ── Волна ── */
-.calm{background:var(--calm);color:var(--calm-text)}
+.calm{background:var(--calm);color:var(--calm-text);box-shadow:inset 0 1px var(--calm-edge,transparent),inset 0 -1px var(--calm-edge,transparent)}
 .calm .sub,.calm .src{color:var(--calm-muted)}
 .wave-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,6vw,6rem);align-items:center}
-.ride{margin-top:2.25rem;background:var(--calm-text);color:var(--calm)}
-.ride.again{background:none;color:var(--calm-text);padding-inline:0;text-decoration:underline;text-underline-offset:.25em;min-height:2.75rem}
+.ride{margin-top:2.25rem;background:var(--calm-text);color:var(--calm);min-width:13.5rem}
 .ride[disabled]{background:transparent;color:var(--calm-text);box-shadow:inset 0 0 0 1.5px var(--calm-muted);cursor:default}
 .wave-fig{position:relative}
 .wave-fig canvas{display:block;width:100%;aspect-ratio:16/9}
 .wave-read{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-top:1rem}
-.wave-time{font-family:var(--f-display);font-weight:700;font-size:clamp(1.75rem,3vw,2.5rem);letter-spacing:-.03em}
-.wave-cue{color:var(--calm-muted);font-weight:500;text-align:right;min-height:1.6em;transition:color .3s ease}
-.wave-cue.done{color:var(--reward);font-family:var(--f-display);font-weight:700;font-size:clamp(1.125rem,1.8vw,1.375rem);letter-spacing:-.02em}
+.wave-time{font-family:var(--f-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em;color:var(--calm-muted)}
+.wave-cue{font-family:var(--f-display);font-weight:700;font-size:clamp(1.75rem,3vw,2.5rem);letter-spacing:-.03em;color:var(--calm-text);min-height:1.2em;transition:opacity .2s ease,color .3s ease}
+.wave-cue.idle{font-family:var(--f-body);font-weight:500;font-size:1.0625rem;letter-spacing:0;color:var(--calm-muted)}
+.wave-cue.done{color:var(--reward);font-size:clamp(1.25rem,2.2vw,1.75rem)}
 .wave-cap{color:var(--calm-muted);font-size:.875rem;font-weight:500;margin-bottom:.5rem}
 .axis-note{position:relative;height:1.4rem;color:var(--calm-muted);font-size:.875rem;margin-top:.35rem}
 .axis-note span{position:absolute;top:0;translate:-50% 0;white-space:nowrap}.axis-note span:first-child{translate:0 0}.axis-note span:last-child{translate:-100% 0}
 
 /* ── Деньги ── */
 .money .big{max-width:none}
+.section.money{padding-top:clamp(2.5rem,5vw,4.5rem)}
 .money .calc{max-width:28rem;margin-top:clamp(1.75rem,3vw,2.5rem)}
 .per{font-size:clamp(1.25rem,2.6vw,2.5rem);letter-spacing:-.02em;font-weight:700;margin-left:.35em;color:var(--muted)}
 .mid{font-family:var(--f-display);font-weight:700;font-size:clamp(1.375rem,2.2vw,1.75rem);letter-spacing:-.025em;margin-top:clamp(3rem,6vw,5rem)}
@@ -230,13 +228,13 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .calc output{font-family:var(--f-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
 .year{display:flex;align-items:baseline;flex-wrap:wrap;font-family:var(--f-display);font-weight:800;font-size:clamp(3.75rem,12vw,11rem);line-height:.9;letter-spacing:-.05em;margin-top:clamp(1rem,2vw,1.5rem);color:var(--text)}
 .year-note{color:var(--text);font-size:clamp(1.125rem,1.6vw,1.375rem);margin-top:.75rem;padding-bottom:clamp(3rem,6vw,5rem);border-bottom:1px solid var(--rule)}
-.timeline{position:relative;margin-top:1.5rem;height:13rem}
-.tl-axis{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:var(--control);opacity:.5;border-radius:2px}
+.timeline{position:relative;margin-top:1rem;height:11rem}
+.tl-axis{position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:var(--rule);border-radius:4px}
 .tl-fill{position:absolute;left:0;top:50%;height:2px;background:var(--act);border-radius:2px;width:0;transition:width .5s var(--ease-out)}
 .tl-tick{position:absolute;top:calc(50% + .9rem);font-size:.875rem;color:var(--muted);translate:-50% 0;white-space:nowrap}
 .tl-tick:first-of-type{translate:0 0}.tl-tick.end{translate:-100% 0}
-.goal{position:absolute;top:50%;width:0;transition:left .5s var(--ease-out)}
-.goal .pin{position:absolute;left:-.5rem;top:-.5rem;width:1rem;height:1rem;border-radius:50%;background:var(--page);border:2px solid var(--act)}
+.goal{position:absolute;top:50%;width:0;transition:left .24s var(--ease-out)}
+.goal .pin{position:absolute;left:-.4375rem;top:-.4375rem;width:.875rem;height:.875rem;border-radius:50%;background:var(--act);box-shadow:0 0 0 3px var(--page)}
 .goal.got .pin{background:var(--act)}
 .goal .lbl{position:absolute;left:0;bottom:1.4rem;translate:-50% 0;white-space:nowrap;text-align:center;line-height:1.3}
 .goal.down .lbl{bottom:auto;top:2.6rem}
@@ -269,7 +267,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .chart .grid{stroke:var(--rule);stroke-width:1}
 .chart .base{stroke:var(--act);stroke-width:1.5;stroke-dasharray:4 5}
 .chart .past-area{fill:var(--act);opacity:.1}
-.chart .line{fill:none;stroke:var(--nick-line);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.chart .line{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:6 6;stroke-linecap:round;stroke-linejoin:round}
 .chart .past{fill:none;stroke:var(--act);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
 .chart .cursor{stroke:var(--text);stroke-width:1;opacity:.35}
 .chart .knob{fill:var(--act);stroke:var(--page);stroke-width:3}
@@ -314,9 +312,9 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .plan + .plan{border-top:1.5px solid var(--rule)}
 .plan b{font-family:var(--f-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
 .plan small{display:block;color:var(--muted);font-size:.875rem;margin-top:.15rem}
-.badge{display:inline-block;vertical-align:.15em;margin-left:.4rem;padding:.15rem .5rem;border-radius:999px;background:var(--me);color:var(--me-text);font:600 .8125rem var(--f-body);letter-spacing:0}
+.badge{display:inline-block;vertical-align:.15em;margin-left:.4rem;padding:.15rem .5rem;border-radius:999px;background:none;box-shadow:inset 0 0 0 1px var(--control);color:var(--muted);font:600 .8125rem var(--f-body);letter-spacing:0}
 .plan .amt{font-family:var(--f-display);font-weight:800;font-size:1.75rem;letter-spacing:-.035em;white-space:nowrap}
-.start{margin-top:2rem;width:100%;max-width:22rem}
+.start{margin-top:2rem;width:100%}
 .promise{list-style:none;margin-top:1.75rem;display:grid;gap:.9rem}
 .promise li{display:grid;grid-template-columns:1.5rem 1fr;gap:.75rem;align-items:start}
 .promise svg{width:1.5rem;height:1.5rem;color:var(--act);margin-top:.05rem}
@@ -350,7 +348,7 @@ footer .brand{color:var(--text)}
   .actions{margin-top:1.4rem;flex-direction:column;align-items:flex-start;gap:.75rem}
   .stage{margin-top:0}
   .copy{align-self:end;padding-top:1rem}
-  .b{font-size:.9375rem;padding:.5rem .8rem}
+  .b{font-size:.9375rem;padding:.5rem .8rem;max-width:78%}
   .wave-grid,.money-row,.brain-ctrl,.slip,.price{grid-template-columns:minmax(0,1fr)}
   .money-row{gap:1.25rem}
   .readout{grid-template-columns:minmax(0,1fr);gap:.75rem;margin-bottom:1rem}
@@ -377,7 +375,6 @@ footer .brand{color:var(--text)}
 }
 @media (prefers-reduced-motion:reduce){
   .b,.hint,.sun,#smog,.hero h1 span,.rv{transition-duration:.2s!important}
-  #smog{animation:none}
   .b,.b.gone,.rv{transform:none!important;filter:none!important}
   .hero.free #smog{transform:none}
   .typing i{animation:none;opacity:.7}
@@ -467,10 +464,10 @@ footer .brand{color:var(--text)}
       <p class="src">NHS, «Quit smoking: dealing with cravings». В демо четыре минуты идут за двенадцать секунд, в приложении — в реальном времени.</p>
     </div>
     <figure class="wave-fig rv" aria-labelledby="w-h"><figcaption class="wave-cap">Сила тяги</figcaption>
-      <p class="nick-ping" id="ping"><span class="nick-ping-who">Ник</span>может, одну? 🙂</p>
+      <p class="nick-ping off" id="ping" aria-hidden="true"><span class="nick-ping-who">Ник</span>может, одну? 🙂</p>
       <canvas id="wave" width="1280" height="720" role="img" aria-label="График тяги: поднимается, держится около минуты и спадает к четвёртой минуте."></canvas>
       <div class="axis-note" aria-hidden="true"><span style="left:0">0</span><span style="left:25%">1</span><span style="left:50%">2</span><span style="left:75%">3</span><span style="left:100%">4 мин</span></div>
-      <div class="wave-read"><span class="wave-time num" id="w-time">0:00</span><span class="wave-cue" id="w-cue" aria-live="polite">Нажми, когда Ник напишет</span></div>
+      <div class="wave-read"><span class="wave-cue idle" id="w-cue" aria-live="polite">Нажми — и смотри, как она спадает</span><span class="wave-time num" id="w-time">0:00</span></div>
     </figure>
   </div>
 </section>
@@ -600,7 +597,7 @@ function build(){
   pg.append(mk('stop', { offset: 0, 'stop-color': c('--cl-front-top'), 'stop-opacity': .95 }), mk('stop', { offset: .55, 'stop-color': c('--cl-front-top'), 'stop-opacity': .28 }), mk('stop', { offset: 1, 'stop-color': c('--cl-front-top'), 'stop-opacity': 0 }));
   defs.append(pg);
   const rg = mk('radialGradient', { id: 'g-rim', gradientUnits: 'userSpaceOnUse' });
-  rg.append(mk('stop', { offset: .3, 'stop-color': c('--sun-core'), 'stop-opacity': .9 }), mk('stop', { offset: .55, 'stop-color': c('--sun'), 'stop-opacity': .35 }), mk('stop', { offset: 1, 'stop-color': c('--sun'), 'stop-opacity': 0 }));
+  rg.append(mk('stop', { offset: .3, 'stop-color': c('--sun-core'), 'stop-opacity': .5 }), mk('stop', { offset: .5, 'stop-color': c('--sun'), 'stop-opacity': .14 }), mk('stop', { offset: 1, 'stop-color': c('--sun'), 'stop-opacity': 0 }));
   defs.append(rg);
   // Низ облака растворяется, а не обрезан линейкой
   const mg = mk('linearGradient', { id: 'g-fade', gradientUnits: 'userSpaceOnUse', x1: 0, y1: base + R * .03, x2: 0, y2: base + R * .12 });
@@ -640,7 +637,7 @@ function build(){
   sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .05);
   sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .55 - sy) / (sr * 2) * 100) + '%');
   sunEl.style.setProperty('--sx', sxp + 'px'); sunEl.style.setProperty('--sy', sy + 'px');
-  rg.setAttribute('cx', sxp); rg.setAttribute('cy', sy); rg.setAttribute('r', sr * 2.3);
+  rg.setAttribute('cx', sxp); rg.setAttribute('cy', sy); rg.setAttribute('r', sr * 1.7);
   noteRects();
 }
 let nRects = [];
@@ -760,7 +757,7 @@ function drawWave(p){
   for (let i = 1; i < 4; i++) { const x = W * i / 4; wx.beginPath(); wx.moveTo(x, padY - 20); wx.lineTo(x, base); wx.stroke(); }
   const pt = q => [q * W, base - curve(q) * (base - padY)];
   // будущее — пунктир
-  wx.strokeStyle = 'rgba(226,235,235,.22)'; wx.lineWidth = 5; wx.lineCap = 'round'; wx.beginPath();
+  wx.strokeStyle = p > 0 ? 'rgba(226,235,235,.22)' : 'rgba(108,201,209,.3)'; wx.lineWidth = 5; wx.lineCap = 'round'; wx.beginPath();
   for (let q = p; q <= 1.0001; q += .005) { const [x, y] = pt(q); q === p ? wx.moveTo(x, y) : wx.lineTo(x, y); } wx.stroke();
   if (p > 0) {
     const g = wx.createLinearGradient(0, padY, 0, base); g.addColorStop(0, 'rgba(108,201,209,.32)'); g.addColorStop(1, 'rgba(108,201,209,0)');
@@ -775,25 +772,32 @@ function drawWave(p){
 }
 drawWave(0);
 function placePing(){ const q = .3, H = wc.height, base = H - 40, padY = 70, x = wc.offsetLeft + q * wc.clientWidth, y = wc.offsetTop + (base - curve(q) * (base - padY)) / H * wc.clientHeight - 14;
-  ping.style.setProperty('--px', x + 'px'); ping.style.setProperty('--py', y + 'px'); }
+  const cap = document.querySelector('.wave-cap'), pw = ping.offsetWidth, ph = ping.offsetHeight, fw = wc.parentElement.clientWidth;
+  const minY = cap.offsetTop + cap.offsetHeight + ph + 8;
+  ping.style.setProperty('--px', Math.min(fw - pw / 2, Math.max(pw / 2, x)) + 'px'); ping.style.setProperty('--py', Math.max(minY, y) + 'px'); }
 placePing(); addEventListener('resize', placePing);
+let wState = 'idle', wT0 = 0, wPausedAt = 0;
+const D = 12000;
+function wStep(now){
+  const p = reduce ? 1 : Math.min(1, (now - wT0) / D); waveP = p; drawWave(p);
+  ping.classList.toggle('off', p < .05 || p > .55);
+  const sec = Math.round(p * 240); wTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+  if (p < 1) { const cue = Math.floor((now - wT0) / 2000) % 2 ? 'Выдох' : 'Вдох'; if (wCue.textContent !== cue) wCue.textContent = cue; waveRaf = requestAnimationFrame(wStep); }
+  else { wState = 'done'; wCue.textContent = 'Волна прошла. Ник замолчал.'; wCue.classList.add('done'); ride.textContent = 'Ещё раз'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} }
+}
 ride.addEventListener('click', () => {
-  cancelAnimationFrame(waveRaf); ride.classList.remove('again'); ride.disabled = true; ride.textContent = 'Дыши'; wCue.classList.remove('done');
-  const D = 12000, t0 = performance.now();
-  const step = now => {
-    const p = reduce ? 1 : Math.min(1, (now - t0) / D); waveP = p; drawWave(p); ping.classList.toggle('off', p > .55);
-    const sec = Math.round(p * 240); wTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
-    if (p < 1) { const ph = Math.floor((now - t0) / 2000) % 2; const cue = ph ? 'Выдох' : 'Вдох'; if (wCue.textContent !== cue) wCue.textContent = cue; waveRaf = requestAnimationFrame(step); }
-    else { wCue.textContent = 'Волна прошла. Ник замолчал.'; wCue.classList.add('done'); ride.disabled = false; ride.textContent = 'Пройти ещё раз'; ride.classList.add('again'); try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} }
-  };
-  waveRaf = requestAnimationFrame(step);
+  const now = performance.now();
+  if (wState === 'running') { cancelAnimationFrame(waveRaf); wPausedAt = now; wState = 'paused'; ride.textContent = 'Продолжить'; wCue.textContent = 'Пауза'; return; }
+  if (wState === 'paused') { wT0 += now - wPausedAt; wState = 'running'; ride.textContent = 'Пауза'; waveRaf = requestAnimationFrame(wStep); return; }
+  wT0 = now; wState = 'running'; ride.textContent = 'Пауза'; wCue.classList.remove('idle', 'done'); wCue.textContent = 'Вдох';
+  waveRaf = requestAnimationFrame(wStep);
 });
 
 /* ── Деньги и цели ── */
 const rub = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
-const GOALS = [['Кроссовки', 12000], ['Неделя на море', 60000], ['Новый телефон', 90000]];
+const GOALS = [['Кроссовки', 12000], ['Велосипед', 30000], ['Неделя на море', 60000], ['Новый телефон', 90000]];
 const tl = document.getElementById('tl');
-const goalEls = GOALS.map(([name], i) => { const g = document.createElement('div'); g.className = 'goal'; g.innerHTML = '<span class="pin"></span><span class="lbl"><b>' + name + '</b><span class="num"></span></span><span class="bar" aria-hidden="true"><i></i></span>'; tl.appendChild(g); return g; });
+const goalEls = GOALS.map(([name], i) => { const g = document.createElement('div'); g.className = 'goal' + (i % 2 ? ' down' : ''); g.innerHTML = '<span class="pin"></span><span class="lbl"><b>' + name + '</b><span class="num"></span></span><span class="bar" aria-hidden="true"><i></i></span>'; tl.appendChild(g); return g; });
 const dayWord = n => { const a = n % 10, b = n % 100; return (a === 1 && b !== 11) ? 'день' : (a >= 2 && a <= 4 && (b < 12 || b > 14)) ? 'дня' : 'дней'; };
 const spend = document.getElementById('spend'), year = document.getElementById('year');
 function money(){
@@ -864,12 +868,12 @@ function drawChart(){
   pastArea.setAttribute('d', w ? smoothPath(w) + ' L' + cx(w) + ',' + CY1 + ' L' + CX0 + ',' + CY1 + 'Z' : '');
   cur.setAttribute('x1', cx(w)); cur.setAttribute('x2', cx(w));
   knob.setAttribute('cx', cx(w)); knob.setAttribute('cy', cy(v));
-  lab.setAttribute('x', Math.min(CX1 - 40, Math.max(CX0 + 40, cx(w)))); lab.setAttribute('y', cy(v) - 20); lab.textContent = Math.round(v * 100) + '%';
+  lab.setAttribute('x', Math.min(CX1 - 40, Math.max(CX0 + 40, cx(w)))); lab.setAttribute('y', cy(v) - 20); lab.textContent = '';
   week.style.setProperty('--p', (w / 12 * 100) + '%');
   const name = w === 0 ? 'День расставания' : 'Неделя ' + w;
-  week.setAttribute('aria-valuetext', name + ', лишних рецепторов ' + Math.round(v * 100) + '%');
+  week.setAttribute('aria-valuetext', name);
   document.getElementById('wk').firstChild.nodeValue = name;
-  document.querySelector('.wk-pct').textContent = 'лишних рецепторов: ' + Math.round(v * 100) + '% от исходного избытка';
+  document.querySelector('.wk-pct').textContent = w < 5 ? 'избыток рецепторов ещё держится' : w < 12 ? 'избыток уходит, к 6–12 неделе — уровень некурящего' : 'уровень некурящего';
   document.getElementById('wk-t').textContent = TEXT[w].replace(/ —/g, '\u00A0—');
 }
 week.addEventListener('input', drawChart);
