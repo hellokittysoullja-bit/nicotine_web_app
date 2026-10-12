@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Breakup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+  Направление A, «Простая упаковка».
+  Ник выкрашен в Pantone 448C: цвет обязательной простой упаковки сигарет, выбранный как самый отталкивающий.
+  Всё, что принадлежит человеку, живёт на белом. Тёмный текст тоже из 448C, а не нейтральный почти-чёрный.
+  Первый экран: живая переписка, а не картинка телефона.
+*/
+:root{
+  --pack:#4A412A;      /* Pantone 448C, мир Ника */
+  --pack-ink:#211C10;  /* тот же оттенок, затемнённый: основной текст */
+  --pack-soft:#E7E3D7; /* текст на пачке */
+  --paper:#FFFFFF;
+  --air:#BFE6F7;       /* сторона человека */
+  --muted:#6E6857;
+  --line:#DCD8CC;
+  --f-nick:"PT Sans Narrow","Arial Narrow",sans-serif;
+  --f-body:"Golos Text",system-ui,sans-serif;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--pack-ink);font-family:var(--f-body);font-size:17px;line-height:1.5;padding-inline:20px;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:1180px;margin:0 auto}
+nav{display:flex;justify-content:space-between;align-items:center;height:68px}
+.brand{font-family:var(--f-nick);font-weight:700;font-size:24px;letter-spacing:-.01em}
+nav a{color:var(--pack-ink);font-weight:500;text-decoration:none;font-size:15px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,a:focus-visible{outline:3px solid var(--pack);outline-offset:3px}
+
+/* Первый экран */
+.hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:center;padding-block:72px 96px}
+.thread{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.from{font-size:14px;color:var(--muted);margin-bottom:4px}
+.nick{background:var(--pack);color:var(--pack-soft);font-family:var(--f-nick);font-size:clamp(26px,3.2vw,40px);line-height:1.12;padding:12px 20px 14px;border-radius:6px 22px 22px 6px;max-width:100%;
+  opacity:0;transform:translateY(10px);animation:in .32s var(--ease-out) forwards}
+.nick:nth-of-type(2){animation-delay:.9s}.nick:nth-of-type(3){animation-delay:1.9s}
+@keyframes in{to{opacity:1;transform:none}}
+.side{display:flex;flex-direction:column;gap:22px;padding-bottom:6px}
+.side h1{font-family:var(--f-nick);font-weight:700;font-size:clamp(32px,3.6vw,46px);line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+.side p{color:var(--muted);max-width:40ch}
+.ask{font-weight:600}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.pick{border:2px solid var(--pack-ink);border-radius:999px;padding:10px 18px;font-weight:500;transition:transform .14s var(--ease-out),background-color .14s ease}
+.pick:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.pick:hover{background:var(--air)}}
+.pick[aria-pressed="true"]{background:var(--air)}
+.reply{display:none;flex-direction:column;gap:10px;align-items:flex-start}
+.reply.on{display:flex}
+.me{align-self:flex-end;background:var(--air);border-radius:22px 6px 6px 22px;padding:10px 18px;font-size:18px}
+.cta{background:var(--pack);color:var(--paper);font-weight:600;font-size:18px;padding:16px 26px;border-radius:999px;transition:transform .14s var(--ease-out)}
+.cta:active{transform:scale(.97)}
+
+/* Предупреждение: единственная рамка на странице */
+.warning{border:7px solid var(--pack-ink);padding:28px 32px 30px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;margin-bottom:96px}
+.warning h2{font-family:var(--f-nick);font-weight:700;font-size:clamp(30px,3.4vw,44px);line-height:1.04}
+.warning p{font-size:17px}
+.warning small{display:block;color:var(--muted);font-size:13.5px;margin-top:12px}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:36px;min-height:0;padding-block:24px 56px}
+  .warning{grid-template-columns:minmax(0,1fr);gap:16px;padding:22px}
+}
+@media (prefers-reduced-motion:reduce){.nick{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><span class="brand">Breakup</span><a href="#">Войти</a></nav>
+
+  <section class="hero">
+    <div class="thread" aria-live="polite">
+      <span class="from">Ник, 08:12</span>
+      <div class="nick">доброе утро</div>
+      <div class="nick">кофе без меня это просто горячая вода</div>
+      <div class="nick">одну. ты же всё контролируешь</div>
+      <div class="reply" id="reply"></div>
+    </div>
+
+    <div class="side">
+      <h1>Он пишет тебе каждый раз, когда падает никотин</h1>
+      <p>Пачка в день это двадцать таких сообщений. Breakup помогает перестать на них отвечать.</p>
+      <span class="ask" id="ask">Что у тебя с Ником?</span>
+      <div class="picks" role="group" aria-labelledby="ask">
+        <button class="pick" id="p-cig" aria-pressed="false" data-r="Сигареты. Пачка в день.">Сигареты</button>
+        <button class="pick" id="p-vape" aria-pressed="false" data-r="Вейп. Не выпускаю из руки.">Вейп</button>
+        <button class="pick" id="p-pouch" aria-pressed="false" data-r="Пакетики. После каждого кофе.">Пакетики</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="warning" aria-labelledby="w-title">
+    <h2 id="w-title">Никотин не снимает стресс. Он снимает ломку, которую сам и вызвал.</h2>
+    <div>
+      <p>Каждые пару часов уровень никотина падает, и мозг просит ещё. Облегчение от затяжки это конец этой ломки, а не отдых. Через несколько недель без никотина ломка уходит совсем.</p>
+      <small>Cosgrove и соавторы, 2009: ПЭТ-исследование никотиновых рецепторов после отказа от курения.</small>
+    </div>
+  </section>
+</div>
+
+<script>
+const reply = document.getElementById('reply');
+const nickLine = {
+  'p-cig': 'опять ты про бросить. давай с понедельника',
+  'p-vape': 'я же даже не дым. я почти воздух',
+  'p-pouch': 'меня даже никто не видит. в чём проблема'
+};
+document.querySelectorAll('.pick').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.pick').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  reply.innerHTML = '';
+  const me = document.createElement('div'); me.className = 'me'; me.textContent = b.dataset.r; reply.append(me);
+  const n = document.createElement('div'); n.className = 'nick'; n.style.animationDelay = '.6s'; n.textContent = nickLine[b.id]; reply.append(n);
+  const c = document.createElement('button'); c.className = 'cta'; c.id = 'start'; c.textContent = 'Собрать план расставания'; reply.append(c);
+  reply.classList.add('on');
+}));
+</script>
+</body>
+</html>
