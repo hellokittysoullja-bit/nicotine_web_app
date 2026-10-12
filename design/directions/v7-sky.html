@@ -517,19 +517,18 @@ footer .brand{color:var(--text)}
   <div class="wrap price">
     <div class="rv">
       <h2 class="big" id="p-h">Честно о деньгах</h2>
-      <p class="sub">Год — 34,99 $, это около 0,67 $ в неделю. Списания только с твоего согласия, и о каждом мы предупредим заранее.</p>
+      <p class="sub">Одна подписка, 349 ₽ в месяц. Списания только с твоего согласия, и о каждом мы предупредим заранее.</p>
     </div>
     <div class="rv">
-      <div class="plans" role="radiogroup" aria-label="Тариф">
-        <button class="plan" role="radio" aria-checked="true" tabindex="0" data-label="34,99 $ в год"><span class="pdot" aria-hidden="true"></span><span class="pmain"><b>Год <span class="badge">выгоднее</span></b><small>около 0,67 $ в неделю</small></span><span class="amt num">34,99 $</span></button>
-        <button class="plan" role="radio" aria-checked="false" tabindex="-1" data-label="4,99 $ в неделю"><span class="pdot" aria-hidden="true"></span><span class="pmain"><b>Неделя</b><small>без обязательств</small></span><span class="amt num">4,99 $</span></button>
+      <div class="plans">
+        <div class="plan"><span class="pmain"><b>Месяц</b><small id="plan-cmp">меньше, чем ты отдаёшь Нику за 2 дня</small></span><span class="amt num">349 ₽</span></div>
       </div>
       <ul class="promise">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Напомним за два дня до списания.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Отмена — одно нажатие в настройках, без вопросов «а может, останешься».</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Никаких таймеров «скидка сгорит через пять минут».</span></li>
       </ul>
-      <button class="btn btn-ink start" id="start">Начать — 34,99 $ в год</button>
+      <button class="btn btn-ink start" id="start">Начать — 349 ₽ в месяц</button>
     </div>
   </div>
 </section>
@@ -560,7 +559,7 @@ const mobile = () => innerWidth <= 860;
 
 /* ── Висячие предлоги: короткое слово держится за следующее ── */
 (function nbsp(root){ const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const re = /(^|[\s(«—])(в|во|с|со|к|ко|о|об|у|и|а|но|не|ни|на|за|по|из|от|до|без|для|что|он|ты|я|мы|это)\s+/gi; let n;
-  while ((n = w.nextNode())) { if (n.parentElement.closest('script,style,svg')) continue; const v = n.nodeValue.replace(re, (m, a, b) => a + b + '\u00A0').replace(/ —/g, '\u00A0—').replace(/(\d) ([$₽])/g, '$1\u00A0$2'); if (v !== n.nodeValue) n.nodeValue = v; } })(document.body);
+  while ((n = w.nextNode())) { if (n.parentElement.closest('script,style,svg')) continue; const v = n.nodeValue.replace(re, (m, a, b) => a + b + '\u00A0').replace(re, (m, a, b) => a + b + '\u00A0').replace(/ —/g, '\u00A0—').replace(/(\d) ([$₽])/g, '$1\u00A0$2'); if (v !== n.nodeValue) n.nodeValue = v; } })(document.body);
 
 /* ── Переписка: Ник печатает, потом пишет ── */
 const notes = [...document.querySelectorAll('.b')], typing = document.getElementById('typing'), st = document.getElementById('st');
@@ -733,10 +732,6 @@ const toQuiz = () => {
   else { hero.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); setTimeout(() => release('button'), reduce ? 0 : 600); }
 };
 document.getElementById('again').addEventListener('click', toQuiz); document.getElementById('start').addEventListener('click', toQuiz);
-const plans = [...document.querySelectorAll('.plan')], startBtn = document.getElementById('start');
-function pickPlan(pl){ plans.forEach(x => { const on = x === pl; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); startBtn.textContent = 'Начать — ' + pl.dataset.label; }
-plans.forEach(pl => pl.addEventListener('click', () => pickPlan(pl)));
-document.querySelector('.plans').addEventListener('keydown', e => { const i = plans.indexOf(document.activeElement); if (i < 0 || !['ArrowDown','ArrowUp','ArrowLeft','ArrowRight'].includes(e.key)) return; e.preventDefault(); const n = plans[(i + 1) % 2]; n.focus(); pickPlan(n); });
 lastW = innerWidth; build();
 
 /* ── Опрос ── */
@@ -815,6 +810,7 @@ const spend = document.getElementById('spend'), year = document.getElementById('
 function money(){
   const d = +spend.value; spend.style.setProperty('--p', ((d - 50) / 950 * 100) + '%');
   const s = rub.format(d); document.getElementById('spend-v').textContent = s + ' в день'; spend.setAttribute('aria-valuetext', s + ' в день');
+  const dd = Math.max(1, Math.ceil(349 / d)); document.getElementById('plan-cmp').textContent = 'меньше, чем ты отдаёшь Нику за ' + dd + ' ' + dayWord(dd);
   year.textContent = rub.format(d * 365); document.getElementById('year-note').textContent = 'За пять лет — ' + rub.format(d * 365 * 5) + '.';
   const desc = [];
   GOALS.forEach(([name, price], i) => {
