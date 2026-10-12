@@ -1,0 +1,10 @@
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
+const [w,h,scheme]=[+(process.argv[2]||1440),+(process.argv[3]||900),process.argv[4]||'light'];
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const ctx = await b.newContext({ viewport:{width:w,height:h}, deviceScaleFactor:1, colorScheme:scheme });
+const p = await ctx.newPage(); await p.goto('file://'+process.cwd()+'/v7-sky.html',{waitUntil:'networkidle'});
+await p.evaluate(()=>document.querySelectorAll('.rv').forEach(e=>e.classList.add('seen')));
+await p.waitForTimeout(1500);
+const secs = await p.$$('main section, footer');
+for (let i=1;i<secs.length;i++) await secs[i].screenshot({path:`v7s-${w}-${scheme}-${i}.png`});
+console.log(secs.length); await b.close();
