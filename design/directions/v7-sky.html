@@ -96,6 +96,7 @@ main :focus-visible,footer :focus-visible{outline-color:var(--text)}
   opacity:.3;transform:scale(.85);transition:opacity 1.4s var(--ease-out),transform 1.4s var(--ease-out)}
 .sun{transition:transform 1.4s var(--ease-out);transform:translateY(var(--sun-hide,30%)) scale(.94)}
 .hero.free .sun{transform:none}
+@media (min-width:861px){.hero.free .sun{transform:translate(7rem,-3rem)}}
 .hero.free .sun::before{opacity:1;transform:none}
 .hero.dragging{user-select:none;-webkit-user-select:none}
 #smog{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;overflow:visible;transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
@@ -205,7 +206,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .calm{background:var(--calm);color:var(--calm-text);box-shadow:inset 0 1px var(--calm-edge,transparent),inset 0 -1px var(--calm-edge,transparent)}
 .calm .sub,.calm .src{color:var(--calm-muted)}
 .wave-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,6vw,6rem);align-items:center}
-.ride{margin-top:2.25rem;background:var(--calm-text);color:var(--calm);min-width:13.5rem}
+.ride{margin-top:2.25rem;background:var(--calm-line);color:#06292D;min-width:13.5rem}
 .ride[disabled]{background:transparent;color:var(--calm-text);box-shadow:inset 0 0 0 1.5px var(--calm-muted);cursor:default}
 .wave-fig{position:relative}
 .wave-fig canvas{display:block;width:100%;aspect-ratio:16/9}
@@ -214,7 +215,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .wave-cue{font-family:var(--f-display);font-weight:700;font-size:clamp(1.75rem,3vw,2.5rem);letter-spacing:-.03em;color:var(--calm-text);min-height:1.2em;transition:opacity .2s ease,color .3s ease}
 .wave-cue.idle{font-family:var(--f-body);font-weight:500;font-size:1.0625rem;letter-spacing:0;color:var(--calm-muted)}
 .wave-cue.done{color:var(--reward);font-size:clamp(1.25rem,2.2vw,1.75rem)}
-.wave-cap{color:var(--calm-muted);font-size:.875rem;font-weight:500;margin-bottom:.5rem}
+.wave-cap{display:inline-block;color:var(--calm-muted);font-size:.875rem;font-weight:500;margin-bottom:.5rem}
 .axis-note{position:relative;height:1.4rem;color:var(--calm-muted);font-size:.875rem;margin-top:.35rem}
 .axis-note span{position:absolute;top:0;translate:-50% 0;white-space:nowrap}.axis-note span:first-child{translate:0 0}.axis-note span:last-child{translate:-100% 0}
 
@@ -261,7 +262,8 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .brain-wide{position:relative;margin-top:clamp(2.5rem,5vw,4rem)}
 .readout{display:grid;grid-template-columns:auto minmax(0,30rem);gap:clamp(1.5rem,4vw,4rem);align-items:end;margin-bottom:clamp(1rem,2vw,1.5rem)}
 .readout .wk-t{margin:0;min-height:0}
-.brain-ctrl{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,6vw,6rem);align-items:start;margin-top:1.5rem}
+.brain-ctrl{margin:.5rem 3.33% 0}
+.brain-ctrl .src{max-width:40rem}
 .brain-ctrl .src{margin-top:.6rem}
 .chart{width:100%;height:auto;display:block;overflow:visible;cursor:pointer;touch-action:pan-y}
 .chart .grid{stroke:var(--rule);stroke-width:1}
@@ -284,7 +286,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .x-nick,.x-me{padding:.6rem .95rem;font-size:1.0625rem;line-height:1.35;width:fit-content;max-width:85%}
 .x-nick{background:var(--nick);color:var(--nick-text);border-radius:1.3rem 1.3rem 1.3rem .4rem}
 .x-me{align-self:flex-end;background:var(--act);color:var(--act-text);border-radius:1.3rem 1.3rem .4rem 1.3rem}
-.nick-ping{position:absolute;left:var(--px,28%);top:var(--py,8%);translate:-50% -100%;white-space:nowrap;background:var(--nick);color:var(--nick-text);border-radius:1.3rem 1.3rem 1.3rem .4rem;padding:.5rem .9rem;font-size:.9375rem;transition:opacity .4s ease,transform .4s var(--ease-out)}
+.nick-ping{position:absolute;left:var(--px,28%);top:var(--py,8%);translate:-50% -100%;white-space:nowrap;background:var(--nick);color:var(--nick-text);border-radius:1.3rem 1.3rem 1.3rem .4rem;padding:.5rem .9rem;font-size:.9375rem;transition:opacity .2s ease-out,transform .2s var(--ease-out)}
 .nick-ping-who{display:block;font-size:.75rem;font-weight:600;opacity:.75}
 .nick-ping.off{opacity:0;transform:translateY(-.4rem)}
 .cal{max-width:30rem}
@@ -307,8 +309,13 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 
 /* ── Цена ── */
 .price{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(2.5rem,6vw,6rem);align-items:start}
-.plans{border:1.5px solid var(--rule);border-radius:1.75rem;overflow:hidden;background:var(--card)}
-.plan{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1.4rem 1.6rem}
+.plans{display:grid;border:1.5px solid var(--rule);border-radius:1.75rem;overflow:hidden;background:var(--card)}
+.plan{display:flex;align-items:center;gap:1rem;width:100%;text-align:left;padding:1.3rem 1.5rem;transition:background-color .15s ease}
+.plan .pmain{flex:1}
+.pdot{width:1.25rem;height:1.25rem;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1.5px var(--control);transition:box-shadow .15s var(--ease-out)}
+.plan[aria-checked="true"]{background:color-mix(in oklab,var(--act) 7%,transparent)}
+.plan[aria-checked="true"] .pdot{box-shadow:inset 0 0 0 6px var(--act)}
+.plan:focus-visible{outline-offset:-3px}
 .plan + .plan{border-top:1.5px solid var(--rule)}
 .plan b{font-family:var(--f-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
 .plan small{display:block;color:var(--muted);font-size:.875rem;margin-top:.15rem}
@@ -423,9 +430,9 @@ footer .brand{color:var(--text)}
 
     <div class="copy">
       <h1 id="h"><span class="before-h">Пора расстаться с&nbsp;Ником</span><span class="after-h" aria-hidden="true">Небо снова твоё</span></h1>
-      <p class="lead"><span class="before-l">Ник — это никотин. Он пишет каждый раз, когда тебя ломает, и обещает спокойствие. Мы помогаем перестать отвечать.</span><span class="after-l" aria-hidden="true">Первый шаг сделан. Дальше пара вопросов, чтобы мы знали, с чем ты.</span></p>
+      <p class="lead"><span class="before-l">Ник — это никотин. Он пишет каждый раз, когда тебя ломает, и обещает спокойствие. Мы помогаем перестать отвечать.</span><span class="after-l" aria-hidden="true">Первый шаг сделан. Дальше — пара вопросов, чтобы понять, с чего тебе начать.</span></p>
       <div class="actions">
-        <button class="btn btn-ink" id="break">Расстаться</button>
+        <button class="btn btn-ink" id="break">Расстаться с&nbsp;Ником</button>
         <span class="hint" id="hint" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0v3.5a6 6 0 0 1-6 6h-.8a5 5 0 0 1-4-2l-2.6-3.4a1.5 1.5 0 0 1 2.3-1.9L9 13"/></svg>
           <span id="hint-t">или разгони облако</span>
@@ -449,7 +456,7 @@ footer .brand{color:var(--text)}
     <h3 class="mid rv">На что хватит того, что ты не потратишь</h3>
     <div class="timeline rv" id="tl" role="img" aria-label="">
       <div class="tl-axis"></div>
-      <span class="tl-tick" style="left:0">сегодня</span><span class="tl-tick end" style="left:100%">год</span>
+      <span class="tl-tick" style="left:0">сегодня</span>
     </div>
     <p class="src">Цели для примера — свои поставишь в приложении.</p>
   </div>
@@ -477,7 +484,7 @@ footer .brand{color:var(--text)}
     <h2 class="big rv" id="b-h">Мозг перестаёт его ждать</h2>
     <div class="brain-wide rv">
       <div class="readout">
-        <div class="wk" id="wk" aria-live="polite">Неделя 4<span class="wk-pct"></span></div>
+        <div class="wk" id="wk" aria-live="polite">Неделя 4</div>
         <p class="wk-t" id="wk-t"></p>
       </div>
       <svg class="chart" id="chart" viewBox="0 0 1200 440" role="img" aria-labelledby="b-h ch-d"><desc id="ch-d">Лишние никотиновые рецепторы по неделям: держатся около четырёх недель и к двенадцатой приходят к уровню некурящего.</desc></svg>
@@ -513,16 +520,16 @@ footer .brand{color:var(--text)}
       <p class="sub">Год — 34,99 $, это около 0,67 $ в неделю. Списания только с твоего согласия, и о каждом мы предупредим заранее.</p>
     </div>
     <div class="rv">
-      <div class="plans">
-        <div class="plan"><div><b>Год <span class="badge">выгоднее</span></b><small>около 0,67 $ в неделю</small></div><span class="amt num">34,99 $</span></div>
-        <div class="plan"><div><b>Неделя</b><small>без обязательств</small></div><span class="amt num">4,99 $</span></div>
+      <div class="plans" role="radiogroup" aria-label="Тариф">
+        <button class="plan" role="radio" aria-checked="true" tabindex="0" data-label="34,99 $ в год"><span class="pdot" aria-hidden="true"></span><span class="pmain"><b>Год <span class="badge">выгоднее</span></b><small>около 0,67 $ в неделю</small></span><span class="amt num">34,99 $</span></button>
+        <button class="plan" role="radio" aria-checked="false" tabindex="-1" data-label="4,99 $ в неделю"><span class="pdot" aria-hidden="true"></span><span class="pmain"><b>Неделя</b><small>без обязательств</small></span><span class="amt num">4,99 $</span></button>
       </div>
       <ul class="promise">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Напомним за два дня до списания.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Отмена — одно нажатие в настройках, без вопросов «а может, останешься».</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Никаких таймеров «скидка сгорит через пять минут».</span></li>
       </ul>
-      <button class="btn btn-ink start" id="start">Начать</button>
+      <button class="btn btn-ink start" id="start">Начать — 34,99 $ в год</button>
     </div>
   </div>
 </section>
@@ -538,7 +545,7 @@ footer .brand{color:var(--text)}
 </main>
 
 <footer class="gutter"><div class="wrap">
-  <span class="brand" style="font-size:1.125rem"><svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><circle cx="17" cy="11" r="8" fill="#FFC94D"/></svg><span lang="en">Breakup</span></span>
+  <span class="brand" style="font-size:1.125rem"><svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><circle cx="17" cy="11" r="8" fill="#FFC94D"/><path d="M3.5 22.5a4.5 4.5 0 0 1 4.2-4.5 6 6 0 0 1 11.3 1.1 3.7 3.7 0 0 1-.4 7.4H7.9a4.4 4.4 0 0 1-4.4-4z" fill="#4A412A"/></svg><span lang="en">Breakup</span></span>
   <p>18+. Breakup помогает бросить и не заменяет врача. Никотинозаместительную терапию обсуди с врачом. Источники: Cosgrove 2009; NHS, Quit smoking.</p>
   <nav aria-label="Документы"><a class="link" href="#">Конфиденциальность</a><a class="link" href="#">Условия</a></nav>
 </div></footer>
@@ -553,7 +560,7 @@ const mobile = () => innerWidth <= 860;
 
 /* ── Висячие предлоги: короткое слово держится за следующее ── */
 (function nbsp(root){ const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const re = /(^|[\s(«—])(в|во|с|со|к|ко|о|об|у|и|а|но|не|ни|на|за|по|из|от|до|без|для|что|он|ты|я|мы|это)\s+/gi; let n;
-  while ((n = w.nextNode())) { if (n.parentElement.closest('script,style,svg')) continue; const v = n.nodeValue.replace(re, (m, a, b) => a + b + '\u00A0').replace(/ —/g, '\u00A0—'); if (v !== n.nodeValue) n.nodeValue = v; } })(document.body);
+  while ((n = w.nextNode())) { if (n.parentElement.closest('script,style,svg')) continue; const v = n.nodeValue.replace(re, (m, a, b) => a + b + '\u00A0').replace(/ —/g, '\u00A0—').replace(/(\d) ([$₽])/g, '$1\u00A0$2'); if (v !== n.nodeValue) n.nodeValue = v; } })(document.body);
 
 /* ── Переписка: Ник печатает, потом пишет ── */
 const notes = [...document.querySelectorAll('.b')], typing = document.getElementById('typing'), st = document.getElementById('st');
@@ -726,6 +733,10 @@ const toQuiz = () => {
   else { hero.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); setTimeout(() => release('button'), reduce ? 0 : 600); }
 };
 document.getElementById('again').addEventListener('click', toQuiz); document.getElementById('start').addEventListener('click', toQuiz);
+const plans = [...document.querySelectorAll('.plan')], startBtn = document.getElementById('start');
+function pickPlan(pl){ plans.forEach(x => { const on = x === pl; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); startBtn.textContent = 'Начать — ' + pl.dataset.label; }
+plans.forEach(pl => pl.addEventListener('click', () => pickPlan(pl)));
+document.querySelector('.plans').addEventListener('keydown', e => { const i = plans.indexOf(document.activeElement); if (i < 0 || !['ArrowDown','ArrowUp','ArrowLeft','ArrowRight'].includes(e.key)) return; e.preventDefault(); const n = plans[(i + 1) % 2]; n.focus(); pickPlan(n); });
 lastW = innerWidth; build();
 
 /* ── Опрос ── */
@@ -773,8 +784,8 @@ function drawWave(p){
 drawWave(0);
 function placePing(){ const q = .3, H = wc.height, base = H - 40, padY = 70, x = wc.offsetLeft + q * wc.clientWidth, y = wc.offsetTop + (base - curve(q) * (base - padY)) / H * wc.clientHeight - 14;
   const cap = document.querySelector('.wave-cap'), pw = ping.offsetWidth, ph = ping.offsetHeight, fw = wc.parentElement.clientWidth;
-  const minY = cap.offsetTop + cap.offsetHeight + ph + 8;
-  ping.style.setProperty('--px', Math.min(fw - pw / 2, Math.max(pw / 2, x)) + 'px'); ping.style.setProperty('--py', Math.max(minY, y) + 'px'); }
+  const peakY = wc.offsetTop + padY / H * wc.clientHeight - 12, minX = cap.offsetLeft + cap.offsetWidth + pw / 2 + 12;
+  ping.style.setProperty('--px', Math.min(fw - pw / 2, Math.max(minX, x)) + 'px'); ping.style.setProperty('--py', peakY + 'px'); }
 placePing(); addEventListener('resize', placePing);
 let wState = 'idle', wT0 = 0, wPausedAt = 0;
 const D = 12000;
@@ -789,6 +800,7 @@ ride.addEventListener('click', () => {
   const now = performance.now();
   if (wState === 'running') { cancelAnimationFrame(waveRaf); wPausedAt = now; wState = 'paused'; ride.textContent = 'Продолжить'; wCue.textContent = 'Пауза'; return; }
   if (wState === 'paused') { wT0 += now - wPausedAt; wState = 'running'; ride.textContent = 'Пауза'; waveRaf = requestAnimationFrame(wStep); return; }
+  const fr = wc.getBoundingClientRect(); if (fr.top < 0 || fr.bottom > innerHeight) wc.parentElement.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
   wT0 = now; wState = 'running'; ride.textContent = 'Пауза'; wCue.classList.remove('idle', 'done'); wCue.textContent = 'Вдох';
   waveRaf = requestAnimationFrame(wStep);
 });
@@ -873,7 +885,7 @@ function drawChart(){
   const name = w === 0 ? 'День расставания' : 'Неделя ' + w;
   week.setAttribute('aria-valuetext', name);
   document.getElementById('wk').firstChild.nodeValue = name;
-  document.querySelector('.wk-pct').textContent = w < 5 ? 'избыток рецепторов ещё держится' : w < 12 ? 'избыток уходит, к 6–12 неделе — уровень некурящего' : 'уровень некурящего';
+
   document.getElementById('wk-t').textContent = TEXT[w].replace(/ —/g, '\u00A0—');
 }
 week.addEventListener('input', drawChart);
