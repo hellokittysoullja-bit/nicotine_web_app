@@ -1,0 +1,6 @@
+flow,state,trigger,user_sees,available_action,verification
+contact-form,idle,page ready,empty labelled fields,enter details,keyboard order and labels
+contact-form,submitting,valid submit,progress without duplicate submission,wait or cancel when safe,button state and live status
+contact-form,success,server confirmed,clear receipt and next step,continue,server result and focus placement
+contact-form,validation-error,invalid submit,field errors plus summary,correct and resubmit,errors linked to fields
+contact-form,server-error,server rejected or failed,plain explanation without data loss,retry or use alternate contact,fixture and live failure test

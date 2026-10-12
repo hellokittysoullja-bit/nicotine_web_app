@@ -1,0 +1,34 @@
+name: Bug report
+description: Report a reproducible problem in the Skill, validators, or examples.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Please remove private data, credentials, and customer content before submitting.
+  - type: input
+    id: version
+    attributes:
+      label: Website Studio version or commit
+      placeholder: v1.0.0
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: Agent and version
+      placeholder: Codex, Claude Code, Cursor, Gemini CLI, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the task, relevant recipe or script, expected result, and actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Verification evidence
+      description: Paste non-sensitive test output or describe the browser state you inspected.

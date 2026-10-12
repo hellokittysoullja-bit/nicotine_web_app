@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Northstar dashboard preview</title>
+  <desc id="desc">An original vector preview of a fictional operations dashboard with metrics, a chart, incidents, and a service table.</desc>
+  <rect width="1200" height="720" rx="28" fill="#0b1118"/>
+  <rect x="30" y="30" width="1140" height="660" rx="18" fill="#f4f5f2"/>
+  <path d="M30 48C30 38 38 30 48 30H244V690H48C38 690 30 682 30 672Z" fill="#111820"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <circle cx="72" cy="76" r="18" fill="#2ed39a"/>
+    <path d="M64 78L70 84L82 68" fill="none" stroke="#111820" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="102" y="82" fill="#ffffff" font-size="17" font-weight="800" letter-spacing="1.4">NORTHSTAR</text>
+    <text x="58" y="132" fill="#6f8292" font-size="9" font-weight="700" letter-spacing="1.6">WORKSPACE</text>
+    <rect x="48" y="150" width="178" height="42" rx="8" fill="#24323f"/>
+    <circle cx="68" cy="171" r="5" fill="#2ed39a"/>
+    <text x="84" y="176" fill="#ffffff" font-size="12" font-weight="700">Overview</text>
+    <g fill="#91a0ad" font-size="12">
+      <text x="58" y="228">Incidents</text><text x="58" y="266">Services</text><text x="58" y="304">Deployments</text><text x="58" y="342">Runbooks</text>
+    </g>
+    <rect x="48" y="606" width="178" height="54" rx="10" fill="#19232d" stroke="#ffffff" stroke-opacity="0.08"/>
+    <circle cx="72" cy="633" r="13" fill="#5789ff"/>
+    <text x="72" y="638" fill="#ffffff" font-size="10" font-weight="800" text-anchor="middle">AM</text>
+    <text x="94" y="629" fill="#ffffff" font-size="11" font-weight="700">Alex Morgan</text>
+    <text x="94" y="646" fill="#718391" font-size="9">Operator</text>
+
+    <text x="278" y="74" fill="#68737c" font-size="10" font-weight="700" letter-spacing="1.3">SERVICE OPERATIONS / OVERVIEW</text>
+    <text x="278" y="130" fill="#182027" font-size="34" font-weight="800">What needs attention now?</text>
+    <text x="278" y="156" fill="#68737c" font-size="11">Updated 09:42 UTC · Fictional fixtures</text>
+    <rect x="952" y="103" width="176" height="42" rx="8" fill="#ffffff" stroke="#d9deda"/>
+    <text x="976" y="129" fill="#68737c" font-size="10" font-weight="700">24H</text>
+    <rect x="1017" y="109" width="48" height="30" rx="6" fill="#111820"/>
+    <text x="1041" y="129" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">7D</text>
+    <text x="1082" y="129" fill="#68737c" font-size="10" font-weight="700">30D</text>
+
+    <g transform="translate(278 188)">
+      <rect width="195" height="105" rx="12" fill="#ffffff" stroke="#d9deda"/>
+      <rect x="207" width="195" height="105" rx="12" fill="#ffffff" stroke="#d9deda"/>
+      <rect x="414" width="195" height="105" rx="12" fill="#ffffff" stroke="#d9deda"/>
+      <rect x="621" width="229" height="105" rx="12" fill="#111820"/>
+      <g fill="#68737c" font-size="9" font-weight="700" letter-spacing="1.2">
+        <text x="18" y="26">AVAILABILITY</text><text x="225" y="26">P95 LATENCY</text><text x="432" y="26">REQUEST RATE</text>
+      </g>
+      <text x="18" y="67" fill="#182027" font-size="28" font-weight="800">99.96%</text>
+      <text x="225" y="67" fill="#182027" font-size="28" font-weight="800">182 ms</text>
+      <text x="432" y="67" fill="#182027" font-size="28" font-weight="800">8.4k</text>
+      <circle cx="646" cy="29" r="6" fill="#ffb545"/>
+      <text x="664" y="33" fill="#ffcf77" font-size="9" font-weight="700" letter-spacing="1.2">NEEDS ATTENTION</text>
+      <text x="646" y="70" fill="#ffffff" font-size="23" font-weight="800">3 open</text>
+    </g>
+
+    <g transform="translate(278 312)">
+      <rect width="535" height="205" rx="12" fill="#ffffff" stroke="#d9deda"/>
+      <text x="18" y="30" fill="#182027" font-size="14" font-weight="800">Request volume by hour</text>
+      <text x="405" y="30" fill="#68737c" font-size="8" font-weight="700" letter-spacing="1.2">REQUESTS / MINUTE</text>
+      <path d="M24 168H511M24 124H511M24 80H511" stroke="#d9deda" stroke-dasharray="3 6"/>
+      <g fill="#5789ff">
+        <rect x="34" y="116" width="20" height="52" rx="3"/><rect x="70" y="104" width="20" height="64" rx="3"/><rect x="106" y="111" width="20" height="57" rx="3"/>
+        <rect x="142" y="86" width="20" height="82" rx="3"/><rect x="178" y="95" width="20" height="73" rx="3"/><rect x="214" y="101" width="20" height="67" rx="3"/>
+        <rect x="250" y="74" width="20" height="94" rx="3"/><rect x="286" y="91" width="20" height="77" rx="3" fill="#ffb545"/><rect x="322" y="65" width="20" height="103" rx="3"/>
+        <rect x="358" y="80" width="20" height="88" rx="3"/><rect x="394" y="69" width="20" height="99" rx="3"/><rect x="430" y="84" width="20" height="84" rx="3"/>
+        <rect x="466" y="76" width="20" height="92" rx="3"/>
+      </g>
+    </g>
+
+    <g transform="translate(829 312)">
+      <rect width="299" height="205" rx="12" fill="#ffffff" stroke="#d9deda"/>
+      <text x="18" y="30" fill="#182027" font-size="14" font-weight="800">Needs attention</text>
+      <text x="239" y="30" fill="#f06464" font-size="9" font-weight="700">3 OPEN</text>
+      <g font-size="10">
+        <circle cx="24" cy="67" r="5" fill="#f06464"/><text x="40" y="64" fill="#182027" font-weight="700">Checkout latency</text><text x="40" y="80" fill="#68737c">EU West · 12 min ago</text>
+        <circle cx="24" cy="115" r="5" fill="#ffb545"/><text x="40" y="112" fill="#182027" font-weight="700">Worker retries</text><text x="40" y="128" fill="#68737c">Image pipeline · Mina</text>
+        <circle cx="24" cy="163" r="5" fill="#ffb545"/><text x="40" y="160" fill="#182027" font-weight="700">Certificate renewal</text><text x="40" y="176" fill="#68737c">Edge routing · 6 days</text>
+      </g>
+    </g>
+
+    <g transform="translate(278 536)">
+      <rect width="850" height="126" rx="12" fill="#ffffff" stroke="#d9deda"/>
+      <text x="18" y="28" fill="#182027" font-size="14" font-weight="800">Service verification</text>
+      <path d="M18 45H832M18 83H832" stroke="#d9deda"/>
+      <g fill="#68737c" font-size="9" font-weight="700" letter-spacing="1">
+        <text x="18" y="67">SERVICE</text><text x="300" y="67">AVAILABILITY</text><text x="460" y="67">P95</text><text x="590" y="67">LAST DEPLOY</text><text x="760" y="67">STATE</text>
+      </g>
+      <circle cx="24" cy="103" r="4" fill="#2ed39a"/><text x="38" y="107" fill="#182027" font-size="11" font-weight="700">API gateway</text>
+      <text x="300" y="107" fill="#182027" font-size="11">99.99%</text><text x="460" y="107" fill="#182027" font-size="11">102 ms</text><text x="590" y="107" fill="#182027" font-size="11">2h ago</text>
+      <rect x="748" y="92" width="76" height="24" rx="12" fill="#d9f7ea"/><text x="786" y="108" fill="#167a57" font-size="9" font-weight="700" text-anchor="middle">HEALTHY</text>
+    </g>
+  </g>
+</svg>

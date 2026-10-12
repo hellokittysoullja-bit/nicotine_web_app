@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Paper Moon editorial-story preview</title>
+  <desc id="desc">An original vector preview of a fictional editorial archive with a paper moon, narrative headline, timeline, and observer cards.</desc>
+  <rect width="1200" height="720" rx="28" fill="#211b18"/>
+  <rect x="30" y="30" width="1140" height="660" rx="18" fill="#fbf7ee"/>
+  <path d="M30 48C30 38 38 30 48 30H1170V410H30Z" fill="#5b1824"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="70" y="82" fill="#d9a72e" font-size="10" font-weight="700" letter-spacing="2.4">PAPER MOON / OBSERVATORY ARCHIVE</text>
+    <text x="1028" y="82" fill="#e3c7c9" font-size="10" font-weight="700" letter-spacing="1.6">INDEX · LOG · VOICES</text>
+    <path d="M70 103H1130" stroke="#ffffff" stroke-opacity="0.2"/>
+
+    <text x="70" y="156" fill="#d9a72e" font-size="10" font-weight="700" letter-spacing="2">A FICTIONAL RECORD OF PATIENT LOOKING</text>
+    <text x="66" y="248" fill="#fbf7ee" font-size="82" font-family="Georgia, Times New Roman, serif">Paper</text>
+    <text x="66" y="326" fill="#d9a72e" font-size="82" font-family="Georgia, Times New Roman, serif" font-style="italic">Moon</text>
+    <text x="74" y="361" fill="#e3c7c9" font-size="14">Three observers mapped a moon they knew</text>
+    <text x="74" y="383" fill="#e3c7c9" font-size="14">was made of paper—and changed how a town looked.</text>
+
+    <g transform="translate(730 114)">
+      <circle cx="184" cy="132" r="112" fill="#f0e8d7"/>
+      <path d="M125 60C190 93 224 156 234 241" fill="none" stroke="#d9a72e" stroke-width="2"/>
+      <ellipse cx="184" cy="132" rx="158" ry="71" fill="none" stroke="#65a9c8" stroke-width="2" transform="rotate(-18 184 132)"/>
+      <circle cx="335" cy="84" r="8" fill="#65a9c8"/>
+      <rect x="245" y="210" width="190" height="83" fill="#2d0e15" stroke="#d9a72e"/>
+      <text x="261" y="233" fill="#d9a72e" font-size="8" font-weight="700" letter-spacing="1.5">OBSERVATION / 09</text>
+      <text x="261" y="258" fill="#fbf7ee" font-size="15" font-family="Georgia, Times New Roman, serif">The shadow moved.</text>
+      <text x="261" y="278" fill="#b89da0" font-size="9">Final fictional log · 03:17</text>
+    </g>
+
+    <rect x="70" y="430" width="220" height="42" fill="#5b1824"/>
+    <text x="180" y="456" fill="#fbf7ee" font-size="10" font-weight="700" letter-spacing="1.6" text-anchor="middle">01 / WHY IT MATTERS</text>
+    <text x="70" y="522" fill="#211b18" font-size="35" font-family="Georgia, Times New Roman, serif">A false moon taught</text>
+    <text x="70" y="563" fill="#211b18" font-size="35" font-family="Georgia, Times New Roman, serif">them how to look.</text>
+    <text x="72" y="601" fill="#6e625b" font-size="12">Editorial rhythm, source context, and a visual system</text>
+    <text x="72" y="620" fill="#6e625b" font-size="12">derived from the subject rather than a fixed template.</text>
+
+    <g transform="translate(550 446)">
+      <text x="0" y="18" fill="#5b1824" font-size="9" font-weight="700" letter-spacing="1.8">02 / OBSERVATION LOG</text>
+      <path d="M20 54H545" stroke="#5b1824" stroke-opacity="0.35"/>
+      <circle cx="74" cy="54" r="7" fill="#5b1824"/><circle cx="268" cy="54" r="7" fill="#d9a72e"/><circle cx="468" cy="54" r="7" fill="#65a9c8"/>
+      <g fill="#8a7d74" font-size="9" font-weight="700">
+        <text x="46" y="82">WINTER 01</text><text x="240" y="82">WINTER 05</text><text x="440" y="82">WINTER 09</text>
+      </g>
+      <g font-family="Georgia, Times New Roman, serif" fill="#211b18" font-size="14">
+        <text x="20" y="112">The first moon</text><text x="214" y="112">A shadow changes</text><text x="414" y="112">The town looks up</text>
+      </g>
+      <g transform="translate(0 142)">
+        <rect width="170" height="82" fill="#f0e8d7" stroke="#211b18" stroke-opacity="0.16"/>
+        <rect x="185" width="170" height="82" fill="#f0e8d7" stroke="#211b18" stroke-opacity="0.16"/>
+        <rect x="370" width="175" height="82" fill="#f0e8d7" stroke="#211b18" stroke-opacity="0.16"/>
+        <circle cx="28" cy="28" r="14" fill="#5b1824"/><text x="28" y="33" fill="#fbf7ee" font-size="10" font-weight="700" text-anchor="middle">EM</text>
+        <circle cx="213" cy="28" r="14" fill="#d9a72e"/><text x="213" y="33" fill="#211b18" font-size="10" font-weight="700" text-anchor="middle">RN</text>
+        <circle cx="398" cy="28" r="14" fill="#65a9c8"/><text x="398" y="33" fill="#211b18" font-size="10" font-weight="700" text-anchor="middle">AV</text>
+        <text x="50" y="26" fill="#5b1824" font-size="8" font-weight="700">OPTICS</text><text x="50" y="48" fill="#211b18" font-size="12" font-weight="700">Elia Moss</text>
+        <text x="235" y="26" fill="#5b1824" font-size="8" font-weight="700">SCENERY</text><text x="235" y="48" fill="#211b18" font-size="12" font-weight="700">Rin Neri</text>
+        <text x="420" y="26" fill="#5b1824" font-size="8" font-weight="700">WEATHER</text><text x="420" y="48" fill="#211b18" font-size="12" font-weight="700">Ada Vale</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+{
+  "siteType": "landing-page",
+  "renderMode": "static",
+  "accessMode": "public-anonymous",
+  "outputDir": ".",
+  "basePath": "",
+  "routes": [
+    {
+      "path": "/",
+      "file": "index.html",
+      "requiredText": ["Talk less. Move more.", "fictional Website Studio example"],
+      "expectedAnonymousStatuses": [200]
+    }
+  ],
+  "requiredFiles": ["index.html"],
+  "criticalAssets": [],
+  "forbiddenText": ["Lorem ipsum", "TODO", "REPLACE_ME"],
+  "browserViewports": [
+    { "width": 1440, "height": 900 },
+    { "width": 768, "height": 900 },
+    { "width": 390, "height": 844 },
+    { "width": 320, "height": 568 }
+  ],
+  "criticalFlows": [
+    { "name": "mobile-navigation", "states": ["closed", "open", "escape-closed"] },
+    { "name": "primary-call-to-action", "states": ["idle", "focus", "activated"] }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "website-studio-skill",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Portable Agent Skill for complete website design, implementation, QA, and hosting handoff",
+  "scripts": {
+    "validate": "node scripts/validate-package.mjs",
+    "test": "npm run validate && node --test tests/*.test.mjs",
+    "package:release": "node scripts/package-release.mjs"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Do-fei/website-studio-skill.git"
+  },
+  "homepage": "https://github.com/Do-fei/website-studio-skill#readme",
+  "bugs": {
+    "url": "https://github.com/Do-fei/website-studio-skill/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Website Studio icon</title>
+  <rect width="64" height="64" rx="14" fill="#2E49FF"/>
+  <path d="M14 18h36v28H14z" fill="#FFF8E9"/>
+  <path d="M14 18h36v7H14z" fill="#11131A"/>
+  <circle cx="19" cy="21.5" r="1.5" fill="#B9F542"/>
+  <circle cx="24" cy="21.5" r="1.5" fill="#FF6A3D"/>
+  <path d="m21 38 7-8 5 5 4-4 7 8H21Z" fill="#2E49FF"/>
+  <path d="M21 42h22" stroke="#11131A" stroke-width="2.5"/>
+</svg>

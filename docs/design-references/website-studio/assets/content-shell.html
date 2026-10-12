@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="[What this collection helps the reader understand or find]">
+    <title>[Collection] — [Current page]</title>
+    <link rel="stylesheet" href="semantic-tokens.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#article">Skip to article</a>
+    <header class="page-shell">
+      <a href="/">[Collection]</a>
+      <form role="search"><label for="site-search">Search</label><input id="site-search" name="q" type="search"></form>
+      <nav aria-label="Primary navigation"><a href="[section]">[Section]</a><a href="[section]">[Section]</a></nav>
+    </header>
+
+    <div class="page-shell">
+      <aside aria-label="Section navigation">
+        <nav><a href="[topic]" aria-current="page">[Current topic]</a><a href="[topic]">[Related topic]</a></nav>
+      </aside>
+
+      <main id="article">
+        <nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="[section]">[Section]</a> / <span>[Page]</span></nav>
+        <article>
+          <header><p>[Category · freshness · status]</p><h1>[Specific article or story title]</h1><p>[Useful summary.]</p></header>
+          <section aria-labelledby="section-one"><h2 id="section-one">[Section heading]</h2><p class="reading-copy">[Evidence-based or source-grounded content.]</p></section>
+          <section aria-labelledby="section-two"><h2 id="section-two">[Section heading]</h2><p class="reading-copy">[More content with meaningful links and media.]</p></section>
+        </article>
+      </main>
+
+      <aside aria-label="On this page"><nav><a href="#section-one">[Section one]</a><a href="#section-two">[Section two]</a></nav></aside>
+    </div>
+
+    <footer class="page-shell"><p>[Source, ownership, contact, update, and rights information.]</p></footer>
+  </body>
+</html>

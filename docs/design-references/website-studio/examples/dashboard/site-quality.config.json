@@ -1,0 +1,29 @@
+{
+  "siteType": "dashboard",
+  "renderMode": "static",
+  "accessMode": "public-anonymous",
+  "outputDir": ".",
+  "basePath": "",
+  "routes": [
+    {
+      "path": "/",
+      "file": "index.html",
+      "requiredText": ["What needs attention now?", "fictional demonstration data"],
+      "expectedAnonymousStatuses": [200]
+    }
+  ],
+  "requiredFiles": ["index.html"],
+  "criticalAssets": [],
+  "forbiddenText": ["Lorem ipsum", "TODO", "REPLACE_ME", "live production data"],
+  "browserViewports": [
+    { "width": 1440, "height": 900 },
+    { "width": 768, "height": 900 },
+    { "width": 390, "height": 844 },
+    { "width": 320, "height": 568 }
+  ],
+  "criticalFlows": [
+    { "name": "time-range-filter", "states": ["24h-selected", "7d-selected", "30d-selected"] },
+    { "name": "mobile-navigation", "states": ["closed", "open", "escape-closed"] },
+    { "name": "data-state", "states": ["success", "loading", "empty", "error", "stale"] }
+  ]
+}

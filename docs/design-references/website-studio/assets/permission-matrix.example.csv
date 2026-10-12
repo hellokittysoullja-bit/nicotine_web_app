@@ -1,0 +1,5 @@
+role,route_or_object,read,create,update,transition,delete,notes
+viewer,public content,yes,no,no,no,no,anonymous or read-only role
+member,owned record,yes,yes,yes,allowed transitions,archive only,server-enforced ownership
+manager,team record,yes,yes,yes,approval transitions,archive only,audit every high-impact change
+administrator,configuration,yes,limited,yes,no,restricted,never infer from hidden controls

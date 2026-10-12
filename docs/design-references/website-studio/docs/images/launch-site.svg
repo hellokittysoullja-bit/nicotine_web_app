@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Relay launch-site preview</title>
+  <desc id="desc">An original vector preview of a fictional landing page with a strong headline, calls to action, and workflow cards.</desc>
+  <rect width="1200" height="720" rx="28" fill="#111827"/>
+  <rect x="30" y="30" width="1140" height="660" rx="18" fill="#f4f0e6"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <circle cx="62" cy="58" r="5" fill="#ff6d52"/><circle cx="80" cy="58" r="5" fill="#f7c948"/><circle cx="98" cy="58" r="5" fill="#72c989"/>
+    <text x="70" y="113" fill="#121212" font-size="20" font-weight="800" letter-spacing="2">RELAY</text>
+    <g fill="#5c5c59" font-size="11" font-weight="700" letter-spacing="1.2">
+      <text x="720" y="110">WHY RELAY</text><text x="830" y="110">WORKFLOW</text><text x="935" y="110">PRINCIPLES</text>
+    </g>
+    <rect x="1045" y="87" width="88" height="36" rx="18" fill="#121212"/>
+    <text x="1089" y="110" fill="#f4f0e6" font-size="10" font-weight="700" text-anchor="middle">TRY DEMO</text>
+    <path d="M70 137H1130" stroke="#121212" stroke-opacity="0.16"/>
+
+    <text x="70" y="192" fill="#2454ff" font-size="11" font-weight="700" letter-spacing="2">FEWER MEETINGS. CLEARER MOVEMENT.</text>
+    <text x="70" y="277" fill="#121212" font-size="72" font-weight="800" letter-spacing="-3">Talk less.</text>
+    <text x="70" y="347" fill="#121212" font-size="72" font-weight="800" letter-spacing="-3">Move more.</text>
+    <text x="74" y="391" fill="#55554f" font-size="16">Every meeting becomes a visible decision,</text>
+    <text x="74" y="416" fill="#55554f" font-size="16">a named owner, and the next piece of work.</text>
+    <rect x="70" y="450" width="152" height="48" rx="4" fill="#2454ff"/>
+    <text x="146" y="480" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">TRY THE DEMO</text>
+    <rect x="234" y="450" width="144" height="48" rx="4" fill="none" stroke="#121212"/>
+    <text x="306" y="480" fill="#121212" font-size="11" font-weight="700" text-anchor="middle">SEE WORKFLOW</text>
+
+    <g transform="translate(640 165)">
+      <rect width="470" height="320" rx="18" fill="#2454ff"/>
+      <circle cx="235" cy="160" r="90" fill="none" stroke="#c9ff4a" stroke-width="2"/>
+      <circle cx="235" cy="160" r="52" fill="#121212"/>
+      <text x="235" y="176" fill="#f4f0e6" font-size="46" font-weight="800" text-anchor="middle">R</text>
+      <circle cx="324" cy="159" r="10" fill="#c9ff4a"/>
+      <rect x="28" y="34" width="182" height="76" rx="8" fill="#f4f0e6"/>
+      <text x="44" y="58" fill="#2454ff" font-size="9" font-weight="700" letter-spacing="1.4">DECISION / 09:42</text>
+      <text x="44" y="86" fill="#121212" font-size="14" font-weight="700">Ship the smaller scope.</text>
+      <rect x="262" y="222" width="180" height="66" rx="8" fill="#c9ff4a"/>
+      <text x="278" y="245" fill="#2454ff" font-size="9" font-weight="700" letter-spacing="1.4">OWNER / TODAY</text>
+      <text x="278" y="270" fill="#121212" font-size="14" font-weight="700">Mina moves it forward.</text>
+    </g>
+
+    <text x="70" y="566" fill="#121212" font-size="26" font-weight="800">Meetings become momentum.</text>
+    <g transform="translate(70 592)">
+      <rect width="332" height="70" fill="#ffffff" stroke="#121212" stroke-opacity="0.16"/>
+      <rect x="346" width="332" height="70" fill="#ffffff" stroke="#121212" stroke-opacity="0.16"/>
+      <rect x="692" width="368" height="70" fill="#ffffff" stroke="#121212" stroke-opacity="0.16"/>
+      <text x="18" y="26" fill="#2454ff" font-size="9" font-weight="700">01 / DECISIONS</text>
+      <text x="18" y="50" fill="#121212" font-size="15" font-weight="700">Stay visible</text>
+      <text x="364" y="26" fill="#2454ff" font-size="9" font-weight="700">02 / OWNERS</text>
+      <text x="364" y="50" fill="#121212" font-size="15" font-weight="700">Move with a person</text>
+      <text x="710" y="26" fill="#2454ff" font-size="9" font-weight="700">03 / PROGRESS</text>
+      <text x="710" y="50" fill="#121212" font-size="15" font-weight="700">Close the loop</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 256" role="img" aria-labelledby="title desc">
+  <title id="title">Website Studio</title>
+  <desc id="desc">A browser canvas surrounded by design and verification marks.</desc>
+  <rect width="512" height="256" rx="40" fill="#11131A"/>
+  <rect x="72" y="48" width="368" height="160" rx="16" fill="#FFF8E9"/>
+  <path d="M72 64c0-8.837 7.163-16 16-16h336c8.837 0 16 7.163 16 16v24H72V64Z" fill="#2E49FF"/>
+  <circle cx="96" cy="68" r="6" fill="#B9F542"/>
+  <circle cx="116" cy="68" r="6" fill="#FF6A3D"/>
+  <path d="M108 128h132v16H108zM108 158h96v10h-96z" fill="#11131A"/>
+  <path d="m286 169 32-45 24 25 18-19 44 58H286Z" fill="#2E49FF"/>
+  <circle cx="370" cy="116" r="12" fill="#B9F542"/>
+  <path d="m408 36 10 18 21 4-15 15 3 21-19-9-19 9 3-21-15-15 21-4 10-18Z" fill="#FF6A3D"/>
+  <path d="m48 183 12 12 26-28" fill="none" stroke="#B9F542" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

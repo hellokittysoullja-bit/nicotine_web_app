@@ -1,0 +1,18 @@
+{
+  "project": "replace-with-project-name",
+  "releaseMode": "public",
+  "assets": [
+    {
+      "id": "approved-original-hero",
+      "path": "public/media/hero.webp",
+      "type": "image",
+      "sourceUrl": null,
+      "rightsHolder": "Project team",
+      "licenseOrPermission": "Original work created for this project",
+      "attribution": "",
+      "usageScope": "Public website, repository, and social preview",
+      "status": "original",
+      "removalContact": "project-maintainer@example.com"
+    }
+  ]
+}

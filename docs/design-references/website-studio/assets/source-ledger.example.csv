@@ -1,0 +1,3 @@
+source_id,claim_or_dataset_id,source_type,title,publisher_or_creator,source_url,accessed_on,last_verified,verification_status,notes
+source-001,claim-example,primary,Example first-party page,Example publisher,https://example.com/source,YYYY-MM-DD,YYYY-MM-DD,verified,"Replace every fictional value before publishing."
+source-002,dataset-example,api,Example API documentation,Example provider,https://example.org/api-docs,YYYY-MM-DD,YYYY-MM-DD,provisional,"Record whether displayed data is live, cached, delayed, or fixture data."

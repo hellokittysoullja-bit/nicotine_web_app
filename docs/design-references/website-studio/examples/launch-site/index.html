@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A fictional product launch page demonstrating the Website Studio landing-page recipe.">
+    <meta name="theme-color" content="#f4f0e6">
+    <title>Relay — Make every meeting move work forward</title>
+    <style>
+      :root { --ink:#121212; --paper:#f4f0e6; --blue:#2454ff; --lime:#c9ff4a; --coral:#ff6d52; --line:rgba(18,18,18,.18); --sans:Arial,Helvetica,sans-serif; --serif:Georgia,serif; }
+      * { box-sizing:border-box; }
+      html { scroll-behavior:smooth; }
+      body { min-width:320px; margin:0; overflow-x:clip; color:var(--ink); background:var(--paper); font-family:var(--sans); }
+      a { color:inherit; text-decoration:none; }
+      button { color:inherit; font:inherit; }
+      :focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+      .skip { position:fixed; z-index:100; top:-5rem; left:1rem; padding:.8rem 1rem; color:white; background:var(--blue); }
+      .skip:focus { top:1rem; }
+      .header { position:absolute; z-index:10; top:0; display:grid; grid-template-columns:1fr auto auto; gap:2rem; align-items:center; width:100%; min-height:76px; padding:0 clamp(1.2rem,4vw,4.5rem); border-bottom:1px solid var(--line); }
+      .brand { font-weight:900; font-size:1.3rem; letter-spacing:-.06em; }
+      .brand i { display:inline-block; width:.7rem; height:.7rem; margin-left:.15rem; border-radius:50%; background:var(--coral); }
+      .header nav { display:flex; gap:1.6rem; font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+      .header-cta, .button { display:inline-flex; min-height:46px; align-items:center; justify-content:center; padding:.75rem 1rem; border:1px solid var(--ink); font-size:.76rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+      .header-cta { color:white; background:var(--ink); }
+      .menu { display:none; border:0; border-bottom:1px solid var(--ink); background:transparent; font-size:.75rem; font-weight:800; text-transform:uppercase; }
+      .hero { display:grid; min-height:100svh; grid-template-columns:1.08fr .92fr; padding-top:76px; border-bottom:1px solid var(--ink); }
+      .hero-copy { display:flex; flex-direction:column; justify-content:center; padding:clamp(5rem,9vw,9rem) clamp(1.2rem,7vw,7rem); border-right:1px solid var(--ink); }
+      .eyebrow { display:flex; align-items:center; gap:.65rem; margin:0 0 1.4rem; font-size:.65rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+      .eyebrow::before { width:2rem; height:2px; content:""; background:var(--blue); }
+      h1 { max-width:8ch; margin:0; font-size:clamp(4.2rem,10vw,10.5rem); line-height:.78; letter-spacing:-.085em; text-transform:uppercase; }
+      .hero-lead { max-width:41rem; margin:2rem 0; font:clamp(1.05rem,1.6vw,1.35rem)/1.65 var(--serif); }
+      .actions { display:flex; flex-wrap:wrap; gap:.75rem; }
+      .button.primary { color:white; border-color:var(--blue); background:var(--blue); }
+      .button.secondary { background:transparent; }
+      .hero-visual { position:relative; display:grid; min-height:600px; place-items:center; overflow:hidden; background:var(--blue); }
+      .orbit { position:relative; display:grid; width:min(72%,520px); aspect-ratio:1; place-items:center; border:2px solid white; border-radius:50%; }
+      .orbit::before, .orbit::after { position:absolute; content:""; border:1px solid rgba(255,255,255,.55); border-radius:50%; }
+      .orbit::before { inset:12%; }
+      .orbit::after { inset:28%; }
+      .orbit strong { z-index:1; color:white; font-size:clamp(5rem,12vw,10rem); letter-spacing:-.12em; }
+      .note { position:absolute; display:grid; min-width:170px; gap:.35rem; padding:1rem; border:1px solid var(--ink); background:var(--lime); box-shadow:8px 8px 0 var(--ink); transform:rotate(-4deg); }
+      .note.one { top:18%; left:6%; }
+      .note.two { right:7%; bottom:13%; background:var(--coral); transform:rotate(5deg); }
+      .note small { font-size:.58rem; font-weight:800; letter-spacing:.12em; }
+      .note span { font:1.1rem/1.25 var(--serif); }
+      .proof { display:grid; grid-template-columns:auto 1fr; gap:2rem; align-items:center; padding:1.2rem clamp(1.2rem,5vw,5rem); color:white; background:var(--ink); }
+      .proof > span { color:var(--lime); font-size:.62rem; font-weight:800; letter-spacing:.14em; }
+      .proof-list { display:flex; justify-content:space-around; gap:2rem; color:rgba(255,255,255,.72); font:italic .95rem var(--serif); }
+      .section { padding:clamp(5rem,9vw,9rem) clamp(1.2rem,7vw,7rem); }
+      .section-head { display:grid; grid-template-columns:.7fr 1.3fr; gap:4vw; margin-bottom:4rem; }
+      .section-head h2 { max-width:12ch; margin:0; font-size:clamp(3rem,6vw,6.5rem); line-height:.9; letter-spacing:-.065em; }
+      .section-head p { max-width:43rem; margin:0; align-self:end; font:1.05rem/1.75 var(--serif); }
+      .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--ink); border-left:1px solid var(--ink); }
+      .feature-grid article { min-height:310px; padding:1.3rem; border-right:1px solid var(--ink); border-bottom:1px solid var(--ink); }
+      .feature-grid span { font-size:3rem; font-weight:900; letter-spacing:-.07em; }
+      .feature-grid h3 { margin:5rem 0 .8rem; font-size:1.5rem; }
+      .feature-grid p { margin:0; font: .95rem/1.7 var(--serif); }
+      .workflow { color:white; background:var(--blue); }
+      .workflow .section-head p { color:rgba(255,255,255,.76); }
+      .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; counter-reset:step; }
+      .steps article { position:relative; min-height:340px; padding:1.3rem; overflow:hidden; color:var(--ink); background:var(--paper); counter-increment:step; }
+      .steps article::before { content:"0" counter(step); color:var(--blue); font-size:5.5rem; font-weight:900; letter-spacing:-.1em; }
+      .steps h3 { margin:5rem 0 .7rem; font-size:1.7rem; }
+      .steps p { font: .95rem/1.7 var(--serif); }
+      .quote { display:grid; grid-template-columns:1fr auto; gap:3rem; align-items:end; padding:clamp(5rem,9vw,9rem) clamp(1.2rem,7vw,7rem); background:var(--lime); }
+      blockquote { margin:0; }
+      blockquote p { max-width:16ch; margin:0 0 1.5rem; font:clamp(2.2rem,5vw,5rem)/1.05 var(--serif); letter-spacing:-.04em; }
+      blockquote cite { font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
+      .quote-badge { display:grid; width:160px; aspect-ratio:1; place-items:center; border:1px solid var(--ink); border-radius:50%; font-size:.68rem; font-weight:800; text-align:center; }
+      .final { display:grid; grid-template-columns:1fr auto; gap:3rem; align-items:end; color:white; background:var(--ink); }
+      .final h2 { max-width:10ch; margin:0; font-size:clamp(3.2rem,7vw,7.5rem); line-height:.85; letter-spacing:-.07em; }
+      .final .button { color:var(--ink); border-color:var(--lime); background:var(--lime); }
+      footer { display:flex; justify-content:space-between; gap:2rem; padding:2rem clamp(1.2rem,7vw,7rem); color:rgba(255,255,255,.55); background:var(--ink); border-top:1px solid rgba(255,255,255,.18); font-size:.7rem; }
+      @media(max-width:900px){ .header{grid-template-columns:1fr auto}.header nav,.header-cta{display:none}.menu{display:block}.header nav[data-open="true"]{position:absolute;top:76px;right:0;left:0;display:grid;gap:0;background:var(--paper)}.header nav a{padding:1.2rem;border-bottom:1px solid var(--line)}.hero{grid-template-columns:1fr}.hero-copy{border-right:0;border-bottom:1px solid var(--ink)}.hero-visual{min-height:720px}.section-head{grid-template-columns:1fr}.feature-grid,.steps{grid-template-columns:1fr}.feature-grid article{min-height:240px}.feature-grid h3{margin-top:3rem}.steps article{min-height:280px}.quote,.final{grid-template-columns:1fr}.quote-badge{width:120px}.final .button{justify-self:start}.proof-list{justify-content:flex-start;overflow:auto} }
+      @media(max-width:560px){ .header{min-height:68px;padding:0 1rem}.header nav[data-open="true"]{top:68px}.hero{padding-top:68px}.hero-copy{padding:5rem 1.1rem}.hero h1{font-size:clamp(3.7rem,21vw,6rem)}.hero-visual{min-height:500px}.note{min-width:145px}.note.one{top:8%;left:4%}.proof{grid-template-columns:1fr}.section,.quote{padding:5rem 1.1rem}.section-head h2{font-size:clamp(2.8rem,15vw,4.5rem)}.final{padding:5rem 1.1rem}.actions .button{width:100%}footer{flex-direction:column;padding:2rem 1.1rem} }
+      @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+    </style>
+    <script>
+      addEventListener("DOMContentLoaded",()=>{const b=document.querySelector(".menu"),n=document.querySelector("#nav");const close=()=>{b.setAttribute("aria-expanded","false");n.dataset.open="false";b.textContent="Menu"};b.addEventListener("click",()=>{const open=b.getAttribute("aria-expanded")!=="true";b.setAttribute("aria-expanded",String(open));n.dataset.open=String(open);b.textContent=open?"Close":"Menu"});n.addEventListener("click",e=>{if(e.target.closest("a"))close()});addEventListener("keydown",e=>{if(e.key==="Escape"&&b.getAttribute("aria-expanded")==="true"){close();b.focus()}})});
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to main content</a>
+    <header class="header"><a class="brand" href="#top">relay<i></i></a><nav id="nav" aria-label="Primary navigation"><a href="#value">Why Relay</a><a href="#workflow">How it works</a><a href="#proof">Stories</a></nav><a class="header-cta" href="#start">Start a relay</a><button class="menu" type="button" aria-expanded="false" aria-controls="nav">Menu</button></header>
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title"><div class="hero-copy"><p class="eyebrow">Fewer meetings. Clearer movement.</p><h1 id="hero-title">Talk less. Move more.</h1><p class="hero-lead">Relay turns every meeting into a visible decision, a named owner, and the next piece of work—before anyone forgets why they met.</p><div class="actions"><a class="button primary" href="#start">Try the fictional demo</a><a class="button secondary" href="#workflow">See the workflow</a></div></div><div class="hero-visual" aria-label="Abstract relay workflow diagram"><div class="orbit"><strong>R</strong></div><div class="note one"><small>DECISION / 09:42</small><span>Ship the smaller scope.</span></div><div class="note two"><small>OWNER / TODAY</small><span>Mina moves it forward.</span></div></div></section>
+      <div class="proof"><span>FICTIONAL TEAMS MOVING WITH RELAY</span><div class="proof-list"><span>Northline Studio</span><span>Fieldwork Co.</span><span>Patch &amp; Signal</span></div></div>
+      <section class="section" id="value" aria-labelledby="value-title"><header class="section-head"><h2 id="value-title">Meetings become momentum.</h2><p>Relay is built around the real job after a conversation: preserve the decision, make ownership explicit, and show whether the work actually moved.</p></header><div class="feature-grid"><article><span>01</span><h3>Decisions stay visible</h3><p>A one-line decision record replaces the archaeology of old notes and message threads.</p></article><article><span>02</span><h3>Every next step has a person</h3><p>Owners and due moments are part of the same record—not an optional follow-up.</p></article><article><span>03</span><h3>Progress answers back</h3><p>Each relay closes with evidence: finished, changed, blocked, or consciously dropped.</p></article></div></section>
+      <section class="section workflow" id="workflow" aria-labelledby="workflow-title"><header class="section-head"><h2 id="workflow-title">Three moves. No meeting theatre.</h2><p>Capture only what changes the work. Relay stays deliberately smaller than a project manager and more accountable than shared notes.</p></header><div class="steps"><article><h3>Mark the decision</h3><p>Write the choice in one sentence while everyone still agrees on what happened.</p></article><article><h3>Name the next move</h3><p>Assign one owner, one visible outcome, and the moment the team should look again.</p></article><article><h3>Close the loop</h3><p>Return with proof, a changed decision, or an honest blocker. The history remains readable.</p></article></div></section>
+      <section class="quote" id="proof" aria-labelledby="quote-title"><blockquote><p id="quote-title">“For the first time, our notes tell us what happened next.”</p><cite>Fictional research participant · Product operations</cite></blockquote><div class="quote-badge">ORIGINAL<br>DEMO COPY<br>01 / 01</div></section>
+      <section class="section final" id="start" aria-labelledby="start-title"><h2 id="start-title">Make the next conversation count.</h2><a class="button" href="#top">Restart the demo</a></section>
+    </main>
+    <footer><span>Relay is a fictional Website Studio example.</span><span>No tracking · no external assets · no real claims</span></footer>
+  </body>
+</html>

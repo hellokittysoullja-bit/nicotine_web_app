@@ -1,0 +1,79 @@
+{
+  "project": "replace-with-project-name",
+  "path": "simple",
+  "adapter": "static",
+  "capabilities": {
+    "scaffold": {
+      "required": true,
+      "available": true,
+      "provider": "existing-project-or-adapter",
+      "fallback": null,
+      "needsUserChoice": false,
+      "verification": "project opens without overwriting existing files"
+    },
+    "dev": {
+      "required": true,
+      "available": true,
+      "provider": "existing-project-or-adapter",
+      "fallback": "serve static output",
+      "needsUserChoice": false,
+      "verification": "healthy local URL"
+    },
+    "build": {
+      "required": true,
+      "available": true,
+      "provider": "existing-project-or-adapter",
+      "fallback": null,
+      "needsUserChoice": false,
+      "verification": "production build exits successfully"
+    },
+    "preview": {
+      "required": true,
+      "available": false,
+      "provider": null,
+      "fallback": "manual screenshots and checklist",
+      "needsUserChoice": false,
+      "verification": "state clearly reports visual QA incomplete when unavailable"
+    },
+    "deploy": {
+      "required": false,
+      "available": false,
+      "provider": null,
+      "fallback": "deployment-ready artifact and target instructions",
+      "needsUserChoice": true,
+      "verification": "real URL or explicit not-deployed handoff"
+    },
+    "structuredData": {
+      "required": false,
+      "available": false,
+      "provider": null,
+      "fallback": "fixture data labelled as demo only",
+      "needsUserChoice": false,
+      "verification": "no durable-data claims"
+    },
+    "blobStorage": {
+      "required": false,
+      "available": false,
+      "provider": null,
+      "fallback": null,
+      "needsUserChoice": false,
+      "verification": "no upload flow"
+    },
+    "identity": {
+      "required": false,
+      "available": false,
+      "provider": null,
+      "fallback": null,
+      "needsUserChoice": false,
+      "verification": "public anonymous access"
+    },
+    "connectors": {
+      "required": false,
+      "available": false,
+      "provider": null,
+      "fallback": "CSV or JSON import/export",
+      "needsUserChoice": false,
+      "verification": "fixture data is not presented as live"
+    }
+  }
+}

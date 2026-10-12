@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="[Task-specific application description]">
+    <title>[Workspace] — [Current task]</title>
+    <link rel="stylesheet" href="semantic-tokens.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to workspace</a>
+    <header>
+      <a href="/">[Product]</a>
+      <button type="button" aria-expanded="false" aria-controls="app-nav">Menu</button>
+      <nav id="app-nav" aria-label="Workspace navigation"><a href="[route]" aria-current="page">[Current task]</a><a href="[route]">[Other task]</a></nav>
+      <button type="button" aria-haspopup="menu">[Account]</button>
+    </header>
+
+    <main id="workspace" class="page-shell">
+      <header>
+        <div><p>[Workspace · freshness · access]</p><h1>[Current task, not generic dashboard]</h1></div>
+        <button type="button">[Primary task]</button>
+      </header>
+
+      <section aria-labelledby="summary-title">
+        <h2 id="summary-title">Current status</h2>
+        <dl><div><dt>[Metric]</dt><dd>[Value and unit]</dd></div><div><dt>[Metric]</dt><dd>[Value and unit]</dd></div></dl>
+      </section>
+
+      <section aria-labelledby="records-title">
+        <header><h2 id="records-title">[Records or events]</h2><form><label for="filter">Filter</label><select id="filter"><option>All</option></select></form></header>
+        <div role="status" aria-live="polite">[Loading, filtered, saved, or error state when active]</div>
+        <table>
+          <thead><tr><th scope="col">[Identity]</th><th scope="col">[State]</th><th scope="col">[Owner]</th><th scope="col">[Action]</th></tr></thead>
+          <tbody><tr><th scope="row"><a href="[record]">[Record]</a></th><td>[State]</td><td>[Owner]</td><td><button type="button">[Valid action]</button></td></tr></tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

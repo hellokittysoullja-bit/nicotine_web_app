@@ -1,0 +1,558 @@
+<title>Breakup с Ником</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: слева короткая легенда прототипа, справа телефон; на узком экране — только телефон во всю ширину. Тёмный мир мессенджера, один горячий акцент. */
+:root{
+  --bg:#0d0a0f;
+  --surface:#17121b;
+  --surface-2:#221a28;
+  --line:#33283b;
+  --fg:#f4eef6;
+  --muted:#a497ac;
+  --accent:#ff3d7f;
+  --accent-soft:rgba(255,61,127,.16);
+  --nick:#2b2133;
+  --ok:#5fd3a6;
+  --warn:#ffc15e;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45;padding-inline:16px;padding-block:24px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:48px;align-items:start}
+.legend{padding-top:28px;min-width:0}
+.legend h1{font-family:var(--f-display);font-weight:700;font-size:40px;line-height:1.05;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+.legend h1 em{font-style:normal;color:var(--accent)}
+.legend p{color:var(--muted);max-width:44ch;margin:0 0 22px}
+.jump{display:grid;gap:6px;max-width:340px}
+.jump button{display:flex;justify-content:space-between;align-items:center;gap:12px;background:none;border:1px solid var(--line);border-radius:12px;padding:11px 14px;text-align:left}
+.jump button span:last-child{color:var(--muted);font-size:13px}
+.jump button[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.legend .note{font-size:12.5px;margin-top:22px}
+
+/* телефон */
+.phone{position:relative;width:100%;max-width:390px;height:800px;max-height:calc(100vh - 48px);min-height:640px;background:var(--bg);border:1px solid var(--line);border-radius:46px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.status{display:flex;justify-content:space-between;padding:14px 28px 6px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 18px 18px;display:none}
+.screen.on{display:block}
+.screen.chat{display:none;padding:0}
+.screen.chat.on{display:flex;flex-direction:column}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--surface);padding:8px 6px 14px}
+.tabs button{background:none;border:0;padding:6px 0;font-size:11.5px;color:var(--muted);display:grid;justify-items:center;gap:3px}
+.tabs button svg{width:22px;height:22px}
+.tabs button[aria-current="true"]{color:var(--fg)}
+.tabs button[aria-current="true"] svg{color:var(--accent)}
+.tabs .dot{position:relative}
+.tabs .dot::after{content:"";position:absolute;top:-1px;right:-3px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+/* общие элементы */
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+.h-big{font-family:var(--f-display);font-weight:700;font-size:44px;line-height:1;letter-spacing:-.03em;margin:4px 0 6px}
+.h-big small{font-size:16px;color:var(--muted);font-family:var(--f-body);font-weight:500;letter-spacing:0;margin-left:6px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px}
+.stack{display:grid;gap:10px}
+.row{display:flex;gap:10px;align-items:center}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg button{background:none;border:0;border-radius:9px;padding:7px 0;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface-2);color:var(--fg)}
+.btn{display:block;width:100%;border:0;border-radius:16px;padding:15px;font-weight:600;font-size:16px;background:var(--accent);color:#1a0610}
+.btn.ghost{background:var(--surface-2);color:var(--fg)}
+.bar{height:8px;border-radius:8px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 12px;font-size:13px}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.pill{display:inline-block;font-size:11.5px;border-radius:999px;padding:3px 9px;background:var(--surface-2);color:var(--muted)}
+.pill.risk{background:rgba(255,193,94,.15);color:var(--warn)}
+.pill.ok{background:rgba(95,211,166,.14);color:var(--ok)}
+.days{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;margin-top:10px}
+.days i{aspect-ratio:1;border-radius:4px;background:var(--accent)}
+.days i.slip{background:var(--surface-2);outline:1px dashed var(--muted);outline-offset:-1px}
+.days i.future{background:var(--surface-2)}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.kv:first-child{border-top:0}
+.kv b{font-variant-numeric:tabular-nums;font-weight:600}
+
+/* шеринг-карточка */
+.overlay{position:absolute;inset:0;background:rgba(8,5,10,.82);display:grid;place-items:center;padding:24px;z-index:5}
+.share{width:100%;border-radius:24px;padding:26px 22px;background:linear-gradient(160deg,#2a1020 0%,#120c16 60%);border:1px solid var(--line)}
+.share .torn{font-family:var(--f-display);font-size:26px;line-height:1.1;font-weight:700;letter-spacing:-.02em}
+.share .torn em{font-style:normal;color:var(--accent)}
+
+/* чат */
+.chat-head{display:flex;align-items:center;gap:12px;padding:6px 18px 12px;border-bottom:1px solid var(--line)}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--nick);display:grid;place-items:center;flex:none}
+.chat-head .who{font-weight:600}
+.chat-head .who small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.chat-body{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:6px}
+.msg{max-width:80%;padding:9px 13px;border-radius:19px;font-size:15px;animation:pop .22s ease-out}
+.msg.nick{align-self:flex-start;background:var(--nick);border-bottom-left-radius:6px}
+.msg.me{align-self:flex-end;background:var(--accent);color:#1a0610;border-bottom-right-radius:6px}
+.msg.sys{align-self:center;max-width:92%;background:none;border:1px solid var(--line);color:var(--muted);font-size:12.5px;text-align:center;border-radius:12px}
+.msg time{display:block;font-family:var(--f-mono);font-size:10px;opacity:.6;margin-top:2px}
+.typing{align-self:flex-start;background:var(--nick);border-radius:19px;padding:12px 14px;display:flex;gap:4px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.replies{padding:10px 14px 14px;display:grid;gap:6px;border-top:1px solid var(--line)}
+.replies .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.replies button{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px;text-align:left;font-size:14px}
+.replies button b{color:var(--accent);font-weight:600}
+@keyframes pop{from{transform:translateY(6px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* волна */
+.wave-box{position:relative;height:300px;border-radius:24px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.wave-box svg{position:absolute;inset:0;width:100%;height:100%}
+.wave-text{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:20px;pointer-events:none}
+.wave-text .t{font-family:var(--f-mono);font-size:44px;font-variant-numeric:tabular-nums}
+.wave-text .p{font-size:15px;max-width:26ch;margin:6px auto 0;text-wrap:balance}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.scale{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+
+/* мозг */
+.brain-box{border-radius:24px;background:var(--surface);border:1px solid var(--line);padding:10px 10px 14px}
+.brain-box canvas{width:100%;height:220px;display:block}
+.legend-dots{display:flex;gap:14px;font-size:12px;color:var(--muted);padding:0 6px}
+.legend-dots i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.tl{display:grid;gap:0}
+.tl div{display:grid;grid-template-columns:86px 1fr;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.tl div:first-child{border-top:0}
+.tl div span:first-child{font-family:var(--f-mono);font-size:12px;color:var(--accent);padding-top:2px}
+.src{font-size:11.5px;color:var(--muted);margin-top:10px}
+
+/* оплата */
+.plan-li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:14.5px;padding:5px 0}
+.plan-li svg{color:var(--accent);margin-top:2px}
+.opt{display:block;width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;position:relative}
+.opt[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.opt .name{font-weight:600}
+.opt .price{font-weight:700;font-variant-numeric:tabular-nums}
+.opt .sub{font-size:13px;color:var(--muted)}
+.opt .badge{position:absolute;top:-10px;right:14px;background:var(--accent);color:#1a0610;font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px}
+.when{display:grid;gap:0;margin:4px 0 0}
+.when div{display:grid;grid-template-columns:14px 1fr;gap:10px;padding:6px 0;font-size:13.5px}
+.when div i{width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);margin-top:5px}
+.fine{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+.toast{position:absolute;left:16px;right:16px;bottom:90px;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13.5px;z-index:6}
+
+@media (max-width:860px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:20px}
+  .legend{padding-top:0}
+  .legend h1{font-size:28px}
+  .jump{display:none}
+  .phone{margin:0 auto}
+}
+@media (max-width:440px){
+  body{padding-inline:16px;padding-block:12px}
+  .phone{border-radius:30px;height:calc(100vh - 120px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .msg{animation:none}.typing i{animation:none;opacity:.7}
+}
+</style>
+
+<div class="wrap">
+  <section class="legend">
+    <h1>Расставание с <em>Ником</em></h1>
+    <p>Кликабельный прототип ключевых экранов. Ник — никотин в образе бывшего. Переключи продукт на экране «Сегодня»: облик Ника и модули поменяются.</p>
+    <div class="jump" id="jump"></div>
+    <p class="note muted">Все цифры — пример ответов из онбординга: $4 в день, цель «наушники» за $249, 26 дней с даты расставания. Оплаты нет, данные никуда не уходят.</p>
+  </section>
+
+  <div class="phone" id="phone">
+    <div class="status num"><span id="clock">8:14</span><span>5G ▮▮▮</span></div>
+
+    <!-- СЕГОДНЯ -->
+    <section class="screen on" id="s-today" aria-label="Сегодня">
+      <div class="seg" role="group" aria-label="Что бросаешь">
+        <button id="p-cig" data-p="cig" aria-pressed="false">Сигареты</button>
+        <button id="p-vape" data-p="vape" aria-pressed="false">Вейп</button>
+        <button id="p-pouch" data-p="pouch" aria-pressed="true">Пакетики</button>
+      </div>
+      <div class="eyebrow">Без Ника</div>
+      <div class="h-big num">26 <small>чистых дней из 30</small></div>
+      <div class="muted" style="font-size:14px">Три срыва разобраны, счётчик не обнулялся. Сегодняшний день ещё идёт.</div>
+      <div class="days" aria-hidden="true" id="days"></div>
+
+      <div class="eyebrow">Копилка</div>
+      <div class="card stack">
+        <div class="row" style="justify-content:space-between">
+          <div><div style="font-size:26px;font-weight:700" class="num">$104</div><div class="muted" style="font-size:13px">не отдано Нику</div></div>
+          <div style="text-align:right"><div style="font-weight:600">Наушники</div><div class="muted num" style="font-size:13px">$249 · через 37 дней</div></div>
+        </div>
+        <div class="bar"><i style="width:42%"></i></div>
+      </div>
+
+      <div class="eyebrow">Утро · 10 секунд</div>
+      <div class="card stack" id="morning">
+        <div style="font-size:14px">Как спал?</div>
+        <div class="chips" data-q="sleep">
+          <button class="chip" id="sl-bad" data-v="bad" aria-pressed="false">Плохо</button>
+          <button class="chip" id="sl-ok" data-v="ok" aria-pressed="false">Нормально</button>
+          <button class="chip" id="sl-good" data-v="good" aria-pressed="false">Отлично</button>
+        </div>
+        <div style="font-size:14px">Стресс сегодня?</div>
+        <div class="chips" data-q="stress">
+          <button class="chip" id="st-low" data-v="low" aria-pressed="false">Низкий</button>
+          <button class="chip" id="st-mid" data-v="mid" aria-pressed="false">Средний</button>
+          <button class="chip" id="st-high" data-v="high" aria-pressed="false">Высокий</button>
+        </div>
+        <div id="morning-out" hidden></div>
+      </div>
+
+      <div class="eyebrow" id="mod-title">Модуль</div>
+      <div class="card" id="module"></div>
+
+      <div class="eyebrow">Последний срыв</div>
+      <div class="card stack">
+        <div style="font-weight:600">Это был звонок бывшему, а не возвращение</div>
+        <div class="muted" style="font-size:14px">Триггер: ужин с друзьями, вторая кружка пива. Новый план: «если после ужина тянет — выхожу на 10 минут пройтись с кем-нибудь».</div>
+      </div>
+
+      <div class="stack" style="margin-top:16px">
+        <button class="btn" id="open-share">Карточка для соцсетей</button>
+        <button class="btn ghost" id="open-pay">Экран оплаты (после онбординга)</button>
+      </div>
+    </section>
+
+    <!-- НИК -->
+    <section class="screen chat" id="s-nick" aria-label="Переписка с Ником">
+      <div class="chat-head">
+        <div class="avatar" id="avatar"></div>
+        <div class="who"><span id="nick-name">Ник</span><small id="nick-status">был в сети только что</small></div>
+      </div>
+      <div class="chat-body" id="chat" aria-live="polite"></div>
+      <div class="replies" id="replies"></div>
+    </section>
+
+    <!-- ВОЛНА -->
+    <section class="screen" id="s-wave" aria-label="SOS Волна">
+      <div class="eyebrow">SOS</div>
+      <div style="font-family:var(--f-display);font-weight:700;font-size:26px;letter-spacing:-.02em;margin-bottom:12px">Переждать волну</div>
+      <div id="wave-before" class="card stack">
+        <div class="row" style="justify-content:space-between"><span>Насколько тянет сейчас?</span><b class="num" id="before-v">7</b></div>
+        <input type="range" id="before" min="0" max="10" value="7" aria-label="Сила тяги до">
+        <div class="scale"><span>0 · спокойно</span><span>10 · невыносимо</span></div>
+      </div>
+      <div class="wave-box" style="margin-top:12px">
+        <svg id="wave-svg" viewBox="0 0 354 300" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff3d7f" stop-opacity=".85"/><stop offset="1" stop-color="#ff3d7f" stop-opacity=".1"/></linearGradient></defs>
+          <path id="w2" fill="#ff3d7f" fill-opacity=".18"/>
+          <path id="w1" fill="url(#wg)"/>
+        </svg>
+        <div class="wave-text"><div class="t" id="w-time">3:00</div><div class="p" id="w-phase">Тяга — это волна. Она поднимется, дойдёт до пика и спадёт. Тебе нужно просто переждать.</div></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="w-start" style="flex:1">Начать</button>
+        <button class="btn ghost" id="w-speed" style="flex:none;width:auto;padding-inline:16px" aria-pressed="true">Демо ×10</button>
+      </div>
+      <div id="wave-after" class="card stack" style="margin-top:12px" hidden>
+        <div class="row" style="justify-content:space-between"><span>А теперь?</span><b class="num" id="after-v">3</b></div>
+        <input type="range" id="after" min="0" max="10" value="3" aria-label="Сила тяги после">
+        <div id="wave-res" style="font-size:14px"></div>
+      </div>
+      <button class="btn ghost" id="walk" style="margin-top:10px">Вместо этого: 10 минут ходьбы</button>
+      <div class="src">Ходьба снижает тягу примерно на треть (Haasova и соавт., 2014). Техника «сёрфинга тяги» — из программ профилактики срывов на основе осознанности (Bowen и соавт., 2014).</div>
+    </section>
+
+    <!-- МОЗГ -->
+    <section class="screen" id="s-brain" aria-label="Мозг по неделям">
+      <div class="eyebrow">Твой мозг</div>
+      <div style="font-family:var(--f-display);font-weight:700;font-size:26px;letter-spacing:-.02em" id="b-title">Неделя 4</div>
+      <div class="muted" style="font-size:14px;margin-bottom:12px" id="b-sub"></div>
+      <div class="brain-box">
+        <canvas id="brain" width="700" height="440" aria-label="Схема никотиновых рецепторов"></canvas>
+        <div class="legend-dots"><span><i style="background:var(--muted)"></i>обычный уровень</span><span><i style="background:var(--accent)"></i>лишние рецепторы</span></div>
+      </div>
+      <input type="range" id="week" min="0" max="12" value="4" aria-label="Неделя без никотина" style="margin-top:14px">
+      <div class="scale"><span>день 0</span><span>4 нед</span><span>8 нед</span><span>12 нед</span></div>
+      <div class="card" style="margin-top:12px" id="b-card"></div>
+      <div class="eyebrow" id="body-title">Тело</div>
+      <div class="card" id="body"></div>
+      <div class="src">Рецепторы: ПЭТ-исследование Cosgrove и соавт., 2009 — избыток держится около 4 недель, к 6–12 неделям приходит к уровню некурящих. Схема иллюстративная, не снимок. Тело: ВОЗ.</div>
+    </section>
+
+    <!-- ОПЛАТА -->
+    <section class="screen" id="s-pay" aria-label="Оплата">
+      <div class="eyebrow">Шаг 13 из 13</div>
+      <div style="font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1.1;letter-spacing:-.02em;margin-bottom:12px">План расставания готов</div>
+      <div class="card">
+        <div class="plan-li"><svg viewBox="0 0 20 20" width="18" height="18"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Дата расставания — <b>понедельник, 19 октября</b></span></div>
+        <div class="plan-li"><svg viewBox="0 0 20 20" width="18" height="18"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ник будет писать в твои часы: <b>после кофе, после обеда, вечером за рулём</b></span></div>
+        <div class="plan-li"><svg viewBox="0 0 20 20" width="18" height="18"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ты вернёшь себе <b class="num">$1 460 в год</b>. Наушники — через <b>62 дня</b></span></div>
+        <div class="plan-li"><svg viewBox="0 0 20 20" width="18" height="18"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>В прошлый раз сломалось на стрессе. Для него — отдельный план и «Волна»</span></div>
+      </div>
+      <div class="stack" style="margin-top:18px" role="radiogroup" aria-label="Тариф">
+        <button class="opt" id="opt-year" role="radio" aria-checked="true" data-plan="year">
+          <span class="badge">−87%</span>
+          <span class="top"><span class="name">Год</span><span class="price">$34,99</span></span>
+          <span class="sub">$0,67 в неделю · 7 дней бесплатно</span>
+        </button>
+        <button class="opt" id="opt-week" role="radio" aria-checked="false" data-plan="week">
+          <span class="top"><span class="name">Неделя</span><span class="price">$4,99</span></span>
+          <span class="sub">$259 в год, если не отменять · 3 дня бесплатно</span>
+        </button>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="when" id="when"></div>
+      </div>
+      <button class="btn" id="pay" style="margin-top:14px">Начать бесплатно</button>
+      <div class="fine">Сегодня $0. Отмена — одной кнопкой в настройках, без вопросов «а может, останешься?»</div>
+      <div class="fine">Восстановить покупки · Условия · 18+</div>
+    </section>
+
+    <nav class="tabs" aria-label="Разделы">
+      <button id="t-today" data-s="today" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Сегодня</button>
+      <button id="t-nick" data-s="nick" class=""><span class="dot" id="nick-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v9a2 2 0 01-2 2H10l-5 4v-4a2 2 0 01-1-2z"/></svg></span>Ник</button>
+      <button id="t-wave" data-s="wave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 15c3 0 3-6 6-6s3 6 6 6 3-6 6-6 2 2 2 2M2 20c3 0 3-3 6-3s3 3 6 3 3-3 6-3"/></svg>Волна</button>
+      <button id="t-brain" data-s="brain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4a3 3 0 00-3 3 3 3 0 00-2 5 3 3 0 002 5 3 3 0 006 1V5a2 2 0 00-3-1zM15 4a3 3 0 013 3 3 3 0 012 5 3 3 0 01-2 5 3 3 0 01-6 1"/></svg>Мозг</button>
+    </nav>
+  </div>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let product='pouch';
+
+/* ---------- навигация ---------- */
+const SCREENS=[['today','Сегодня','день 26, копилка, утро'],['nick','Ник пишет','триггер после кофе'],['wave','SOS «Волна»','3 минуты тяги'],['brain','Мозг по неделям','рецепторы 0–12 нед'],['pay','Оплата','план и тарифы']];
+const jump=$('#jump');
+SCREENS.forEach(([id,name,hint])=>{const b=document.createElement('button');b.id='j-'+id;b.dataset.s=id;b.innerHTML='<span>'+name+'</span><span>'+hint+'</span>';jump.appendChild(b)});
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id==='s-'+id));
+  document.querySelectorAll('[data-s]').forEach(b=>b.setAttribute('aria-current',String(b.dataset.s===id)));
+  if(id==='nick'){$('#nick-dot').classList.remove('dot');if(!chatStarted)startChat()}
+  if(id==='brain')drawBrain();
+  if(id==='wave')drawWave(waveT);
+}
+document.querySelectorAll('[data-s]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.s)));
+$('#open-pay').addEventListener('click',()=>go('pay'));
+
+/* ---------- звук и вибрация ---------- */
+let actx=null;
+function ping(high){
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(),g=actx.createGain();
+    o.type='sine';o.frequency.value=high?880:620;
+    g.gain.setValueAtTime(.0001,actx.currentTime);g.gain.exponentialRampToValueAtTime(.08,actx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+.18);
+    o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+.2);
+  }catch(e){}
+  try{navigator.vibrate&&navigator.vibrate(18)}catch(e){}
+}
+
+/* ---------- продукты ---------- */
+const P={
+  cig:{nick:'Ник',avatar:'cig',status:'одна сигарета — и я исчезну',
+    modTitle:'Тело · сигареты',
+    module:[['Не выкурено','390 сигарет'],['Угарный газ в крови','в норме с 12-го часа'],['Кровообращение и лёгкие','улучшаются, неделя 2–12'],['Следующая веха','меньше кашля — 1–9 мес']],
+    opener:['привет','кофе уже налил?','мы же всегда по утрам вместе. одна — и всё, честно']},
+  vape:{nick:'Ник',avatar:'vape',status:'просто затяжка. это даже не считается',
+    modTitle:'Вейп',
+    module:[['Затяжек не сделано','≈ 7 800'],['Картриджей не куплено','13'],['Самый частый триггер','за рабочим столом'],['Рекорд без затяжки','26 дней']],
+    opener:['эй','ты же за ноутом. я рядом, в кармане','пара затяжек — никто не заметит']},
+  pouch:{nick:'Ник',avatar:'pouch',status:'под губой никто не увидит',
+    modTitle:'Пакетики',
+    module:[['Банок не открыто','≈ 18'],['Пакетиков мимо','≈ 360'],['Никотина мимо','≈ 2 160 мг'],['Самый частый триггер','после кофе']],
+    opener:['доброе утро','кофе без меня — просто горячая вода','один пакетик. ты же контролируешь']}
+};
+function avatarSvg(kind){
+  if(kind==='cig')return '<svg viewBox="0 0 42 42" width="42" height="42"><rect x="8" y="18" width="22" height="6" rx="1.5" fill="#f4eef6"/><rect x="26" y="18" width="7" height="6" rx="1.5" fill="#ffc15e"/><circle cx="34.5" cy="21" r="1.6" fill="#ff3d7f"/><path d="M12 15c1-2-1-3 0-5" stroke="#a497ac" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="14" cy="21" r="1" fill="#0d0a0f"/><circle cx="19" cy="21" r="1" fill="#0d0a0f"/></svg>';
+  if(kind==='vape')return '<svg viewBox="0 0 42 42" width="42" height="42"><circle cx="16" cy="20" r="8" fill="#a497ac" opacity=".5"/><circle cx="24" cy="17" r="9" fill="#f4eef6" opacity=".85"/><circle cx="27" cy="24" r="7" fill="#f4eef6" opacity=".7"/><circle cx="21" cy="19" r="1.2" fill="#0d0a0f"/><circle cx="27" cy="19" r="1.2" fill="#0d0a0f"/><path d="M21 23q3 2 6 0" stroke="#ff3d7f" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>';
+  return '<svg viewBox="0 0 42 42" width="42" height="42"><rect x="10" y="13" width="22" height="16" rx="7" fill="#f4eef6"/><path d="M14 17h14M14 25h14" stroke="#d9cfe0" stroke-width="1"/><circle cx="18" cy="20" r="1.2" fill="#0d0a0f"/><circle cx="24" cy="20" r="1.2" fill="#0d0a0f"/><path d="M18 24q3 2 6 0" stroke="#ff3d7f" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>';
+}
+function setProduct(p){
+  product=p;
+  document.querySelectorAll('[data-p]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p===p)));
+  const d=P[p];
+  $('#mod-title').textContent=d.modTitle;
+  $('#module').innerHTML=d.module.map(([k,v])=>'<div class="kv"><span>'+k+'</span><b>'+v+'</b></div>').join('');
+  $('#avatar').innerHTML=avatarSvg(d.avatar);
+  $('#nick-status').textContent=d.status;
+  renderBody();
+  chatStarted=false;$('#chat').innerHTML='';$('#replies').innerHTML='';
+  $('#nick-dot').classList.add('dot');
+  if($('#s-nick').classList.contains('on'))startChat();
+}
+document.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>setProduct(b.dataset.p)));
+
+/* ---------- сегодня: календарь дней ---------- */
+const days=$('#days');
+for(let i=0;i<30;i++){const el=document.createElement('i');if([9,17,23].includes(i))el.className='slip';days.appendChild(el)}
+days.children[29].className='future';
+
+/* ---------- утро ---------- */
+const mstate={};
+document.querySelectorAll('#morning .chips').forEach(g=>{
+  g.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
+    g.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',String(c===b)));
+    mstate[g.dataset.q]=b.dataset.v;morning();});
+});
+function morning(){
+  if(!mstate.sleep||!mstate.stress)return;
+  const risky=mstate.sleep==='bad'||mstate.stress==='high';
+  const out=$('#morning-out');out.hidden=false;
+  out.innerHTML=risky
+    ?'<span class="pill risk">Рискованный день</span><div style="font-size:14px;margin-top:8px">После плохого сна и на стрессе тянет сильнее. План: Ник сегодня напишет раньше, после кофе — 10 минут пешком, «Волна» закреплена наверху.</div>'
+    :'<span class="pill ok">Спокойный день</span><div style="font-size:14px;margin-top:8px">Держим обычный план. Главная точка — после кофе, там Ник будет.</div>';
+}
+
+/* ---------- шеринг ---------- */
+$('#open-share').addEventListener('click',()=>{
+  const o=document.createElement('div');o.className='overlay';o.id='share-ov';
+  o.innerHTML='<div class="stack" style="width:100%"><div class="share"><div class="muted" style="font-size:12px;letter-spacing:.12em;text-transform:uppercase">breakup</div><div class="torn" style="margin:18px 0 22px">Я расстался с Ником <em>26 дней</em> назад и сэкономил <em>$104</em></div><div class="muted" style="font-size:13px">Он всё ещё пишет. Я не отвечаю.</div></div><button class="btn" id="share-close">Готово</button></div>';
+  $('#phone').appendChild(o);$('#share-close').focus();
+  $('#share-close').addEventListener('click',()=>o.remove());
+});
+
+/* ---------- чат с Ником ---------- */
+let chatStarted=false;
+const chat=$('#chat');
+const now=()=>{const d=new Date();return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')};
+function bubble(kind,text){const m=document.createElement('div');m.className='msg '+kind;m.innerHTML=text+(kind!=='sys'?'<time>'+now()+'</time>':'');chat.appendChild(m);chat.scrollTop=chat.scrollHeight;return m}
+function typing(ms){return new Promise(r=>{const t=document.createElement('div');t.className='typing';t.innerHTML='<i></i><i></i><i></i>';chat.appendChild(t);chat.scrollTop=chat.scrollHeight;setTimeout(()=>{t.remove();r()},reduce?150:ms)})}
+async function nickSays(lines){for(const l of lines){await typing(700+l.length*18);bubble('nick',l);ping(false)}}
+function replies(opts,label){
+  const r=$('#replies');r.innerHTML=label?'<div class="lbl">'+label+'</div>':'';
+  opts.forEach((o,i)=>{const b=document.createElement('button');b.id='r-'+i;b.innerHTML=o.html;b.addEventListener('click',()=>{r.innerHTML='';o.go()});r.appendChild(b)});
+}
+async function startChat(){
+  chatStarted=true;
+  bubble('sys','Сегодня, '+now()+' · триггер «после кофе»');
+  await nickSays(P[product].opener);
+  planReplies();
+}
+function planReplies(){
+  replies([
+    {html:'<b>По плану:</b> иду пройтись 10 минут',go:async()=>{bubble('me','Иду пройтись. 10 минут.');ping(true);await nickSays(['ну иди. я подожду.','я всегда жду']);bubble('sys','План сработал. Ходьба срезает тягу примерно на треть — через 10 минут Ник станет тише.');again()}},
+    {html:'<b>SOS:</b> запустить «Волну»',go:()=>{bubble('me','Пережду волну.');ping(true);setTimeout(()=>go('wave'),400)}},
+    {html:'Заблокировать Ника до завтра',go:async()=>{bubble('me','Мы расстались. Не пиши.');ping(true);await nickSays(['ты вернёшься','все возвращаются']);bubble('sys','Ник в блоке до завтра, 8:00. Он прав только в одном: тянуть будет. Но тяга длится минуты, а не весь день.');$('#nick-status').textContent='в блоке';again()}}
+  ],'Ответ = действие из твоего плана');
+}
+function again(){
+  replies([{html:'Показать следующий триггер: <b>после обеда</b>',go:async()=>{bubble('sys','13:40 · триггер «после обеда»');await nickSays(['сытый, довольный.','помнишь, как хорошо было вместе после еды?']);planReplies()}}]);
+}
+
+/* ---------- волна ---------- */
+let waveT=0,waveRun=false,speed=10,last=0,raf=0;
+const TOTAL=180;
+const w1=$('#w1'),w2=$('#w2');
+function craving(t){return Math.sin(Math.PI*Math.pow(Math.min(1,Math.max(0,t)),0.6))}
+function path(level,amp,phase,freq){
+  const W=354,H=300,y0=H-level*(H*.78)-24;let d='M0 '+H+' L0 '+y0.toFixed(1);
+  for(let x=0;x<=W;x+=6){const y=y0+Math.sin(x/W*Math.PI*2*freq+phase)*amp;d+=' L'+x+' '+y.toFixed(1)}
+  return d+' L'+W+' '+H+' Z';
+}
+function drawWave(t,clock){
+  const c=craving(t),ph=(clock||0)/1000;
+  w1.setAttribute('d',path(c,6+c*16,ph*1.6,1.3));
+  w2.setAttribute('d',path(Math.min(1,c+.06),5+c*12,ph*1.1+2,0.9));
+  const left=Math.max(0,Math.round(TOTAL*(1-t)));
+  $('#w-time').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');
+}
+function phaseText(t){
+  if(t<=0)return 'Тяга — это волна. Она поднимется, дойдёт до пика и спадёт. Тебе нужно просто переждать.';
+  if(t<.25)return 'Растёт. Это не приказ, это сигнал голодных рецепторов.';
+  if(t<.45)return 'Пик. Вдох на 4 счёта, выдох на 6. Ты не обязан ничего делать.';
+  if(t<1)return 'Спадает. Заметь: ты ничего не сделал, а стало легче.';
+  return 'Волна прошла.';
+}
+function tick(ts){
+  if(!waveRun)return;
+  const dt=last?(ts-last)/1000:0;last=ts;
+  waveT=Math.min(1,waveT+dt*speed/TOTAL);
+  drawWave(waveT,ts);$('#w-phase').textContent=phaseText(waveT);
+  if(waveT>=1){waveRun=false;$('#w-start').textContent='Ещё раз';$('#wave-after').hidden=false;result();ping(true);return}
+  raf=requestAnimationFrame(tick);
+}
+$('#w-start').addEventListener('click',()=>{
+  if(waveRun){waveRun=false;cancelAnimationFrame(raf);$('#w-start').textContent='Продолжить';return}
+  if(waveT>=1){waveT=0;$('#wave-after').hidden=true}
+  waveRun=true;last=0;$('#w-start').textContent='Пауза';raf=requestAnimationFrame(tick);
+});
+$('#w-speed').addEventListener('click',e=>{speed=speed===10?1:10;e.currentTarget.setAttribute('aria-pressed',String(speed===10));e.currentTarget.textContent=speed===10?'Демо ×10':'Реально ×1'});
+$('#before').addEventListener('input',e=>{$('#before-v').textContent=e.target.value;result()});
+$('#after').addEventListener('input',e=>{$('#after-v').textContent=e.target.value;result()});
+function result(){const b=+$('#before').value,a=+$('#after').value;
+  $('#wave-res').innerHTML=a<b?'Тяга <b class="num">'+b+' → '+a+'</b>. Это ещё одно доказательство для мозга: Ник не нужен, чтобы стало легче.':'Бывает, что волна длиннее. Запусти ещё раз или выйди пройтись — это нормально.'}
+$('#walk').addEventListener('click',()=>{waveRun=false;cancelAnimationFrame(raf);$('#w-phase').textContent='Иди. Темп — как будто опаздываешь, но не бежишь. Вернись и отметь, насколько тянет.';$('#w-time').textContent='10:00';});
+drawWave(0,0);
+
+/* ---------- мозг ---------- */
+const EXTRA=[1,1,.96,.92,.86,.66,.42,.3,.2,.12,.06,.02,0];
+const WEEK_TEXT=[
+  ['День расставания','Рецепторов больше, чем у некурящего: мозг вырастил их под постоянный никотин. Сегодня они начнут «голодать».'],
+  ['Неделя 1','Пик ломки. Раздражительность, тяга, плохой сон — это голодные рецепторы, а не ты. К концу недели станет легче.'],
+  ['Неделя 2','Ломка идёт на спад. Но может приходить тяга от привычных мест и ситуаций — это ожидаемо, а не откат.'],
+  ['Неделя 3','Физическая тяга слабее. Ник давит привычками: кофе, перерыв, дорога домой.'],
+  ['Неделя 4','Лишние рецепторы ещё на месте — по ПЭТ-данным они держатся около 4 недель. Тяга от ситуаций может усилиться: так бывает на 2–8 неделе.'],
+  ['Неделя 5','Рецепторов становится меньше. Если сегодня тянет сильнее, чем вчера, — это не провал, это волна.'],
+  ['Неделя 6','Мозг заметно ближе к уровню некурящих. Некоторые доходят до него уже сейчас.'],
+  ['Неделя 7','Большая часть лишних рецепторов ушла. Ник пишет реже — ему нечем давить.'],
+  ['Неделя 8','Тяга от привычек обычно уже стихает. Старые триггеры превращаются в обычные моменты дня.'],
+  ['Неделя 9','Почти норма.'],
+  ['Неделя 10','Почти норма. Держи план на редкие сильные триггеры: праздники, алкоголь, стресс.'],
+  ['Неделя 11','Мозг практически на уровне некурящего.'],
+  ['Неделя 12','По данным ПЭТ к 6–12 неделе рецепторы приходят к уровню некурящих. Расставание случилось и в мозге.']
+];
+const cv=$('#brain'),ctx=cv.getContext('2d');
+function rng(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646}}
+const dots=[];(()=>{const r=rng(7);
+  while(dots.length<230){const x=r()*2-1,y=r()*2-1;
+    // форма: два полушария
+    const inL=((x+.42)**2)/.36+(y**2)/.62<1, inR=((x-.42)**2)/.36+(y**2)/.62<1;
+    if((inL||inR)&&Math.abs(x)>.03)dots.push({x,y,extra:dots.length%4===0,o:r()})}})();
+function drawBrain(){
+  const wk=+$('#week').value,ex=EXTRA[wk];
+  const W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='#33283b';ctx.lineWidth=2;
+  [[-.42],[.42]].forEach(([cx])=>{ctx.beginPath();ctx.ellipse(W/2+cx*W*.42,H/2,Math.sqrt(.36)*W*.42+14,Math.sqrt(.62)*H*.42+14,0,0,Math.PI*2);ctx.stroke()});
+  dots.forEach(d=>{
+    const px=W/2+d.x*W*.42,py=H/2+d.y*H*.42;
+    if(d.extra){if(d.o>ex)return;ctx.fillStyle='#ff3d7f';ctx.globalAlpha=.95}else{ctx.fillStyle='#a497ac';ctx.globalAlpha=.55}
+    ctx.beginPath();ctx.arc(px,py,d.extra?6:5,0,Math.PI*2);ctx.fill();
+  });
+  ctx.globalAlpha=1;
+  const [t,s]=WEEK_TEXT[wk];
+  $('#b-title').textContent=t;
+  $('#b-sub').textContent=wk===0?'Сдвинь ползунок — посмотри, как мозг успокаивается':'Лишних рецепторов: '+Math.round(ex*100)+'% от стартового избытка';
+  $('#b-card').textContent=s;
+}
+$('#week').addEventListener('input',drawBrain);
+
+function renderBody(){
+  const b=$('#body'),t=$('#body-title');
+  if(product==='cig'){t.textContent='Тело · ВОЗ';b.innerHTML='<div class="tl"><div><span>12 часов</span><span>Угарный газ в крови в норме</span></div><div><span>2–12 нед</span><span>Лучше кровообращение и работа лёгких</span></div><div><span>1–9 мес</span><span>Меньше кашля и одышки</span></div><div><span>1 год</span><span>Риск ишемической болезни сердца вдвое ниже</span></div></div>'}
+  else if(product==='vape'){t.textContent='Вейп';b.innerHTML='<div class="tl"><div><span>Неделя 1</span><span>Пик ломки — затяжки «на автомате» каждые 10 минут больше не нужны</span></div><div><span>Неделя 2–4</span><span>Тяга от рабочего стола и дороги — главный риск</span></div><div><span>Совет</span><span>Обсуди с врачом никотинозаместительную терапию: вместе с приложением шанс выше</span></div></div>'}
+  else{t.textContent='Пакетики';b.innerHTML='<div class="tl"><div><span>Неделя 1</span><span>Пик ломки. Руки ищут банку — держи жвачку без никотина</span></div><div><span>Неделя 2–4</span><span>Главный риск — кофе и экран: там Ник сидел под губой</span></div><div><span>Совет</span><span>Обсуди с врачом никотинозаместительную терапию: вместе с приложением шанс выше</span></div></div>'}
+}
+
+/* ---------- оплата ---------- */
+let plan='year';
+const WHEN={
+  year:[['Сегодня','Полный доступ, $0'],['17 октября','Напомним, что пробный период заканчивается'],['19 октября','Спишем $34,99 за год, если не отменишь']],
+  week:[['Сегодня','Полный доступ, $0'],['13 октября','Напомним, что пробный период заканчивается'],['15 октября','Спишем $4,99, дальше каждую неделю']]
+};
+function renderWhen(){$('#when').innerHTML=WHEN[plan].map(([d,t])=>'<div><i></i><span><b>'+d+'</b> · '+t+'</span></div>').join('');
+  $('#pay').textContent=plan==='year'?'Начать 7 дней бесплатно':'Начать 3 дня бесплатно'}
+document.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',()=>{plan=o.dataset.plan;document.querySelectorAll('.opt').forEach(x=>x.setAttribute('aria-checked',String(x===o)));renderWhen()}));
+$('#pay').addEventListener('click',()=>{const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent='Это прототип: здесь откроется системное окно оплаты App Store / Google Play.';$('#phone').appendChild(t);setTimeout(()=>t.remove(),3200)});
+renderWhen();
+
+/* ---------- старт ---------- */
+setProduct('pouch');drawBrain();
+const ck=()=>{$('#clock').textContent=now()};ck();setInterval(ck,30000);
+})();
+</script>

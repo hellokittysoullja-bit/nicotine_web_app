@@ -1,0 +1,4 @@
+route,audience,primary_job,access_mode,render_mode,data_source,critical_state,metadata_profile
+/,public visitor,understand the offer and choose the main action,public-anonymous,static,curated content,normal,public-content
+/directory,public visitor,search and compare entries,public-anonymous,ssr,server database,no-results,public-content
+/workspace,authenticated operator,review assigned work and act,authenticated,ssr,server database,permission-denied,private-app

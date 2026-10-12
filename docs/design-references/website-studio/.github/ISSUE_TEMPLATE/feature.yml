@@ -1,0 +1,24 @@
+name: Improvement proposal
+description: Suggest a focused recipe, adapter, validator, or documentation improvement.
+title: "[Proposal]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Concrete problem
+      description: Which real website or Agent failure should this prevent?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Explain the smallest change that would solve the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sources or evidence
+      description: Link official documentation for compatibility claims.
