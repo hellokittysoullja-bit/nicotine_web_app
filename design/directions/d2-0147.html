@@ -1,0 +1,45 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@200;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_phone.css">
+<style>
+:root{--night:#0E1630;--dusk:#26224F;--lamp:#FFB547;--text:#ECEEF7;--muted:#8D94B4;--glass:rgba(236,238,247,.10)}
+body{background:var(--night);color:var(--text);font-family:Commissioner,sans-serif}
+.logo{position:absolute;top:40px;left:88px;font-weight:600;font-size:20px}
+.left{display:flex;flex-direction:column;justify-content:center;padding-bottom:110px}
+.time{font-weight:200;font-size:168px;line-height:.9;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.left h1{font-weight:600;font-size:46px;line-height:1.1;margin-top:18px;max-width:600px}
+.left p{font-size:20px;line-height:1.5;color:var(--muted);max-width:520px;margin-top:20px}
+.btn{display:inline-block;margin-top:34px;background:var(--lamp);color:#1B1405;font-weight:700;font-size:18px;padding:18px 28px;border-radius:999px;align-self:flex-start}
+.phone{background:radial-gradient(120% 70% at 70% 0%,#3A3170 0%,var(--dusk) 38%,var(--night) 100%);border:1px solid #2C3462}
+.lock{padding:58px 18px 0;text-align:center}
+.lock small{color:var(--muted);font-size:14px}
+.lock .t{font-weight:200;font-size:86px;line-height:1;letter-spacing:-.03em;margin:4px 0 26px}
+.notes{display:grid;gap:8px;padding:0 12px}
+.n{background:var(--glass);border-radius:20px;padding:12px 14px;text-align:left}
+.n .top{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:3px}
+.n b{color:var(--text);font-weight:600}
+.n p{font-size:15px;line-height:1.35}
+.stack{transform:scale(.95);opacity:.55}
+.sos{margin:22px 12px 0;background:var(--lamp);color:#1B1405;border-radius:20px;padding:14px 16px;font-weight:600;font-size:15px}
+.sos small{display:block;font-weight:400;font-size:13px;opacity:.75;margin-top:2px}
+.tokens{color:var(--muted)}
+</style></head><body><div class="board">
+<div class="logo">Breakup</div>
+<section class="left">
+  <div class="time">01:47</div>
+  <h1>Ник пишет, когда тебе хуже всего</h1>
+  <p>Поздно, устал, поругался — и вот он. Breakup знает твои часы и встаёт между тобой и сообщением.</p>
+  <span class="btn">Расстаться с Ником</span>
+</section>
+<div class="phone">
+  <div class="lock"><small>Вторник, 14 октября</small><div class="t">01:47</div></div>
+  <div class="notes">
+    <div class="n"><div class="top"><b>Ник</b><span>сейчас</span></div><p>не спишь? 🙂</p></div>
+    <div class="n"><div class="top"><b>Ник</b><span>сейчас</span></div><p>я тут подумал… может, одну? чисто вспомнить</p></div>
+    <div class="n"><div class="top"><b>Ник</b><span>1 мин</span></div><p>ты же без меня нервный</p></div>
+    <div class="n stack"><div class="top"><b>Ник</b><span>3 мин</span></div><p>и ещё 4 сообщения</p></div>
+  </div>
+  <div class="sos">Пережить волну вместо ответа<small>3 минуты · тяга спадёт сама</small></div>
+</div>
+<div class="tokens"><span class="sw"><i style="background:#0E1630;border:1px solid #444"></i>ночь</span><span class="sw"><i style="background:#26224F"></i>сумерки</span><span class="sw"><i style="background:#FFB547"></i>лампа</span><span>Commissioner: 200 для часов, 600 для текста</span></div>
+</div></body></html>

@@ -1,0 +1,47 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Golos+Text:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_phone.css">
+<style>
+:root{--yellow:#FFE45C;--ink:#000;--white:#fff;--red:#E8322E;--grey:#ECECEC}
+body{background:var(--yellow);color:var(--ink);font-family:"Golos Text",sans-serif}
+.logo{position:absolute;top:40px;left:88px;font-family:"Rubik Mono One";font-size:18px}
+.left{display:flex;flex-direction:column;justify-content:center;padding-bottom:110px}
+.big{font-family:"Rubik Mono One";font-size:84px;line-height:.98;letter-spacing:-.02em;max-width:720px}
+.big s{text-decoration:none;position:relative;color:var(--ink)}
+.big s::after{content:"";position:absolute;left:-6px;right:-6px;top:52%;height:12px;background:var(--red);transform:rotate(-3deg)}
+.left p{font-size:21px;line-height:1.45;max-width:560px;margin-top:26px;font-weight:600}
+.btn{display:inline-block;margin-top:30px;background:var(--ink);color:var(--yellow);font-weight:700;font-size:19px;padding:20px 30px;align-self:flex-start;box-shadow:6px 6px 0 var(--white)}
+.phone{background:var(--white);border:4px solid var(--ink);box-shadow:12px 12px 0 var(--ink)}
+.head{padding:50px 18px 14px;border-bottom:4px solid var(--ink);display:flex;justify-content:space-between;align-items:center}
+.head b{font-family:"Rubik Mono One";font-size:20px}
+.head span{background:var(--red);color:var(--white);font-weight:700;font-size:12px;padding:5px 9px}
+.chat{flex:1;padding:18px 14px;display:flex;flex-direction:column;gap:9px}
+.nick{background:var(--grey);align-self:flex-start;border-radius:18px 18px 18px 4px;font-size:16px}
+.nick.x{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:3px;color:#777}
+.me{background:var(--ink);color:var(--yellow);align-self:flex-end;border-radius:18px 18px 4px 18px;font-weight:600;font-size:16px}
+.count{align-self:center;text-align:center;font-family:"Rubik Mono One";font-size:44px;margin:8px 0 0}
+.count small{display:block;font-family:"Golos Text";font-size:13px;font-weight:600;text-align:center}
+.replies{padding:12px 14px 28px;display:grid;gap:8px}
+.replies div{border:3px solid var(--ink);padding:11px 12px;font-weight:700;font-size:15px}
+.replies div:first-child{background:var(--yellow)}
+.tokens{font-weight:600}
+</style></head><body><div class="board">
+<div class="logo">breakup</div>
+<section class="left">
+  <div class="big">хватит отвечать <s>нику</s></div>
+  <p>Никотин пишет тебе 20 раз в день. Мы считаем, сколько раз ты не ответил, и сколько денег это сэкономило.</p>
+  <span class="btn">Заблокировать Ника</span>
+</section>
+<div class="phone">
+  <div class="head"><b>ник</b><span>в блоке до 08:00</span></div>
+  <div class="chat">
+    <div class="bub nick x">одну и всё, честно</div>
+    <div class="bub nick x">ты же без меня скучный</div>
+    <div class="bub me">Мы расстались. Не пиши.</div>
+    <div class="bub nick">ты вернёшься 😏</div>
+    <div class="count">26<small>дней без ответа · $104 в кармане</small></div>
+  </div>
+  <div class="replies"><div>Запустить «Волну»</div><div>Показать, сколько я сэкономил</div></div>
+</div>
+<div class="tokens"><span class="sw"><i style="background:#FFE45C;border:2px solid #000"></i>стоп-жёлтый</span><span class="sw"><i style="background:#000"></i>чёрный</span><span class="sw"><i style="background:#E8322E"></i>зачёркивание</span><span>Rubik Mono One + Golos Text</span></div>
+</div></body></html>
