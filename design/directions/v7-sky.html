@@ -42,7 +42,7 @@
   --act:#0E7480;--act-text:#FFFFFF;--me:#CDEEEF;--me-text:#132125;
   --card:#FFFFFF;--control:#7A8A8C;--rule:#D5DEDF;--reward:#F0B23F;
   --chip:#FFFFFF;--chip-text:#06243F;--chip-ring:transparent;
-  --calm:#162125;--calm-2:#1E2C31;--calm-text:#E2EBEB;--calm-muted:#9EB0B3;--calm-line:#6CC9D1;
+  --calm:#1B2A2E;--calm-2:#22343A;--calm-text:#E2EBEB;--calm-muted:#9EB0B3;--calm-line:#6CC9D1;
   --f-display:"Geologica","Golos Text",system-ui,sans-serif;
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --ease-out:cubic-bezier(.23,1,.32,1);
@@ -56,14 +56,14 @@
   --ink:#F3F7FB;--on-ink:#06243F;--page:#121819;--text:#E2EBEB;--muted:#9EAFB1;
   --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E2EBEB;
   --card:#18222A;--control:#647476;--rule:#26302F;--reward:#D9A23E;--chip:#16306A;--chip-text:#F3F7FB;--chip-ring:rgba(243,247,251,.28);
-  --calm:#0D1416;--calm-2:#152024;--nick-line:#A8956A;color-scheme:dark}}
+  --calm:#0F2226;--calm-2:#163036;--nick-line:#A8956A;color-scheme:dark}}
 :root[data-theme="dark"]{
   --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sun:#E7B34A;--sun-core:#F3CF7A;
   --cl-back-top:#4E4530;--cl-back-bot:#2A2516;--cl-mid-top:#6E6243;--cl-mid-bot:#3A3320;--cl-front-top:#86774F;--cl-front-bot:#463D27;
   --ink:#F3F7FB;--on-ink:#06243F;--page:#121819;--text:#E2EBEB;--muted:#9EAFB1;
   --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E2EBEB;
   --card:#18222A;--control:#647476;--rule:#26302F;--reward:#D9A23E;--chip:#16306A;--chip-text:#F3F7FB;--chip-ring:rgba(243,247,251,.28);
-  --calm:#0D1416;--calm-2:#152024;--nick-line:#A8956A;color-scheme:dark}
+  --calm:#0F2226;--calm-2:#163036;--nick-line:#A8956A;color-scheme:dark}
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;overscroll-behavior-y:none;scroll-padding-top:1rem}
@@ -88,14 +88,14 @@ main :focus-visible,footer :focus-visible{outline-color:var(--text)}
 
 /* ── Первый экран ── */
 .hero{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;color:var(--ink);touch-action:pan-y;
-  background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 54%,var(--sky-low) 84%,var(--page) 100%)}
+  background:linear-gradient(in oklab 180deg,var(--sky-top) 0%,var(--sky-mid) 52%,var(--sky-low) 88%,var(--page) 100%)}
 .sun{position:absolute;z-index:-3;pointer-events:none;border-radius:50%;
   left:var(--sx,82%);top:var(--sy,22%);width:var(--sr,15vmax);aspect-ratio:1;translate:-50% -50%;
   background:radial-gradient(circle at 45% 42%,var(--sun-core) 0%,var(--sun) 55%,color-mix(in oklab,var(--sun) 92%,#E08A2E) 100%)}
 .sun::before{content:"";position:absolute;inset:-110%;border-radius:50%;z-index:-1;
   background:radial-gradient(circle closest-side,color-mix(in oklab,var(--sun) 55%,transparent) 0%,color-mix(in oklab,var(--sun) 22%,transparent) 45%,transparent 100%);
-  opacity:.7;transform:scale(.85);transition:opacity 1.4s var(--ease-out),transform 1.4s var(--ease-out)}
-.sun{transition:transform 1.4s var(--ease-out);transform:scale(.94)}
+  opacity:.3;transform:scale(.85);transition:opacity 1.4s var(--ease-out),transform 1.4s var(--ease-out)}
+.sun{transition:transform 1.4s var(--ease-out);transform:translateY(var(--sun-hide,30%)) scale(.94)}
 .hero.free .sun{transform:none}
 .hero.free .sun::before{opacity:1;transform:none}
 .hero.dragging{user-select:none;-webkit-user-select:none}
@@ -106,17 +106,17 @@ main :focus-visible,footer :focus-visible{outline-color:var(--text)}
 
 header.top{position:absolute;inset:0 0 auto 0;z-index:3;padding-top:env(safe-area-inset-top)}
 header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:4.75rem}
-.login{display:inline-flex;align-items:center;min-height:2.75rem;padding-inline:1.1rem;color:var(--chip-text);font-weight:600;font-size:.9375rem;text-decoration:none;border-radius:999px;
-  background:var(--chip);box-shadow:inset 0 0 0 1px var(--chip-ring),0 1px 2px rgba(6,36,63,.12),0 4px 14px rgba(6,36,63,.1);transition:transform .14s var(--ease-out)}
+.login{display:inline-flex;align-items:center;min-height:2.75rem;padding-inline:.75rem;margin-right:-.75rem;color:var(--ink);font-weight:600;font-size:.9375rem;text-decoration:none;border-radius:999px;transition:background-color .15s ease}
 .login:active{transform:scale(.97)}
 
 .hero-inner{position:relative;z-index:2;min-height:100svh;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-rows:minmax(0,1fr) auto;
   column-gap:3rem;padding-block:calc(6rem + env(safe-area-inset-top)) clamp(3.5rem,9vh,6rem);pointer-events:none}
 .hero-inner > *{pointer-events:auto}
-.copy{grid-column:1;grid-row:1/3;align-self:end;max-width:46rem}
-.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(3.1rem,7vw,6.5rem);line-height:.9;letter-spacing:-.05em;text-wrap:balance;display:grid}
+.copy{grid-column:1;grid-row:1/3;align-self:center;max-width:46rem;padding-top:2rem}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(3.1rem,7vw,6.5rem);line-height:.95;letter-spacing:-.04em;text-wrap:balance;display:grid}
 .hero h1 span{grid-area:1/1;align-self:end;transition:opacity .22s ease,filter .22s ease}
-.hero h1 .after-h{opacity:0;filter:blur(4px)}
+.lead{display:grid}.lead span{grid-area:1/1;transition:opacity .22s ease}.lead .after-l{opacity:0}.hero.free .lead .before-l{opacity:0}.hero.free .lead .after-l{opacity:1}
+.hero h1 .after-h{opacity:0;filter:blur(4px);line-height:1}
 .hero.free h1 .before-h{opacity:0;filter:blur(4px)}
 .hero.free h1 .after-h{opacity:1;filter:none}
 .lead{font-size:clamp(1.125rem,1.45vw,1.3125rem);line-height:1.5;max-width:31rem;margin-top:1.6rem;text-wrap:pretty}
@@ -126,28 +126,27 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
   transition:transform .14s var(--ease-out),background-color .15s ease}
 .btn:active{transform:scale(.97)}
 .btn svg{width:1.15rem;height:1.15rem;flex:none}
-.btn-ink{background:var(--ink);color:var(--on-ink);box-shadow:0 1px 2px rgba(6,36,63,.25),0 10px 24px -8px rgba(6,36,63,.45)}
+.btn-ink{background:var(--act);color:var(--act-text);box-shadow:0 1px 2px rgba(6,36,63,.2),0 10px 24px -10px rgba(6,36,63,.45)}
 .hint{display:flex;align-items:center;gap:.55rem;font-weight:500;font-size:.9375rem;opacity:0;transform:translateY(.25rem);transition:opacity .3s ease,transform .3s var(--ease-out)}
 .hint.on{opacity:.9;transform:none}
 .hint svg{width:1.5rem;height:1.5rem;flex:none}
 
 /* Переписка с Ником */
-.stage{grid-column:2;grid-row:1/3;align-self:start;margin-top:clamp(1rem,7vh,5rem);display:grid;justify-items:start}
+.stage{grid-column:2;grid-row:1/3;align-self:center;margin-top:-4vh;display:grid;justify-items:start}
 .thread,.card{grid-area:1/1}
 .thread{width:100%;max-width:25rem}
 .who{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem .1rem;color:var(--ink);opacity:0;transition:opacity .3s ease}
 .who.in{opacity:1}
-.who .av{width:2rem;height:2rem;border-radius:50%;background:var(--nick);display:grid;place-items:center;box-shadow:0 0 0 2px rgba(38,32,18,.35)}
-.who .av svg{width:1.7rem;height:1.7rem}
+.who .av{width:2.25rem;height:2.25rem;border-radius:50%;background:var(--nick);display:grid;place-items:center;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.who .av svg{width:1.9rem;height:1.9rem}
 .who b{font-weight:600;font-size:.9375rem}
-.who .st{font-size:.8125rem;opacity:.85}
+.who .st{font-size:.875rem;opacity:.85}
 .bubbles{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.2rem}
 .b{max-width:min(100%,21rem);background:var(--nick);color:var(--nick-text);padding:.62rem .95rem .66rem;font-size:1.0625rem;line-height:1.35;
-  border-radius:.4rem 1.3rem 1.3rem .4rem;box-shadow:0 .5rem 1.5rem -.5rem rgba(38,32,18,.5);
+  border-radius:1.25rem;
   opacity:0;transform:translateY(.4rem) scale(.97);transform-origin:left bottom;
   transition:opacity .22s var(--ease-out),transform .22s var(--ease-out),filter .2s ease}
-.b:first-of-type{border-top-left-radius:1.3rem}
-.b.last{border-bottom-left-radius:1.3rem}
+.b.last{border-bottom-left-radius:.375rem}
 .b.in{opacity:1;transform:none}
 .b.gone{opacity:0;transform:translateX(calc(var(--dx,-1) * 1.6rem)) scale(.97);filter:blur(4px);transition-duration:.16s}
 .typing{display:none;position:absolute;left:0;align-items:center;gap:.28rem;background:var(--nick);border-radius:1.3rem;padding:.85rem 1rem}
@@ -166,28 +165,30 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .me{background:var(--act);color:var(--act-text);border-radius:1.3rem 1.3rem .4rem 1.3rem;padding:.55rem .95rem;font-weight:500;font-size:.9375rem}
 .me small{display:block;text-align:right;font-size:.75rem;opacity:.92;margin-top:.1rem;font-weight:500}
 .card h2{font-family:var(--f-display);font-weight:700;font-size:1.375rem;letter-spacing:-.025em;margin-bottom:.85rem}
-.opts{display:grid;gap:.5rem}
-.opt{display:flex;align-items:center;gap:.75rem;min-height:3.25rem;padding:0 1rem;border:1.5px solid var(--control);border-radius:1rem;font-weight:500;text-align:left;
+.opts{display:flex;flex-wrap:wrap;gap:.5rem}
+.opt{display:flex;align-items:center;gap:.6rem;min-height:3rem;padding:0 1.1rem;border:1.5px solid var(--control);border-radius:999px;white-space:nowrap;font-weight:500;text-align:left;
   transition:border-color .15s ease,background-color .15s ease,transform .12s var(--ease-out)}
 .opt:active{transform:scale(.985)}
 .opt .dot{width:1.1rem;height:1.1rem;border-radius:50%;border:1.5px solid var(--control);flex:none;transition:border-width .15s var(--ease-out),border-color .15s ease}
 .opt[aria-checked="true"]{border-color:var(--act);background:color-mix(in oklab,var(--act) 9%,transparent)}
 .opt[aria-checked="true"] .dot{border:6px solid var(--act)}
 .err{min-height:1.5rem;margin-top:.45rem;font-size:.9375rem}
-.next{width:100%;background:var(--ink);color:var(--on-ink)}
+.next{width:100%;background:var(--act);color:var(--act-text)}
 
 @media (hover:hover) and (pointer:fine){
-  .btn-ink:hover,.next:hover{background:color-mix(in oklab,var(--ink) 86%,var(--sky-top))}
+  .btn-ink:hover,.next:hover{background:color-mix(in oklab,var(--act) 88%,var(--text))}
   .opt:hover{border-color:var(--text)}
-  .login:hover{box-shadow:0 1px 2px rgba(6,36,63,.14),0 6px 20px rgba(6,36,63,.16)}
+  .login:hover{background:color-mix(in oklab,var(--ink) 10%,transparent)}
   .link:hover{text-decoration-thickness:2px}
 }
 
 /* ── Общие секции ── */
-.section{padding-block:clamp(5rem,11vw,9rem)}
-.big{font-family:var(--f-display);font-weight:800;font-size:clamp(2.35rem,5.2vw,4.5rem);line-height:.96;letter-spacing:-.045em;text-wrap:balance}
+.section{padding-block:clamp(4.5rem,9vw,8rem)}
+.section.ruled > .wrap{border-top:1px solid var(--rule);padding-top:clamp(4.5rem,9vw,8rem)}
+.section.ruled{padding-top:0}
+.big{font-family:var(--f-display);font-weight:800;font-size:clamp(2.35rem,5.2vw,4.5rem);line-height:1;letter-spacing:-.035em;text-wrap:balance}
 .sub{color:var(--muted);margin-top:1.25rem;max-width:30rem;font-size:1.125rem;text-wrap:pretty}
-.src{color:var(--muted);font-size:.8125rem;line-height:1.5;margin-top:1.25rem;max-width:34rem;text-wrap:pretty}
+.src{color:var(--muted);font-size:.875rem;line-height:1.5;margin-top:1.25rem;max-width:34rem;text-wrap:pretty}
 .rv{opacity:0;transform:translateY(1rem);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
 .rv.seen{opacity:1;transform:none}
 
@@ -208,28 +209,31 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .calm .sub,.calm .src{color:var(--calm-muted)}
 .wave-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,6vw,6rem);align-items:center}
 .ride{margin-top:2.25rem;background:var(--calm-text);color:var(--calm)}
+.ride.again{background:none;color:var(--calm-text);padding-inline:0;text-decoration:underline;text-underline-offset:.25em;min-height:2.75rem}
 .ride[disabled]{background:transparent;color:var(--calm-text);box-shadow:inset 0 0 0 1.5px var(--calm-muted);cursor:default}
-.wave-fig{position:relative;background:var(--calm-2);border-radius:1.75rem;padding:clamp(1.25rem,3vw,2rem)}
+.wave-fig{position:relative}
 .wave-fig canvas{display:block;width:100%;aspect-ratio:16/9}
 .wave-read{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-top:1rem}
 .wave-time{font-family:var(--f-display);font-weight:700;font-size:clamp(1.75rem,3vw,2.5rem);letter-spacing:-.03em}
 .wave-cue{color:var(--calm-muted);font-weight:500;text-align:right;min-height:1.6em;transition:color .3s ease}
-.wave-cue.done{color:var(--reward)}
-.wave-cap{color:var(--calm-muted);font-size:.8125rem;font-weight:500;margin-bottom:.5rem}
-.axis-note{display:flex;justify-content:space-between;color:var(--calm-muted);font-size:.8125rem;margin-top:.35rem}
+.wave-cue.done{color:var(--reward);font-family:var(--f-display);font-weight:700;font-size:clamp(1.125rem,1.8vw,1.375rem);letter-spacing:-.02em}
+.wave-cap{color:var(--calm-muted);font-size:.875rem;font-weight:500;margin-bottom:.5rem}
+.axis-note{position:relative;height:1.4rem;color:var(--calm-muted);font-size:.875rem;margin-top:.35rem}
+.axis-note span{position:absolute;top:0;translate:-50% 0;white-space:nowrap}.axis-note span:first-child{translate:0 0}.axis-note span:last-child{translate:-100% 0}
 
 /* ── Деньги ── */
 .money .big{max-width:none}
-.money-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,6vw,6rem);align-items:end;margin-top:1.25rem;padding-bottom:clamp(3.5rem,7vw,6rem);border-bottom:1px solid var(--rule)}
+.money .calc{max-width:28rem;margin-top:clamp(1.75rem,3vw,2.5rem)}
+.per{font-size:clamp(1.25rem,2.6vw,2.5rem);letter-spacing:-.02em;font-weight:700;margin-left:.35em;color:var(--muted)}
 .mid{font-family:var(--f-display);font-weight:700;font-size:clamp(1.375rem,2.2vw,1.75rem);letter-spacing:-.025em;margin-top:clamp(3rem,6vw,5rem)}
 .calc label{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;gap:1rem}
 .calc output{font-family:var(--f-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
-.year{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(4.25rem,17vw,15rem);line-height:.84;letter-spacing:-.06em;margin-top:clamp(1rem,2.5vw,2rem);white-space:nowrap;color:var(--act)}
-.year-note{color:var(--muted);font-size:clamp(1.125rem,1.6vw,1.375rem);max-width:22rem;text-wrap:pretty}
+.year{display:flex;align-items:baseline;flex-wrap:wrap;font-family:var(--f-display);font-weight:800;font-size:clamp(3.75rem,12vw,11rem);line-height:.9;letter-spacing:-.05em;margin-top:clamp(1rem,2vw,1.5rem);color:var(--text)}
+.year-note{color:var(--text);font-size:clamp(1.125rem,1.6vw,1.375rem);margin-top:.75rem;padding-bottom:clamp(3rem,6vw,5rem);border-bottom:1px solid var(--rule)}
 .timeline{position:relative;margin-top:1.5rem;height:13rem}
 .tl-axis{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:var(--control);opacity:.5;border-radius:2px}
 .tl-fill{position:absolute;left:0;top:50%;height:2px;background:var(--act);border-radius:2px;width:0;transition:width .5s var(--ease-out)}
-.tl-tick{position:absolute;top:calc(50% + .9rem);font-size:.8125rem;color:var(--muted);translate:-50% 0;white-space:nowrap}
+.tl-tick{position:absolute;top:calc(50% + .9rem);font-size:.875rem;color:var(--muted);translate:-50% 0;white-space:nowrap}
 .tl-tick:first-of-type{translate:0 0}.tl-tick.end{translate:-100% 0}
 .goal{position:absolute;top:50%;width:0;transition:left .5s var(--ease-out)}
 .goal .pin{position:absolute;left:-.5rem;top:-.5rem;width:1rem;height:1rem;border-radius:50%;background:var(--page);border:2px solid var(--act)}
@@ -237,7 +241,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .goal .lbl{position:absolute;left:0;bottom:1.4rem;translate:-50% 0;white-space:nowrap;text-align:center;line-height:1.3}
 .goal.down .lbl{bottom:auto;top:2.6rem}
 .goal .lbl b{display:block;font-weight:600;font-size:.9375rem}
-.goal .lbl span{font-size:.8125rem;color:var(--muted)}
+.goal .lbl span{font-size:.875rem;color:var(--muted)}
 .goal.edge-l .lbl{translate:-.75rem 0;text-align:left}
 .goal.edge-r .lbl{translate:calc(-100% + .75rem) 0;text-align:right}
 .goal.far .pin{border-style:dashed}
@@ -257,18 +261,19 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 
 /* ── Мозг ── */
 .brain-wide{position:relative;margin-top:clamp(2.5rem,5vw,4rem)}
-.readout{position:absolute;right:0;top:clamp(2.5rem,6vw,5rem);width:min(26rem,40%)}
+.readout{display:grid;grid-template-columns:auto minmax(0,30rem);gap:clamp(1.5rem,4vw,4rem);align-items:end;margin-bottom:clamp(1rem,2vw,1.5rem)}
+.readout .wk-t{margin:0;min-height:0}
 .brain-ctrl{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,6vw,6rem);align-items:start;margin-top:1.5rem}
 .brain-ctrl .src{margin-top:.6rem}
 .chart{width:100%;height:auto;display:block;overflow:visible;cursor:pointer;touch-action:pan-y}
 .chart .grid{stroke:var(--rule);stroke-width:1}
 .chart .base{stroke:var(--act);stroke-width:1.5;stroke-dasharray:4 5}
-.chart .area{fill:var(--nick-line);opacity:.12}
+.chart .past-area{fill:var(--act);opacity:.1}
 .chart .line{fill:none;stroke:var(--nick-line);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .chart .past{fill:none;stroke:var(--act);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
 .chart .cursor{stroke:var(--text);stroke-width:1;opacity:.35}
 .chart .knob{fill:var(--act);stroke:var(--page);stroke-width:3}
-.chart text{fill:var(--muted);font:500 13px var(--f-body)}
+.chart text{fill:var(--muted);font:500 15px var(--f-body)}
 .chart .lab{fill:var(--act);font-weight:600}
 .wk{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.04em;line-height:1}
 .wk-pct{display:block;color:var(--muted);font-size:1rem;font-family:var(--f-body);font-weight:500;letter-spacing:0;margin-top:.5rem}
@@ -281,16 +286,23 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .x-nick,.x-me{padding:.6rem .95rem;font-size:1.0625rem;line-height:1.35;width:fit-content;max-width:85%}
 .x-nick{background:var(--nick);color:var(--nick-text);border-radius:1.3rem 1.3rem 1.3rem .4rem}
 .x-me{align-self:flex-end;background:var(--act);color:var(--act-text);border-radius:1.3rem 1.3rem .4rem 1.3rem}
-.nick-ping{position:absolute;right:clamp(1.25rem,3vw,2rem);top:clamp(1rem,2.5vw,1.6rem);background:var(--nick);color:var(--nick-text);border-radius:1.3rem 1.3rem 1.3rem .4rem;padding:.5rem .9rem;font-size:.9375rem;transition:opacity .4s ease,transform .4s var(--ease-out)}
+.nick-ping{position:absolute;left:var(--px,28%);top:var(--py,8%);translate:-50% -100%;white-space:nowrap;background:var(--nick);color:var(--nick-text);border-radius:1.3rem 1.3rem 1.3rem .4rem;padding:.5rem .9rem;font-size:.9375rem;transition:opacity .4s ease,transform .4s var(--ease-out)}
 .nick-ping-who{display:block;font-size:.75rem;font-weight:600;opacity:.75}
 .nick-ping.off{opacity:0;transform:translateY(-.4rem)}
-.cal{max-width:24rem}
-.cal-h,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem}
-.cal-h{color:var(--muted);font-size:.75rem;font-weight:500;margin-bottom:.5rem;text-align:center}
+.cal{max-width:30rem}
+.cal-h,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem .45rem}
+.days{row-gap:.45rem}
+.legend{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;margin-top:1.1rem;font-size:.875rem;color:var(--muted);list-style:none}
+.legend li{display:flex;align-items:center;gap:.45rem}
+.legend i{width:.9rem;height:.9rem;border-radius:50%;background:var(--act)}
+.legend i.lm{background:color-mix(in oklab,var(--nick-line) 22%,transparent);box-shadow:inset 0 0 0 1.5px var(--nick-line)}
+.legend i.lf{background:none;box-shadow:inset 0 0 0 1.5px var(--rule)}
+.cal-h{color:var(--muted);font-size:.875rem;font-weight:500;margin-bottom:.5rem;text-align:center}
 .days i{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:.875rem;font-weight:600;font-variant-numeric:tabular-nums;
-  background:var(--me);color:var(--me-text)}
-.days i.miss{background:transparent;color:var(--text);box-shadow:inset 0 0 0 2px var(--nick-line)}
-.days i.today{background:var(--act);color:var(--act-text)}
+  background:var(--act);color:var(--act-text)}
+.days i.miss{background:color-mix(in oklab,var(--nick-line) 22%,transparent);color:var(--text);box-shadow:inset 0 0 0 1.5px var(--nick-line);position:relative}
+.days i.pad{background:none}
+.days i.today{background:var(--act);color:var(--act-text);box-shadow:0 0 0 2px var(--page),0 0 0 4px var(--act)}
 .days i.next{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1.5px var(--rule)}
 .days-cap{margin-top:1rem;font-weight:600}
 .days-cap span{color:var(--muted);font-weight:400;display:block;max-width:24rem}
@@ -302,38 +314,47 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .plan + .plan{border-top:1.5px solid var(--rule)}
 .plan b{font-family:var(--f-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
 .plan small{display:block;color:var(--muted);font-size:.875rem;margin-top:.15rem}
+.badge{display:inline-block;vertical-align:.15em;margin-left:.4rem;padding:.15rem .5rem;border-radius:999px;background:var(--me);color:var(--me-text);font:600 .8125rem var(--f-body);letter-spacing:0}
 .plan .amt{font-family:var(--f-display);font-weight:800;font-size:1.75rem;letter-spacing:-.035em;white-space:nowrap}
+.start{margin-top:2rem;width:100%;max-width:22rem}
 .promise{list-style:none;margin-top:1.75rem;display:grid;gap:.9rem}
 .promise li{display:grid;grid-template-columns:1.5rem 1fr;gap:.75rem;align-items:start}
 .promise svg{width:1.5rem;height:1.5rem;color:var(--act);margin-top:.05rem}
 
 /* ── Финал ── */
-.final{position:relative;overflow:hidden;isolation:isolate;color:var(--ink);text-align:left;
-  background:linear-gradient(180deg,var(--page) 0%,var(--sky-low) 22%,var(--sky-mid) 60%,var(--sky-top) 100%)}
-.final .sun{--sx:76%;--sy:100%;--sr:30vmax;transform:none}
-.final .wrap{position:relative;padding-block:clamp(7rem,16vw,12rem) clamp(5rem,10vw,8rem)}
-.final .big{font-size:clamp(2.6rem,6.4vw,5.75rem);max-width:14ch}
-.final .btn{margin-top:2.5rem}
+.final{position:relative;overflow:hidden;isolation:isolate;color:var(--ink);text-align:center;
+  background:linear-gradient(in oklab 180deg,var(--page) 0%,var(--sky-low) 24%,var(--sky-mid) 62%,var(--sky-top) 100%)}
+.final .wrap{display:flex;flex-direction:column;align-items:center}
 
-footer{background:var(--sky-top);color:var(--ink);padding-block:2.5rem calc(2.5rem + env(safe-area-inset-bottom));font-size:.875rem}
+.final .wrap{position:relative;padding-block:clamp(7rem,16vw,12rem) clamp(5rem,10vw,8rem)}
+.final .big{font-size:clamp(2.6rem,6.4vw,5.75rem);max-width:16ch}
+.final .btn{margin-top:2.5rem}
+.final-note{margin-top:1rem;font-size:.9375rem;opacity:.85}
+
+footer{background:var(--page);color:var(--muted);border-top:1px solid var(--rule);padding-block:2.5rem calc(2.5rem + env(safe-area-inset-bottom));font-size:.875rem}
 footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:1.5rem 3rem;align-items:start}
 footer p{max-width:34rem;opacity:.92}
 footer nav{display:flex;gap:1.25rem;flex-wrap:wrap}
 footer a{color:inherit}
 .link{text-underline-offset:.2em;text-decoration-thickness:1px}
-footer :focus-visible{outline-color:var(--ink)}
+footer :focus-visible{outline-color:var(--text)}
+footer .brand{color:var(--text)}
 
 @media (max-width:860px){
   .hero-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:0;padding-top:calc(5.25rem + env(safe-area-inset-top));padding-bottom:2.5rem}
   .stage{grid-column:1;grid-row:1;align-self:start}
   .thread,.card{max-width:none}
   .copy{grid-column:1;grid-row:2;padding-top:1.5rem}
-  .hero h1{font-size:clamp(2.75rem,12.5vw,4rem)}
+  .hero h1{font-size:clamp(2.5rem,11vw,3.4rem)}
   .lead{margin-top:1.1rem}
-  .actions{margin-top:1.6rem;gap:1rem}
+  .actions{margin-top:1.4rem;flex-direction:column;align-items:flex-start;gap:.75rem}
+  .stage{margin-top:0}
+  .copy{align-self:end;padding-top:1rem}
+  .b{font-size:.9375rem;padding:.5rem .8rem}
   .wave-grid,.money-row,.brain-ctrl,.slip,.price{grid-template-columns:minmax(0,1fr)}
   .money-row{gap:1.25rem}
-  .readout{position:static;width:auto;margin-bottom:1.5rem}
+  .readout{grid-template-columns:minmax(0,1fr);gap:.75rem;margin-bottom:1rem}
+  .readout .wk-t{min-height:4.8em}
   .cal-wrap{order:2}
   .card{padding:1.1rem}
   .me-row{margin-bottom:.8rem}
@@ -405,7 +426,7 @@ footer :focus-visible{outline-color:var(--ink)}
 
     <div class="copy">
       <h1 id="h"><span class="before-h">Пора расстаться с&nbsp;Ником</span><span class="after-h" aria-hidden="true">Небо снова твоё</span></h1>
-      <p class="lead">Ник — это никотин. Он пишет каждый раз, когда тебя ломает, и обещает спокойствие. Breakup помогает перестать отвечать.</p>
+      <p class="lead"><span class="before-l">Ник — это никотин. Он пишет каждый раз, когда тебя ломает, и обещает спокойствие. Мы помогаем перестать отвечать.</span><span class="after-l" aria-hidden="true">Первый шаг сделан. Дальше пара вопросов, чтобы мы знали, с чем ты.</span></p>
       <div class="actions">
         <button class="btn btn-ink" id="break">Расстаться</button>
         <span class="hint" id="hint" aria-hidden="true">
@@ -422,20 +443,18 @@ footer :focus-visible{outline-color:var(--ink)}
 <section class="section gutter money" aria-labelledby="m-h">
   <div class="wrap">
     <h2 class="big rv" id="m-h">Он забирает у тебя</h2>
-    <p class="year num rv" id="year">91 250 ₽</p>
-    <div class="money-row rv">
-      <p class="year-note" id="year-note">в год. За пять лет — 456 250 ₽.</p>
-      <div class="calc">
-        <label for="spend"><span>Тратишь на никотин в день</span><output id="spend-v" class="num" for="spend">250 ₽</output></label>
-        <input type="range" id="spend" min="50" max="1000" step="10" value="250">
-      </div>
+    <div class="calc rv">
+      <label for="spend"><span>Тратишь на никотин</span><output id="spend-v" class="num" for="spend">250 ₽ в день</output></label>
+      <input type="range" id="spend" min="50" max="1000" step="10" value="250">
     </div>
-    <h3 class="mid rv">Breakup откладывает их на твою цель</h3>
+    <p class="year rv"><span class="num" id="year">91 250 ₽</span><span class="per">в год</span></p>
+    <p class="year-note rv" id="year-note">За пять лет — 456 250 ₽.</p>
+    <h3 class="mid rv">На что хватит того, что ты не потратишь</h3>
     <div class="timeline rv" id="tl" role="img" aria-label="">
       <div class="tl-axis"></div>
-      <span class="tl-tick" style="left:0">сегодня</span><span class="tl-tick" style="left:25%">3 мес</span><span class="tl-tick" style="left:50%">6 мес</span><span class="tl-tick" style="left:75%">9 мес</span><span class="tl-tick end" style="left:100%">год</span>
+      <span class="tl-tick" style="left:0">сегодня</span><span class="tl-tick end" style="left:100%">год</span>
     </div>
-    <p class="src">Цели и цены — пример. В приложении ставишь свои.</p>
+    <p class="src">Цели для примера — свои поставишь в приложении.</p>
   </div>
 </section>
 
@@ -443,14 +462,14 @@ footer :focus-visible{outline-color:var(--ink)}
   <div class="wrap wave-grid">
     <div class="rv">
       <h2 class="big" id="w-h">Тяга накатывает и уходит</h2>
-      <p class="sub">Когда Ник пишет, Breakup не спорит с ним. Он помогает переждать: дышишь и смотришь, как волна поднимается и спадает. Обычно тяга уходит за несколько минут.</p>
+      <p class="sub">Когда Ник пишет, мы не спорим с ним. Мы помогаем переждать: дышишь и смотришь, как волна поднимается и спадает. Обычно тяга уходит за несколько минут.</p>
       <button class="btn ride" id="ride">Переждать волну</button>
       <p class="src">NHS, «Quit smoking: dealing with cravings». В демо четыре минуты идут за двенадцать секунд, в приложении — в реальном времени.</p>
     </div>
     <figure class="wave-fig rv" aria-labelledby="w-h"><figcaption class="wave-cap">Сила тяги</figcaption>
       <p class="nick-ping" id="ping"><span class="nick-ping-who">Ник</span>может, одну? 🙂</p>
       <canvas id="wave" width="1280" height="720" role="img" aria-label="График тяги: поднимается, держится около минуты и спадает к четвёртой минуте."></canvas>
-      <div class="axis-note" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4 мин</span></div>
+      <div class="axis-note" aria-hidden="true"><span style="left:0">0</span><span style="left:25%">1</span><span style="left:50%">2</span><span style="left:75%">3</span><span style="left:100%">4 мин</span></div>
       <div class="wave-read"><span class="wave-time num" id="w-time">0:00</span><span class="wave-cue" id="w-cue" aria-live="polite">Нажми, когда Ник напишет</span></div>
     </figure>
   </div>
@@ -473,10 +492,10 @@ footer :focus-visible{outline-color:var(--ink)}
   </div>
 </section>
 
-<section class="section gutter" aria-labelledby="s-h" style="padding-top:0">
+<section class="section gutter ruled" aria-labelledby="s-h">
   <div class="wrap slip">
     <div class="rv cal-wrap">
-      <div class="cal" role="img" aria-label="Календарь месяца: 24 дня позади, 23 без никотина и один срыв на семнадцатый день"><div class="cal-h" aria-hidden="true"><span>пн</span><span>вт</span><span>ср</span><span>чт</span><span>пт</span><span>сб</span><span>вс</span></div><div class="days" id="days" aria-hidden="true"></div></div>
+      <div class="cal" role="img" aria-label="Календарь месяца: 24 дня позади, 23 без никотина и один срыв семнадцатого числа"><div class="cal-h" aria-hidden="true"><span>пн</span><span>вт</span><span>ср</span><span>чт</span><span>пт</span><span>сб</span><span>вс</span></div><div class="days" id="days" aria-hidden="true"></div><ul class="legend" aria-hidden="true"><li><i></i>без Ника</li><li><i class="lm"></i>срыв</li><li><i class="lf"></i>впереди</li></ul></div>
       <p class="days-cap">23 дня из 24 без Ника<span>Срыв семнадцатого числа виден, но он не стирает остальные.</span></p>
     </div>
     <div class="rv">
@@ -485,36 +504,37 @@ footer :focus-visible{outline-color:var(--ink)}
         <p class="x-nick">ну всё, ты снова мой 🙂</p>
         <p class="x-me">Нет. Один день не отменяет двадцать&nbsp;три.</p>
       </div>
-      <p class="sub">Счётчик не обнуляется. Breakup помогает понять, что случилось, и идти дальше.</p>
+      <p class="sub">Счётчик не обнуляется. Разберём, что сорвало, и пойдём дальше: двадцать три дня никуда не делись.</p>
     </div>
   </div>
 </section>
 
-<section class="section gutter" aria-labelledby="p-h" style="padding-top:0">
+<section class="section gutter ruled" aria-labelledby="p-h">
   <div class="wrap price">
     <div class="rv">
       <h2 class="big" id="p-h">Честно о деньгах</h2>
-      <p class="sub">Подписка окупается быстрее, чем пачка: пример выше считает, сколько ты уже не потратил.</p>
+      <p class="sub">Год — 34,99 $, это около 0,67 $ в неделю. Списания только с твоего согласия, и о каждом мы предупредим заранее.</p>
     </div>
     <div class="rv">
       <div class="plans">
-        <div class="plan"><div><b>Неделя</b><small>Попробовать без обязательств</small></div><span class="amt num">4,99 $</span></div>
-        <div class="plan"><div><b>Год</b><small>0,67 $ в неделю</small></div><span class="amt num">34,99 $</span></div>
+        <div class="plan"><div><b>Год <span class="badge">выгоднее</span></b><small>около 0,67 $ в неделю</small></div><span class="amt num">34,99 $</span></div>
+        <div class="plan"><div><b>Неделя</b><small>без обязательств</small></div><span class="amt num">4,99 $</span></div>
       </div>
       <ul class="promise">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Напомним за два дня до списания.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Отмена — одно нажатие в настройках, без вопросов «а может, останешься».</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4L19 7"/></svg><span>Никаких таймеров «скидка сгорит через пять минут».</span></li>
       </ul>
+      <button class="btn btn-ink start" id="start">Начать</button>
     </div>
   </div>
 </section>
 
 <section class="final gutter" aria-labelledby="f-h">
-  <div class="sun" aria-hidden="true"></div>
   <div class="wrap">
     <h2 class="big rv" id="f-h">Ник напишет снова. Ты можешь не отвечать.</h2>
     <button class="btn btn-ink rv" id="again">Расстаться с Ником</button>
+    <p class="final-note rv">Напомним за два дня до списания. Отмена в одно нажатие.</p>
   </div>
 </section>
 </div>
@@ -536,11 +556,11 @@ const mobile = () => innerWidth <= 860;
 
 /* ── Висячие предлоги: короткое слово держится за следующее ── */
 (function nbsp(root){ const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const re = /(^|[\s(«—])(в|во|с|со|к|ко|о|об|у|и|а|но|не|ни|на|за|по|из|от|до|без|для|что|он|ты|я|мы|это)\s+/gi; let n;
-  while ((n = w.nextNode())) { if (n.parentElement.closest('script,style,svg')) continue; const v = n.nodeValue.replace(re, (m, a, b) => a + b + '\u00A0'); if (v !== n.nodeValue) n.nodeValue = v; } })(document.body);
+  while ((n = w.nextNode())) { if (n.parentElement.closest('script,style,svg')) continue; const v = n.nodeValue.replace(re, (m, a, b) => a + b + '\u00A0').replace(/ —/g, '\u00A0—'); if (v !== n.nodeValue) n.nodeValue = v; } })(document.body);
 
 /* ── Переписка: Ник печатает, потом пишет ── */
 const notes = [...document.querySelectorAll('.b')], typing = document.getElementById('typing'), st = document.getElementById('st');
-document.getElementById('hint-t').textContent = coarse ? 'или смахни облако' : 'или разгони облако мышью';
+document.getElementById('hint-t').textContent = coarse ? 'или смахни облако' : 'или разгони облако';
 if (reduce) { notes.forEach(n => n.classList.add('in')); document.getElementById('who').classList.add('in'); st.textContent = 'в сети'; document.getElementById('hint').classList.add('on'); }
 else {
   setTimeout(() => { document.getElementById('who').classList.add('in'); }, 250);
@@ -561,7 +581,7 @@ let rect, puffs = [], freed = false, freedAt = 0, touched = false, pressedStroke
 const mk = (n, a) => { const e = document.createElementNS(SV, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
 
 function layout(){
-  return mobile() ? { cx: .5, cy: .29, w: 1.12, h: .3, peak: .74 } : { cx: .765, cy: .38, w: .48, h: .44, peak: .66 };
+  return mobile() ? { cx: .5, cy: .26, w: 1.12, h: .27, peak: .74 } : { cx: .765, cy: .38, w: .48, h: .44, peak: .66 };
 }
 function build(){
   rect = hero.getBoundingClientRect();
@@ -583,11 +603,11 @@ function build(){
   rg.append(mk('stop', { offset: .3, 'stop-color': c('--sun-core'), 'stop-opacity': .9 }), mk('stop', { offset: .55, 'stop-color': c('--sun'), 'stop-opacity': .35 }), mk('stop', { offset: 1, 'stop-color': c('--sun'), 'stop-opacity': 0 }));
   defs.append(rg);
   // Низ облака растворяется, а не обрезан линейкой
-  const mg = mk('linearGradient', { id: 'g-fade', gradientUnits: 'userSpaceOnUse', x1: 0, y1: base - 3, x2: 0, y2: base + 1 });
+  const mg = mk('linearGradient', { id: 'g-fade', gradientUnits: 'userSpaceOnUse', x1: 0, y1: base + R * .03, x2: 0, y2: base + R * .12 });
   mg.append(mk('stop', { offset: 0, 'stop-color': '#fff' }), mk('stop', { offset: 1, 'stop-color': '#fff', 'stop-opacity': 0 }));
   defs.append(mg);
   const mask = mk('mask', { id: 'm-base', maskUnits: 'userSpaceOnUse', x: -W0, y: -H0, width: W0 * 3, height: H0 * 3 });
-  mask.append(mk('rect', { x: -W0, y: -H0, width: W0 * 3, height: base + H0 + 4, fill: 'url(#g-fade)' }));
+  mask.append(mk('rect', { x: -W0, y: -H0, width: W0 * 3, height: base + H0 + R * .14, fill: 'url(#g-fade)' }));
   defs.append(mask);
   const bl = mk('filter', { id: 'f-soft', x: '-20%', y: '-20%', width: '140%', height: '140%' }); bl.append(mk('feGaussianBlur', { stdDeviation: (R * .028).toFixed(1) })); defs.append(bl);
   const shapeClip = mk('clipPath', { id: 'c-shape' }); defs.append(shapeClip);
@@ -618,6 +638,7 @@ function build(){
   const tower = puffs.filter(p => p.layer === 'main' && Math.abs(p.x - sxp) < sr * 1.2);
   const towerTop = tower.length ? Math.min(...tower.map(p => p.y - p.rad)) : topY;
   sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .05);
+  sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .55 - sy) / (sr * 2) * 100) + '%');
   sunEl.style.setProperty('--sx', sxp + 'px'); sunEl.style.setProperty('--sy', sy + 'px');
   rg.setAttribute('cx', sxp); rg.setAttribute('cy', sy); rg.setAttribute('r', sr * 2.3);
   noteRects();
@@ -645,7 +666,7 @@ function frame(now){
   }
   updateNotes(now);
   const goneFrac = puffs.filter(p => p.gone).length / puffs.length;
-  if (!freed && touched && pressedStroke && now - startedAt > 400 && (goneFrac > .36 || notes.every(n => n.classList.contains('gone')))) release('swipe');
+  if (!freed && touched && pressedStroke && now - startedAt > 400 && (goneFrac > (coarse ? .34 : .36) || notes.every(n => n.classList.contains('gone')))) release('swipe');
   if (moving) rafId = requestAnimationFrame(frame);
 }
 function kick(){ if (!rafId) { last = performance.now(); rafId = requestAnimationFrame(frame); } }
@@ -662,15 +683,19 @@ function updateNotes(now){
 
 let prev = null, prevT = 0;
 function push(x, y, dx, dy, power, detach){
-  const R = coarse ? 120 : 100;
+  const R = coarse ? 150 : 100, det = coarse ? .7 : .5;
   for (const p of puffs) { if (p.gone) continue;
     const px = p.x + p.ox, py = p.y + p.oy, d = Math.hypot(px - x, py - y) - p.rad * .5; if (d > R) continue;
     const k = (1 - Math.max(0, d) / R) * power;
-    p.vx += dx * k * (detach ? .5 : .12); p.vy += dy * k * (detach ? .5 : .12);
+    p.vx += dx * k * (detach ? det : .12); p.vy += dy * k * (detach ? det : .12);
   }
 }
+let edgeStroke = false;
 function stroke(e, isDown){
   if (freed || e.target.closest('button,a')) { prev = null; return; }
+  // Касание у края экрана — это жест «назад» в iOS и Android, облако его не перехватывает
+  if (isDown) edgeStroke = e.pointerType === 'touch' && (e.clientX < 24 || e.clientX > innerWidth - 24);
+  if (edgeStroke) { prev = null; return; }
   const pressed = e.pointerType !== 'mouse' || (e.buttons & 1) === 1;
   if (!touched) { touched = true; startedAt = performance.now(); document.getElementById('hint').classList.remove('on'); }
   if (pressed) pressedStroke = true;
@@ -690,6 +715,7 @@ function release(how){
   hero.style.setProperty('--wind', (lastDx > 0 ? 40 : -40) + 'vw');
   hero.classList.add('free'); notes.forEach(n => { n.style.setProperty('--dx', lastDx < 0 ? -1 : 1); n.classList.add('gone'); });
   typing.classList.remove('on'); hero.classList.remove('dragging'); try { getSelection().removeAllRanges(); } catch {}
+  document.querySelector('.after-l').removeAttribute('aria-hidden'); document.querySelector('.before-l').setAttribute('aria-hidden', 'true');
   document.querySelector('.after-h').removeAttribute('aria-hidden'); document.querySelector('.before-h').setAttribute('aria-hidden', 'true');
   try { navigator.vibrate && navigator.vibrate(18); } catch {}
   document.getElementById('status').textContent = 'Облако разогнано. Небо снова твоё. Вопрос: что у тебя с Ником?';
@@ -698,10 +724,11 @@ function release(how){
     const r = c.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) c.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); }, reduce ? 0 : 260);
 }
 document.getElementById('break').addEventListener('click', () => release('button'));
-document.getElementById('again').addEventListener('click', () => {
+const toQuiz = () => {
   if (freed) { const c = document.getElementById('card'); c.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); setTimeout(() => document.querySelector('.opt[tabindex="0"]').focus({ preventScroll: true }), reduce ? 0 : 500); }
   else { hero.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); setTimeout(() => release('button'), reduce ? 0 : 600); }
-});
+};
+document.getElementById('again').addEventListener('click', toQuiz); document.getElementById('start').addEventListener('click', toQuiz);
 lastW = innerWidth; build();
 
 /* ── Опрос ── */
@@ -747,29 +774,32 @@ function drawWave(p){
   wx.beginPath(); wx.arc(Math.max(14, Math.min(W - 14, mx)), my, 14, 0, Math.PI * 2); wx.fill();
 }
 drawWave(0);
+function placePing(){ const q = .3, H = wc.height, base = H - 40, padY = 70, x = wc.offsetLeft + q * wc.clientWidth, y = wc.offsetTop + (base - curve(q) * (base - padY)) / H * wc.clientHeight - 14;
+  ping.style.setProperty('--px', x + 'px'); ping.style.setProperty('--py', y + 'px'); }
+placePing(); addEventListener('resize', placePing);
 ride.addEventListener('click', () => {
-  cancelAnimationFrame(waveRaf); ride.disabled = true; ride.textContent = 'Дыши'; wCue.classList.remove('done');
+  cancelAnimationFrame(waveRaf); ride.classList.remove('again'); ride.disabled = true; ride.textContent = 'Дыши'; wCue.classList.remove('done');
   const D = 12000, t0 = performance.now();
   const step = now => {
     const p = reduce ? 1 : Math.min(1, (now - t0) / D); waveP = p; drawWave(p); ping.classList.toggle('off', p > .55);
     const sec = Math.round(p * 240); wTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
     if (p < 1) { const ph = Math.floor((now - t0) / 2000) % 2; const cue = ph ? 'Выдох' : 'Вдох'; if (wCue.textContent !== cue) wCue.textContent = cue; waveRaf = requestAnimationFrame(step); }
-    else { wCue.textContent = 'Волна прошла. Ник замолчал.'; wCue.classList.add('done'); ride.disabled = false; ride.textContent = 'Ещё раз'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} }
+    else { wCue.textContent = 'Волна прошла. Ник замолчал.'; wCue.classList.add('done'); ride.disabled = false; ride.textContent = 'Пройти ещё раз'; ride.classList.add('again'); try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} }
   };
   waveRaf = requestAnimationFrame(step);
 });
 
 /* ── Деньги и цели ── */
 const rub = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
-const GOALS = [['Концерт', 6000], ['Кроссовки', 12000], ['Неделя на море', 60000], ['Новый телефон', 90000]];
+const GOALS = [['Кроссовки', 12000], ['Неделя на море', 60000], ['Новый телефон', 90000]];
 const tl = document.getElementById('tl');
-const goalEls = GOALS.map(([name], i) => { const g = document.createElement('div'); g.className = 'goal' + (i % 2 ? ' down' : ''); g.innerHTML = '<span class="pin"></span><span class="lbl"><b>' + name + '</b><span class="num"></span></span><span class="bar" aria-hidden="true"><i></i></span>'; tl.appendChild(g); return g; });
+const goalEls = GOALS.map(([name], i) => { const g = document.createElement('div'); g.className = 'goal'; g.innerHTML = '<span class="pin"></span><span class="lbl"><b>' + name + '</b><span class="num"></span></span><span class="bar" aria-hidden="true"><i></i></span>'; tl.appendChild(g); return g; });
 const dayWord = n => { const a = n % 10, b = n % 100; return (a === 1 && b !== 11) ? 'день' : (a >= 2 && a <= 4 && (b < 12 || b > 14)) ? 'дня' : 'дней'; };
 const spend = document.getElementById('spend'), year = document.getElementById('year');
 function money(){
   const d = +spend.value; spend.style.setProperty('--p', ((d - 50) / 950 * 100) + '%');
-  const s = rub.format(d); document.getElementById('spend-v').textContent = s; spend.setAttribute('aria-valuetext', s + ' в день');
-  year.textContent = rub.format(d * 365); document.getElementById('year-note').textContent = 'в год. За пять лет — ' + rub.format(d * 365 * 5) + '.';
+  const s = rub.format(d); document.getElementById('spend-v').textContent = s + ' в день'; spend.setAttribute('aria-valuetext', s + ' в день');
+  year.textContent = rub.format(d * 365); document.getElementById('year-note').textContent = 'За пять лет — ' + rub.format(d * 365 * 5) + '.';
   const desc = [];
   GOALS.forEach(([name, price], i) => {
     const days = Math.ceil(price / d), g = goalEls[i], pos = Math.min(1, days / 365);
@@ -809,13 +839,13 @@ function smoothPath(to){
   return s;
 }
 const el = (n, a, txt) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (txt) e.textContent = txt; return e; };
-let cur, knob, past, lab;
+let cur, knob, past, lab, pastArea;
 function buildChart(){
   const narrow = innerWidth <= 600; VW = narrow ? 600 : 1200; VH = narrow ? 460 : 440; CX0 = narrow ? 10 : 40; CX1 = VW - (narrow ? 10 : 40); CY0 = 60; CY1 = VH - 60;
   chart.setAttribute('viewBox', `0 0 ${VW} ${VH}`); [...chart.querySelectorAll(':scope > :not(desc)')].forEach(n => n.remove()); prepCurve();
   for (let i = 0; i <= 4; i++) chart.appendChild(el('line', { class: 'grid', x1: CX0, x2: CX1, y1: cy(i / 4), y2: cy(i / 4) }));
   const full = smoothPath(12);
-  chart.appendChild(el('path', { class: 'area', d: full + ' L' + CX1 + ',' + CY1 + ' L' + CX0 + ',' + CY1 + 'Z' }));
+  pastArea = el('path', { class: 'past-area' }); chart.appendChild(pastArea);
   chart.appendChild(el('path', { class: 'line', d: full }));
   chart.appendChild(el('line', { class: 'base', x1: CX0, x2: CX1, y1: CY1, y2: CY1 }));
   past = el('path', { class: 'past' }); chart.appendChild(past);
@@ -831,6 +861,7 @@ let narrowNow = innerWidth <= 600; addEventListener('resize', () => { if ((inner
 function drawChart(){
   const w = +week.value, v = EXTRA[w];
   past.setAttribute('d', smoothPath(w)); past.style.display = w ? '' : 'none';
+  pastArea.setAttribute('d', w ? smoothPath(w) + ' L' + cx(w) + ',' + CY1 + ' L' + CX0 + ',' + CY1 + 'Z' : '');
   cur.setAttribute('x1', cx(w)); cur.setAttribute('x2', cx(w));
   knob.setAttribute('cx', cx(w)); knob.setAttribute('cy', cy(v));
   lab.setAttribute('x', Math.min(CX1 - 40, Math.max(CX0 + 40, cx(w)))); lab.setAttribute('y', cy(v) - 20); lab.textContent = Math.round(v * 100) + '%';
@@ -839,7 +870,7 @@ function drawChart(){
   week.setAttribute('aria-valuetext', name + ', лишних рецепторов ' + Math.round(v * 100) + '%');
   document.getElementById('wk').firstChild.nodeValue = name;
   document.querySelector('.wk-pct').textContent = 'лишних рецепторов: ' + Math.round(v * 100) + '% от исходного избытка';
-  document.getElementById('wk-t').textContent = TEXT[w];
+  document.getElementById('wk-t').textContent = TEXT[w].replace(/ —/g, '\u00A0—');
 }
 week.addEventListener('input', drawChart);
 const setFromPointer = e => { const r = chart.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * VW; const w = Math.round(Math.min(12, Math.max(0, (x - CX0) / (CX1 - CX0) * 12))); if (w !== +week.value) { week.value = w; drawChart(); } };
@@ -849,7 +880,8 @@ drawChart();
 
 /* ── Срыв ── */
 const days = document.getElementById('days');
-for (let i = 1; i <= 28; i++) { const c = document.createElement('i'); c.textContent = i; if (i === 17) c.className = 'miss'; else if (i === 24) c.className = 'today'; else if (i > 24) c.className = 'next'; days.appendChild(c); }
+for (let k = 0; k < 2; k++) { const c = document.createElement('i'); c.className = 'pad'; days.appendChild(c); }   // месяц начинается в среду
+for (let i = 1; i <= 30; i++) { const c = document.createElement('i'); c.textContent = i; if (i === 17) { c.className = 'miss'; c.title = 'срыв'; } else if (i === 24) c.className = 'today'; else if (i > 24) c.className = 'next'; days.appendChild(c); }
 })();
 </script>
 </body>
