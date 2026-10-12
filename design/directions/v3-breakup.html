@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Breakup — расстаться с никотином</title>
+<meta name="description" content="Breakup помогает бросить сигареты, вейп и никотиновые пакетики. Никотин здесь — бывший по имени Ник, и мы учимся ему не отвечать.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F3F6F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121819" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Breakup — расстаться с никотином">
+<meta property="og:description" content="Сигареты, вейп, пакетики. План расставания с Ником.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230E7480'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+  Breakup, v3. Цвет выбран по docs/research/color-evidence.md:
+  - Ник: приглушённый тёмный жёлто-коричневый (семейство Pantone 448C), самое нелюбимое семейство оттенков
+    (Palmer & Schloss 2010). Только реплики и знак, никогда не поле.
+  - Человек и прогресс: бирюзовый, самое любимое семейство. Отличается от Ника и оттенком, и светлотой,
+    поэтому различим при красно-зелёном дальтонизме.
+  - Днём светлая тема (тёмный текст на светлом читается лучше, Piepenbrock 2013),
+    вечером тёмная с малой площадью цвета (ночью важна общая яркость, Nagare 2018).
+  - Янтарь появляется только в момент реального события.
+  Длинное тире в русском тексте разрешено: этого требует грамматика (решение в CLAUDE.md).
+*/
+:root{
+  --bg:#F3F6F6;
+  --ink:#132125;
+  --muted:#4B5A5E;
+  --line:#D5DEDF;
+  --control:#7A8A8C; /* рамка элемента управления, 3.3:1 к фону */
+  --nick:#4A412A;
+  --nick-text:#EEE9DA;
+  --me:#CDEEEF;
+  --me-text:#0C2E33;
+  --act:#0E7480;
+  --act-text:#FFFFFF;
+  --reward:#F0B23F;
+  --f-nick:"PT Sans Narrow","Roboto Condensed","Arial Narrow",sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121819;--ink:#E2EBEB;--muted:#9EAFB1;--line:#26302F;--control:#647476;
+  --nick:#4A412A;--nick-text:#EAE4D3;--me:#1C4A50;--me-text:#E1F5F5;
+  --act:#6CC9D1;--act-text:#06292D;--reward:#D9A23E;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121819;--ink:#E2EBEB;--muted:#9EAFB1;--line:#26302F;--control:#647476;
+  --nick:#4A412A;--nick-text:#EAE4D3;--me:#1C4A50;--me-text:#E1F5F5;
+  --act:#6CC9D1;--act-text:#06292D;--reward:#D9A23E;color-scheme:dark}
+
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1.0625rem;line-height:1.55;
+  padding-inline:max(1.25rem,env(safe-area-inset-left));padding-bottom:env(safe-area-inset-bottom);-webkit-tap-highlight-color:transparent}
+.wrap{max-width:72rem;margin:0 auto}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+:focus-visible{outline:3px solid var(--act);outline-offset:3px;border-radius:6px}
+
+header{display:flex;justify-content:space-between;align-items:center;height:4.25rem;padding-top:env(safe-area-inset-top)}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--f-nick);font-weight:700;font-size:1.5rem;color:var(--ink);text-decoration:none}
+.mark{width:1.75rem;height:1.75rem;border-radius:50%;background:var(--act);position:relative;overflow:hidden}
+.mark::after{content:"";position:absolute;inset:0 0 0 50%;background:var(--nick)}
+header a.login{display:inline-flex;align-items:center;min-height:2.75rem;padding-inline:.5rem;color:var(--ink);font-weight:500;text-decoration:none}
+
+/* Первый экран: заголовок, под ним сама переписка. Высота зарезервирована, ничего не прыгает. */
+.hero{padding-block:3rem 4.5rem;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-areas:'text chat' 'pick chat';column-gap:4.5rem;row-gap:2.25rem;align-items:start}
+.hero-text{grid-area:text;display:grid;gap:1.25rem}
+.thread{grid-area:chat}
+fieldset{grid-area:pick}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr);grid-template-areas:'text' 'chat' 'pick'}}
+h1{font-family:var(--f-nick);font-weight:700;font-size:clamp(2.25rem,4.4vw,3.5rem);line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
+.lead{color:var(--muted);max-width:36rem;font-size:1.125rem}
+
+.thread{display:flex;flex-direction:column;gap:.5rem;padding-top:.5rem}
+.meta{display:flex;align-items:center;gap:.6rem;color:var(--muted);font-size:.9rem;margin-bottom:.25rem}
+.avatar{width:2rem;height:2rem;border-radius:50%;background:var(--nick);color:var(--nick-text);display:grid;place-items:center;font-family:var(--f-nick);font-weight:700;font-size:1rem}
+.bubble{max-width:min(36rem,92%);padding:.6rem 1rem .7rem;font-size:1.0625rem;line-height:1.35}
+.nick{align-self:flex-start;background:var(--nick);color:var(--nick-text);font-family:var(--f-nick);font-size:clamp(1.375rem,2.4vw,1.75rem);border-radius:.4rem 1.25rem 1.25rem .4rem}
+.me{align-self:flex-end;background:var(--me);color:var(--me-text);border-radius:1.25rem .4rem .4rem 1.25rem}
+.appear{opacity:0;transform:translateY(.5rem);animation:in .24s var(--ease-out) forwards}
+@keyframes in{to{opacity:1;transform:none}}
+.typing{align-self:flex-start;background:var(--nick);border-radius:.4rem 1.25rem 1.25rem .4rem;padding:.85rem 1rem;display:flex;gap:.3rem}
+.typing i{width:.4rem;height:.4rem;border-radius:50%;background:var(--nick-text);opacity:.5;animation:dot .9s ease-in-out infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{opacity:1}}
+
+fieldset{border:0;padding:0;display:grid;gap:.75rem}
+fieldset[hidden]{display:none}
+.redo{align-self:flex-end;min-height:2.75rem;padding-inline:.25rem;color:var(--muted);font-size:.9rem;text-decoration:underline;text-underline-offset:3px}
+legend{font-weight:600;margin-bottom:.75rem}
+.choices{display:flex;flex-wrap:wrap;gap:.5rem}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;width:1px;height:1px}
+.choice label{display:inline-flex;align-items:center;gap:.5rem;min-height:3rem;padding:0 1.1rem;border:2px solid var(--control);border-radius:.75rem;font-weight:500;cursor:pointer;
+  transition:border-color .15s ease,transform .12s var(--ease-out);user-select:none;-webkit-user-select:none}
+.choice label:active{transform:scale(.97)}
+.dot{width:1.05rem;height:1.05rem;border-radius:50%;border:2px solid var(--control);flex:none;transition:border-width .12s var(--ease-out),border-color .12s ease}
+.choice input:checked + label{border-color:var(--act);box-shadow:inset 0 0 0 1px var(--act)}
+.choice input:checked + label .dot{border:5px solid var(--act)}
+.choice input:focus-visible + label{outline:3px solid var(--act);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){.choice label:hover{border-color:var(--ink)}}
+
+.cta{display:inline-flex;align-items:center;min-height:3.25rem;padding:0 1.6rem;border-radius:.75rem;background:var(--act);color:var(--act-text);font-weight:600;font-size:1.0625rem;transition:transform .12s var(--ease-out),filter .15s ease}
+.cta:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.cta:hover{filter:brightness(1.06)}}
+.cta-row{align-self:flex-start;margin-top:.75rem}
+
+/* Почему он так пишет: одна колонка, заголовок над текстом */
+.why{border-top:1px solid var(--line);padding-block:3.5rem 4rem;max-width:46rem;display:grid;gap:1rem}
+.why h2{font-family:var(--f-nick);font-weight:700;font-size:clamp(1.75rem,3.2vw,2.5rem);line-height:1.06;text-wrap:balance}
+.why p{max-width:38rem}
+.why .src{color:var(--muted);font-size:.9rem}
+
+footer{border-top:1px solid var(--line);padding-block:1.75rem 2.5rem;color:var(--muted);font-size:.9rem;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+@media (prefers-reduced-motion:reduce){.appear{animation:none;opacity:1;transform:none}.typing i{animation:none;opacity:.8}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="#" aria-label="Breakup, на главную"><span class="mark" aria-hidden="true"></span><span lang="en">Breakup</span></a>
+    <a class="login" href="#">Войти</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="h">
+      <div class="hero-text">
+        <h1 id="h">Никотин пишет тебе каждый раз, когда его уровень падает</h1>
+        <p class="lead">Мы зовём его Ник. Пачка в день — это двадцать таких сообщений. Breakup учит на них не отвечать.</p>
+      </div>
+
+      <div class="thread" id="thread" aria-live="polite">
+        <div class="meta"><span class="avatar" aria-hidden="true">Н</span><span>Ник, 08:12</span></div>
+        <div class="bubble nick">доброе утро</div>
+        <div class="bubble nick">кофе без меня — просто горячая вода</div>
+        <div class="bubble nick">одну. ты же всё контролируешь</div>
+      </div>
+
+      <fieldset>
+        <legend>Что у тебя с Ником?</legend>
+        <div class="choices">
+          <div class="choice"><input type="radio" name="p" id="p-cig" value="cig"><label for="p-cig"><span class="dot" aria-hidden="true"></span>Сигареты</label></div>
+          <div class="choice"><input type="radio" name="p" id="p-vape" value="vape"><label for="p-vape"><span class="dot" aria-hidden="true"></span>Вейп</label></div>
+          <div class="choice"><input type="radio" name="p" id="p-pouch" value="pouch"><label for="p-pouch"><span class="dot" aria-hidden="true"></span>Пакетики</label></div>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="why" aria-labelledby="why-h">
+      <h2 id="why-h">Он обещает спокойствие, которого сам тебя лишил</h2>
+      <p>Тревога между затяжками — это ломка: никотин уходит из крови, и мозг требует ещё. Затяжка снимает именно её. У тех, кто бросил, уровень тревоги и стресса со временем снижается, а не растёт.</p>
+      <p class="src">Parrott, 1999, American Psychologist: «Does cigarette smoking cause stress?». Taylor и соавторы, 2014, BMJ: метаанализ 26 исследований о психическом здоровье после отказа от курения.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>18+</span>
+    <span>Breakup помогает бросить и не заменяет врача. Если хочешь использовать никотинозаместительную терапию, обсуди её с врачом.</span>
+  </footer>
+</div>
+
+<script>
+const thread = document.getElementById('thread');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const T = ms => reduce ? 0 : ms;
+const said = {
+  cig:   ['Сигареты. Где-то пачка в день.', 'опять ты про бросить. давай с понедельника'],
+  vape:  ['Вейп. Почти не выпускаю из руки.', 'я же даже не дым. я почти воздух'],
+  pouch: ['Пакетики. После каждого кофе.', 'меня даже никто не видит. в чём проблема']
+};
+function add(cls, text){ const d = document.createElement('div'); d.className = 'bubble ' + cls + ' appear'; d.textContent = text; thread.append(d); return d; }
+let run = 0;
+document.querySelectorAll('input[name="p"]').forEach(r => r.addEventListener('change', () => {
+  const id = ++run;
+  thread.querySelectorAll('.appear, .typing, .cta-row').forEach(n => n.remove());
+  const [me, nick] = said[r.value];
+  document.querySelector('fieldset').hidden = true;
+  add('me', me);
+  const typing = document.createElement('div'); typing.className = 'typing'; typing.setAttribute('aria-label', 'Ник печатает'); typing.innerHTML = '<i></i><i></i><i></i>';
+  setTimeout(() => { if (id !== run) return; thread.append(typing); }, T(250));
+  setTimeout(() => {
+    if (id !== run) return;
+    typing.remove(); add('nick', nick);
+    const b = document.createElement('button'); b.className = 'cta cta-row appear'; b.id = 'start'; b.textContent = 'Собрать план расставания';
+    b.style.animationDelay = reduce ? '0s' : '.35s'; thread.append(b);
+    const redo = document.createElement('button'); redo.className = 'redo cta-row'; redo.textContent = 'Ответить по-другому';
+    redo.addEventListener('click', () => { thread.querySelectorAll('.appear, .typing, .cta-row').forEach(n => n.remove()); const f = document.querySelector('fieldset'); f.hidden = false; f.querySelector('input:checked')?.focus(); });
+    thread.append(redo);
+    b.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    b.focus({ preventScroll: true });
+  }, T(1150));
+}));
+</script>
+</body>
+</html>
