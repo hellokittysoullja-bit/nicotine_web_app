@@ -382,7 +382,7 @@ footer :focus-visible{outline-color:var(--ink)}
   <div class="gutter"><div class="wrap hero-inner">
     <div class="stage" id="stage">
       <div class="thread" id="thread" aria-live="polite">
-        <div class="who" id="who"><span class="av" aria-hidden="true"><svg viewBox="5 8 22 18"><path d="M7 23.5a5 5 0 0 1 1.3-9.8 7.5 7.5 0 0 1 14.4-1.6A5.6 5.6 0 0 1 25 23.5z" fill="#8C7C52"/><circle cx="13" cy="17.2" r="1.35" fill="#EEE9DA"/><circle cx="19" cy="17.2" r="1.35" fill="#EEE9DA"/><path d="M13.2 20.6c1.6 1 3.6 1 5.6-.4" fill="none" stroke="#EEE9DA" stroke-width="1.4" stroke-linecap="round"/></svg></span><b>Ник</b><span class="st" id="st">печатает…</span></div>
+        <div class="who" id="who"><span class="av" aria-hidden="true"><svg viewBox="3.5 6 25 21"><path d="M7 23.5a5 5 0 0 1 1.3-9.8 7.5 7.5 0 0 1 14.4-1.6A5.6 5.6 0 0 1 25 23.5z" fill="#8C7C52"/><circle cx="13" cy="17.2" r="1.35" fill="#EEE9DA"/><circle cx="19" cy="17.2" r="1.35" fill="#EEE9DA"/><path d="M13.2 20.6c1.6 1 3.6 1 5.6-.4" fill="none" stroke="#EEE9DA" stroke-width="1.4" stroke-linecap="round"/></svg></span><b>Ник</b><span class="st" id="st">печатает…</span></div>
         <div class="bubbles">
           <p class="b">не спишь? 🙂</p>
           <p class="b">давай по одной. чисто вспомнить, как нам было хорошо</p>
@@ -583,7 +583,7 @@ function build(){
   rg.append(mk('stop', { offset: .3, 'stop-color': c('--sun-core'), 'stop-opacity': .9 }), mk('stop', { offset: .55, 'stop-color': c('--sun'), 'stop-opacity': .35 }), mk('stop', { offset: 1, 'stop-color': c('--sun'), 'stop-opacity': 0 }));
   defs.append(rg);
   // Низ облака растворяется, а не обрезан линейкой
-  const mg = mk('linearGradient', { id: 'g-fade', gradientUnits: 'userSpaceOnUse', x1: 0, y1: base - H * .06, x2: 0, y2: base + 2 });
+  const mg = mk('linearGradient', { id: 'g-fade', gradientUnits: 'userSpaceOnUse', x1: 0, y1: base - 3, x2: 0, y2: base + 1 });
   mg.append(mk('stop', { offset: 0, 'stop-color': '#fff' }), mk('stop', { offset: 1, 'stop-color': '#fff', 'stop-opacity': 0 }));
   defs.append(mg);
   const mask = mk('mask', { id: 'm-base', maskUnits: 'userSpaceOnUse', x: -W0, y: -H0, width: W0 * 3, height: H0 * 3 });
