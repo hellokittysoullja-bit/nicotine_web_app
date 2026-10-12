@@ -1,0 +1,15 @@
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const ctx = await b.newContext({ viewport:{width:1440,height:900}, deviceScaleFactor:1 });
+const p = await ctx.newPage(); await p.goto('file://'+process.cwd()+'/v7-sky.html');
+await p.evaluate(()=>document.querySelectorAll('.rv').forEach(e=>e.classList.add('seen')));
+const fig = await p.$('.wave-fig'); await fig.scrollIntoViewIfNeeded(); await p.click('#ride'); await p.waitForTimeout(4500);
+await p.$eval('section.calm', e=>e.scrollIntoView()); await p.waitForTimeout(200);
+await (await p.$('section.calm')).screenshot({path:'v7-wave-mid.png'});
+await p.waitForTimeout(8500); await (await p.$('section.calm')).screenshot({path:'v7-wave-end.png'});
+const ch = await p.$('#chart'); await ch.scrollIntoViewIfNeeded(); const bb = await ch.boundingBox();
+await p.mouse.click(bb.x+bb.width*.72, bb.y+bb.height*.5); await p.waitForTimeout(300);
+await (await p.$('section.brain')).screenshot({path:'v7-chart-click.png'});
+console.log(await p.$eval('#week', e=>e.value));
+const c3 = await b.newContext({ viewport:{width:320,height:568}, deviceScaleFactor:2 }); const q = await c3.newPage(); await q.goto('file://'+process.cwd()+'/v7-sky.html'); await q.waitForTimeout(5500); await q.screenshot({path:'v7-320.png'});
+await b.close();

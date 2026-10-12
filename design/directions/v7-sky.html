@@ -129,7 +129,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .who{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem .1rem;color:var(--ink);opacity:0;transition:opacity .3s ease}
 .who.in{opacity:1}
 .who .av{width:2rem;height:2rem;border-radius:50%;background:var(--nick);display:grid;place-items:center;box-shadow:0 0 0 2px rgba(38,32,18,.35)}
-.who .av svg{width:1.1rem;height:1.1rem}
+.who .av svg{width:1.7rem;height:1.7rem}
 .who b{font-weight:600;font-size:.9375rem}
 .who .st{font-size:.8125rem;opacity:.85}
 .bubbles{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.2rem}
@@ -199,7 +199,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .calm .sub,.calm .src{color:var(--calm-muted)}
 .wave-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,6vw,6rem);align-items:center}
 .ride{margin-top:2.25rem;background:var(--calm-text);color:var(--calm)}
-.ride[disabled]{opacity:.5;cursor:default}
+.ride[disabled]{background:transparent;color:var(--calm-text);box-shadow:inset 0 0 0 1.5px var(--calm-muted);cursor:default}
 .wave-fig{position:relative;background:var(--calm-2);border-radius:1.75rem;padding:clamp(1.25rem,3vw,2rem)}
 .wave-fig canvas{display:block;width:100%;aspect-ratio:16/9}
 .wave-read{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-top:1rem}
@@ -322,6 +322,11 @@ footer :focus-visible{outline-color:var(--ink)}
 }
 @media (max-width:860px) and (max-height:700px){
   .b:nth-of-type(2){display:none}
+  .copy{align-self:start;padding-top:.75rem}
+  .hero-inner{padding-top:calc(4.5rem + env(safe-area-inset-top))}
+  .me-row{display:none}
+  .err{min-height:1.1rem;margin-top:.25rem}
+  .next{min-height:3rem}
   .hero h1{font-size:2.6rem}
   .lead{font-size:1rem}
 }
@@ -353,7 +358,7 @@ footer :focus-visible{outline-color:var(--ink)}
   <div class="gutter"><div class="wrap hero-inner">
     <div class="stage" id="stage">
       <div class="thread" id="thread" aria-live="polite">
-        <div class="who" id="who"><span class="av" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="#EEE9DA" stroke-width="1.8" stroke-linecap="round"><path d="M4 13c1.5-1 2.5-1 4 0s2.5 1 4 0 2.5-1 4 0M6 9c1-3 3-4 5-3"/></svg></span><b>Ник</b><span class="st" id="st">печатает…</span></div>
+        <div class="who" id="who"><span class="av" aria-hidden="true"><svg viewBox="5 8 22 18"><path d="M7 23.5a5 5 0 0 1 1.3-9.8 7.5 7.5 0 0 1 14.4-1.6A5.6 5.6 0 0 1 25 23.5z" fill="#8C7C52"/><circle cx="13" cy="17.2" r="1.35" fill="#EEE9DA"/><circle cx="19" cy="17.2" r="1.35" fill="#EEE9DA"/><path d="M13.2 20.6c1.6 1 3.6 1 5.6-.4" fill="none" stroke="#EEE9DA" stroke-width="1.4" stroke-linecap="round"/></svg></span><b>Ник</b><span class="st" id="st">печатает…</span></div>
         <div class="bubbles">
           <p class="b">не спишь? 🙂</p>
           <p class="b">давай по одной. чисто вспомнить, как нам было хорошо</p>
