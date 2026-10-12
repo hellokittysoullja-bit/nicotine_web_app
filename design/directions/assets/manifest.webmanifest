@@ -1,0 +1,15 @@
+{
+  "name": "Breakup — расставание с Ником",
+  "short_name": "Breakup",
+  "description": "Помогает бросить никотин: сигареты, вейп, пакетики.",
+  "lang": "ru",
+  "start_url": "../v7-sky.html",
+  "display": "standalone",
+  "background_color": "#F3F6F6",
+  "theme_color": "#1E9BEA",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

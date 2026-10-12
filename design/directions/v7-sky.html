@@ -11,6 +11,15 @@
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#081A3D">
 <meta property="og:title" content="Breakup — расстаться с никотином">
 <meta property="og:description" content="Разгони Ника и посмотри, сколько неба он у тебя забирал.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Облако цвета Ника закрывает солнце. Надпись: «Пора расстаться с Ником».">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="assets/manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E9BEA'/%3E%3Ccircle cx='19' cy='13' r='7' fill='%23FFC94D'/%3E%3Cpath d='M7 24a5 5 0 0 1 4.6-5 6 6 0 0 1 11.2 1.4A4 4 0 0 1 22 24z' fill='%234A412A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -210,12 +219,14 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .axis-note{display:flex;justify-content:space-between;color:var(--calm-muted);font-size:.8125rem;margin-top:.35rem}
 
 /* ── Деньги ── */
-.money-top{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(2.5rem,6vw,6rem);align-items:end}
+.money .big{max-width:none}
+.money-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,6vw,6rem);align-items:end;margin-top:1.25rem;padding-bottom:clamp(3.5rem,7vw,6rem);border-bottom:1px solid var(--rule)}
+.mid{font-family:var(--f-display);font-weight:700;font-size:clamp(1.375rem,2.2vw,1.75rem);letter-spacing:-.025em;margin-top:clamp(3rem,6vw,5rem)}
 .calc label{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;gap:1rem}
 .calc output{font-family:var(--f-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
-.year{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(3.75rem,9.4vw,8.25rem);line-height:.86;letter-spacing:-.055em;margin-top:1.75rem;white-space:nowrap}
-.year-note{margin-top:.75rem;color:var(--muted)}
-.timeline{position:relative;margin-top:clamp(3.5rem,7vw,5.5rem);height:13rem}
+.year{display:block;font-family:var(--f-display);font-weight:800;font-size:clamp(4.25rem,17vw,15rem);line-height:.84;letter-spacing:-.06em;margin-top:clamp(1rem,2.5vw,2rem);white-space:nowrap;color:var(--act)}
+.year-note{color:var(--muted);font-size:clamp(1.125rem,1.6vw,1.375rem);max-width:22rem;text-wrap:pretty}
+.timeline{position:relative;margin-top:1.5rem;height:13rem}
 .tl-axis{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:var(--control);opacity:.5;border-radius:2px}
 .tl-fill{position:absolute;left:0;top:50%;height:2px;background:var(--act);border-radius:2px;width:0;transition:width .5s var(--ease-out)}
 .tl-tick{position:absolute;top:calc(50% + .9rem);font-size:.8125rem;color:var(--muted);translate:-50% 0;white-space:nowrap}
@@ -241,11 +252,14 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
   .goal .bar{display:block;grid-column:1/-1;height:.375rem;border-radius:1rem;background:var(--rule);overflow:hidden}
   .goal .bar i{display:block;height:100%;width:100%;border-radius:inherit;background:var(--act);transform:scaleX(var(--w,0));transform-origin:left;transition:transform .4s var(--ease-out)}
   .goal.far .bar i{opacity:.45}
-  .brain .chart text{font-size:22px}
+  .brain .chart text{font-size:24px}
 }
 
 /* ── Мозг ── */
-.brain-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2.5rem,6vw,6rem);align-items:center;margin-top:clamp(2.5rem,5vw,4rem)}
+.brain-wide{position:relative;margin-top:clamp(2.5rem,5vw,4rem)}
+.readout{position:absolute;right:0;top:clamp(2.5rem,6vw,5rem);width:min(26rem,40%)}
+.brain-ctrl{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,6vw,6rem);align-items:start;margin-top:1.5rem}
+.brain-ctrl .src{margin-top:.6rem}
 .chart{width:100%;height:auto;display:block;overflow:visible;cursor:pointer;touch-action:pan-y}
 .chart .grid{stroke:var(--rule);stroke-width:1}
 .chart .base{stroke:var(--act);stroke-width:1.5;stroke-dasharray:4 5}
@@ -258,11 +272,18 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--pag
 .chart .lab{fill:var(--act);font-weight:600}
 .wk{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.04em;line-height:1}
 .wk-pct{display:block;color:var(--muted);font-size:1rem;font-family:var(--f-body);font-weight:500;letter-spacing:0;margin-top:.5rem}
-.wk-t{margin-top:1.25rem;max-width:30rem;min-height:4.8em;text-wrap:pretty;font-size:1.125rem}
-.brain label{display:block;color:var(--muted);font-size:.9375rem;margin-top:1.25rem}
+.wk-t{margin-top:1rem;max-width:30rem;min-height:4.8em;text-wrap:pretty;font-size:1.125rem}
+.brain label{display:block;color:var(--muted);font-size:.9375rem}
 
 /* ── Срыв ── */
-.slip{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2.5rem,6vw,6rem);align-items:center}
+.slip{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,7vw,7rem);align-items:center}
+.exchange{display:flex;flex-direction:column;gap:.35rem;margin-top:1.75rem;max-width:26rem}
+.x-nick,.x-me{padding:.6rem .95rem;font-size:1.0625rem;line-height:1.35;width:fit-content;max-width:85%}
+.x-nick{background:var(--nick);color:var(--nick-text);border-radius:1.3rem 1.3rem 1.3rem .4rem}
+.x-me{align-self:flex-end;background:var(--act);color:var(--act-text);border-radius:1.3rem 1.3rem .4rem 1.3rem}
+.nick-ping{position:absolute;right:clamp(1.25rem,3vw,2rem);top:clamp(1rem,2.5vw,1.6rem);background:var(--nick);color:var(--nick-text);border-radius:1.3rem 1.3rem 1.3rem .4rem;padding:.5rem .9rem;font-size:.9375rem;transition:opacity .4s ease,transform .4s var(--ease-out)}
+.nick-ping-who{display:block;font-size:.75rem;font-weight:600;opacity:.75}
+.nick-ping.off{opacity:0;transform:translateY(-.4rem)}
 .cal{max-width:24rem}
 .cal-h,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem}
 .cal-h{color:var(--muted);font-size:.75rem;font-weight:500;margin-bottom:.5rem;text-align:center}
@@ -310,7 +331,10 @@ footer :focus-visible{outline-color:var(--ink)}
   .hero h1{font-size:clamp(2.75rem,12.5vw,4rem)}
   .lead{margin-top:1.1rem}
   .actions{margin-top:1.6rem;gap:1rem}
-  .wave-grid,.money-top,.brain-grid,.slip,.price{grid-template-columns:minmax(0,1fr)}
+  .wave-grid,.money-row,.brain-ctrl,.slip,.price{grid-template-columns:minmax(0,1fr)}
+  .money-row{gap:1.25rem}
+  .readout{position:static;width:auto;margin-bottom:1.5rem}
+  .cal-wrap{order:2}
   .card{padding:1.1rem}
   .me-row{margin-bottom:.8rem}
   .card h2{font-size:1.25rem;margin-bottom:.65rem}
@@ -397,18 +421,16 @@ footer :focus-visible{outline-color:var(--ink)}
 <div id="content">
 <section class="section gutter money" aria-labelledby="m-h">
   <div class="wrap">
-    <div class="money-top">
-      <div class="rv">
-        <h2 class="big" id="m-h">Деньги, которые он забирал, остаются тебе</h2>
-        <p class="sub">Подвинь ползунок под свои траты. Breakup каждый день откладывает их на твою цель и показывает, когда она станет твоей.</p>
-      </div>
-      <div class="calc rv">
+    <h2 class="big rv" id="m-h">Он забирает у тебя</h2>
+    <p class="year num rv" id="year">91 250 ₽</p>
+    <div class="money-row rv">
+      <p class="year-note" id="year-note">в год. За пять лет — 456 250 ₽.</p>
+      <div class="calc">
         <label for="spend"><span>Тратишь на никотин в день</span><output id="spend-v" class="num" for="spend">250 ₽</output></label>
         <input type="range" id="spend" min="50" max="1000" step="10" value="250">
-        <span class="year num" id="year">91 250 ₽</span>
-        <p class="year-note" id="year-note">за год. За пять лет — 456 250 ₽.</p>
       </div>
     </div>
+    <h3 class="mid rv">Breakup откладывает их на твою цель</h3>
     <div class="timeline rv" id="tl" role="img" aria-label="">
       <div class="tl-axis"></div>
       <span class="tl-tick" style="left:0">сегодня</span><span class="tl-tick" style="left:25%">3 мес</span><span class="tl-tick" style="left:50%">6 мес</span><span class="tl-tick" style="left:75%">9 мес</span><span class="tl-tick end" style="left:100%">год</span>
@@ -426,6 +448,7 @@ footer :focus-visible{outline-color:var(--ink)}
       <p class="src">NHS, «Quit smoking: dealing with cravings». В демо четыре минуты идут за двенадцать секунд, в приложении — в реальном времени.</p>
     </div>
     <figure class="wave-fig rv" aria-labelledby="w-h"><figcaption class="wave-cap">Сила тяги</figcaption>
+      <p class="nick-ping" id="ping"><span class="nick-ping-who">Ник</span>может, одну? 🙂</p>
       <canvas id="wave" width="1280" height="720" role="img" aria-label="График тяги: поднимается, держится около минуты и спадает к четвёртой минуте."></canvas>
       <div class="axis-note" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4 мин</span></div>
       <div class="wave-read"><span class="wave-time num" id="w-time">0:00</span><span class="wave-cue" id="w-cue" aria-live="polite">Нажми, когда Ник напишет</span></div>
@@ -436,28 +459,33 @@ footer :focus-visible{outline-color:var(--ink)}
 <section class="section gutter brain" aria-labelledby="b-h">
   <div class="wrap">
     <h2 class="big rv" id="b-h">Мозг перестаёт его ждать</h2>
-    <div class="brain-grid">
-      <svg class="chart rv" id="chart" viewBox="0 0 720 380" role="img" aria-labelledby="b-h ch-d"><desc id="ch-d">Лишние никотиновые рецепторы по неделям: держатся около четырёх недель и к двенадцатой приходят к уровню некурящего.</desc></svg>
-      <div class="rv">
+    <div class="brain-wide rv">
+      <div class="readout">
         <div class="wk" id="wk" aria-live="polite">Неделя 4<span class="wk-pct"></span></div>
         <p class="wk-t" id="wk-t"></p>
-        <label for="week">Неделя без никотина</label>
-        <input type="range" id="week" min="0" max="12" value="4">
-        <p class="src">Схема по данным Cosgrove и соавторов, 2009, Archives of General Psychiatry (ПЭТ): избыток никотиновых рецепторов держится около 4 недель и к 6–12 неделям приходит к уровню некурящих. Форма кривой между точками — иллюстрация.</p>
       </div>
+      <svg class="chart" id="chart" viewBox="0 0 1200 440" role="img" aria-labelledby="b-h ch-d"><desc id="ch-d">Лишние никотиновые рецепторы по неделям: держатся около четырёх недель и к двенадцатой приходят к уровню некурящего.</desc></svg>
+    </div>
+    <div class="brain-ctrl rv">
+      <div><label for="week">Неделя без никотина</label><input type="range" id="week" min="0" max="12" value="4"></div>
+      <p class="src">Cosgrove и соавторы, 2009, Archives of General Psychiatry (ПЭТ): избыток никотиновых рецепторов держится около 4 недель и к 6–12 неделям приходит к уровню некурящих. Форма кривой между точками — иллюстрация.</p>
     </div>
   </div>
 </section>
 
 <section class="section gutter" aria-labelledby="s-h" style="padding-top:0">
   <div class="wrap slip">
-    <div class="rv">
-      <h2 class="big" id="s-h">Сорвался — не значит вернулся</h2>
-      <p class="sub">Одна сигарета не отменяет три недели без Ника. Счётчик не обнуляется: Breakup помогает понять, что случилось, и идти дальше.</p>
-    </div>
-    <div class="rv">
+    <div class="rv cal-wrap">
       <div class="cal" role="img" aria-label="Календарь месяца: 24 дня позади, 23 без никотина и один срыв на семнадцатый день"><div class="cal-h" aria-hidden="true"><span>пн</span><span>вт</span><span>ср</span><span>чт</span><span>пт</span><span>сб</span><span>вс</span></div><div class="days" id="days" aria-hidden="true"></div></div>
       <p class="days-cap">23 дня из 24 без Ника<span>Срыв семнадцатого числа виден, но он не стирает остальные.</span></p>
+    </div>
+    <div class="rv">
+      <h2 class="big" id="s-h">Сорвался — не значит вернулся</h2>
+      <div class="exchange" aria-label="Переписка после срыва">
+        <p class="x-nick">ну всё, ты снова мой 🙂</p>
+        <p class="x-me">Нет. Один день не отменяет двадцать&nbsp;три.</p>
+      </div>
+      <p class="sub">Счётчик не обнуляется. Breakup помогает понять, что случилось, и идти дальше.</p>
     </div>
   </div>
 </section>
@@ -695,7 +723,7 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
 /* ── Волна ── */
 const wc = document.getElementById('wave'), wx = wc.getContext('2d'), ride = document.getElementById('ride');
-const wTime = document.getElementById('w-time'), wCue = document.getElementById('w-cue');
+const wTime = document.getElementById('w-time'), wCue = document.getElementById('w-cue'), ping = document.getElementById('ping');
 const curve = p => { const r = p < .3 ? Math.sin(p / .3 * Math.PI / 2) : Math.exp(-Math.pow((p - .3) / .32, 2) * 1.6); return Math.max(0, r * (1 - Math.pow(p, 6))); };
 let waveP = 0, waveRaf = 0;
 function drawWave(p){
@@ -723,7 +751,7 @@ ride.addEventListener('click', () => {
   cancelAnimationFrame(waveRaf); ride.disabled = true; ride.textContent = 'Дыши'; wCue.classList.remove('done');
   const D = 12000, t0 = performance.now();
   const step = now => {
-    const p = reduce ? 1 : Math.min(1, (now - t0) / D); waveP = p; drawWave(p);
+    const p = reduce ? 1 : Math.min(1, (now - t0) / D); waveP = p; drawWave(p); ping.classList.toggle('off', p > .55);
     const sec = Math.round(p * 240); wTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
     if (p < 1) { const ph = Math.floor((now - t0) / 2000) % 2; const cue = ph ? 'Выдох' : 'Вдох'; if (wCue.textContent !== cue) wCue.textContent = cue; waveRaf = requestAnimationFrame(step); }
     else { wCue.textContent = 'Волна прошла. Ник замолчал.'; wCue.classList.add('done'); ride.disabled = false; ride.textContent = 'Ещё раз'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} }
@@ -741,7 +769,7 @@ const spend = document.getElementById('spend'), year = document.getElementById('
 function money(){
   const d = +spend.value; spend.style.setProperty('--p', ((d - 50) / 950 * 100) + '%');
   const s = rub.format(d); document.getElementById('spend-v').textContent = s; spend.setAttribute('aria-valuetext', s + ' в день');
-  year.textContent = rub.format(d * 365); document.getElementById('year-note').textContent = 'за год. За пять лет — ' + rub.format(d * 365 * 5) + '.';
+  year.textContent = rub.format(d * 365); document.getElementById('year-note').textContent = 'в год. За пять лет — ' + rub.format(d * 365 * 5) + '.';
   const desc = [];
   GOALS.forEach(([name, price], i) => {
     const days = Math.ceil(price / d), g = goalEls[i], pos = Math.min(1, days / 365);
@@ -764,15 +792,16 @@ const TEXT = ['Рецепторов больше, чем у некурящего
  'Старые триггеры становятся обычными моментами дня.', 'Почти норма.', 'Почти норма. Держи план на праздники и стресс.',
  'Практически уровень некурящего.', 'Рецепторы на уровне некурящего. Расставание случилось и в мозге.'];
 const chart = document.getElementById('chart'), week = document.getElementById('week'), NS = 'http://www.w3.org/2000/svg';
-const CX0 = 40, CX1 = 700, CY0 = 40, CY1 = 320;
+let VW = 1200, VH = 440, CX0 = 40, CX1 = 1160, CY0 = 60, CY1 = 380;
 const cx = w => CX0 + (CX1 - CX0) * w / 12, cy = v => CY1 - (CY1 - CY0) * v;
+let ALL, TAN;
 // Монотонный сплайн (Фриче — Карлсон): кривая без ступенек и без выбросов
-const ALL = EXTRA.map((v, i) => [cx(i), cy(v)]);
-const TAN = (() => { const n = ALL.length, d = [], m = [];
+function prepCurve(){ ALL = EXTRA.map((v, i) => [cx(i), cy(v)]);
+TAN = (() => { const n = ALL.length, d = [], m = [];
   for (let i = 0; i < n - 1; i++) d.push((ALL[i + 1][1] - ALL[i][1]) / (ALL[i + 1][0] - ALL[i][0]));
   m[0] = d[0]; m[n - 1] = d[n - 2];
   for (let i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : 2 / (1 / d[i - 1] + 1 / d[i]);
-  return m; })();
+  return m; })(); }
 function smoothPath(to){
   let s = 'M' + ALL[0][0] + ',' + ALL[0][1];
   for (let i = 0; i < to; i++) { const [x0, y0] = ALL[i], [x1, y1] = ALL[i + 1], h = (x1 - x0) / 3;
@@ -781,7 +810,9 @@ function smoothPath(to){
 }
 const el = (n, a, txt) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (txt) e.textContent = txt; return e; };
 let cur, knob, past, lab;
-(function buildChart(){
+function buildChart(){
+  const narrow = innerWidth <= 600; VW = narrow ? 600 : 1200; VH = narrow ? 460 : 440; CX0 = narrow ? 10 : 40; CX1 = VW - (narrow ? 10 : 40); CY0 = 60; CY1 = VH - 60;
+  chart.setAttribute('viewBox', `0 0 ${VW} ${VH}`); [...chart.querySelectorAll(':scope > :not(desc)')].forEach(n => n.remove()); prepCurve();
   for (let i = 0; i <= 4; i++) chart.appendChild(el('line', { class: 'grid', x1: CX0, x2: CX1, y1: cy(i / 4), y2: cy(i / 4) }));
   const full = smoothPath(12);
   chart.appendChild(el('path', { class: 'area', d: full + ' L' + CX1 + ',' + CY1 + ' L' + CX0 + ',' + CY1 + 'Z' }));
@@ -794,7 +825,9 @@ let cur, knob, past, lab;
   [[0, 'начало'], [4, '4 нед'], [8, '8 нед'], [12, '12 нед']].forEach(([w, t]) => chart.appendChild(el('text', { x: cx(w), y: CY1 + 32, 'text-anchor': w === 0 ? 'start' : w === 12 ? 'end' : 'middle' }, t)));
   chart.appendChild(el('text', { x: CX0, y: CY0 - 16 }, 'лишние рецепторы'));
   chart.appendChild(el('text', { x: CX0 + 6, y: CY1 - 12, class: 'lab' }, 'уровень некурящего'));
-})();
+}
+buildChart();
+let narrowNow = innerWidth <= 600; addEventListener('resize', () => { if ((innerWidth <= 600) !== narrowNow) { narrowNow = !narrowNow; buildChart(); drawChart(); } });
 function drawChart(){
   const w = +week.value, v = EXTRA[w];
   past.setAttribute('d', smoothPath(w)); past.style.display = w ? '' : 'none';
@@ -809,7 +842,7 @@ function drawChart(){
   document.getElementById('wk-t').textContent = TEXT[w];
 }
 week.addEventListener('input', drawChart);
-const setFromPointer = e => { const r = chart.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 720; const w = Math.round(Math.min(12, Math.max(0, (x - CX0) / (CX1 - CX0) * 12))); if (w !== +week.value) { week.value = w; drawChart(); } };
+const setFromPointer = e => { const r = chart.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * VW; const w = Math.round(Math.min(12, Math.max(0, (x - CX0) / (CX1 - CX0) * 12))); if (w !== +week.value) { week.value = w; drawChart(); } };
 chart.addEventListener('pointerdown', e => { setFromPointer(e); chart.setPointerCapture(e.pointerId); });
 chart.addEventListener('pointermove', e => { if (e.buttons & 1 || e.pointerType !== 'mouse' && chart.hasPointerCapture(e.pointerId)) setFromPointer(e); });
 drawChart();
