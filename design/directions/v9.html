@@ -763,7 +763,7 @@ function makeSprites(pal){
     const lumps = []; for (let i = 0; i < 24; i++) { const a = r() * Math.PI * 2, d = Math.sqrt(r()) * .26; lumps.push([.5 + Math.cos(a) * d, .52 + Math.sin(a) * d * .78, .11 + r() * .12]); }
     lumps.sort((a, b) => a[1] - b[1]);
     for (const [u, v, q] of lumps) { const gr = x.createRadialGradient(u * S, v * S, 0, u * S, v * S, q * S);
-      gr.addColorStop(0, pal.body); gr.addColorStop(.7, pal.body + 'cc'); gr.addColorStop(1, pal.body + '00'); x.fillStyle = gr; x.beginPath(); x.arc(u * S, v * S, q * S, 0, 7); x.fill(); }
+      gr.addColorStop(0, pal.body); gr.addColorStop(.84, pal.body + 'f2'); gr.addColorStop(1, pal.body + '00'); x.fillStyle = gr; x.beginPath(); x.arc(u * S, v * S, q * S, 0, 7); x.fill(); }
     x.globalCompositeOperation = 'source-atop';
     for (const [u, v, q] of lumps) { const lx = (u + q * .35) * S, ly = (v - q * .45) * S, gr = x.createRadialGradient(lx, ly, 0, lx, ly, q * S * .95);
       gr.addColorStop(0, pal.lit + 'e0'); gr.addColorStop(.6, pal.lit + '30'); gr.addColorStop(1, pal.lit + '00'); x.fillStyle = gr; x.fillRect(0, 0, S, S); }
