@@ -340,11 +340,13 @@ dialog.plan::backdrop{background:rgba(6,30,50,0);transition:background-color .22
 dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl{display:flex;flex-direction:column;max-height:inherit;height:100%}
 .pl-body{flex:1}
-.pl-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem .75rem 0}
+.grab{display:none}
+.pl-top{position:relative;touch-action:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem .75rem 0}
 .icon-btn{width:2.75rem;height:2.75rem;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:background-color .15s ease,opacity .15s ease}
 .icon-btn svg{width:1.25rem;height:1.25rem}
 .icon-btn[hidden]{display:grid;visibility:hidden}
 .prog{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:.35rem;max-width:9rem}
+.prog[hidden]{display:grid;visibility:hidden}
 .prog i{height:.25rem;border-radius:1rem;background:var(--rule);transition:background-color .2s ease}
 .prog i.on{background:var(--act)}
 .pl-body{padding:1rem 1.75rem 0;overflow:auto;overscroll-behavior:contain}
@@ -368,12 +370,12 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .sum b{display:block;font-weight:600}
 .sum span{color:var(--muted);font-size:.9375rem}
 .pay[hidden]{display:none}
-.pay{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:.5rem;padding:1rem 1.1rem;border-radius:1rem;background:var(--surface-2)}
+.pay{display:grid;gap:.35rem;margin-top:.5rem;padding:1rem 1.1rem;border-radius:1rem;background:var(--surface-2)}
 .pay b{font:500 1.75rem/1 var(--f-display);font-variant-numeric:lining-nums}
-.pay span{color:var(--muted);font-size:.875rem;text-align:right}
+.pay span{color:var(--muted);font-size:.875rem}
 .pl-foot{padding:1.25rem 1.75rem calc(1.5rem + env(safe-area-inset-bottom));display:grid;gap:.6rem}
 .pl-foot .btn{width:100%}
-.pl-foot .btn[aria-disabled="true"]{opacity:.45;cursor:default}
+.pl-foot .btn[aria-disabled="true"]{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1.5px var(--control);cursor:default}
 .pl-foot .btn[hidden]{display:none}
 .pl-msg{min-height:1.4rem;font-size:.875rem;color:var(--muted);text-align:center;text-wrap:balance}
 .pl-msg:empty::before{content:"Ответы остаются в этом браузере."}
@@ -400,10 +402,13 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .brain-line .dot{width:.85rem;height:.85rem}
   footer .wrap{grid-template-columns:minmax(0,1fr)}
   footer nav{margin-top:0}
-  dialog.plan{width:100%;max-width:none;height:auto;min-height:min(31rem,80svh);max-height:92svh;bottom:0;top:auto;margin:auto 0 0;border-radius:1.5rem 1.5rem 0 0;transform:translateY(100%);transition:opacity .32s var(--ease-drawer),transform .32s var(--ease-drawer),overlay .32s allow-discrete,display .32s allow-discrete;opacity:1}
+  dialog.plan{width:100%;max-width:none;height:min(47rem,92svh);max-height:none;bottom:0;top:auto;margin:auto 0 0;border-radius:1.5rem 1.5rem 0 0;transform:translateY(100%);transition:opacity .32s var(--ease-drawer),transform .32s var(--ease-drawer),overlay .32s allow-discrete,display .32s allow-discrete;opacity:1}
   dialog.plan[open].in{transform:none}
   dialog.plan.out{transition-duration:.24s}
   .pl-body{padding-inline:1.25rem}.pl-foot{padding-inline:1.25rem}
+  .grab{display:block;position:absolute;left:50%;top:.45rem;width:2.25rem;height:.3125rem;margin-left:-1.125rem;border-radius:1rem;background:var(--rule)}
+  .pl-top{padding-top:1.1rem}
+  dialog.plan.drag{transition:none}
 }
 @media (max-width:860px) and (max-height:700px){
   .b:nth-of-type(2){display:none}
@@ -416,7 +421,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .typing i,.nl-dots i{animation:none;opacity:.7}
   .b,.b.gone,.rv,.nick-say{transform:none!important;filter:none!important}
   .sun,.hero.free .sun{transition-property:filter,opacity!important;transform:none!important}
-  .actions > div{transition-duration:.15s!important;transition-delay:0s!important}
+  .actions > div{transition-property:opacity!important;transition-duration:.15s!important;transition-delay:0s!important}
   dialog.plan,dialog.plan[open].in{transform:none!important}
 }
 </style>
@@ -608,7 +613,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 
 <dialog class="plan" id="plan" aria-labelledby="pl-title">
   <form class="pl" method="dialog" id="pl-form">
-    <div class="pl-top">
+    <div class="pl-top" id="pl-top"><span class="grab" aria-hidden="true"></span>
       <button type="button" class="icon-btn" id="pl-back" aria-label="Назад" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="prog" id="prog" role="progressbar" aria-label="Опрос" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1"><i class="on"></i><i></i><i></i><i></i></div>
       <button type="button" class="icon-btn" id="pl-close" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
@@ -626,7 +631,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
       <section class="step" data-step="4" hidden aria-labelledby="sum-h"><h2 id="sum-h">Твой план</h2><ul class="sum" id="sum"></ul></section>
     </div>
     <div class="pl-foot">
-      <div class="pay" id="pay" hidden><b>349 ₽</b><span>в месяц<br>напомним за 2&nbsp;дня до&nbsp;списания,<br>отмена в&nbsp;одно нажатие</span></div>
+      <div class="pay" id="pay" hidden><b>349 ₽</b><span>в месяц. Напомним за 2&nbsp;дня до&nbsp;списания, отмена в&nbsp;одно нажатие.</span></div>
       <button type="button" class="btn btn-act" id="pl-next" aria-disabled="true">Дальше</button>
       <p class="pl-msg" id="pl-msg" aria-live="polite"></p>
     </div>
@@ -731,7 +736,7 @@ function draw(){
   const v = og.createLinearGradient(0, base - H, 0, base + R * .06); v.addColorStop(0, 'rgba(30,34,38,0)'); v.addColorStop(1, 'rgba(24,28,32,.5)'); og.fillStyle = v; og.fillRect(0, 0, W0, H0);
   const rg = og.createRadialGradient(sx, sy, sr * .5, sx, sy, sr * 2.6); rg.addColorStop(0, `rgba(${glow},.55)`); rg.addColorStop(.45, `rgba(${glow},.14)`); rg.addColorStop(1, `rgba(${glow},0)`); og.fillStyle = rg; og.fillRect(0, 0, W0, H0);
   og.globalCompositeOperation = 'destination-out';
-  const fd = og.createLinearGradient(0, base + R * .02, 0, base + R * .13); fd.addColorStop(0, 'rgba(0,0,0,0)'); fd.addColorStop(1, 'rgba(0,0,0,1)'); og.fillStyle = fd; og.fillRect(0, base + R * .02, W0, H0);
+  const fd = og.createLinearGradient(0, base - R * .04, 0, base + R * .1); fd.addColorStop(0, 'rgba(0,0,0,0)'); fd.addColorStop(1, 'rgba(0,0,0,1)'); og.fillStyle = fd; og.fillRect(0, base - R * .04, W0, H0);
   g2.setTransform(1, 0, 0, 1, 0, 0); g2.clearRect(0, 0, cv.width, cv.height); g2.drawImage(off, 0, 0);
   // Серебряная кайма: край облака со стороны солнца — облако минус то же облако, сдвинутое от солнца
   const cxm = W0 * .5, cym = base - H * .4, vl = Math.hypot(cxm - sx, cym - sy) || 1, ddx = (cxm - sx) / vl * 7, ddy = (cym - sy) / vl * 7;
@@ -856,13 +861,13 @@ steps.slice(0, 4).forEach((stp, si) => {
     e.preventDefault(); const n = os[(map[e.key] + os.length) % os.length]; n.focus(); choose(si, n, false); });
 });
 function choose(si, b, advance = true){
-  const box = b.parentElement;
+  const box = b.parentElement, was = b.getAttribute('aria-checked');
   if (si === 2) { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', String(on)); on ? answers[2].add(b.dataset.v) : answers[2].delete(b.dataset.v); }
   else { [...box.children].forEach(x => { const on = x === b; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); answers[si] = b.dataset.v;
     if (si === 1) { spend.value = answers[1]; money(); }
     clearTimeout(choose.t); if (advance) choose.t = setTimeout(() => { if (at === si) show(si + 1); }, reduce ? 0 : 200); }
   msg.textContent = '';
-  try { coarse && navigator.vibrate && navigator.vibrate(6); } catch {}
+  try { if (si === 2 || was !== 'true') coarse && navigator.vibrate && navigator.vibrate(6); } catch {}
   syncFoot();
 }
 const nextB = document.getElementById('pl-next'), backB = document.getElementById('pl-back'), msg = document.getElementById('pl-msg'), prog = document.getElementById('prog');
@@ -899,14 +904,20 @@ nextB.addEventListener('click', () => {
 backB.addEventListener('click', () => show(Math.max(0, at - 1)));
 function openPlan(from, step){
   opener = from || document.activeElement; if (plan.open) return;
-  show(step ?? (answers[3] !== null && answers[2].size && answers[1] && answers[0] ? 4 : at === 4 ? 4 : at));
-  plan.showModal(); requestAnimationFrame(() => requestAnimationFrame(() => plan.classList.add('in')));
-  show(at);
+  const target = step ?? (answers[3] !== null && answers[2].size && answers[1] && answers[0] ? 4 : at);
+  plan.showModal(); show(target); requestAnimationFrame(() => requestAnimationFrame(() => plan.classList.add('in')));
 }
 function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; plan.classList.add('out'); plan.classList.remove('in');
   let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.close(); opener && opener.focus?.({ preventScroll: true }); };
-  if (reduce) return fin(); plan.addEventListener('transitionend', e => { if (e.target === plan && (e.propertyName === 'transform' || e.propertyName === 'opacity')) fin(); }, { once: false }); setTimeout(fin, mobile() ? 300 : 210); }
+  if (reduce) return fin(); const te = e => { if (e.target === plan && (e.propertyName === 'transform' || e.propertyName === 'opacity')) { plan.removeEventListener('transitionend', te); fin(); } }; plan.addEventListener('transitionend', te); setTimeout(fin, mobile() ? 300 : 210); }
 document.getElementById('pl-close').addEventListener('click', closePlan);
+// Лист на телефоне смахивается вниз, как в iOS: тянется за пальцем, закрывается после четверти высоты или быстрым жестом
+{ const top = document.getElementById('pl-top'); let y0 = 0, t0 = 0, dy = 0, on = false;
+  top.addEventListener('pointerdown', e => { if (!mobile() || e.target.closest('button')) return; on = true; y0 = e.clientY; t0 = performance.now(); dy = 0; plan.classList.add('drag'); top.setPointerCapture(e.pointerId); });
+  top.addEventListener('pointermove', e => { if (!on) return; dy = Math.max(0, e.clientY - y0); plan.style.transform = `translateY(${dy}px)`; });
+  const end = () => { if (!on) return; on = false; plan.classList.remove('drag'); const v = dy / Math.max(1, performance.now() - t0);
+    if (dy > plan.offsetHeight * .25 || v > .5) { plan.style.transform = ''; closePlan(); } else { plan.style.transform = ''; } };
+  top.addEventListener('pointerup', end); top.addEventListener('pointercancel', end); }
 plan.addEventListener('cancel', e => { e.preventDefault(); closePlan(); });
 plan.addEventListener('click', e => { if (e.target === plan) closePlan(); });
 document.getElementById('plan-open').addEventListener('click', e => openPlan(e.currentTarget));
@@ -957,7 +968,7 @@ waveResize(); addEventListener('resize', waveResize);
 let wState = 'idle', wT0 = 0, wPausedAt = 0;
 const D = 12000;
 function wStep(now){
-  const p = reduce ? 1 : Math.min(1, (now - wT0) / D); waveP = p; drawWave(p);
+  const p = Math.min(1, (now - wT0) / D); waveP = p; drawWave(p);
   ping.classList.toggle('off', p < .05 || p > .55);
   haze.style.opacity = (curve(p) * .5).toFixed(3); haze.style.transform = 'scaleY(' + (.7 + curve(p) * .3).toFixed(3) + ')';
   const sec = Math.round(p * 240); wTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
