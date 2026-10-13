@@ -744,6 +744,7 @@ function draw(){
   rg2.globalCompositeOperation = 'destination-out'; rg2.drawImage(off, ddx * DPR, ddy * DPR);
   rg2.globalCompositeOperation = 'source-in'; const rl = rg2.createRadialGradient(sx * DPR, sy * DPR, 0, sx * DPR, sy * DPR, sr * 3.2 * DPR);
   rl.addColorStop(0, 'rgba(255,246,222,.95)'); rl.addColorStop(.5, 'rgba(255,246,222,.4)'); rl.addColorStop(1, 'rgba(255,246,222,0)'); rg2.fillStyle = rl; rg2.fillRect(0, 0, rimC.width, rimC.height);
+  rg2.globalCompositeOperation = 'destination-out'; rg2.fillStyle = '#000'; const ex = Math.ceil(Math.abs(ddx) * DPR) + 2, ey = Math.ceil(Math.abs(ddy) * DPR) + 2; rg2.fillRect(0, 0, ex, rimC.height); rg2.fillRect(rimC.width - ex, 0, ex, rimC.height); rg2.fillRect(0, 0, rimC.width, ey);
   g2.globalCompositeOperation = 'lighter'; g2.globalAlpha = .9; g2.drawImage(rimC, 0, 0); g2.globalAlpha = 1; g2.globalCompositeOperation = 'source-over';
 }
 let nRects = [];
@@ -993,7 +994,7 @@ function paintBank(bank, top, lit, seed, flip){
   let q = seed; const r = () => (q = q * 16807 % 2147483647) / 2147483647;
   const n = Math.ceil(W / (48 * Math.min(1, H / 160))) + 3;
   for (let pass = 0; pass < 3; pass++) { x.globalAlpha = [.55, .8, 1][pass];
-    for (let i = 0; i < n; i++) { const rad = (26 + r() * (pass ? 26 : 40) + (r() < .15 ? 24 : 0)) * Math.min(1, H / 160), S = rad * 2.6, cx = (i - 1 + r()) * (W / (n - 3)), cy = H - rad * [.9, .55, .25][pass] - (pass ? 0 : 8);
+    for (let i = 0; i < n; i++) { const rad = (26 + r() * (pass ? 26 : 40) + (r() < .15 ? 24 : 0)) * Math.min(1, H / 160), S = rad * 2.6, cx = (i - 1 + r()) * (W / (n - 3)), cy = Math.max(rad * .95, H - rad * [.9, .55, .25][pass] - (pass ? 0 : 8));
       x.drawImage(spr[(i + pass) % spr.length], cx - S / 2, cy - S / 2, S, S); } }
   x.globalAlpha = 1; const g = x.createLinearGradient(0, H - 40, 0, H); g.addColorStop(0, top + '00'); g.addColorStop(1, top); x.fillStyle = g; x.fillRect(0, H - 40, W, 40);
   x.fillStyle = top; x.fillRect(0, H - 4, W, 4);
