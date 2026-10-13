@@ -49,7 +49,7 @@
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E7B34A;--sun-core:#F3CF7A;
+  --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E9E2CC;--sun-core:#F7F3E6;
   --smog-body:#4C545B;--smog-lit:#7F878E;--smog-shade:#171B1F;--smog-glow:200,210,220;
   --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.12);
   --ink:#F3F7FB;--on-ink:#06243F;--text:#E6EEF2;--muted:#A9BDC8;--rule:rgba(243,247,251,.16);
@@ -57,7 +57,7 @@
   --surface:#122130;--surface-2:#182A3A;--control:#6E8896;--reward:#D9A23E;
   --storm-top:#081419;--storm-low:#16262B;color-scheme:dark}}
 :root[data-theme="dark"]{
-  --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E7B34A;--sun-core:#F3CF7A;
+  --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E9E2CC;--sun-core:#F7F3E6;
   --smog-body:#4C545B;--smog-lit:#7F878E;--smog-shade:#171B1F;--smog-glow:200,210,220;
   --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.12);
   --ink:#F3F7FB;--on-ink:#06243F;--text:#E6EEF2;--muted:#A9BDC8;--rule:rgba(243,247,251,.16);
@@ -98,7 +98,7 @@ main,footer{position:relative;z-index:1}
 .hero{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;color:var(--ink);touch-action:pan-y}
 .sun{position:absolute;z-index:-3;pointer-events:none;border-radius:50%;
   left:var(--sx,82%);top:var(--sy,22%);width:var(--sr,15vmax);aspect-ratio:1;translate:-50% -50%;
-  background:radial-gradient(circle at 45% 42%,var(--sun-core) 0%,var(--sun) 55%,color-mix(in oklab,var(--sun) 92%,#E08A2E) 100%);
+  background:radial-gradient(circle,var(--sun-core) 0%,var(--sun) 62%,var(--sun) 100%);box-shadow:0 0 1.5px var(--sun),0 0 60px 18px color-mix(in oklab,var(--sun) 40%,transparent),0 0 180px 70px color-mix(in oklab,var(--sun-core) 20%,transparent);
   transition:transform 1.2s var(--ease-out),filter 1.2s var(--ease-out);transform:translateY(var(--sun-hide,30%)) scale(.92);filter:saturate(.75) brightness(.96)}
 .sun::before{content:"";position:absolute;inset:-110%;border-radius:50%;z-index:-1;
   background:radial-gradient(circle closest-side,color-mix(in oklab,var(--sun) 55%,transparent) 0%,color-mix(in oklab,var(--sun) 22%,transparent) 45%,transparent 100%);
@@ -123,17 +123,17 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .hero h1 span{grid-area:1/1;align-self:start;transition:opacity .12s ease-out}
 .hero h1 .after-h{opacity:0;transform:translateY(.5rem)}
 .hero.free h1 .before-h{opacity:0}
-.hero.free h1 .after-h{opacity:1;transform:none;transition:opacity .26s var(--ease-out) .38s,transform .26s var(--ease-out) .38s}
+.hero.free h1 .after-h{opacity:1;transform:none;transition:opacity .24s var(--ease-out) .14s,transform .24s var(--ease-out) .14s}
 .lead{display:grid;font-size:clamp(1.125rem,1.45vw,1.3125rem);line-height:1.5;max-width:31rem;margin-top:1.6rem;text-wrap:pretty}
 .lead span{grid-area:1/1;transition:opacity .22s ease}
 .lead .after-l,.hero.free .lead .before-l{opacity:0}
 .lead .after-l{transform:translateY(.4rem)}
 .lead .before-l{transition-duration:.12s}
-.hero.free .lead .after-l{opacity:1;transform:none;transition:opacity .26s var(--ease-out) .44s,transform .26s var(--ease-out) .44s}
+.hero.free .lead .after-l{opacity:1;transform:none;transition:opacity .24s var(--ease-out) .18s,transform .24s var(--ease-out) .18s}
 .actions{display:grid;margin-top:2.25rem}
 .actions > div{grid-area:1/1;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;transition:opacity .18s ease-out,visibility 0s}
 .actions .after-a,.hero.free .actions .before-a{opacity:0;visibility:hidden;transition:opacity .14s ease-out,visibility 0s .14s}
-.hero.free .actions .after-a{opacity:1;visibility:visible;transition:opacity .22s ease-out .5s,visibility 0s}
+.hero.free .actions .after-a{opacity:1;visibility:visible;transition:opacity .2s ease-out .2s,visibility 0s}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:3.5rem;padding:0 1.75rem;border-radius:999px;font-weight:600;font-size:1.0625rem;
   transition:transform .14s var(--ease-out),background-color .15s ease,box-shadow .15s ease;text-decoration:none}
 .btn:active{transform:scale(.97)}
@@ -141,7 +141,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .btn-act{background:var(--act);color:var(--act-text);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
 .btn-ghost{color:var(--text);box-shadow:inset 0 0 0 1.5px var(--control)}
 .hint{display:flex;align-items:center;gap:.55rem;font-weight:500;font-size:.9375rem;opacity:0;transform:translateY(.25rem);transition:opacity .3s ease,transform .3s var(--ease-out)}
-.hint.on{opacity:.8;transform:none}
+.hint.on{opacity:1;transform:none}
 .hint svg{width:1.4rem;height:1.4rem;flex:none}
 
 /* Переписка с Ником */
@@ -149,7 +149,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .thread{width:100%;max-width:25rem}
 .who{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem .1rem;color:var(--ink);opacity:0;transition:opacity .3s ease}
 .who.in{opacity:1}
-.av{width:2.25rem;height:2.25rem;border-radius:50%;background:var(--nick);color:var(--nick-text);display:grid;place-items:center;font:500 1.0625rem/1 var(--f-display);box-shadow:0 0 0 2px rgba(255,255,255,.55)}
+.av{width:2.25rem;height:2.25rem;border-radius:50%;background:var(--nick);color:var(--nick-text);display:grid;place-items:center;font:600 .875rem/1 var(--f-body);box-shadow:0 0 0 2px rgba(255,255,255,.55)}
 .who b{font-weight:600;font-size:.9375rem}
 .who .st{font-size:.875rem;opacity:.85}
 .bubbles{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.22rem}
@@ -215,7 +215,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .steps p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
 
 /* ── Волна ── */
-.calm{color:var(--calm-text);background:linear-gradient(in oklab 180deg,color-mix(in oklab,var(--storm-top) 0%,transparent) 0,var(--storm-top) 9rem,var(--storm-low) calc(100% - 9rem),color-mix(in oklab,var(--storm-low) 0%,transparent) 100%);padding-block:clamp(9rem,14vw,12rem)}
+.calm{color:var(--calm-text);background:linear-gradient(in oklab 180deg,color-mix(in oklab,var(--storm-top) 0%,transparent) 0,var(--storm-top) 4.5rem,var(--storm-low) calc(100% - 4.5rem),color-mix(in oklab,var(--storm-low) 0%,transparent) 100%);padding-block:clamp(9rem,14vw,12rem)}
 .calm .sub,.calm .src{color:var(--calm-muted)}
 .wave-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:2rem 4rem;align-items:end}
 .try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
@@ -231,19 +231,19 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .wave-cue{transition:opacity .16s ease-out,color .3s ease;font:500 clamp(1.5rem,2.6vw,2.25rem)/1.1 var(--f-display);letter-spacing:-.015em;color:var(--calm-text)}
 .wave-cue.idle{font:500 1.0625rem/1.4 var(--f-body);letter-spacing:0;color:var(--calm-muted)}
 .wave-cue.done{color:var(--reward)}
-.wave-time{font:500 clamp(2.5rem,5vw,4.25rem)/1 var(--f-display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.02em;color:var(--calm-text)}
+.wave-time{font:500 clamp(2rem,3.4vw,3rem)/1 var(--f-display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.02em;color:var(--calm-text)}
 .nick-ping{position:absolute;left:var(--px,28%);top:var(--py,8%);translate:-50% -100%;white-space:nowrap;background:var(--nick);color:var(--nick-text);border-radius:1.2rem 1.2rem 1.2rem .35rem;padding:.5rem .9rem;font-size:.9375rem;box-shadow:inset 0 0 0 1px var(--nick-ring);transition:opacity .2s ease-out,transform .2s var(--ease-out)}
 .nick-ping small{display:block;font-size:.75rem;font-weight:600;opacity:.7}
 .nick-ping.off{opacity:0;transform:translateY(-.4rem)}
 
 /* ── Срыв: месяц как полоса неба ── */
 .slip-h{max-width:16ch}
-.strip{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));height:clamp(9rem,16vw,12rem);border-radius:1.25rem;overflow:hidden;margin-top:clamp(2.5rem,5vw,4rem);box-shadow:inset 0 0 0 1px var(--rule)}
+.strip{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));height:clamp(9rem,16vw,12rem);border-radius:.75rem;overflow:hidden;margin-top:clamp(2.5rem,5vw,4rem);}
 .strip i{position:relative;background:linear-gradient(180deg,color-mix(in oklab,var(--sky-top) calc(var(--k) * 100%),#8FA9B6),color-mix(in oklab,var(--sky-low) calc(var(--k) * 100%),#C9D6DC))}
 .strip i + i{box-shadow:inset 1px 0 0 rgba(255,255,255,.18)}
 .strip i.miss{background:radial-gradient(120% 60% at 50% 30%,#8A9298,#4E565C 70%),#5A6268}
-.strip i.next{background:transparent}
-.strip i.today::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 2px var(--act)}
+.strip i.next{background:color-mix(in oklab,var(--sky-mid) 10%,transparent)}
+.strip i.today::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--act)}
 .strip-n{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));margin-top:.6rem;font-size:.8125rem;color:var(--muted)}
 .strip-n span{text-align:center;white-space:nowrap}
 .slip-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2rem clamp(2.5rem,6vw,6rem);margin-top:clamp(2.5rem,5vw,4rem);align-items:start}
@@ -260,7 +260,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .brain-line svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .brain-line path{fill:none;stroke:var(--act);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .brain-line .base{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 6;opacity:.6}
-.brain-line .dot{position:absolute;width:1rem;height:1rem;border-radius:50%;background:var(--act);translate:-50% -50%;box-shadow:0 0 0 4px var(--sky-pale)}
+.brain-line .dot{position:absolute;width:1rem;height:1rem;border-radius:50%;background:var(--act);translate:-50% -50%}
 .brain-line .base-l{position:absolute;right:0;bottom:-1.6rem;font-size:.8125rem;color:var(--muted)}
 .weeks{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,4rem);margin-top:2.5rem}
 .weeks b{display:block;font:500 clamp(1.5rem,2.3vw,2rem)/1.15 var(--f-display);letter-spacing:-.015em}
@@ -279,7 +279,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 
 /* ── Цена ── */
 .price{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
-.amount{margin-top:1.25rem;font:500 clamp(5rem,12vw,10rem)/.9 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums}
+.amount{margin-top:1.5rem;font:500 clamp(3.25rem,6vw,5rem)/1 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums}
 .amount small{font-size:.24em;letter-spacing:0;color:var(--muted);margin-left:.25em}
 .gets{list-style:none;display:grid;gap:0}
 .gets li{padding:1rem 0;border-bottom:1px solid var(--rule);display:grid;gap:.15rem}
@@ -321,13 +321,15 @@ footer a{color:inherit;display:inline-flex;align-items:center;min-height:2.75rem
 footer .brand{color:var(--text);font-size:1.25rem;margin-top:-.6rem}
 
 /* ── Опрос: настоящий лист с шагами ── */
-dialog.plan{border:0;padding:0;margin:auto;width:min(31rem,calc(100vw - 2rem));max-height:min(44rem,calc(100svh - 2rem));background:var(--surface);color:var(--text);border-radius:1.75rem;
+dialog.plan{border:0;padding:0;margin:6.5rem max(1.5rem,calc((100vw - 76rem) / 2)) auto auto;width:min(29rem,calc(100vw - 2rem));height:auto;bottom:auto;max-height:calc(100svh - 8rem);background:var(--surface);color:var(--text);border-radius:1.75rem;
   box-shadow:0 1px 2px rgba(6,36,63,.1),0 30px 60px -20px rgba(6,36,63,.45);overflow:hidden;
   opacity:0;transform:translateY(1rem) scale(.98);transition:opacity .22s var(--ease-out),transform .22s var(--ease-out),overlay .22s allow-discrete,display .22s allow-discrete}
 dialog.plan[open].in{opacity:1;transform:none}
+dialog.plan.out{transition-duration:.16s}
 dialog.plan::backdrop{background:rgba(6,30,50,0);transition:background-color .22s ease-out}
-dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
-.pl{display:flex;flex-direction:column;max-height:inherit}
+dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
+.pl{display:flex;flex-direction:column;max-height:inherit;height:100%}
+.pl-body{flex:1}
 .pl-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem .75rem 0}
 .icon-btn{width:2.75rem;height:2.75rem;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:background-color .15s ease,opacity .15s ease}
 .icon-btn svg{width:1.25rem;height:1.25rem}
@@ -355,17 +357,20 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
 .sum li:last-child{border-bottom:0}
 .sum b{display:block;font-weight:600}
 .sum span{color:var(--muted);font-size:.9375rem}
+.pay[hidden]{display:none}
 .pay{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:.5rem;padding:1rem 1.1rem;border-radius:1rem;background:var(--surface-2)}
 .pay b{font:500 1.75rem/1 var(--f-display);font-variant-numeric:lining-nums}
 .pay span{color:var(--muted);font-size:.875rem;text-align:right}
 .pl-foot{padding:1.25rem 1.75rem calc(1.5rem + env(safe-area-inset-bottom));display:grid;gap:.6rem}
 .pl-foot .btn{width:100%}
-.pl-foot .btn[aria-disabled="true"]{opacity:.4;cursor:default}
-.pl-msg{min-height:1.4rem;font-size:.875rem;color:var(--muted);text-align:center}
+.pl-foot .btn[aria-disabled="true"]{opacity:.45;cursor:default}
+.pl-foot .btn[hidden]{display:none}
+.pl-msg{min-height:1.4rem;font-size:.875rem;color:var(--muted);text-align:center;text-wrap:balance}
+.pl-msg:empty::before{content:"Ответы остаются в этом браузере."}
 
 @media (max-width:860px){
   .hero-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-content:start;column-gap:0;padding-top:calc(5.25rem + env(safe-area-inset-top));padding-bottom:2.5rem}
-  .stage{grid-column:1;grid-row:1;margin-top:0;min-height:max(15rem,40svh);display:flex;flex-direction:column;justify-content:flex-start}
+  .stage{grid-column:1;grid-row:1;margin-top:0;min-height:max(13rem,33svh);display:flex;flex-direction:column;justify-content:flex-start}
   .thread{max-width:none}
   .copy{grid-column:1;grid-row:2;padding-top:.5rem}
   .hero h1{font-size:clamp(2.75rem,12.5vw,3.75rem)}
@@ -381,8 +386,9 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
   .brain-line .dot{width:.85rem;height:.85rem}
   footer .wrap{grid-template-columns:minmax(0,1fr)}
   footer nav{margin-top:0}
-  dialog.plan{width:100%;max-width:none;max-height:calc(100svh - 1.5rem);margin:auto 0 0;border-radius:1.5rem 1.5rem 0 0;transform:translateY(100%);transition:opacity .32s var(--ease-drawer),transform .32s var(--ease-drawer),overlay .32s allow-discrete,display .32s allow-discrete;opacity:1}
+  dialog.plan{width:100%;max-width:none;height:auto;min-height:min(31rem,80svh);max-height:92svh;bottom:0;top:auto;margin:auto 0 0;border-radius:1.5rem 1.5rem 0 0;transform:translateY(100%);transition:opacity .32s var(--ease-drawer),transform .32s var(--ease-drawer),overlay .32s allow-discrete,display .32s allow-discrete;opacity:1}
   dialog.plan[open].in{transform:none}
+  dialog.plan.out{transition-duration:.24s}
   .pl-body{padding-inline:1.25rem}.pl-foot{padding-inline:1.25rem}
 }
 @media (max-width:860px) and (max-height:700px){
@@ -395,7 +401,8 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
   .b,.hint,.sun,.sun::before,#smog,.hero h1 span,.lead span,.rv,.sky i,.nick-say{transition-duration:.2s!important;transition-delay:0s!important}
   .typing i,.nl-dots i{animation:none;opacity:.7}
   .b,.b.gone,.rv,.nick-say{transform:none!important;filter:none!important}
-  .hero.free .sun{transform:none!important}
+  .sun,.hero.free .sun{transition-property:filter,opacity!important;transform:none!important}
+  .actions > div{transition-duration:.15s!important;transition-delay:0s!important}
   dialog.plan,dialog.plan[open].in{transform:none!important}
 }
 </style>
@@ -409,7 +416,7 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
   <canvas id="smog" aria-hidden="true"></canvas>
   <header class="top gutter"><div class="wrap">
     <a class="brand" href="#" lang="en" aria-label="Breakup, на главную">Breakup</a>
-    <a class="login" href="#">Войти</a>
+    <button class="login" id="top-plan" type="button">Составить план</button>
   </div></header>
 
   <div class="gutter"><div class="wrap hero-inner">
@@ -427,7 +434,7 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
 
     <div class="copy">
       <h1 id="h"><span class="before-h">Пора <em>расстаться</em> с&nbsp;Ником</span><span class="after-h" aria-hidden="true">Небо снова <em>твоё</em></span></h1>
-      <p class="lead"><span class="before-l">Ник — это никотин. Он пишет каждый раз, когда тебя ломает, и&nbsp;обещает спокойствие. Мы учим не&nbsp;отвечать.</span><span class="after-l" aria-hidden="true">Хорошо. Теперь пара вопросов — чтобы план был про тебя, а&nbsp;не&nbsp;про всех.</span></p>
+      <p class="lead"><span class="before-l">Ник — это никотин. Каждая тяга — его сообщение: «одну, и&nbsp;станет спокойнее». Мы поможем не&nbsp;отвечать.</span><span class="after-l" aria-hidden="true">Хорошо. Теперь пара вопросов — чтобы план был про тебя, а&nbsp;не&nbsp;про всех.</span></p>
       <div class="actions">
         <div class="before-a">
           <button class="btn btn-act" id="break">Расстаться с&nbsp;Ником</button>
@@ -460,7 +467,7 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
 <section class="calm section gutter" aria-labelledby="w-h" data-sky="storm">
   <div class="wrap">
     <div class="wave-head rv">
-      <div><p class="try">Попробуй — это кусок приложения</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;уходит</h2></div>
+      <div><p class="try">Попробуй прямо здесь — это часть приложения</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;уходит</h2></div>
       <p class="sub">Когда Ник пишет, мы не&nbsp;спорим с&nbsp;ним. Переждать проще, чем кажется: тяга обычно уходит за несколько минут.</p>
     </div>
     <figure class="wave-fig rv" aria-labelledby="w-h">
@@ -489,7 +496,7 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
       <p class="tally rv">23 дня из 24 без Ника<span>Серый день 17-го никуда не&nbsp;делся. Остальные 23 — тоже.</span></p>
       <div class="rv">
         <div class="exchange" aria-label="Переписка после срыва">
-          <p class="x-nick">ну всё, ты снова мой 🙂</p>
+          <p class="x-nick">ну всё, мы снова вместе 🙂</p>
           <p class="x-me">Нет. Один день не&nbsp;отменяет двадцать&nbsp;три.</p>
         </div>
         <p class="sub">Счётчик не&nbsp;обнуляется. Приложение спросит, что сорвало, и&nbsp;подскажет, что делать в&nbsp;следующий раз.</p>
@@ -505,7 +512,7 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
     <ol class="weeks">
       <li class="rv"><b>1-я неделя</b><p>Пик ломки. Раздражение и&nbsp;тяга — это голодные рецепторы, а&nbsp;не&nbsp;ты.</p></li>
       <li class="rv"><b>4-я неделя</b><p>Физической тяги меньше. Ник давит привычками: кофе, перерыв, дорога домой.</p></li>
-      <li class="rv"><b>6–12 недель</b><p>Рецепторов столько&nbsp;же, сколько у&nbsp;человека без никотина. Теперь вы расстались и&nbsp;в&nbsp;голове.</p></li>
+      <li class="rv"><b>6–12 недель</b><p>В&nbsp;среднем рецепторов становится столько&nbsp;же, сколько у&nbsp;некурящих. Теперь вы расстались и&nbsp;в&nbsp;голове.</p></li>
     </ol>
     <p class="src rv">Источник: Cosgrove и&nbsp;соавторы, 2009, Archives of&nbsp;General Psychiatry (ПЭТ). Избыток никотиновых рецепторов держится около четырёх недель и&nbsp;к&nbsp;6–12 неделям приходит к&nbsp;уровню некурящих. Форма линии между точками — иллюстрация.</p>
   </div>
@@ -532,17 +539,17 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
       <div class="nick-say"><span class="av" aria-hidden="true">Н</span><p class="msg"><span class="sr">Ник: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">они просто хотят твоих денег</span></p></div>
       <h2 class="h2" id="p-h">Сколько стоит</h2>
       <p class="amount num">349 ₽<small>в месяц</small></p>
-      <p class="terms">Подписка продлевается сама. За два дня до списания напомним, отменить можно в&nbsp;одно нажатие. Никаких таймеров «скидка сгорит через пять минут».</p>
+      <p class="terms">Подписка продлевается сама. За два дня до списания напомним, отменить можно в&nbsp;одно нажатие. Без таймеров и&nbsp;«последнего шанса»: цена одна и&nbsp;не&nbsp;сгорает.</p>
     </div>
     <div class="rv">
       <ul class="gets">
         <li><b>План расставания</b><span>День, когда вы расстаётесь, и&nbsp;первые две недели по шагам.</span></li>
         <li><b>«Волна» в&nbsp;одно нажатие</b><span>На минуты, когда тянет сильнее всего.</span></li>
         <li><b>Мозг по неделям</b><span>Что сейчас происходит и&nbsp;почему так тяжело.</span></li>
-        <li><b>Копилка</b><span>Сколько ты уже не&nbsp;отдал Нику.</span></li>
+        <li><b>Копилка</b><span>Сколько денег уже не&nbsp;ушло Нику.</span></li>
         <li><b>Срыв без обнуления</b><span>Разбор, что сорвало, и&nbsp;план на следующий раз.</span></li>
       </ul>
-      <button class="btn btn-act" id="start">Пройти опрос и&nbsp;получить план</button>
+      <button class="btn btn-act" id="start">Составить план — 2&nbsp;минуты</button>
     </div>
   </div>
 </section>
@@ -551,10 +558,10 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
   <div class="wrap faq-grid">
     <div class="rv">
       <h2 class="h2" id="q-h">Что ещё важно знать</h2>
-      <p class="privacy">Ответы опроса и&nbsp;дневник срывов хранятся на твоём устройстве. Мы их не&nbsp;видим и&nbsp;никому не&nbsp;передаём.</p>
+      <p class="privacy">Ответы опроса и&nbsp;дневник срывов сохраняются в&nbsp;этом браузере и&nbsp;не&nbsp;уходят на наш сервер. Оплату обрабатывает платёжный сервис — подробнее в&nbsp;«Конфиденциальности».</p>
     </div>
     <div class="faq rv">
-      <details><summary>Я уже пробовал бросить. Почему сейчас получится?<i aria-hidden="true"></i></summary><p>Попыток бывает много, и&nbsp;это нормально. Здесь срыв не&nbsp;обнуляет счётчик, а&nbsp;помогает понять, что именно сорвало, — и&nbsp;подготовиться к&nbsp;этому моменту в&nbsp;следующий раз.</p></details>
+      <details><summary>Уже были попытки бросить. Почему сейчас получится?<i aria-hidden="true"></i></summary><p>Попыток бывает много, и&nbsp;это нормально. Здесь срыв не&nbsp;обнуляет счётчик, а&nbsp;помогает понять, что именно сорвало, — и&nbsp;подготовиться к&nbsp;этому моменту в&nbsp;следующий раз.</p></details>
       <details><summary>Подходит для вейпа и&nbsp;пакетиков?<i aria-hidden="true"></i></summary><p>Да. Ник один и&nbsp;тот&nbsp;же — никотин. Неважно, в&nbsp;чём он приходит.</p></details>
       <details><summary>Можно вместе с&nbsp;пластырем или жвачкой?<i aria-hidden="true"></i></summary><p>Да. Никотинозаместительную терапию обсуди с&nbsp;врачом: приложение её не&nbsp;заменяет, но&nbsp;помогает с&nbsp;привычками и&nbsp;тягой.</p></details>
       <details><summary>Это лечение?<i aria-hidden="true"></i></summary><p>Нет. Breakup помогает бросить и&nbsp;не&nbsp;заменяет врача.</p></details>
@@ -567,7 +574,7 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
   <div class="wrap">
     <div class="nick-say" id="last-say"><span class="av" aria-hidden="true">Н</span><p class="msg"><span class="sr">Ник: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">не спишь?</span></p></div>
     <h2 class="h2 rv" id="f-h">Ник напишет снова. Ты&nbsp;можешь не&nbsp;отвечать.</h2>
-    <button class="btn btn-act rv" id="again">Расстаться с&nbsp;Ником</button>
+    <button class="btn btn-act rv" id="again">Составить план — 2&nbsp;минуты</button>
     <p class="final-note rv">Сначала опрос и&nbsp;план. Оплата — только после.</p>
   </div>
 </section>
@@ -597,10 +604,10 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
         <div class="opts" role="group" aria-label="Когда он пишет чаще всего?"></div></fieldset>
       <fieldset class="step" data-step="3" data-kind="one" hidden><legend>Когда расстаёмся?</legend>
         <div class="opts" role="radiogroup" aria-label="Когда расстаёмся?"></div></fieldset>
-      <section class="step" data-step="4" hidden aria-labelledby="sum-h"><h2 id="sum-h">Твой план</h2><ul class="sum" id="sum"></ul>
-        <div class="pay"><b>349 ₽</b><span>в месяц<br>напомним за 2&nbsp;дня до&nbsp;списания</span></div></section>
+      <section class="step" data-step="4" hidden aria-labelledby="sum-h"><h2 id="sum-h">Твой план</h2><ul class="sum" id="sum"></ul></section>
     </div>
     <div class="pl-foot">
+      <div class="pay" id="pay" hidden><b>349 ₽</b><span>в месяц<br>напомним за 2&nbsp;дня до&nbsp;списания,<br>отмена в&nbsp;одно нажатие</span></div>
       <button type="button" class="btn btn-act" id="pl-next" aria-disabled="true">Дальше</button>
       <p class="pl-msg" id="pl-msg" aria-live="polite"></p>
     </div>
@@ -657,11 +664,11 @@ function makeSprites(pal){
     return c;
   });
 }
-function layout(){ return mobile() ? { cx: .55, cy: .3, w: 1.25, h: .3, peak: .74 } : { cx: .765, cy: .38, w: .5, h: .44, peak: .66 }; }
+function layout(){ return mobile() ? { cx: .52, cy: .22, w: 1.2, h: .3, peak: .74 } : { cx: .72, cy: .4, w: .5, h: .44, peak: .66 }; }
 function build(){
   rect = hero.getBoundingClientRect();
   const W0 = rect.width, H0 = rect.height, L = layout();
-  DPR = Math.min(2, devicePixelRatio || 1);
+  DPR = 1;
   cv.width = Math.round(W0 * DPR); cv.height = Math.round(H0 * DPR);
   if (!off) { off = document.createElement('canvas'); og = off.getContext('2d'); }
   off.width = cv.width; off.height = cv.height;
@@ -710,7 +717,7 @@ function draw(){
 let nRects = [];
 function noteRects(){ nRects = notes.map(n => n.getBoundingClientRect()); }
 let lastW = 0;
-addEventListener('resize', () => { if (freed) return; if (Math.abs(innerWidth - lastW) > 40 || !lastW) { lastW = innerWidth; build(); } else { rect = hero.getBoundingClientRect(); noteRects(); } });
+let rbT = 0; addEventListener('resize', () => { if (freed) return; if (Math.abs(innerWidth - lastW) > 40 || !lastW) { clearTimeout(rbT); rbT = setTimeout(() => { lastW = innerWidth; build(); }, 150); } else { rect = hero.getBoundingClientRect(); noteRects(); } });
 addEventListener('scroll', () => { rect = hero.getBoundingClientRect(); noteRects(); }, { passive: true });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!freed) build(); waveResize(); });
 
@@ -795,7 +802,7 @@ function release(how){
   document.getElementById('break').tabIndex = -1; const po = document.getElementById('plan-open'); po.tabIndex = 0;
   try { navigator.vibrate && navigator.vibrate(18); } catch {}
   document.getElementById('status').textContent = 'Облако разогнано. Небо снова твоё.';
-  if (how === 'button') setTimeout(() => openPlan(po), reduce ? 0 : 700);
+  setTimeout(() => { if (viaKey) po.focus({ preventScroll: true }); }, reduce ? 0 : 1300);
 
 }
 document.getElementById('break').addEventListener('click', () => release('button'));
@@ -804,13 +811,13 @@ lastW = innerWidth; build();
 /* ── Опрос: четыре вопроса, потом план и цена ── */
 const plan = document.getElementById('plan'), steps = [...plan.querySelectorAll('.step')];
 const Q = [
-  [['cig', 'Сигареты'], ['vape', 'Вейп'], ['pouch', 'Никотиновые пакетики'], ['mix', 'Понемногу всё']],
+  [['cig', 'Сигареты'], ['vape', 'Вейп'], ['pouch', 'Никотиновые пакетики'], ['mix', 'Всего понемногу']],
   [['100', 'Около 100 ₽'], ['250', 'Около 250 ₽'], ['400', 'Около 400 ₽'], ['600', 'Больше 600 ₽']],
   [['coffee', 'Утром, с кофе'], ['break', 'На перерыве'], ['road', 'В дороге'], ['stress', 'Когда нервничаю'], ['drink', 'С алкоголем'], ['bored', 'Когда скучно']],
   [['0', 'Сегодня'], ['1', 'Завтра'], ['mon', 'В понедельник']]];
 const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
 const answers = [null, null, new Set(), null];
-let at = 0, opener = null;
+let at = 0, opener = null, spendTouched = false;
 steps.slice(0, 4).forEach((stp, si) => {
   const box = stp.querySelector('.opts'), many = stp.dataset.kind === 'many';
   Q[si].forEach(([v, t], k) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.dataset.v = v;
@@ -819,22 +826,25 @@ steps.slice(0, 4).forEach((stp, si) => {
     b.addEventListener('click', () => choose(si, b)); });
   if (!many) box.addEventListener('keydown', e => { const os = [...box.children], i = os.indexOf(document.activeElement); if (i < 0) return;
     const map = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: os.length - 1 }; if (!(e.key in map)) return;
-    e.preventDefault(); const n = os[(map[e.key] + os.length) % os.length]; n.focus(); choose(si, n); });
+    e.preventDefault(); const n = os[(map[e.key] + os.length) % os.length]; n.focus(); choose(si, n, false); });
 });
-function choose(si, b){
+function choose(si, b, advance = true){
   const box = b.parentElement;
   if (si === 2) { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', String(on)); on ? answers[2].add(b.dataset.v) : answers[2].delete(b.dataset.v); }
   else { [...box.children].forEach(x => { const on = x === b; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); answers[si] = b.dataset.v;
-    if (si === 1) { spend.value = answers[1]; money(); } }
+    if (si === 1) { spend.value = answers[1]; money(); }
+    clearTimeout(choose.t); if (advance) choose.t = setTimeout(() => { if (at === si) show(si + 1); }, reduce ? 0 : 200); }
+  msg.textContent = '';
   try { coarse && navigator.vibrate && navigator.vibrate(6); } catch {}
   syncFoot();
 }
 const nextB = document.getElementById('pl-next'), backB = document.getElementById('pl-back'), msg = document.getElementById('pl-msg'), prog = document.getElementById('prog');
 const ready = () => at === 4 || (at === 2 ? answers[2].size > 0 : answers[at] !== null);
-function syncFoot(){ nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === 4 ? 'Перейти к оплате' : at === 3 ? 'Показать план' : 'Дальше'; }
+function syncFoot(){ nextB.hidden = !(at === 2 || at === 4); document.getElementById('pay').hidden = at !== 4; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === 4 ? 'Оплата — скоро' : at === 3 ? 'Показать план' : 'Дальше'; }
 function show(i){
   at = i; steps.forEach((s, k) => s.hidden = k !== i); backB.hidden = i === 0; msg.textContent = '';
   [...prog.children].forEach((p, k) => p.classList.toggle('on', k <= Math.min(i, 3))); prog.setAttribute('aria-valuenow', Math.min(i + 1, 4)); prog.hidden = i === 4;
+  if (i === 1 && spendTouched && answers[1] === null) { const v = +spend.value, opts = [...steps[1].querySelectorAll('.opt')]; const near = opts.reduce((a, o) => Math.abs(+o.dataset.v - v) < Math.abs(+a.dataset.v - v) ? o : a); [...opts].forEach(x => { const on = x === near; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); answers[1] = near.dataset.v; steps[1].querySelector('.note').textContent = 'Как в калькуляторе выше — можно поменять.'; }
   if (i === 4) summary(); syncFoot();
   const f = steps[i].querySelector('.opt[aria-checked="true"]') || steps[i].querySelector('.opt[tabindex="0"], .opt');
   const head = steps[i].querySelector('legend, h2'); head.tabIndex = -1; head.style.outline = 'none';
@@ -848,8 +858,8 @@ function summary(){
   const when = [...answers[2]].map(k => WHEN[k]), list = when.length > 1 ? when.slice(0, -1).join(', ') + ' и ' + when.at(-1) : when[0];
   const per = +answers[1], month = rub.format(per * 30);
   const items = [
-    ['День расставания — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : '') + date, 'Накануне напомним, а утром спросим, как ты.'],
-    ['Ник будет писать ' + list, 'На эти минуты — «Волна»: четыре минуты, и тяга спадает.'],
+    ['День расставания — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : 'в понедельник, ') + date, w === '0' ? 'Вечером спросим, как прошёл первый день.' : 'Накануне напомним, а утром спросим, как ты.'],
+    ['Чаще всего Ник пишет ' + list, 'На эти минуты — «Волна». Обычно тяга спадает за несколько минут.'],
     ['Тебе остаётся около ' + month + ' в месяц', 'Раньше их забирал Ник. Копилка покажет, на что хватит.'],
     ['Первые две недели — по шагам', 'Каждый день короткий план и что сейчас происходит в мозге.']];
   const ul = document.getElementById('sum'); ul.innerHTML = '';
@@ -857,7 +867,7 @@ function summary(){
 }
 nextB.addEventListener('click', () => {
   if (!ready()) { msg.textContent = at === 2 ? 'Отметь хотя бы один вариант.' : 'Выбери один вариант.'; return; }
-  if (at < 4) show(at + 1); else msg.textContent = 'Оплата появится к запуску — это прототип.';
+  if (at < 4) show(at + 1); else msg.textContent = 'Оплата ещё не подключена: это прототип. План уже твой.';
 });
 backB.addEventListener('click', () => show(Math.max(0, at - 1)));
 function openPlan(from, step){
@@ -866,11 +876,14 @@ function openPlan(from, step){
   plan.showModal(); requestAnimationFrame(() => requestAnimationFrame(() => plan.classList.add('in')));
   show(at);
 }
-function closePlan(){ if (!plan.open) return; plan.classList.remove('in'); setTimeout(() => { plan.close(); opener && opener.focus?.({ preventScroll: true }); }, reduce ? 0 : 230); }
+function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; plan.classList.add('out'); plan.classList.remove('in');
+  let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.close(); opener && opener.focus?.({ preventScroll: true }); };
+  if (reduce) return fin(); plan.addEventListener('transitionend', e => { if (e.target === plan && (e.propertyName === 'transform' || e.propertyName === 'opacity')) fin(); }, { once: false }); setTimeout(fin, mobile() ? 300 : 210); }
 document.getElementById('pl-close').addEventListener('click', closePlan);
 plan.addEventListener('cancel', e => { e.preventDefault(); closePlan(); });
 plan.addEventListener('click', e => { if (e.target === plan) closePlan(); });
 document.getElementById('plan-open').addEventListener('click', e => openPlan(e.currentTarget));
+document.getElementById('top-plan').addEventListener('click', e => openPlan(e.currentTarget));
 document.getElementById('start').addEventListener('click', e => openPlan(e.currentTarget));
 document.getElementById('again').addEventListener('click', e => openPlan(e.currentTarget));
 
@@ -900,7 +913,7 @@ function drawWave(p){
   wx.setTransform(WD, 0, 0, WD, 0, 0); wx.clearRect(0, 0, W, H);
   const pt = q => [q * W, base - curve(q) * (base - padY)];
   // весь путь волны — тихий контур, чтобы видно было, что впереди
-  wx.strokeStyle = 'rgba(230,238,238,.5)'; wx.lineWidth = 2; wx.setLineDash([2, 7]); wx.lineCap = 'round'; wx.beginPath();
+  wx.strokeStyle = p > 0 ? 'rgba(230,238,238,.28)' : 'rgba(230,238,238,.6)'; wx.lineWidth = 2; wx.setLineDash([]); wx.lineCap = 'round'; wx.beginPath();
   for (let q = 0; q <= 1.0001; q += .004) { const [x, y] = pt(q); q === 0 ? wx.moveTo(x, y) : wx.lineTo(x, y); } wx.stroke(); wx.setLineDash([]);
   if (p > 0) {
     const g = wx.createLinearGradient(0, padY, 0, base); g.addColorStop(0, 'rgba(108,201,209,.55)'); g.addColorStop(1, 'rgba(108,201,209,.06)');
@@ -921,13 +934,13 @@ function wStep(now){
   ping.classList.toggle('off', p < .05 || p > .55);
   haze.style.opacity = (curve(p) * .5).toFixed(3); haze.style.transform = 'scaleY(' + (.7 + curve(p) * .3).toFixed(3) + ')';
   const sec = Math.round(p * 240); wTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
-  if (p < 1) { const cue = Math.floor((now - wT0) / 2000) % 2 ? 'Выдох' : 'Вдох'; if (wCue.dataset.next !== cue) { wCue.dataset.next = cue; wCue.style.opacity = 0; setTimeout(() => { wCue.textContent = cue; wCue.style.opacity = 1; }, reduce ? 0 : 160); } waveRaf = requestAnimationFrame(wStep); }
+  if (p < 1) { const cue = Math.floor((now - wT0) / 2000) % 2 ? 'Выдох' : 'Вдох'; if (wCue.dataset.next !== cue) { wCue.dataset.next = cue; wCue.style.opacity = 0; clearTimeout(wCue.t); wCue.t = setTimeout(() => { wCue.textContent = cue; wCue.style.opacity = 1; }, reduce ? 0 : 160); } waveRaf = requestAnimationFrame(wStep); }
   else { wState = 'done'; wavePassed = true; document.documentElement.dataset.sky = 'pale'; haze.style.opacity = 0; wCue.textContent = 'Волна прошла. Ник замолчал.'; wCue.classList.add('done'); ride.textContent = 'Ещё раз'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} }
 }
 ride.addEventListener('click', () => {
   const now = performance.now();
-  if (wState === 'running') { cancelAnimationFrame(waveRaf); wPausedAt = now; wState = 'paused'; ride.textContent = 'Продолжить'; wCue.textContent = 'Пауза'; return; }
-  if (wState === 'paused') { wT0 += now - wPausedAt; wState = 'running'; ride.textContent = 'Пауза'; waveRaf = requestAnimationFrame(wStep); return; }
+  if (wState === 'running') { cancelAnimationFrame(waveRaf); wPausedAt = now; wState = 'paused'; ride.textContent = 'Продолжить'; clearTimeout(wCue.t); wCue.style.opacity = 1; wCue.textContent = 'Пауза'; return; }
+  if (wState === 'paused') { wT0 += now - wPausedAt; wCue.dataset.next = ''; wState = 'running'; ride.textContent = 'Пауза'; waveRaf = requestAnimationFrame(wStep); return; }
   wT0 = now; wState = 'running'; ride.textContent = 'Пауза'; wCue.classList.remove('idle', 'done'); wCue.textContent = 'Вдох';
   waveRaf = requestAnimationFrame(wStep);
 });
@@ -942,11 +955,11 @@ function money(){
   const s = rub.format(d); document.getElementById('spend-v').textContent = s + ' в день'; spend.setAttribute('aria-valuetext', s + ' в день');
   year.textContent = rub.format(d * 365);
   const shoes = Math.ceil(12000 / d), sea = Math.ceil(60000 / d);
-  document.getElementById('year-note').textContent = 'Это кроссовки через ' + shoes + ' ' + dayWord(shoes) + ' и неделя на море через ' + (sea > 365 ? 'год с небольшим' : sea + ' ' + dayWord(sea)) + '. За пять лет — ' + rub.format(d * 365 * 5) + '.';
+  document.getElementById('year-note').textContent = 'Через ' + shoes + ' ' + dayWord(shoes) + ' — новые кроссовки. Через ' + (sea > 365 ? 'год с лишним' : sea + ' ' + dayWord(sea)) + ' — неделя у моря. За пять лет — ' + rub.format(d * 365 * 5) + '.';
   const dd = Math.max(1, Math.ceil(349 / d));
   document.getElementById('bridge').innerHTML = 'Подписка — 349 ₽ в месяц. <em>Меньше, чем Ник берёт с тебя за ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + '.</em>';
 }
-spend.addEventListener('input', money); money();
+spend.addEventListener('input', () => { spendTouched = true; money(); }); money();
 
 /* ── Мозг: линия к уровню без никотина ── */
 const bl = document.getElementById('brain-line'), bs = document.getElementById('brain-svg');
