@@ -238,6 +238,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .wave-fig canvas{display:block;width:100%;height:clamp(12rem,24vw,18rem)}
 .haze{position:absolute;inset:0 0 2.5rem 0;pointer-events:none;opacity:0;transform-origin:bottom;transform:scaleY(.7);
   background:radial-gradient(60% 70% at 20% 100%,rgba(20,26,30,.9),transparent 70%),radial-gradient(55% 80% at 55% 100%,rgba(20,26,30,.85),transparent 70%),radial-gradient(50% 70% at 88% 100%,rgba(20,26,30,.8),transparent 70%)}
+.pk{position:absolute;left:30%;top:.2rem;translate:-50% 0;font-size:.875rem;color:var(--calm-muted)}
 .axis-note{position:relative;height:1.4rem;color:var(--calm-muted);font-size:.875rem;margin-top:.5rem}
 .axis-note span{position:absolute;top:0;translate:-50% 0;white-space:nowrap}.axis-note span:first-child{translate:0 0}.axis-note span:last-child{translate:-100% 0}
 .wave-ctl{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:1.5rem 2rem;margin-top:1.75rem}
@@ -417,7 +418,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .brain-line .dot{width:.85rem;height:.85rem}
   footer .wrap{grid-template-columns:minmax(0,1fr)}
   footer nav{margin-top:0}
-  dialog.plan{width:100%;max-width:none;height:min(47rem,92svh);max-height:none;bottom:0;top:auto;margin:auto 0 0;border-radius:1.5rem 1.5rem 0 0;transform:translateY(100%);transition:opacity .28s var(--ease-drawer),transform .28s var(--ease-drawer),overlay .32s allow-discrete,display .32s allow-discrete;opacity:1}
+  dialog.plan{width:100%;max-width:none;height:auto;min-height:min(36rem,72svh);max-height:92svh;bottom:0;top:auto;margin:auto 0 0;border-radius:1.5rem 1.5rem 0 0;transform:translateY(100%);transition:opacity .28s var(--ease-drawer),transform .28s var(--ease-drawer),overlay .32s allow-discrete,display .32s allow-discrete;opacity:1}
   dialog.plan[open].in{transform:none}
   dialog.plan.out{transition-duration:.24s}
   .pl-body{padding-inline:1.25rem}.pl-foot{padding-inline:1.25rem}
@@ -457,7 +458,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 [data-char=zen] .sun[data-e] .brow:nth-child(1),[data-char=warm] .sun[data-e] .brow:nth-child(1){rotate:-4deg}[data-char=zen] .sun[data-e] .brow:nth-child(2),[data-char=warm] .sun[data-e] .brow:nth-child(2){rotate:4deg}
 [data-char=zen] .sun[data-e] .brow,[data-char=warm] .sun[data-e] .brow{opacity:.85;translate:0 0}
 [data-char=fight] .sun[data-e] .brow:nth-child(1){rotate:12deg;opacity:.9}[data-char=fight] .sun[data-e] .brow:nth-child(2){rotate:-12deg;opacity:.9}
-html:has(dialog.plan[open]) .hero-inner .copy{opacity:.1;transition:opacity .2s var(--ease-out)}
+html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s var(--ease-out)}
 .hero-inner .copy{transition:opacity .2s var(--ease-out)}
 /* Опрос: ползунок, клавиши, разбор */
 .sl{margin-top:1.4rem;display:grid;gap:.4rem}
@@ -477,8 +478,8 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:.1;transition:opacity .2s 
 .tile svg.br{display:block;width:100%;height:3rem;margin-top:.5rem;overflow:visible}
 .tile svg.br path{fill:none;stroke:var(--act);stroke-width:2.5;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .tile svg.br line{stroke:var(--muted);stroke-dasharray:2 4;opacity:.6;vector-effect:non-scaling-stroke}
-.rings{display:grid;grid-template-columns:5.5rem 1fr;gap:1rem;align-items:center;margin-top:.5rem}
-.rings svg{width:5.5rem;height:5.5rem}
+.rings{display:grid;grid-template-columns:7.5rem 1fr;gap:1.1rem;align-items:center;margin-top:.5rem}
+.rings svg{width:7.5rem;height:7.5rem}
 .rg{fill:none;stroke-width:6;stroke-linecap:round;transform:rotate(-90deg);transform-origin:40px 40px;transition:stroke-dashoffset .28s var(--ease-out),stroke .28s var(--ease-out)}
 .rg-t{stroke:var(--rule)}
 .rg.done{stroke:var(--reward)!important;stroke-dashoffset:0!important}
@@ -572,6 +573,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:.1;transition:opacity .2s 
       <div class="haze" id="haze" aria-hidden="true"></div>
       <p class="nick-ping off" id="ping" aria-hidden="true"><small>Смог</small>ну одну. никто не&nbsp;узнает</p>
       <canvas id="wave" role="img" aria-label="Сила тяги: поднимается, держится около минуты и спадает к четвёртой минуте."></canvas>
+      <span class="pk" aria-hidden="true">пик</span>
       <div class="axis-note" aria-hidden="true"><span style="left:0">0</span><span style="left:25%">1</span><span style="left:50%">2</span><span style="left:75%">3</span><span style="left:100%">4 мин</span></div>
     </figure>
     <div class="wave-ctl">
@@ -618,7 +620,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:.1;transition:opacity .2s 
 
 <section class="section gutter" aria-labelledby="m-h" data-sky="pale">
   <div class="wrap">
-    <h2 class="h2 money-h rv" id="m-h">Сколько ты платишь смогу</h2>
+    <h2 class="h2 money-h rv" id="m-h">Сколько это стоит тебе</h2>
     <div class="calc rv">
       <label for="spend">Уходит на никотин</label>
       <output id="spend-v" class="num" for="spend">250 ₽ в день</output>
@@ -1031,7 +1033,7 @@ function summary(){
     '<div class="tile w2" style="--i:2"><h3>Твоё «если — то»</h3><p></p><p class="src2">Старт — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : 'в понедельник, ') + date + '. Заранее выбранное действие связывает ситуацию с ответом (Gollwitzer, Sheeran, 2006).</p></div>' +
     '<div class="tile w2" style="--i:3"><h3>Миф про твой триггер</h3><p><b></b></p><p></p></div>' +
     '<div class="tile w2" style="--i:4"><h3>Три кольца дня</h3><div class="rings"><svg viewBox="0 0 80 80" aria-hidden="true">' + ring(34, 'a', 0) + ring(26, 'b', 0) + ring(18, 'c', 0) + '</svg>' +
-    '<div><p style="margin:0">Сегодня небо чистое. Рецепторы приходят в норму за недели (Cosgrove, 2009). Кольца дня помогают держать ритм; здесь это демо — нажми.</p><div class="rbtns" style="margin-top:.6rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div></div></div>' +
+    '<div><p style="margin:0">Сегодня небо чистое. Рецепторы приходят в норму за недели (Cosgrove, 2009). Кольца дня помогают держать ритм; здесь это демо — нажми.</p></div></div><div class="rbtns" style="margin-top:.8rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div>' +
     '<p class="src2" id="ring-msg" aria-live="polite" style="margin-top:.6rem">Сорвался — счётчик не обнуляется: разберём причину, и день не пропадёт.</p></div>' +
     '<div class="tile w2" style="--i:5"><h3>Подписка</h3><span class="big">349 ₽ в месяц</span><p class="src2">Напомним за 2 дня до списания, отмена в одно нажатие. Оплату подключим к запуску — это прототип.</p></div>';
   const t = bt.querySelectorAll('.tile'); t[2].querySelector('p').textContent = 'Если ' + IFW(trig, answers[0]) + ', то я ' + (ACT[answers[3]] || '…') + '.';
