@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Breakup — расстаться с никотином</title>
+<meta name="description" content="Сигареты, вейп, пакетики. Ник — это никотин. Breakup помогает перестать ему отвечать: план, «Волна» на моменты тяги, 349 ₽ в месяц.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#1E9BEA">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#081A3D">
+<meta property="og:title" content="Breakup — расстаться с никотином">
+<meta property="og:description" content="Разгони Ника и посмотри, сколько неба он у тебя забирал.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Серый смог закрывает солнце. Надпись: «Пора расстаться с Ником».">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="assets/manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E9BEA'/%3E%3Ccircle cx='19' cy='13' r='7' fill='%23FFC94D'/%3E%3Cpath d='M7 24a5 5 0 0 1 4.6-5 6 6 0 0 1 11.2 1.4A4 4 0 0 1 22 24z' fill='%236F787E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,500;0,7..72,600;1,7..72,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+  Breakup v8. Разбор четырёх критиков (UX, визуал, движение, тексты):
+  облако было коричневым и читалось грязью — теперь серый смог;
+  опрос был фальшивым — теперь настоящий, с планом и ценой;
+  низ страницы был шаблоном на белом — теперь вся страница стоит на небе.
+*/
+:root{
+  --sky-top:#1E9BEA;--sky-mid:#4EC0F4;--sky-low:#BFEAFB;--sky-pale:#DDF2FC;--sky-wash:#F1F9FD;
+  --sun:#FFC94D;--sun-core:#FFE08A;
+  --smog-body:#737B83;--smog-lit:#B4BBC2;--smog-shade:#2E343A;--smog-glow:236,238,240;
+  --nick:#2C3338;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.16);
+  --ink:#06243F;--on-ink:#FFFFFF;
+  --text:#0F2430;--muted:#3B5563;--rule:rgba(6,36,63,.14);
+  --act:#0E7480;--act-text:#FFFFFF;--me:#CDEEEF;--me-text:#132125;
+  --surface:#FFFFFF;--surface-2:#F1F6F7;--control:#6B858F;--reward:#F0B23F;
+  --storm-top:#26343A;--storm-low:#3A4A50;--calm-text:#E6EEEE;--calm-muted:#BCCBCD;--calm-line:#6CC9D1;
+  --f-display:"Literata",Georgia,"Times New Roman",serif;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --ease-drawer:cubic-bezier(.32,.72,0,1);
+  --gut:max(1.25rem,env(safe-area-inset-left));
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E7B34A;--sun-core:#F3CF7A;
+  --smog-body:#4C545B;--smog-lit:#7F878E;--smog-shade:#171B1F;--smog-glow:200,210,220;
+  --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.12);
+  --ink:#F3F7FB;--on-ink:#06243F;--text:#E6EEF2;--muted:#A9BDC8;--rule:rgba(243,247,251,.16);
+  --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E6EEF2;
+  --surface:#122130;--surface-2:#182A3A;--control:#6E8896;--reward:#D9A23E;
+  --storm-top:#081419;--storm-low:#16262B;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E7B34A;--sun-core:#F3CF7A;
+  --smog-body:#4C545B;--smog-lit:#7F878E;--smog-shade:#171B1F;--smog-glow:200,210,220;
+  --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.12);
+  --ink:#F3F7FB;--on-ink:#06243F;--text:#E6EEF2;--muted:#A9BDC8;--rule:rgba(243,247,251,.16);
+  --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E6EEF2;
+  --surface:#122130;--surface-2:#182A3A;--control:#6E8896;--reward:#D9A23E;
+  --storm-top:#081419;--storm-low:#16262B;color-scheme:dark}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;overscroll-behavior-y:none;background:var(--sky-wash)}
+body{color:var(--text);font-family:var(--f-body);font-size:1.0625rem;line-height:1.55;font-feature-settings:"kern","liga"}
+button,a,[role="button"],input,summary{touch-action:manipulation}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;user-select:none;-webkit-user-select:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:12px}
+.calm :focus-visible{outline-color:var(--calm-text)}
+.gutter{padding-inline:var(--gut) max(1.25rem,env(safe-area-inset-right))}
+.wrap{max-width:76rem;margin:0 auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:1rem;top:-4rem;z-index:10;background:var(--ink);color:var(--on-ink);padding:.75rem 1rem;border-radius:.75rem;font-weight:600;text-decoration:none}
+.skip:focus{top:calc(.75rem + env(safe-area-inset-top))}
+.num{font-variant-numeric:lining-nums tabular-nums}
+em{font-style:italic}
+
+/* ── Небо за всей страницей: погода меняется по сюжету ── */
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+.sky i{position:absolute;inset:0;opacity:0;transition:opacity .9s ease-out}
+.s-day{background:linear-gradient(in oklab 180deg,var(--sky-top),var(--sky-mid) 55%,var(--sky-low))}
+.s-pale{background:linear-gradient(in oklab 180deg,var(--sky-pale),var(--sky-wash) 80%)}
+.s-storm{background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low))}
+.s-clear{background:linear-gradient(in oklab 180deg,var(--sky-low),var(--sky-mid) 50%,var(--sky-top))}
+html:not([data-sky]) .s-day,html[data-sky="day"] .s-day,html[data-sky="pale"] .s-pale,html[data-sky="storm"] .s-storm,html[data-sky="clear"] .s-clear{opacity:1}
+main,footer,.skip{position:relative;z-index:1}
+
+/* ── Бренд ── */
+.brand{display:inline-flex;align-items:baseline;font-family:var(--f-display);font-style:italic;font-weight:500;font-size:1.5rem;letter-spacing:-.02em;color:inherit;text-decoration:none;min-height:2.75rem;align-items:center}
+
+/* ── Первый экран ── */
+.hero{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;color:var(--ink);touch-action:pan-y}
+.sun{position:absolute;z-index:-3;pointer-events:none;border-radius:50%;
+  left:var(--sx,82%);top:var(--sy,22%);width:var(--sr,15vmax);aspect-ratio:1;translate:-50% -50%;
+  background:radial-gradient(circle at 45% 42%,var(--sun-core) 0%,var(--sun) 55%,color-mix(in oklab,var(--sun) 92%,#E08A2E) 100%);
+  transition:transform 1.2s var(--ease-out),filter 1.2s var(--ease-out);transform:translateY(var(--sun-hide,30%)) scale(.92);filter:saturate(.75) brightness(.96)}
+.sun::before{content:"";position:absolute;inset:-110%;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle closest-side,color-mix(in oklab,var(--sun) 55%,transparent) 0%,color-mix(in oklab,var(--sun) 22%,transparent) 45%,transparent 100%);
+  opacity:.25;transform:scale(.85);transition:opacity 1.2s var(--ease-out),transform 1.2s var(--ease-out)}
+.hero.free .sun{transform:translate(var(--sun-fx,0),var(--sun-fy,0));filter:none;transition:transform .9s cubic-bezier(.22,1,.36,1) .06s,filter .9s ease-out .06s}
+.who{transition:opacity .3s ease}.hero.free .who{opacity:0;transition-duration:.15s;transition-delay:.06s}
+
+.hero.free .sun::before{opacity:1;transform:none}
+.hero.dragging{user-select:none;-webkit-user-select:none}
+#smog{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.hero.free #smog{opacity:0;transition:opacity .25s ease-out .55s}
+
+header.top{position:absolute;inset:0 0 auto 0;z-index:3;padding-top:env(safe-area-inset-top)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:4.75rem}
+.login{display:inline-flex;align-items:center;min-height:2.75rem;padding-inline:.85rem;margin-right:-.85rem;color:var(--ink);font-weight:500;font-size:.9375rem;text-decoration:none;border-radius:999px;transition:background-color .15s ease}
+
+.hero-inner{position:relative;z-index:2;min-height:100svh;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+  column-gap:3rem;padding-block:calc(6rem + env(safe-area-inset-top)) clamp(3.5rem,9vh,6rem);align-items:center;pointer-events:none}
+.hero-inner > *{pointer-events:auto}
+.copy{grid-column:1;grid-row:1;max-width:46rem}
+.hero h1{font-family:var(--f-display);font-weight:500;font-size:clamp(3.25rem,7.4vw,7rem);line-height:.98;letter-spacing:-.025em;text-wrap:balance;display:grid}
+.hero h1 span{grid-area:1/1;align-self:start;transition:opacity .12s ease-out}
+.hero h1 .after-h{opacity:0;transform:translateY(.5rem)}
+.hero.free h1 .before-h{opacity:0}
+.hero.free h1 .after-h{opacity:1;transform:none;transition:opacity .26s var(--ease-out) .38s,transform .26s var(--ease-out) .38s}
+.lead{display:grid;font-size:clamp(1.125rem,1.45vw,1.3125rem);line-height:1.5;max-width:31rem;margin-top:1.6rem;text-wrap:pretty}
+.lead span{grid-area:1/1;transition:opacity .22s ease}
+.lead .after-l,.hero.free .lead .before-l{opacity:0}
+.lead .after-l{transform:translateY(.4rem)}
+.lead .before-l{transition-duration:.12s}
+.hero.free .lead .after-l{opacity:1;transform:none;transition:opacity .26s var(--ease-out) .44s,transform .26s var(--ease-out) .44s}
+.actions{display:grid;margin-top:2.25rem}
+.actions > div{grid-area:1/1;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;transition:opacity .18s ease-out,visibility 0s}
+.actions .after-a,.hero.free .actions .before-a{opacity:0;visibility:hidden;transition:opacity .14s ease-out,visibility 0s .14s}
+.hero.free .actions .after-a{opacity:1;visibility:visible;transition:opacity .22s ease-out .5s,visibility 0s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:3.5rem;padding:0 1.75rem;border-radius:999px;font-weight:600;font-size:1.0625rem;
+  transition:transform .14s var(--ease-out),background-color .15s ease,box-shadow .15s ease;text-decoration:none}
+.btn:active{transform:scale(.97)}
+.btn svg{width:1.15rem;height:1.15rem;flex:none}
+.btn-act{background:var(--act);color:var(--act-text);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.btn-ghost{color:var(--text);box-shadow:inset 0 0 0 1.5px var(--control)}
+.hint{display:flex;align-items:center;gap:.55rem;font-weight:500;font-size:.9375rem;opacity:0;transform:translateY(.25rem);transition:opacity .3s ease,transform .3s var(--ease-out)}
+.hint.on{opacity:.8;transform:none}
+.hint svg{width:1.4rem;height:1.4rem;flex:none}
+
+/* Переписка с Ником */
+.stage{grid-column:2;grid-row:1;margin-top:-4vh}
+.thread{width:100%;max-width:25rem}
+.who{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem .1rem;color:var(--ink);opacity:0;transition:opacity .3s ease}
+.who.in{opacity:1}
+.av{width:2.25rem;height:2.25rem;border-radius:50%;background:var(--nick);color:var(--nick-text);display:grid;place-items:center;font:500 1.0625rem/1 var(--f-display);box-shadow:0 0 0 2px rgba(255,255,255,.55)}
+.who b{font-weight:600;font-size:.9375rem}
+.who .st{font-size:.875rem;opacity:.85}
+.bubbles{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.22rem}
+.b{max-width:min(100%,17.5rem);text-wrap:pretty;background:var(--nick);color:var(--nick-text);padding:.6rem .95rem .64rem;font-size:1.0625rem;line-height:1.35;
+  border-radius:1.25rem;box-shadow:inset 0 0 0 1px var(--nick-ring),0 6px 18px -10px rgba(10,20,30,.55);
+  opacity:0;transform:translateY(.4rem) scale(.97);transform-origin:left bottom;
+  transition:opacity .22s var(--ease-out),transform .22s var(--ease-out),filter .2s ease}
+.b.last{border-bottom-left-radius:.375rem}
+.b.in{opacity:1;transform:none}
+.b.gone{opacity:0;transform:translateX(calc(var(--dx,-1) * .75rem));transition-duration:.15s}
+.typing{display:none;position:absolute;left:0;align-items:center;gap:.28rem;background:var(--nick);border-radius:1.3rem;padding:.85rem 1rem;box-shadow:inset 0 0 0 1px var(--nick-ring)}
+.typing.on{display:inline-flex}
+.typing i,.nl-dots i{width:.42rem;height:.42rem;border-radius:50%;background:var(--nick-text);opacity:.4;animation:dot 1s ease-in-out infinite}
+.typing i:nth-child(2),.nl-dots i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3),.nl-dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{opacity:.35;transform:none}30%{opacity:.95;transform:translateY(-2px)}}
+
+@media (hover:hover) and (pointer:fine){
+  .btn-act:hover{background:color-mix(in oklab,var(--act) 88%,var(--text))}
+  .btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--text)}
+  .opt:hover{border-color:var(--text)}
+  .login:hover{background:color-mix(in oklab,var(--ink) 10%,transparent)}
+  .link:hover{text-decoration-thickness:2px}
+  .faq summary:hover{color:var(--act)}
+}
+
+/* ── Секции ── */
+.section{padding-block:clamp(4.5rem,8vw,7.5rem)}
+.eyebrow-n{display:none}
+.h2{font-family:var(--f-display);font-weight:500;font-size:clamp(2.4rem,5.4vw,4.75rem);line-height:1.02;letter-spacing:-.022em;text-wrap:balance}
+.h3{font-family:var(--f-display);font-weight:500;font-size:clamp(1.5rem,2.3vw,2rem);line-height:1.15;letter-spacing:-.015em}
+.sub{color:var(--muted);margin-top:1.25rem;max-width:32rem;font-size:1.125rem;text-wrap:pretty}
+.src{color:var(--muted);font-size:.875rem;line-height:1.5;margin-top:1.25rem;max-width:36rem;text-wrap:pretty}
+.rv{opacity:0;transform:translateY(.5rem);transition:opacity .26s var(--ease-out),transform .26s var(--ease-out)}
+.rv.seen{opacity:1;transform:none}
+
+/* Ник вклинивается в разговор: реплика с именем, сначала «печатает» */
+.nick-say{display:flex;align-items:flex-end;gap:.55rem;margin-bottom:1.5rem;opacity:0;transform:translateY(6px);transition:opacity .22s var(--ease-out),transform .22s var(--ease-out)}
+.nick-say.on{opacity:1;transform:none}
+.nick-say .av{width:1.9rem;height:1.9rem;font-size:.9375rem;box-shadow:none}
+.nick-say .msg{background:var(--nick);color:var(--nick-text);border-radius:1.2rem 1.2rem 1.2rem .35rem;padding:.55rem .95rem;font-size:1.0625rem;line-height:1.35;box-shadow:inset 0 0 0 1px var(--nick-ring);min-height:2.5rem;display:flex;align-items:center}
+.nick-say .msg small{display:block;font-size:.75rem;font-weight:600;opacity:.7}
+.nick-say:not(.sent) .nl-msg{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.nick-say.sent .nl-dots{display:none}
+.nl-dots{display:inline-flex;gap:.28rem;padding:.2rem .1rem}
+
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2.75rem;background:transparent;color:var(--act);--p:20%;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:.375rem;border-radius:1rem;background:linear-gradient(90deg,currentColor var(--p),var(--rule) var(--p))}
+input[type=range]::-moz-range-track{height:.375rem;border-radius:1rem;background:var(--rule)}
+input[type=range]::-moz-range-progress{height:.375rem;border-radius:1rem;background:currentColor}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.75rem;height:1.75rem;border-radius:50%;background:#fff;border:0;margin-top:-.6875rem;
+  box-shadow:0 0 0 1px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.22);transition:transform .14s var(--ease-out)}
+input[type=range]::-moz-range-thumb{width:1.75rem;height:1.75rem;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.22)}
+input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
+input[type=range]:focus-visible{outline:none}
+input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 2px var(--sky-wash),0 0 0 4px var(--act),0 2px 6px rgba(0,0,0,.22)}
+input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky-wash),0 0 0 4px var(--act)}
+
+/* ── Как это работает ── */
+.how-h{max-width:18ch}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,4rem);margin-top:clamp(3rem,6vw,5rem);counter-reset:s}
+.steps li{counter-increment:s;border-top:1px solid var(--rule);padding-top:1.5rem}
+.steps li::before{content:counter(s);display:block;font:500 clamp(3rem,5vw,4.5rem)/1 var(--f-display);font-variant-numeric:lining-nums;color:var(--act);margin-bottom:1.25rem}
+.steps p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
+
+/* ── Волна ── */
+.calm{color:var(--calm-text);background:linear-gradient(in oklab 180deg,color-mix(in oklab,var(--storm-top) 0%,transparent) 0,var(--storm-top) 9rem,var(--storm-low) calc(100% - 9rem),color-mix(in oklab,var(--storm-low) 0%,transparent) 100%);padding-block:clamp(9rem,14vw,12rem)}
+.calm .sub,.calm .src{color:var(--calm-muted)}
+.wave-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:2rem 4rem;align-items:end}
+.try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
+.try::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--calm-line)}
+.wave-fig{position:relative;margin-top:clamp(2.5rem,5vw,4rem)}
+.wave-fig canvas{display:block;width:100%;height:clamp(14rem,32vw,24rem)}
+.haze{position:absolute;inset:0 0 2.5rem 0;pointer-events:none;opacity:0;transform-origin:bottom;transform:scaleY(.7);
+  background:radial-gradient(60% 70% at 20% 100%,rgba(20,26,30,.9),transparent 70%),radial-gradient(55% 80% at 55% 100%,rgba(20,26,30,.85),transparent 70%),radial-gradient(50% 70% at 88% 100%,rgba(20,26,30,.8),transparent 70%)}
+.axis-note{position:relative;height:1.4rem;color:var(--calm-muted);font-size:.875rem;margin-top:.5rem}
+.axis-note span{position:absolute;top:0;translate:-50% 0;white-space:nowrap}.axis-note span:first-child{translate:0 0}.axis-note span:last-child{translate:-100% 0}
+.wave-ctl{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.5rem 2rem;margin-top:1.75rem}
+.ride{background:var(--calm-line);color:#06292D;min-width:12rem}
+.wave-cue{transition:opacity .16s ease-out,color .3s ease;font:500 clamp(1.5rem,2.6vw,2.25rem)/1.1 var(--f-display);letter-spacing:-.015em;color:var(--calm-text)}
+.wave-cue.idle{font:500 1.0625rem/1.4 var(--f-body);letter-spacing:0;color:var(--calm-muted)}
+.wave-cue.done{color:var(--reward)}
+.wave-time{font:500 clamp(2.5rem,5vw,4.25rem)/1 var(--f-display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.02em;color:var(--calm-text)}
+.nick-ping{position:absolute;left:var(--px,28%);top:var(--py,8%);translate:-50% -100%;white-space:nowrap;background:var(--nick);color:var(--nick-text);border-radius:1.2rem 1.2rem 1.2rem .35rem;padding:.5rem .9rem;font-size:.9375rem;box-shadow:inset 0 0 0 1px var(--nick-ring);transition:opacity .2s ease-out,transform .2s var(--ease-out)}
+.nick-ping small{display:block;font-size:.75rem;font-weight:600;opacity:.7}
+.nick-ping.off{opacity:0;transform:translateY(-.4rem)}
+
+/* ── Срыв: месяц как полоса неба ── */
+.slip-h{max-width:16ch}
+.strip{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));height:clamp(9rem,16vw,12rem);border-radius:1.25rem;overflow:hidden;margin-top:clamp(2.5rem,5vw,4rem);box-shadow:inset 0 0 0 1px var(--rule)}
+.strip i{position:relative;background:linear-gradient(180deg,color-mix(in oklab,var(--sky-top) calc(var(--k) * 100%),#8FA9B6),color-mix(in oklab,var(--sky-low) calc(var(--k) * 100%),#C9D6DC))}
+.strip i + i{box-shadow:inset 1px 0 0 rgba(255,255,255,.18)}
+.strip i.miss{background:radial-gradient(120% 60% at 50% 30%,#8A9298,#4E565C 70%),#5A6268}
+.strip i.next{background:transparent}
+.strip i.today::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 2px var(--act)}
+.strip-n{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));margin-top:.6rem;font-size:.8125rem;color:var(--muted)}
+.strip-n span{text-align:center;white-space:nowrap}
+.slip-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2rem clamp(2.5rem,6vw,6rem);margin-top:clamp(2.5rem,5vw,4rem);align-items:start}
+.tally{font:500 clamp(2rem,3.4vw,2.75rem)/1.1 var(--f-display);letter-spacing:-.015em}
+.tally span{display:block;font:400 1.0625rem/1.5 var(--f-body);letter-spacing:0;color:var(--muted);margin-top:.6rem;max-width:24rem}
+.exchange{display:flex;flex-direction:column;gap:.35rem;max-width:30rem}
+.x-nick,.x-me{padding:.6rem .95rem;font-size:1.0625rem;line-height:1.35;width:fit-content;max-width:85%}
+.x-nick{background:var(--nick);color:var(--nick-text);border-radius:1.2rem 1.2rem 1.2rem .35rem;box-shadow:inset 0 0 0 1px var(--nick-ring)}
+.x-me{align-self:flex-end;background:var(--act);color:var(--act-text);border-radius:1.2rem 1.2rem .35rem 1.2rem}
+.exchange + .sub{margin-top:1.5rem}
+
+/* ── Мозг: три точки, без графика с ползунком ── */
+.brain-line{position:relative;margin-top:clamp(2.5rem,5vw,4rem);height:clamp(6rem,10vw,8rem)}
+.brain-line svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.brain-line path{fill:none;stroke:var(--act);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.brain-line .base{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 6;opacity:.6}
+.brain-line .dot{position:absolute;width:1rem;height:1rem;border-radius:50%;background:var(--act);translate:-50% -50%;box-shadow:0 0 0 4px var(--sky-pale)}
+.brain-line .base-l{position:absolute;right:0;bottom:-1.6rem;font-size:.8125rem;color:var(--muted)}
+.weeks{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,4rem);margin-top:2.5rem}
+.weeks b{display:block;font:500 clamp(1.5rem,2.3vw,2rem)/1.15 var(--f-display);letter-spacing:-.015em}
+.weeks p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
+
+/* ── Деньги ── */
+.money-h{max-width:18ch}
+.calc{max-width:34rem;margin-top:clamp(2rem,4vw,3rem)}
+.calc label{display:block;font-weight:500;color:var(--muted)}
+.calc output{display:block;font:500 clamp(1.75rem,2.6vw,2.25rem)/1.1 var(--f-display);letter-spacing:-.015em;color:var(--text);margin:.35rem 0 .25rem}
+.year{font:500 clamp(4rem,13vw,11.5rem)/.92 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums;margin-top:clamp(2rem,4vw,3rem);white-space:nowrap}
+.year .per{font-size:.28em;letter-spacing:-.01em;margin-left:.3em;color:var(--muted)}
+.year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin-top:1.25rem;max-width:40rem;text-wrap:pretty}
+.bridge{margin-top:clamp(2.5rem,5vw,4rem);padding-top:1.5rem;border-top:1px solid var(--rule);font:500 clamp(1.375rem,2.1vw,1.75rem)/1.3 var(--f-display);letter-spacing:-.01em;max-width:36rem;text-wrap:pretty}
+.bridge em{color:var(--act)}
+
+/* ── Цена ── */
+.price{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
+.amount{margin-top:1.25rem;font:500 clamp(5rem,12vw,10rem)/.9 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums}
+.amount small{font-size:.24em;letter-spacing:0;color:var(--muted);margin-left:.25em}
+.gets{list-style:none;display:grid;gap:0}
+.gets li{padding:1rem 0;border-bottom:1px solid var(--rule);display:grid;gap:.15rem}
+.gets li:first-child{border-top:1px solid var(--rule)}
+.gets b{font-weight:600}
+.gets span{color:var(--muted)}
+.terms{color:var(--muted);font-size:.9375rem;margin-top:1.25rem;max-width:30rem}
+.price .btn{margin-top:2rem}
+
+/* ── Вопросы ── */
+.faq-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
+.privacy{margin-top:1.5rem;color:var(--muted);max-width:26rem}
+.faq{border-top:1px solid var(--rule)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;min-height:4rem;padding:.9rem 0;font-weight:600;font-size:1.125rem;cursor:pointer;transition:color .15s ease}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{position:relative;width:1rem;height:1rem;flex:none}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;margin-top:-.75px;background:currentColor;border-radius:1px;transition:transform .2s var(--ease-out)}
+.faq summary i::after{transform:rotate(90deg)}
+.faq details[open] summary i::after{transform:rotate(0)}
+.faq details p{color:var(--muted);padding:0 2.5rem 1.25rem 0;max-width:40rem;text-wrap:pretty}
+
+/* ── Финал ── */
+.final{position:relative;color:var(--ink);text-align:center;background:linear-gradient(in oklab 180deg,transparent 0,var(--sky-low) 10rem,var(--sky-mid) 60%,var(--sky-top))}
+html[data-sky="clear"] footer{background:var(--sky-top);color:var(--ink)}
+html[data-sky="clear"] footer .brand{color:var(--ink)}
+.final .wrap{display:flex;flex-direction:column;align-items:center;padding-block:clamp(7rem,16vw,12rem) clamp(5rem,10vw,8rem)}
+.final .nick-say{justify-content:center}
+.final .h2{font-size:clamp(2.6rem,6.4vw,5.75rem);max-width:15ch}
+.final .btn{margin-top:2.5rem}
+.final-note{margin-top:1rem;font-size:.9375rem;opacity:.9}
+
+footer{color:var(--muted);padding-block:2.5rem calc(2.5rem + env(safe-area-inset-bottom));font-size:.875rem;background:var(--sky-wash)}
+footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:1rem 3rem;align-items:start}
+footer p{max-width:34rem}
+footer nav{display:flex;gap:.25rem 1rem;flex-wrap:wrap;margin-top:-.75rem}
+footer a{color:inherit;display:inline-flex;align-items:center;min-height:2.75rem}
+.link{text-underline-offset:.2em;text-decoration-thickness:1px}
+footer .brand{color:var(--text);font-size:1.25rem;margin-top:-.6rem}
+
+/* ── Опрос: настоящий лист с шагами ── */
+dialog.plan{border:0;padding:0;margin:auto;width:min(31rem,calc(100vw - 2rem));max-height:min(44rem,calc(100svh - 2rem));background:var(--surface);color:var(--text);border-radius:1.75rem;
+  box-shadow:0 1px 2px rgba(6,36,63,.1),0 30px 60px -20px rgba(6,36,63,.45);overflow:hidden;
+  opacity:0;transform:translateY(1rem) scale(.98);transition:opacity .22s var(--ease-out),transform .22s var(--ease-out),overlay .22s allow-discrete,display .22s allow-discrete}
+dialog.plan[open].in{opacity:1;transform:none}
+dialog.plan::backdrop{background:rgba(6,30,50,0);transition:background-color .22s ease-out}
+dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
+.pl{display:flex;flex-direction:column;max-height:inherit}
+.pl-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem .75rem 0}
+.icon-btn{width:2.75rem;height:2.75rem;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:background-color .15s ease,opacity .15s ease}
+.icon-btn svg{width:1.25rem;height:1.25rem}
+.icon-btn[hidden]{display:grid;visibility:hidden}
+.prog{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:.35rem;max-width:9rem}
+.prog i{height:.25rem;border-radius:1rem;background:var(--rule);transition:background-color .2s ease}
+.prog i.on{background:var(--act)}
+.pl-body{padding:1rem 1.75rem 0;overflow:auto}
+.step{border:0;min-width:0}
+.step[hidden]{display:none}
+.step legend,.step h2{font-family:var(--f-display);font-weight:500;font-size:clamp(1.75rem,4vw,2.125rem);line-height:1.1;letter-spacing:-.015em;padding:0;text-wrap:balance}
+.step .note{color:var(--muted);margin-top:.5rem;font-size:.9375rem}
+.opts{display:grid;gap:.5rem;margin-top:1.4rem}
+.opt{display:flex;align-items:center;gap:.8rem;min-height:3.5rem;padding:0 1.1rem;border:1.5px solid var(--rule);border-radius:1rem;text-align:left;font-weight:500;
+  transition:border-color .15s ease,background-color .15s ease,transform .12s var(--ease-out)}
+.opt:active{transform:scale(.985)}
+.opt .mk{width:1.25rem;height:1.25rem;border-radius:50%;border:1.5px solid var(--control);flex:none;display:grid;place-items:center;transition:border-color .15s ease,background-color .15s ease}
+.opt[role="checkbox"] .mk{border-radius:.35rem}
+.opt .mk svg{width:.8rem;height:.8rem;color:var(--act-text);opacity:0;transition:opacity .12s ease}
+.opt[aria-checked="true"]{border-color:var(--act);background:color-mix(in oklab,var(--act) 8%,transparent)}
+.opt[aria-checked="true"] .mk{border-color:var(--act);background:var(--act)}
+.opt[aria-checked="true"] .mk svg{opacity:1}
+.sum{list-style:none;margin-top:1.25rem;display:grid}
+.sum li{padding:.9rem 0;border-bottom:1px solid var(--rule)}
+.sum li:last-child{border-bottom:0}
+.sum b{display:block;font-weight:600}
+.sum span{color:var(--muted);font-size:.9375rem}
+.pay{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:.5rem;padding:1rem 1.1rem;border-radius:1rem;background:var(--surface-2)}
+.pay b{font:500 1.75rem/1 var(--f-display);font-variant-numeric:lining-nums}
+.pay span{color:var(--muted);font-size:.875rem;text-align:right}
+.pl-foot{padding:1.25rem 1.75rem calc(1.5rem + env(safe-area-inset-bottom));display:grid;gap:.6rem}
+.pl-foot .btn{width:100%}
+.pl-foot .btn[aria-disabled="true"]{opacity:.4;cursor:default}
+.pl-msg{min-height:1.4rem;font-size:.875rem;color:var(--muted);text-align:center}
+
+@media (max-width:860px){
+  .hero-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-content:start;column-gap:0;padding-top:calc(5.25rem + env(safe-area-inset-top));padding-bottom:2.5rem}
+  .stage{grid-column:1;grid-row:1;margin-top:0;min-height:max(15rem,40svh);display:flex;flex-direction:column;justify-content:flex-start}
+  .thread{max-width:none}
+  .copy{grid-column:1;grid-row:2;padding-top:.5rem}
+  .hero h1{font-size:clamp(2.75rem,12.5vw,3.75rem)}
+  .lead{margin-top:1rem}
+  .actions{margin-top:1.5rem}
+  .actions > div{flex-direction:column;align-items:flex-start;gap:.75rem}
+  .b{font-size:.9375rem;padding:.5rem .8rem;max-width:80%}
+  .wave-head,.slip-row,.price,.faq-grid{grid-template-columns:minmax(0,1fr)}
+  .steps,.weeks{grid-template-columns:minmax(0,1fr);gap:2rem}
+  .wave-ctl{grid-template-columns:1fr auto}
+  .wave-ctl .ride{grid-column:1/-1;order:3;width:100%}
+  .strip-n span{visibility:hidden}.strip-n span.k{visibility:visible}
+  .brain-line .dot{width:.85rem;height:.85rem}
+  footer .wrap{grid-template-columns:minmax(0,1fr)}
+  footer nav{margin-top:0}
+  dialog.plan{width:100%;max-width:none;max-height:calc(100svh - 1.5rem);margin:auto 0 0;border-radius:1.5rem 1.5rem 0 0;transform:translateY(100%);transition:opacity .32s var(--ease-drawer),transform .32s var(--ease-drawer),overlay .32s allow-discrete,display .32s allow-discrete;opacity:1}
+  dialog.plan[open].in{transform:none}
+  .pl-body{padding-inline:1.25rem}.pl-foot{padding-inline:1.25rem}
+}
+@media (max-width:860px) and (max-height:700px){
+  .b:nth-of-type(2){display:none}
+  .stage{min-height:12rem}
+  .hero h1{font-size:2.6rem}
+  .lead{font-size:1rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .b,.hint,.sun,.sun::before,#smog,.hero h1 span,.lead span,.rv,.sky i,.nick-say{transition-duration:.2s!important;transition-delay:0s!important}
+  .typing i,.nl-dots i{animation:none;opacity:.7}
+  .b,.b.gone,.rv,.nick-say{transform:none!important;filter:none!important}
+  .hero.free .sun{transform:none!important}
+  dialog.plan,dialog.plan[open].in{transform:none!important}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><i class="s-day"></i><i class="s-pale"></i><i class="s-storm"></i><i class="s-clear"></i></div>
+<a class="skip" href="#content">К содержанию</a>
+<main>
+<section class="hero" id="hero" aria-labelledby="h" data-sky="day">
+  <div class="sun" aria-hidden="true"></div>
+  <canvas id="smog" aria-hidden="true"></canvas>
+  <header class="top gutter"><div class="wrap">
+    <a class="brand" href="#" lang="en" aria-label="Breakup, на главную">Breakup</a>
+    <a class="login" href="#">Войти</a>
+  </div></header>
+
+  <div class="gutter"><div class="wrap hero-inner">
+    <div class="stage" id="stage">
+      <div class="thread" id="thread" aria-live="polite">
+        <div class="who" id="who"><span class="av" aria-hidden="true">Н</span><b>Ник</b><span class="st" id="st">печатает…</span></div>
+        <div class="bubbles">
+          <p class="b">не спишь?</p>
+          <p class="b">я тут вспоминал нас</p>
+          <p class="b last">ты ж без меня даже кофе не допиваешь</p>
+          <span class="typing" id="typing" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy">
+      <h1 id="h"><span class="before-h">Пора <em>расстаться</em> с&nbsp;Ником</span><span class="after-h" aria-hidden="true">Небо снова <em>твоё</em></span></h1>
+      <p class="lead"><span class="before-l">Ник — это никотин. Он пишет каждый раз, когда тебя ломает, и&nbsp;обещает спокойствие. Мы учим не&nbsp;отвечать.</span><span class="after-l" aria-hidden="true">Хорошо. Теперь пара вопросов — чтобы план был про тебя, а&nbsp;не&nbsp;про всех.</span></p>
+      <div class="actions">
+        <div class="before-a">
+          <button class="btn btn-act" id="break">Расстаться с&nbsp;Ником</button>
+          <span class="hint" id="hint" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0v3.5a6 6 0 0 1-6 6h-.8a5 5 0 0 1-4-2l-2.6-3.4a1.5 1.5 0 0 1 2.3-1.9L9 13"/></svg>
+            <span id="hint-t">или разгони облако</span>
+          </span>
+        </div>
+        <div class="after-a" aria-hidden="true">
+          <button class="btn btn-act" id="plan-open" tabindex="-1">Составить план — 2&nbsp;минуты</button>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <p class="sr" id="status" aria-live="polite"></p>
+</section>
+
+<div id="content">
+<section class="section gutter" aria-labelledby="how-h" data-sky="pale">
+  <div class="wrap">
+    <h2 class="h2 how-h rv" id="how-h">Как это работает</h2>
+    <ol class="steps">
+      <li class="rv"><h3 class="h3">Расскажи про Ника</h3><p>Две минуты вопросов. В конце — день расставания и&nbsp;план на первые две недели.</p></li>
+      <li class="rv"><h3 class="h3">Тянет — открой «Волну»</h3><p>Четыре минуты: дышишь и&nbsp;смотришь, как тяга поднимается и&nbsp;спадает.</p></li>
+      <li class="rv"><h3 class="h3">Смотри, что меняется</h3><p>Что происходит в&nbsp;мозге на этой неделе и&nbsp;сколько денег уже не&nbsp;ушло Нику.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="calm section gutter" aria-labelledby="w-h" data-sky="storm">
+  <div class="wrap">
+    <div class="wave-head rv">
+      <div><p class="try">Попробуй — это кусок приложения</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;уходит</h2></div>
+      <p class="sub">Когда Ник пишет, мы не&nbsp;спорим с&nbsp;ним. Переждать проще, чем кажется: тяга обычно уходит за несколько минут.</p>
+    </div>
+    <figure class="wave-fig rv" aria-labelledby="w-h">
+      <div class="haze" id="haze" aria-hidden="true"></div>
+      <p class="nick-ping off" id="ping" aria-hidden="true"><small>Ник</small>ну одну. никто не&nbsp;узнает</p>
+      <canvas id="wave" role="img" aria-label="Сила тяги: поднимается, держится около минуты и спадает к четвёртой минуте."></canvas>
+      <div class="axis-note" aria-hidden="true"><span style="left:0">0</span><span style="left:25%">1</span><span style="left:50%">2</span><span style="left:75%">3</span><span style="left:100%">4 мин</span></div>
+    </figure>
+    <div class="wave-ctl">
+      <button class="btn ride" id="ride">Переждать волну</button>
+      <span class="wave-cue idle" id="w-cue" aria-live="polite">Нажми и&nbsp;смотри, как волна спадает</span>
+      <span class="wave-time" id="w-time" aria-hidden="true">0:00</span>
+    </div>
+    <p class="src">Источник: NHS, «Quit smoking: dealing with cravings». В&nbsp;демо четыре минуты идут за двенадцать секунд, в&nbsp;приложении — в&nbsp;реальном времени.</p>
+  </div>
+</section>
+
+<section class="section gutter" aria-labelledby="s-h" data-sky="pale">
+  <div class="wrap">
+    <h2 class="h2 slip-h rv" id="s-h">Срыв — ещё не&nbsp;возвращение</h2>
+    <div class="rv" role="img" aria-label="Месяц полосой неба: 24 дня позади, 23 без никотина и один серый день, срыв семнадцатого числа.">
+      <div class="strip" id="strip" aria-hidden="true"></div>
+      <div class="strip-n" id="strip-n" aria-hidden="true"></div>
+    </div>
+    <div class="slip-row">
+      <p class="tally rv">23 дня из 24 без Ника<span>Серый день 17-го никуда не&nbsp;делся. Остальные 23 — тоже.</span></p>
+      <div class="rv">
+        <div class="exchange" aria-label="Переписка после срыва">
+          <p class="x-nick">ну всё, ты снова мой 🙂</p>
+          <p class="x-me">Нет. Один день не&nbsp;отменяет двадцать&nbsp;три.</p>
+        </div>
+        <p class="sub">Счётчик не&nbsp;обнуляется. Приложение спросит, что сорвало, и&nbsp;подскажет, что делать в&nbsp;следующий раз.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section gutter" aria-labelledby="b-h" data-sky="pale">
+  <div class="wrap">
+    <h2 class="h2 rv" id="b-h">Мозг перестаёт его ждать</h2>
+    <div class="brain-line rv" id="brain-line" aria-hidden="true"><svg id="brain-svg"></svg><span class="base-l">уровень без никотина</span></div>
+    <ol class="weeks">
+      <li class="rv"><b>1-я неделя</b><p>Пик ломки. Раздражение и&nbsp;тяга — это голодные рецепторы, а&nbsp;не&nbsp;ты.</p></li>
+      <li class="rv"><b>4-я неделя</b><p>Физической тяги меньше. Ник давит привычками: кофе, перерыв, дорога домой.</p></li>
+      <li class="rv"><b>6–12 недель</b><p>Рецепторов столько&nbsp;же, сколько у&nbsp;человека без никотина. Теперь вы расстались и&nbsp;в&nbsp;голове.</p></li>
+    </ol>
+    <p class="src rv">Источник: Cosgrove и&nbsp;соавторы, 2009, Archives of&nbsp;General Psychiatry (ПЭТ). Избыток никотиновых рецепторов держится около четырёх недель и&nbsp;к&nbsp;6–12 неделям приходит к&nbsp;уровню некурящих. Форма линии между точками — иллюстрация.</p>
+  </div>
+</section>
+
+<section class="section gutter" aria-labelledby="m-h" data-sky="pale">
+  <div class="wrap">
+    <div class="nick-say"><span class="av" aria-hidden="true">Н</span><p class="msg"><span class="sr">Ник: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">да ладно, это&nbsp;же копейки</span></p></div>
+    <h2 class="h2 money-h rv" id="m-h">Сколько ты платишь Нику</h2>
+    <div class="calc rv">
+      <label for="spend">Уходит на никотин</label>
+      <output id="spend-v" class="num" for="spend">250 ₽ в день</output>
+      <input type="range" id="spend" min="50" max="1000" step="10" value="250">
+    </div>
+    <p class="year rv"><span class="num" id="year">91 250 ₽</span><span class="per">в год</span></p>
+    <p class="year-note rv" id="year-note"></p>
+    <p class="bridge rv" id="bridge"></p>
+  </div>
+</section>
+
+<section class="section gutter" aria-labelledby="p-h" data-sky="pale">
+  <div class="wrap price">
+    <div class="rv">
+      <div class="nick-say"><span class="av" aria-hidden="true">Н</span><p class="msg"><span class="sr">Ник: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">они просто хотят твоих денег</span></p></div>
+      <h2 class="h2" id="p-h">Сколько стоит</h2>
+      <p class="amount num">349 ₽<small>в месяц</small></p>
+      <p class="terms">Подписка продлевается сама. За два дня до списания напомним, отменить можно в&nbsp;одно нажатие. Никаких таймеров «скидка сгорит через пять минут».</p>
+    </div>
+    <div class="rv">
+      <ul class="gets">
+        <li><b>План расставания</b><span>День, когда вы расстаётесь, и&nbsp;первые две недели по шагам.</span></li>
+        <li><b>«Волна» в&nbsp;одно нажатие</b><span>На минуты, когда тянет сильнее всего.</span></li>
+        <li><b>Мозг по неделям</b><span>Что сейчас происходит и&nbsp;почему так тяжело.</span></li>
+        <li><b>Копилка</b><span>Сколько ты уже не&nbsp;отдал Нику.</span></li>
+        <li><b>Срыв без обнуления</b><span>Разбор, что сорвало, и&nbsp;план на следующий раз.</span></li>
+      </ul>
+      <button class="btn btn-act" id="start">Пройти опрос и&nbsp;получить план</button>
+    </div>
+  </div>
+</section>
+
+<section class="section gutter" aria-labelledby="q-h" data-sky="pale">
+  <div class="wrap faq-grid">
+    <div class="rv">
+      <h2 class="h2" id="q-h">Что ещё важно знать</h2>
+      <p class="privacy">Ответы опроса и&nbsp;дневник срывов хранятся на твоём устройстве. Мы их не&nbsp;видим и&nbsp;никому не&nbsp;передаём.</p>
+    </div>
+    <div class="faq rv">
+      <details><summary>Я уже пробовал бросить. Почему сейчас получится?<i aria-hidden="true"></i></summary><p>Попыток бывает много, и&nbsp;это нормально. Здесь срыв не&nbsp;обнуляет счётчик, а&nbsp;помогает понять, что именно сорвало, — и&nbsp;подготовиться к&nbsp;этому моменту в&nbsp;следующий раз.</p></details>
+      <details><summary>Подходит для вейпа и&nbsp;пакетиков?<i aria-hidden="true"></i></summary><p>Да. Ник один и&nbsp;тот&nbsp;же — никотин. Неважно, в&nbsp;чём он приходит.</p></details>
+      <details><summary>Можно вместе с&nbsp;пластырем или жвачкой?<i aria-hidden="true"></i></summary><p>Да. Никотинозаместительную терапию обсуди с&nbsp;врачом: приложение её не&nbsp;заменяет, но&nbsp;помогает с&nbsp;привычками и&nbsp;тягой.</p></details>
+      <details><summary>Это лечение?<i aria-hidden="true"></i></summary><p>Нет. Breakup помогает бросить и&nbsp;не&nbsp;заменяет врача.</p></details>
+      <details><summary>Как отменить подписку?<i aria-hidden="true"></i></summary><p>В&nbsp;настройках, одним нажатием, без вопросов «а&nbsp;может, останешься». За два дня до каждого списания пришлём напоминание.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final gutter" aria-labelledby="f-h" data-sky="clear">
+  <div class="wrap">
+    <div class="nick-say" id="last-say"><span class="av" aria-hidden="true">Н</span><p class="msg"><span class="sr">Ник: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">не спишь?</span></p></div>
+    <h2 class="h2 rv" id="f-h">Ник напишет снова. Ты&nbsp;можешь не&nbsp;отвечать.</h2>
+    <button class="btn btn-act rv" id="again">Расстаться с&nbsp;Ником</button>
+    <p class="final-note rv">Сначала опрос и&nbsp;план. Оплата — только после.</p>
+  </div>
+</section>
+</div>
+</main>
+
+<footer class="gutter"><div class="wrap">
+  <span class="brand" lang="en">Breakup</span>
+  <p>18+. Breakup помогает бросить и&nbsp;не&nbsp;заменяет врача. Никотинозаместительную терапию обсуди с&nbsp;врачом. Источники: Cosgrove 2009; NHS, Quit smoking.</p>
+  <nav aria-label="Документы"><a class="link" href="#">Поддержка</a><a class="link" href="#">Конфиденциальность</a><a class="link" href="#">Условия</a></nav>
+</div></footer>
+
+<dialog class="plan" id="plan" aria-labelledby="pl-title">
+  <form class="pl" method="dialog" id="pl-form">
+    <div class="pl-top">
+      <button type="button" class="icon-btn" id="pl-back" aria-label="Назад" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="prog" id="prog" role="progressbar" aria-label="Опрос" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1"><i class="on"></i><i></i><i></i><i></i></div>
+      <button type="button" class="icon-btn" id="pl-close" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="pl-body">
+      <span class="sr" id="pl-title">План расставания с Ником</span>
+      <fieldset class="step" data-step="0" data-kind="one"><legend>Что у&nbsp;тебя с&nbsp;Ником?</legend>
+        <div class="opts" role="radiogroup" aria-label="Что у тебя с Ником?"></div></fieldset>
+      <fieldset class="step" data-step="1" data-kind="one" hidden><legend>Сколько в&nbsp;день уходит на&nbsp;него?</legend><p class="note">Примерно. Потом поправишь.</p>
+        <div class="opts" role="radiogroup" aria-label="Сколько в день уходит на никотин?"></div></fieldset>
+      <fieldset class="step" data-step="2" data-kind="many" hidden><legend>Когда он пишет чаще всего?</legend><p class="note">Можно несколько.</p>
+        <div class="opts" role="group" aria-label="Когда он пишет чаще всего?"></div></fieldset>
+      <fieldset class="step" data-step="3" data-kind="one" hidden><legend>Когда расстаёмся?</legend>
+        <div class="opts" role="radiogroup" aria-label="Когда расстаёмся?"></div></fieldset>
+      <section class="step" data-step="4" hidden aria-labelledby="sum-h"><h2 id="sum-h">Твой план</h2><ul class="sum" id="sum"></ul>
+        <div class="pay"><b>349 ₽</b><span>в месяц. Напомним за два дня до&nbsp;списания, отмена в&nbsp;одно нажатие.</span></div></section>
+    </div>
+    <div class="pl-foot">
+      <button type="button" class="btn btn-act" id="pl-next" aria-disabled="true">Дальше</button>
+      <p class="pl-msg" id="pl-msg" aria-live="polite"></p>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(() => {
+const hero = document.getElementById('hero');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const coarse = matchMedia('(pointer: coarse)').matches;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const mobile = () => innerWidth <= 860;
+
+/* ── Висячие предлоги: короткое слово держится за следующее ── */
+(function nbsp(root){ const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const re = /(^|[\s(«—])(в|во|с|со|к|ко|о|об|у|и|а|но|не|ни|на|за|по|из|от|до|без|для|что|он|ты|я|мы|это|их)\s+/gi; let n;
+  while ((n = w.nextNode())) { if (n.parentElement.closest('script,style,svg')) continue; const v = n.nodeValue.replace(re, (m, a, b) => a + b + ' ').replace(re, (m, a, b) => a + b + ' ').replace(/ —/g, ' —').replace(/(\d) ([₽])/g, '$1 $2'); if (v !== n.nodeValue) n.nodeValue = v; } })(document.body);
+
+/* ── Переписка: Ник печатает, потом пишет ── */
+const notes = [...document.querySelectorAll('.b')], typing = document.getElementById('typing'), st = document.getElementById('st');
+document.getElementById('hint-t').textContent = coarse ? 'или смахни облако' : 'или разгони облако';
+if (reduce) { notes.forEach(n => n.classList.add('in')); document.getElementById('who').classList.add('in'); st.textContent = 'в сети'; document.getElementById('hint').classList.add('on'); }
+else {
+  setTimeout(() => { document.getElementById('who').classList.add('in'); }, 250);
+  let tt = 500;
+  notes.forEach((n, i) => {
+    setTimeout(() => { if (freed) return; typing.style.top = n.offsetTop + 'px'; typing.classList.add('on'); st.textContent = 'печатает…'; }, tt);
+    tt += i === 0 ? 900 : 1200;
+    setTimeout(() => { if (freed) return; typing.classList.remove('on'); n.classList.add('in'); st.textContent = 'в сети'; noteRects(); }, tt);
+    tt += 350;
+  });
+  setTimeout(() => { if (!touched && !freed) document.getElementById('hint').classList.add('on'); }, tt + 1800);
+}
+
+/* ── Облако: серый смог из мягких клубов, свет солнца сзади ── */
+const cv = document.getElementById('smog'), g2 = cv.getContext('2d');
+const sunEl = hero.querySelector('.sun');
+let rect, puffs = [], freed = false, touched = false, pressedStroke = false, lastDx = -1, startedAt = 0;
+let geo = null, sprites = [], spriteKey = '', off = null, og = null, DPR = 1;
+
+function makeSprites(pal){
+  let s = 11; const r = () => (s = s * 16807 % 2147483647) / 2147483647;
+  return [0, 1, 2, 3, 4, 5].map(() => {
+    const S = 256, c = document.createElement('canvas'); c.width = c.height = S; const x = c.getContext('2d');
+    const lumps = []; for (let i = 0; i < 24; i++) { const a = r() * Math.PI * 2, d = Math.sqrt(r()) * .3; lumps.push([.5 + Math.cos(a) * d, .53 + Math.sin(a) * d * .78, .12 + r() * .16]); }
+    lumps.sort((a, b) => a[1] - b[1]);
+    for (const [u, v, q] of lumps) { const gr = x.createRadialGradient(u * S, v * S, 0, u * S, v * S, q * S);
+      gr.addColorStop(0, pal.body); gr.addColorStop(.7, pal.body + 'cc'); gr.addColorStop(1, pal.body + '00'); x.fillStyle = gr; x.beginPath(); x.arc(u * S, v * S, q * S, 0, 7); x.fill(); }
+    x.globalCompositeOperation = 'source-atop';
+    for (const [u, v, q] of lumps) { const lx = (u + q * .35) * S, ly = (v - q * .45) * S, gr = x.createRadialGradient(lx, ly, 0, lx, ly, q * S * .95);
+      gr.addColorStop(0, pal.lit + 'e0'); gr.addColorStop(.6, pal.lit + '30'); gr.addColorStop(1, pal.lit + '00'); x.fillStyle = gr; x.fillRect(0, 0, S, S); }
+    const sh = x.createLinearGradient(0, S * .35, 0, S * .86); sh.addColorStop(0, pal.shade + '00'); sh.addColorStop(1, pal.shade + 'd0'); x.fillStyle = sh; x.fillRect(0, 0, S, S);
+    return c;
+  });
+}
+function layout(){ return mobile() ? { cx: .55, cy: .3, w: 1.25, h: .3, peak: .74 } : { cx: .765, cy: .38, w: .5, h: .44, peak: .66 }; }
+function build(){
+  rect = hero.getBoundingClientRect();
+  const W0 = rect.width, H0 = rect.height, L = layout();
+  DPR = Math.min(2, devicePixelRatio || 1);
+  cv.width = Math.round(W0 * DPR); cv.height = Math.round(H0 * DPR);
+  if (!off) { off = document.createElement('canvas'); og = off.getContext('2d'); }
+  off.width = cv.width; off.height = cv.height;
+  const pal = { body: css('--smog-body'), lit: css('--smog-lit'), shade: css('--smog-shade') }, key = pal.body + pal.lit + pal.shade;
+  if (key !== spriteKey) { sprites = makeSprites(pal); spriteKey = key; }
+  const W = L.w * W0, H = L.h * H0, x0 = L.cx * W0 - W / 2, base = L.cy * H0 + H * .5, R = Math.min(W, H * 2.2);
+  const env = u => Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, u))), .6) * (.5 + .5 * Math.exp(-Math.pow((u - L.peak) / .18, 2)));
+  const px = x0 + W * L.peak, topY = base - H, sr = R * (mobile() ? .2 : .15);
+  sunEl.style.setProperty('--sr', sr * 2 + 'px');
+  let s = 23; const r = () => (s = s * 16807 % 2147483647) / 2147483647;
+  puffs = [];
+  const list = [];
+  for (let i = 0; i < 10; i++) list.push(['back', .03 + .94 * i / 9, .25 + r() * .6, .85]);
+  for (let i = 0; i < 11; i++) list.push(['main', .01 + .98 * i / 10, 0, 1]);
+  for (let i = 0; i < 20; i++) list.push(['main', .08 + r() * .84, .15 + r() * .85, 1]);
+  list.sort((a, b) => (a[0] === b[0] ? b[2] - a[2] : a[0] === 'back' ? -1 : 1));
+  list.forEach(([layer, u, hgt, sc], i) => {
+    const e = env(u) * sc, rad = R * (.075 + .1 * e) * (1 - hgt * .3);
+    puffs.push({ x: x0 + W * u + (layer === 'back' ? R * .03 : 0), y: base - rad * .5 - hgt * e * H * .78 - (layer === 'back' ? H * .06 : 0),
+      rad, ox: 0, oy: 0, vx: 0, vy: 0, gone: false, op: 1, sc: 1, layer, sp: sprites[i % sprites.length], spin: r() < .5 });
+  });
+  const sxp = Math.min(W0 - sr * .9, px + sr * .3);
+  const tower = puffs.filter(p => p.layer === 'main' && Math.abs(p.x - sxp) < sr * 1.2);
+  const towerTop = tower.length ? Math.min(...tower.map(p => p.y - p.rad)) : topY;
+  const sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .2);
+  sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .7 - sy) / (sr * 2) * 100) + '%');
+  sunEl.style.setProperty('--sx', sxp + 'px'); sunEl.style.setProperty('--sy', sy + 'px');
+  geo = { W0, H0, H, base, R, sx: sxp, sy, sr, glow: css('--smog-glow') };
+  draw(); noteRects();
+}
+/* Кадр облака: клубы в отдельный слой, на нём тень снизу и серебряный край от солнца, низ растворяется */
+function draw(){
+  if (!geo) return; const { W0, H0, H, base, R, sx, sy, sr, glow } = geo;
+  og.setTransform(DPR, 0, 0, DPR, 0, 0); og.globalCompositeOperation = 'source-over'; og.globalAlpha = 1; og.clearRect(0, 0, W0, H0);
+  for (const p of puffs) { if (p.op <= .003) continue;
+    const S = p.rad * 2.6 * p.sc; og.globalAlpha = p.op;
+    if (p.spin) { og.save(); og.translate(p.x + p.ox, p.y + p.oy); og.scale(-1, 1); og.drawImage(p.sp, -S / 2, -S / 2, S, S); og.restore(); }
+    else og.drawImage(p.sp, p.x + p.ox - S / 2, p.y + p.oy - S / 2, S, S); }
+  og.globalAlpha = 1; og.globalCompositeOperation = 'source-atop';
+  const v = og.createLinearGradient(0, base - H, 0, base + R * .06); v.addColorStop(0, 'rgba(30,34,38,0)'); v.addColorStop(1, 'rgba(24,28,32,.5)'); og.fillStyle = v; og.fillRect(0, 0, W0, H0);
+  const rg = og.createRadialGradient(sx, sy, sr * .5, sx, sy, sr * 2.6); rg.addColorStop(0, `rgba(${glow},.55)`); rg.addColorStop(.45, `rgba(${glow},.14)`); rg.addColorStop(1, `rgba(${glow},0)`); og.fillStyle = rg; og.fillRect(0, 0, W0, H0);
+  og.globalCompositeOperation = 'destination-out';
+  const fd = og.createLinearGradient(0, base + R * .02, 0, base + R * .13); fd.addColorStop(0, 'rgba(0,0,0,0)'); fd.addColorStop(1, 'rgba(0,0,0,1)'); og.fillStyle = fd; og.fillRect(0, base + R * .02, W0, H0);
+  g2.setTransform(1, 0, 0, 1, 0, 0); g2.clearRect(0, 0, cv.width, cv.height); g2.drawImage(off, 0, 0);
+}
+let nRects = [];
+function noteRects(){ nRects = notes.map(n => n.getBoundingClientRect()); }
+let lastW = 0;
+addEventListener('resize', () => { if (freed) return; if (Math.abs(innerWidth - lastW) > 40 || !lastW) { lastW = innerWidth; build(); } else { rect = hero.getBoundingClientRect(); noteRects(); } });
+addEventListener('scroll', () => { rect = hero.getBoundingClientRect(); noteRects(); }, { passive: true });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!freed) build(); waveResize(); });
+
+// Физика: мазок толкает клубы, сильный мазок отрывает. Оторванный клуб расползается и тает, как дым на ветру.
+let rafId = 0, last = 0;
+function frame(now){
+  rafId = 0; const dt = Math.min(2, (now - last) / 16.7 || 1); last = now; let moving = false;
+  for (const p of puffs) {
+    if (!p.gone) { p.vx += -p.ox * .045 * dt; p.vy += -p.oy * .045 * dt; p.vx *= Math.pow(.86, dt); p.vy *= Math.pow(.86, dt);
+      if (Math.hypot(p.ox, p.oy) > p.rad * 1.15 + 30) p.gone = true; }
+    else { p.vx *= Math.pow(.95, dt); p.vy = p.vy * Math.pow(.95, dt) - .04 * dt; p.sc += .022 * dt * (1 + p.sc * .2); p.op = Math.max(0, p.op - (p.fade || .028) * dt); }
+    p.ox += p.vx * dt; p.oy += p.vy * dt;
+    if (Math.abs(p.vx) + Math.abs(p.vy) > .05 || (p.gone && p.op > 0) || Math.abs(p.ox) + Math.abs(p.oy) > .3) moving = true;
+  }
+  draw(); updateNotes();
+  const goneFrac = puffs.filter(p => p.gone).length / puffs.length;
+  if (!freed && touched && pressedStroke && now - startedAt > 400 && (goneFrac > (coarse ? .34 : .36) || notes.every(n => n.classList.contains('gone')))) release('swipe');
+  if (moving) rafId = requestAnimationFrame(frame);
+}
+function kick(){ if (!rafId) { last = performance.now(); rafId = requestAnimationFrame(frame); } }
+
+function updateNotes(){
+  if (!touched) return;
+  notes.forEach((n, i) => { const b = nRects[i]; if (!n.classList.contains('in') || !b || !b.width) return;
+    const mx = b.left + b.width / 2 - rect.left, my = b.top + b.height / 2 - rect.top;
+    let near = 0, offn = 0; for (const p of puffs) { if (Math.hypot(p.x - mx, p.y - my) < 190) { near++; if (p.gone) offn++; } }
+    const frac = near ? offn / near : puffs.filter(p => p.gone).length / puffs.length;
+    if (!n.classList.contains('gone') && frac > .3) { n.style.setProperty('--dx', lastDx < 0 ? -1 : 1); n.classList.add('gone'); } });
+}
+
+let prev = null, prevT = 0, flingX = .7, flingY = -.35, flingV = 14, edgeStroke = false;
+function push(x, y, dx, dy, power, detach){
+  const R = coarse ? 150 : 100, det = coarse ? .7 : .5;
+  for (const p of puffs) { if (p.gone) continue;
+    const px = p.x + p.ox, py = p.y + p.oy, d = Math.hypot(px - x, py - y) - p.rad * .5; if (d > R) continue;
+    const k = (1 - Math.max(0, d) / R) * power;
+    p.vx += dx * k * (detach ? det : .12); p.vy += dy * k * (detach ? det : .12);
+  }
+}
+function stroke(e, isDown){
+  if (freed || e.target.closest('button,a')) { prev = null; return; }
+  // Касание у края экрана — это жест «назад», облако его не перехватывает
+  if (isDown) edgeStroke = e.pointerType === 'touch' && (e.clientX < 24 || e.clientX > innerWidth - 24);
+  if (edgeStroke) { prev = null; return; }
+  const pressed = e.pointerType !== 'mouse' || (e.buttons & 1) === 1;
+  if (!touched) { touched = true; startedAt = performance.now(); document.getElementById('hint').classList.remove('on'); }
+  if (pressed) pressedStroke = true;
+  const now = performance.now(), x = e.clientX - rect.left, y = e.clientY - rect.top;
+  if (isDown || !prev) { prev = [x, y]; prevT = now; return; }
+  const dx = x - prev[0], dy = y - prev[1], v = Math.hypot(dx, dy) / Math.max(8, now - prevT) * 16.7;
+  if (Math.hypot(dx, dy) > 3) { const l = Math.hypot(dx, dy); flingX = dx / l; flingY = dy / l; flingV = Math.min(30, Math.max(10, v)); }
+  push(x, y, dx, dy, Math.min(1.6, .6 + v / 18), pressed);
+  if (pressed && Math.abs(dx) > 2) lastDx = Math.sign(dx);
+  prev = [x, y]; prevT = now; kick();
+}
+hero.addEventListener('pointerdown', e => { if (!e.target.closest('button,a')) hero.classList.add('dragging'); stroke(e, true); }, { passive: true });
+hero.addEventListener('pointermove', e => stroke(e, false), { passive: true });
+['pointerleave', 'pointerup', 'pointercancel'].forEach(ev => hero.addEventListener(ev, () => { prev = null; hero.classList.remove('dragging'); }));
+
+const fav = document.querySelector('link[rel="icon"]'), title0 = document.title;
+const SUN_ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E9BEA'/%3E%3Ccircle cx='16' cy='16' r='8' fill='%23FFC94D'/%3E%3C/svg%3E";
+document.addEventListener('visibilitychange', () => { document.title = document.hidden ? (freed ? 'Небо снова твоё' : 'Ник: не спишь?') : title0; });
+
+function release(how){
+  if (freed) return; freed = true;
+  // Смог рвётся по ходу жеста (с кнопки — вверх и вправо): ближние клубы раньше, дальние позже, каждый расползается и тает
+  if (!reduce) { const bx = how === 'button' ? .85 : flingX, by = how === 'button' ? -.5 : flingY, bv = (how === 'button' ? 9 : flingV * .6);
+    let s2 = 5; const rr = () => (s2 = s2 * 16807 % 2147483647) / 2147483647;
+    const ox = how === 'button' ? geo.W0 * (mobile() ? .3 : .55) : (prev ? prev[0] : geo.W0 / 2);
+    for (const p of puffs) { if (p.gone) continue; const a = (rr() - .5) * .9, k = (.7 + rr() * .6) * bv * (p.layer === 'back' ? .65 : 1);
+      const cx = Math.cos(a), sx = Math.sin(a); p.vx = (bx * cx - by * sx) * k; p.vy = (bx * sx + by * cx) * k - 1.5;
+      p.fade = .024 + rr() * .012 + Math.max(0, .01 - Math.abs(p.x - ox) / geo.W0 * .02); p.gone = true; }
+    kick(); }
+  hero.classList.add('free'); fav.href = SUN_ICON; notes.forEach(n => { n.style.setProperty('--dx', lastDx < 0 ? -1 : 1); n.classList.add('gone'); });
+  typing.classList.remove('on'); hero.classList.remove('dragging'); document.getElementById('hint').classList.remove('on'); try { getSelection().removeAllRanges(); } catch {}
+  for (const [a, b] of [['.after-l', '.before-l'], ['.after-h', '.before-h'], ['.after-a', '.before-a']]) { document.querySelector(a).removeAttribute('aria-hidden'); document.querySelector(b).setAttribute('aria-hidden', 'true'); }
+  document.getElementById('break').tabIndex = -1; const po = document.getElementById('plan-open'); po.tabIndex = 0;
+  try { navigator.vibrate && navigator.vibrate(18); } catch {}
+  document.getElementById('status').textContent = 'Облако разогнано. Небо снова твоё.';
+  if (how === 'button') setTimeout(() => openPlan(po), reduce ? 0 : 700);
+  else setTimeout(() => po.focus({ preventScroll: true, focusVisible: false }), 400);
+}
+document.getElementById('break').addEventListener('click', () => release('button'));
+lastW = innerWidth; build();
+
+/* ── Опрос: четыре вопроса, потом план и цена ── */
+const plan = document.getElementById('plan'), steps = [...plan.querySelectorAll('.step')];
+const Q = [
+  [['cig', 'Сигареты'], ['vape', 'Вейп'], ['pouch', 'Никотиновые пакетики'], ['mix', 'Понемногу всё']],
+  [['100', 'Около 100 ₽'], ['250', 'Около 250 ₽'], ['400', 'Около 400 ₽'], ['600', 'Больше 600 ₽']],
+  [['coffee', 'Утром, с кофе'], ['break', 'На перерыве'], ['road', 'В дороге'], ['stress', 'Когда нервничаю'], ['drink', 'С алкоголем'], ['bored', 'Когда скучно']],
+  [['0', 'Сегодня'], ['1', 'Завтра'], ['mon', 'В понедельник']]];
+const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
+const answers = [null, null, new Set(), null];
+let at = 0, opener = null;
+steps.slice(0, 4).forEach((stp, si) => {
+  const box = stp.querySelector('.opts'), many = stp.dataset.kind === 'many';
+  Q[si].forEach(([v, t], k) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.dataset.v = v;
+    b.setAttribute('role', many ? 'checkbox' : 'radio'); b.setAttribute('aria-checked', 'false'); if (!many) b.tabIndex = k ? -1 : 0;
+    b.innerHTML = '<span class="mk" aria-hidden="true">' + CHECK + '</span>' + t; box.appendChild(b);
+    b.addEventListener('click', () => choose(si, b)); });
+  if (!many) box.addEventListener('keydown', e => { const os = [...box.children], i = os.indexOf(document.activeElement); if (i < 0) return;
+    const map = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: os.length - 1 }; if (!(e.key in map)) return;
+    e.preventDefault(); const n = os[(map[e.key] + os.length) % os.length]; n.focus(); choose(si, n); });
+});
+function choose(si, b){
+  const box = b.parentElement;
+  if (si === 2) { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', String(on)); on ? answers[2].add(b.dataset.v) : answers[2].delete(b.dataset.v); }
+  else { [...box.children].forEach(x => { const on = x === b; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); answers[si] = b.dataset.v;
+    if (si === 1) { spend.value = answers[1]; money(); } }
+  try { coarse && navigator.vibrate && navigator.vibrate(6); } catch {}
+  syncFoot();
+}
+const nextB = document.getElementById('pl-next'), backB = document.getElementById('pl-back'), msg = document.getElementById('pl-msg'), prog = document.getElementById('prog');
+const ready = () => at === 4 || (at === 2 ? answers[2].size > 0 : answers[at] !== null);
+function syncFoot(){ nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === 4 ? 'Перейти к оплате' : at === 3 ? 'Показать план' : 'Дальше'; }
+function show(i){
+  at = i; steps.forEach((s, k) => s.hidden = k !== i); backB.hidden = i === 0; msg.textContent = '';
+  [...prog.children].forEach((p, k) => p.classList.toggle('on', k <= Math.min(i, 3))); prog.setAttribute('aria-valuenow', Math.min(i + 1, 4)); prog.hidden = i === 4;
+  if (i === 4) summary(); syncFoot();
+  const f = steps[i].querySelector('.opt[aria-checked="true"]') || steps[i].querySelector('.opt[tabindex="0"], .opt') ; (f || steps[i].querySelector('h2')).focus?.({ preventScroll: true });
+  if (i === 4) { const h = document.getElementById('sum-h'); h.tabIndex = -1; h.focus({ preventScroll: true }); }
+}
+const WHEN = { coffee: 'утром с кофе', break: 'на перерыве', road: 'в дороге', stress: 'когда ты нервничаешь', drink: 'с алкоголем', bored: 'когда скучно' };
+function summary(){
+  const d = new Date(); const w = answers[3];
+  if (w === '1') d.setDate(d.getDate() + 1); else if (w === 'mon') d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7));
+  const date = new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long' }).format(d);
+  const when = [...answers[2]].map(k => WHEN[k]), list = when.length > 1 ? when.slice(0, -1).join(', ') + ' и ' + when.at(-1) : when[0];
+  const per = +answers[1], month = rub.format(per * 30);
+  const items = [
+    ['День расставания — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : '') + date, 'Накануне напомним, а утром спросим, как ты.'],
+    ['Ник будет писать ' + list, 'На эти минуты — «Волна»: четыре минуты, и тяга спадает.'],
+    ['Тебе остаётся около ' + month + ' в месяц', 'Раньше их забирал Ник. Копилка покажет, на что хватит.'],
+    ['Первые две недели — по шагам', 'Каждый день короткий план и что сейчас происходит в мозге.']];
+  const ul = document.getElementById('sum'); ul.innerHTML = '';
+  items.forEach(([b, s]) => { const li = document.createElement('li'); li.innerHTML = '<b></b><span></span>'; li.firstChild.textContent = b; li.lastChild.textContent = s; ul.appendChild(li); });
+}
+nextB.addEventListener('click', () => {
+  if (!ready()) { msg.textContent = at === 2 ? 'Отметь хотя бы один вариант.' : 'Выбери один вариант.'; return; }
+  if (at < 4) show(at + 1); else msg.textContent = 'Оплата появится к запуску — это прототип.';
+});
+backB.addEventListener('click', () => show(Math.max(0, at - 1)));
+function openPlan(from, step){
+  opener = from || document.activeElement; if (plan.open) return;
+  show(step ?? (answers[3] !== null && answers[2].size && answers[1] && answers[0] ? 4 : at === 4 ? 4 : at));
+  plan.showModal(); requestAnimationFrame(() => requestAnimationFrame(() => plan.classList.add('in')));
+  show(at);
+}
+function closePlan(){ if (!plan.open) return; plan.classList.remove('in'); setTimeout(() => { plan.close(); opener && opener.focus?.({ preventScroll: true }); }, reduce ? 0 : 230); }
+document.getElementById('pl-close').addEventListener('click', closePlan);
+plan.addEventListener('cancel', e => { e.preventDefault(); closePlan(); });
+plan.addEventListener('click', e => { if (e.target === plan) closePlan(); });
+document.getElementById('plan-open').addEventListener('click', e => openPlan(e.currentTarget));
+document.getElementById('start').addEventListener('click', e => openPlan(e.currentTarget));
+document.getElementById('again').addEventListener('click', e => openPlan(e.currentTarget));
+
+/* ── Появление секций — один раз ── */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+/* ── Погода — это сюжет ── */
+let wavePassed = false;
+const skyIO = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return;
+  let sky = e.target.dataset.sky; if (sky === 'storm' && wavePassed) sky = 'pale'; document.documentElement.dataset.sky = sky; }), { rootMargin: '-48% 0px -48% 0px' });
+document.querySelectorAll('[data-sky]').forEach(el => skyIO.observe(el));
+
+/* ── Ник вклинивается: сначала «печатает», потом реплика. Один раз. ── */
+const nlIO = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const n = e.target; nlIO.unobserve(n);
+  n.classList.add('on'); setTimeout(() => { n.classList.add('sent'); try { coarse && navigator.vibrate && navigator.vibrate(8); } catch {} }, reduce ? 0 : 900); }), { threshold: .8 });
+document.querySelectorAll('.nick-say').forEach(n => { if (reduce) n.classList.add('on', 'sent'); else nlIO.observe(n); });
+
+/* ── Волна: вода поднимается и спадает ── */
+const wc = document.getElementById('wave'), wx = wc.getContext('2d'), ride = document.getElementById('ride');
+const wTime = document.getElementById('w-time'), wCue = document.getElementById('w-cue'), ping = document.getElementById('ping'), haze = document.getElementById('haze');
+const curve = p => { const r = p < .3 ? Math.sin(p / .3 * Math.PI / 2) : Math.exp(-Math.pow((p - .3) / .32, 2) * 1.6); return Math.max(0, r * (1 - Math.pow(p, 6))); };
+let waveP = 0, waveRaf = 0, WW = 0, WH = 0, WD = 1;
+function waveResize(){ WD = Math.min(2, devicePixelRatio || 1); WW = wc.clientWidth; WH = wc.clientHeight; wc.width = Math.round(WW * WD); wc.height = Math.round(WH * WD); drawWave(waveP); placePing(); }
+function drawWave(p){
+  const W = WW, H = WH, padY = 24, base = H - 2;
+  wx.setTransform(WD, 0, 0, WD, 0, 0); wx.clearRect(0, 0, W, H);
+  const pt = q => [q * W, base - curve(q) * (base - padY)];
+  // весь путь волны — тихий контур, чтобы видно было, что впереди
+  wx.strokeStyle = 'rgba(230,238,238,.5)'; wx.lineWidth = 2; wx.setLineDash([2, 7]); wx.lineCap = 'round'; wx.beginPath();
+  for (let q = 0; q <= 1.0001; q += .004) { const [x, y] = pt(q); q === 0 ? wx.moveTo(x, y) : wx.lineTo(x, y); } wx.stroke(); wx.setLineDash([]);
+  if (p > 0) {
+    const g = wx.createLinearGradient(0, padY, 0, base); g.addColorStop(0, 'rgba(108,201,209,.55)'); g.addColorStop(1, 'rgba(108,201,209,.06)');
+    wx.fillStyle = g; wx.beginPath(); wx.moveTo(0, base); for (let q = 0; q <= p; q += .004) { const [x, y] = pt(q); wx.lineTo(x, y); } wx.lineTo(pt(p)[0], base); wx.closePath(); wx.fill();
+    wx.strokeStyle = '#6CC9D1'; wx.lineWidth = 3; wx.lineJoin = 'round'; wx.beginPath();
+    for (let q = 0; q <= p; q += .004) { const [x, y] = pt(q); q === 0 ? wx.moveTo(x, y) : wx.lineTo(x, y); } wx.stroke();
+  }
+  wx.strokeStyle = 'rgba(188,203,205,.4)'; wx.lineWidth = 1; wx.beginPath(); wx.moveTo(0, base + .5); wx.lineTo(W, base + .5); wx.stroke();
+  if (p > 0) { const [mx, my] = pt(Math.min(p, 1)); wx.fillStyle = p >= 1 ? css('--reward') : '#E6EEEE'; wx.beginPath(); wx.arc(Math.max(8, Math.min(W - 8, mx)), my, 8, 0, Math.PI * 2); wx.fill(); }
+}
+function placePing(){ const pw = ping.offsetWidth, x = .3 * WW, y = (WH - 2) - curve(.3) * (WH - 26) - 14;
+  ping.style.setProperty('--px', Math.min(WW - pw / 2, Math.max(pw / 2, x)) + 'px'); ping.style.setProperty('--py', y + 'px'); }
+waveResize(); addEventListener('resize', waveResize);
+let wState = 'idle', wT0 = 0, wPausedAt = 0;
+const D = 12000;
+function wStep(now){
+  const p = reduce ? 1 : Math.min(1, (now - wT0) / D); waveP = p; drawWave(p);
+  ping.classList.toggle('off', p < .05 || p > .55);
+  haze.style.opacity = (curve(p) * .5).toFixed(3); haze.style.transform = 'scaleY(' + (.7 + curve(p) * .3).toFixed(3) + ')';
+  const sec = Math.round(p * 240); wTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+  if (p < 1) { const cue = Math.floor((now - wT0) / 2000) % 2 ? 'Выдох' : 'Вдох'; if (wCue.textContent !== cue) wCue.textContent = cue; waveRaf = requestAnimationFrame(wStep); }
+  else { wState = 'done'; wavePassed = true; document.documentElement.dataset.sky = 'pale'; haze.style.opacity = 0; wCue.textContent = 'Волна прошла. Ник замолчал.'; wCue.classList.add('done'); ride.textContent = 'Ещё раз'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} }
+}
+ride.addEventListener('click', () => {
+  const now = performance.now();
+  if (wState === 'running') { cancelAnimationFrame(waveRaf); wPausedAt = now; wState = 'paused'; ride.textContent = 'Продолжить'; wCue.textContent = 'Пауза'; return; }
+  if (wState === 'paused') { wT0 += now - wPausedAt; wState = 'running'; ride.textContent = 'Пауза'; waveRaf = requestAnimationFrame(wStep); return; }
+  wT0 = now; wState = 'running'; ride.textContent = 'Пауза'; wCue.classList.remove('idle', 'done'); wCue.textContent = 'Вдох';
+  waveRaf = requestAnimationFrame(wStep);
+});
+
+/* ── Деньги ── */
+const rub = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
+const dayWord = n => { const a = n % 10, b = n % 100; return (a === 1 && b !== 11) ? 'день' : (a >= 2 && a <= 4 && (b < 12 || b > 14)) ? 'дня' : 'дней'; };
+const NUMW = ['', 'один день', 'два дня', 'три дня', 'четыре дня', 'пять дней', 'шесть дней', 'семь дней'];
+const spend = document.getElementById('spend'), year = document.getElementById('year');
+function money(){
+  const d = +spend.value; spend.style.setProperty('--p', ((d - 50) / 950 * 100) + '%');
+  const s = rub.format(d); document.getElementById('spend-v').textContent = s + ' в день'; spend.setAttribute('aria-valuetext', s + ' в день');
+  year.textContent = rub.format(d * 365);
+  const shoes = Math.ceil(12000 / d), sea = Math.ceil(60000 / d);
+  document.getElementById('year-note').textContent = 'Это кроссовки через ' + shoes + ' ' + dayWord(shoes) + ' и неделя на море через ' + (sea > 365 ? 'год с небольшим' : sea + ' ' + dayWord(sea)) + '. За пять лет — ' + rub.format(d * 365 * 5) + '.';
+  const dd = Math.max(1, Math.ceil(349 / d));
+  document.getElementById('bridge').innerHTML = 'Подписка — 349 ₽ в месяц. <em>Меньше, чем Ник берёт с тебя за ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + '.</em>';
+}
+spend.addEventListener('input', money); money();
+
+/* ── Мозг: линия к уровню без никотина ── */
+const bl = document.getElementById('brain-line'), bs = document.getElementById('brain-svg');
+const LV = w => w <= 4 ? 1 - .14 * (w / 4) ** 2 : .86 * Math.exp(-Math.pow((w - 4) / 4.2, 2) * 1.4);
+function brain(){
+  const W = bl.clientWidth, H = bl.clientHeight; bs.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const X = w => w / 12 * W, Y = v => 4 + (H - 8) * (1 - v); let d = '';
+  for (let w = 0; w <= 12.001; w += .1) d += (w ? 'L' : 'M') + X(w).toFixed(1) + ',' + Y(LV(w)).toFixed(1);
+  bs.innerHTML = '<line class="base" x1="0" x2="' + W + '" y1="' + Y(0) + '" y2="' + Y(0) + '"/><path d="' + d + '"/>';
+  bl.querySelectorAll('.dot').forEach(n => n.remove());
+  const cols = mobile() ? [1, 4, 9] : [1, 4, 9];
+  cols.forEach(w => { const i = document.createElement('i'); i.className = 'dot'; i.style.left = X(w) + 'px'; i.style.top = Y(LV(w)) + 'px'; bl.appendChild(i); });
+}
+brain(); addEventListener('resize', brain);
+
+/* ── Срыв: месяц полосой неба ── */
+const strip = document.getElementById('strip'), sn = document.getElementById('strip-n');
+for (let i = 1; i <= 30; i++) { const c = document.createElement('i'); c.style.setProperty('--k', Math.min(1, .35 + (i - 1) / 22 * .65).toFixed(3));
+  if (i === 17) c.className = 'miss'; else if (i === 24) c.className = 'today'; else if (i > 24) c.className = 'next'; strip.appendChild(c);
+  const n = document.createElement('span'); n.textContent = i; if ([1, 17, 24, 30].includes(i)) n.className = 'k'; sn.appendChild(n); }
+})();
+</script>
+</body>
+</html>
