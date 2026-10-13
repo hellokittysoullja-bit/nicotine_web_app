@@ -75,7 +75,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;user-s
 .gutter{padding-inline:var(--gut) max(1.25rem,env(safe-area-inset-right))}
 .wrap{max-width:76rem;margin:0 auto}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:1rem;top:-4rem;z-index:10;background:var(--ink);color:var(--on-ink);padding:.75rem 1rem;border-radius:.75rem;font-weight:600;text-decoration:none}
+.skip{position:fixed;left:1rem;top:-4rem;z-index:10;background:var(--ink);color:var(--on-ink);padding:.75rem 1rem;border-radius:.75rem;font-weight:600;text-decoration:none}
 .skip:focus{top:calc(.75rem + env(safe-area-inset-top))}
 .num{font-variant-numeric:lining-nums tabular-nums}
 em{font-style:italic}
@@ -88,7 +88,8 @@ em{font-style:italic}
 .s-storm{background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low))}
 .s-clear{background:linear-gradient(in oklab 180deg,var(--sky-low),var(--sky-mid) 50%,var(--sky-top))}
 html:not([data-sky]) .s-day,html[data-sky="day"] .s-day,html[data-sky="pale"] .s-pale,html[data-sky="storm"] .s-storm,html[data-sky="clear"] .s-clear{opacity:1}
-main,footer,.skip{position:relative;z-index:1}
+main,footer{position:relative;z-index:1}
+.skip{z-index:10}
 
 /* ── Бренд ── */
 .brand{display:inline-flex;align-items:baseline;font-family:var(--f-display);font-style:italic;font-weight:500;font-size:1.5rem;letter-spacing:-.02em;color:inherit;text-decoration:none;min-height:2.75rem;align-items:center}
@@ -334,7 +335,7 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
 .prog{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:.35rem;max-width:9rem}
 .prog i{height:.25rem;border-radius:1rem;background:var(--rule);transition:background-color .2s ease}
 .prog i.on{background:var(--act)}
-.pl-body{padding:1rem 1.75rem 0;overflow:auto}
+.pl-body{padding:1rem 1.75rem 0;overflow:auto;overscroll-behavior:contain}
 .step{border:0;min-width:0}
 .step[hidden]{display:none}
 .step legend,.step h2{font-family:var(--f-display);font-weight:500;font-size:clamp(1.75rem,4vw,2.125rem);line-height:1.1;letter-spacing:-.015em;padding:0;text-wrap:balance}
@@ -349,8 +350,8 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
 .opt[aria-checked="true"]{border-color:var(--act);background:color-mix(in oklab,var(--act) 8%,transparent)}
 .opt[aria-checked="true"] .mk{border-color:var(--act);background:var(--act)}
 .opt[aria-checked="true"] .mk svg{opacity:1}
-.sum{list-style:none;margin-top:1.25rem;display:grid}
-.sum li{padding:.9rem 0;border-bottom:1px solid var(--rule)}
+.sum{list-style:none;margin-top:.75rem;display:grid}
+.sum li{padding:.7rem 0;border-bottom:1px solid var(--rule)}
 .sum li:last-child{border-bottom:0}
 .sum b{display:block;font-weight:600}
 .sum span{color:var(--muted);font-size:.9375rem}
@@ -597,7 +598,7 @@ dialog.plan.in::backdrop{background:rgba(6,30,50,.42)}
       <fieldset class="step" data-step="3" data-kind="one" hidden><legend>Когда расстаёмся?</legend>
         <div class="opts" role="radiogroup" aria-label="Когда расстаёмся?"></div></fieldset>
       <section class="step" data-step="4" hidden aria-labelledby="sum-h"><h2 id="sum-h">Твой план</h2><ul class="sum" id="sum"></ul>
-        <div class="pay"><b>349 ₽</b><span>в месяц. Напомним за два дня до&nbsp;списания, отмена в&nbsp;одно нажатие.</span></div></section>
+        <div class="pay"><b>349 ₽</b><span>в месяц<br>напомним за 2&nbsp;дня до&nbsp;списания</span></div></section>
     </div>
     <div class="pl-foot">
       <button type="button" class="btn btn-act" id="pl-next" aria-disabled="true">Дальше</button>
@@ -613,6 +614,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarse = matchMedia('(pointer: coarse)').matches;
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const mobile = () => innerWidth <= 860;
+let viaKey = false; addEventListener('keydown', () => viaKey = true, true); addEventListener('pointerdown', () => viaKey = false, true);
 
 /* ── Висячие предлоги: короткое слово держится за следующее ── */
 (function nbsp(root){ const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const re = /(^|[\s(«—])(в|во|с|со|к|ко|о|об|у|и|а|но|не|ни|на|за|по|из|от|до|без|для|что|он|ты|я|мы|это|их)\s+/gi; let n;
@@ -626,9 +628,9 @@ else {
   setTimeout(() => { document.getElementById('who').classList.add('in'); }, 250);
   let tt = 500;
   notes.forEach((n, i) => {
-    setTimeout(() => { if (freed) return; typing.style.top = n.offsetTop + 'px'; typing.classList.add('on'); st.textContent = 'печатает…'; }, tt);
+    setTimeout(() => { if (freed) return; typing.style.top = n.offsetTop + 'px'; typing.classList.add('on'); }, tt);
     tt += i === 0 ? 900 : 1200;
-    setTimeout(() => { if (freed) return; typing.classList.remove('on'); n.classList.add('in'); st.textContent = 'в сети'; noteRects(); }, tt);
+    setTimeout(() => { if (freed) return; typing.classList.remove('on'); n.classList.add('in'); if (i === notes.length - 1) st.textContent = 'в сети'; noteRects(); }, tt);
     tt += 350;
   });
   setTimeout(() => { if (!touched && !freed) document.getElementById('hint').classList.add('on'); }, tt + 1800);
@@ -667,7 +669,7 @@ function build(){
   if (key !== spriteKey) { sprites = makeSprites(pal); spriteKey = key; }
   const W = L.w * W0, H = L.h * H0, x0 = L.cx * W0 - W / 2, base = L.cy * H0 + H * .5, R = Math.min(W, H * 2.2);
   const env = u => Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, u))), .6) * (.5 + .5 * Math.exp(-Math.pow((u - L.peak) / .18, 2)));
-  const px = x0 + W * L.peak, topY = base - H, sr = R * (mobile() ? .2 : .15);
+  const px = x0 + W * L.peak, topY = base - H, sr = R * (mobile() ? .16 : .15);
   sunEl.style.setProperty('--sr', sr * 2 + 'px');
   let s = 23; const r = () => (s = s * 16807 % 2147483647) / 2147483647;
   puffs = [];
@@ -725,7 +727,7 @@ function frame(now){
   }
   draw(); updateNotes();
   const goneFrac = puffs.filter(p => p.gone).length / puffs.length;
-  if (!freed && touched && pressedStroke && now - startedAt > 400 && (goneFrac > (coarse ? .34 : .36) || notes.every(n => n.classList.contains('gone')))) release('swipe');
+  if (!freed && touched && pressedStroke && now - startedAt > 400 && (goneFrac > (coarse ? .34 : .36) || notes.every(n => n.classList.contains('gone')))) armed = true;
   if (moving) rafId = requestAnimationFrame(frame);
 }
 function kick(){ if (!rafId) { last = performance.now(); rafId = requestAnimationFrame(frame); } }
@@ -739,13 +741,14 @@ function updateNotes(){
     if (!n.classList.contains('gone') && frac > .3) { n.style.setProperty('--dx', lastDx < 0 ? -1 : 1); n.classList.add('gone'); } });
 }
 
-let prev = null, prevT = 0, flingX = .7, flingY = -.35, flingV = 14, edgeStroke = false;
+let armed = false, prev = null, prevT = 0, flingX = .7, flingY = -.35, flingV = 14, edgeStroke = false;
 function push(x, y, dx, dy, power, detach){
   const R = coarse ? 150 : 100, det = coarse ? .7 : .5;
   for (const p of puffs) { if (p.gone) continue;
     const px = p.x + p.ox, py = p.y + p.oy, d = Math.hypot(px - x, py - y) - p.rad * .5; if (d > R) continue;
     const k = (1 - Math.max(0, d) / R) * power;
     p.vx += dx * k * (detach ? det : .12); p.vy += dy * k * (detach ? det : .12);
+    if (detach) { const f = Math.pow(1 - Math.max(0, d) / R, 2) * .55; p.ox += dx * f; p.oy += dy * f; }
   }
 }
 function stroke(e, isDown){
@@ -766,7 +769,7 @@ function stroke(e, isDown){
 }
 hero.addEventListener('pointerdown', e => { if (!e.target.closest('button,a')) hero.classList.add('dragging'); stroke(e, true); }, { passive: true });
 hero.addEventListener('pointermove', e => stroke(e, false), { passive: true });
-['pointerleave', 'pointerup', 'pointercancel'].forEach(ev => hero.addEventListener(ev, () => { prev = null; hero.classList.remove('dragging'); }));
+['pointerleave', 'pointerup', 'pointercancel'].forEach(ev => hero.addEventListener(ev, () => { hero.classList.remove('dragging'); if (armed && !freed) release('swipe'); prev = null; }));
 
 const fav = document.querySelector('link[rel="icon"]'), title0 = document.title;
 const SUN_ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E9BEA'/%3E%3Ccircle cx='16' cy='16' r='8' fill='%23FFC94D'/%3E%3C/svg%3E";
@@ -778,10 +781,14 @@ function release(how){
   if (!reduce) { const bx = how === 'button' ? .85 : flingX, by = how === 'button' ? -.5 : flingY, bv = (how === 'button' ? 9 : flingV * .6);
     let s2 = 5; const rr = () => (s2 = s2 * 16807 % 2147483647) / 2147483647;
     const ox = how === 'button' ? geo.W0 * (mobile() ? .3 : .55) : (prev ? prev[0] : geo.W0 / 2);
-    for (const p of puffs) { if (p.gone) continue; const a = (rr() - .5) * .9, k = (.7 + rr() * .6) * bv * (p.layer === 'back' ? .65 : 1);
-      const cx = Math.cos(a), sx = Math.sin(a); p.vx = (bx * cx - by * sx) * k; p.vy = (bx * sx + by * cx) * k - 1.5;
+    for (const p of puffs) { if (p.gone) continue; const k = (.75 + rr() * .5) * bv * (p.layer === 'back' ? .65 : 1);
+      // от солнца наружу, с поправкой на направление жеста; на телефоне — вбок, а не вниз на заголовок
+      let ux = p.x + p.ox - geo.sx, uy = p.y + p.oy - geo.sy, l = Math.hypot(ux, uy) || 1; ux = ux / l + bx * .6; uy = uy / l + by * .6;
+      if (mobile()) uy = Math.max(-.35, Math.min(.35, uy)); l = Math.hypot(ux, uy) || 1; p.vx = ux / l * k; p.vy = uy / l * k - .8;
       p.fade = .024 + rr() * .012 + Math.max(0, .01 - Math.abs(p.x - ox) / geo.W0 * .02); p.gone = true; }
     kick(); }
+  { const { W0, sx, sy, sr } = geo, wantX = mobile() ? 0 : 70, wantY = mobile() ? -10 : -36;
+    sunEl.style.setProperty('--sun-fx', Math.min(wantX, W0 - 1.5 * sr - sx) + 'px'); sunEl.style.setProperty('--sun-fy', Math.max(wantY, (mobile() ? 76 : 84) + sr - sy) + 'px'); }
   hero.classList.add('free'); fav.href = SUN_ICON; notes.forEach(n => { n.style.setProperty('--dx', lastDx < 0 ? -1 : 1); n.classList.add('gone'); });
   typing.classList.remove('on'); hero.classList.remove('dragging'); document.getElementById('hint').classList.remove('on'); try { getSelection().removeAllRanges(); } catch {}
   for (const [a, b] of [['.after-l', '.before-l'], ['.after-h', '.before-h'], ['.after-a', '.before-a']]) { document.querySelector(a).removeAttribute('aria-hidden'); document.querySelector(b).setAttribute('aria-hidden', 'true'); }
@@ -789,7 +796,7 @@ function release(how){
   try { navigator.vibrate && navigator.vibrate(18); } catch {}
   document.getElementById('status').textContent = 'Облако разогнано. Небо снова твоё.';
   if (how === 'button') setTimeout(() => openPlan(po), reduce ? 0 : 700);
-  else setTimeout(() => po.focus({ preventScroll: true, focusVisible: false }), 400);
+
 }
 document.getElementById('break').addEventListener('click', () => release('button'));
 lastW = innerWidth; build();
@@ -829,8 +836,9 @@ function show(i){
   at = i; steps.forEach((s, k) => s.hidden = k !== i); backB.hidden = i === 0; msg.textContent = '';
   [...prog.children].forEach((p, k) => p.classList.toggle('on', k <= Math.min(i, 3))); prog.setAttribute('aria-valuenow', Math.min(i + 1, 4)); prog.hidden = i === 4;
   if (i === 4) summary(); syncFoot();
-  const f = steps[i].querySelector('.opt[aria-checked="true"]') || steps[i].querySelector('.opt[tabindex="0"], .opt') ; (f || steps[i].querySelector('h2')).focus?.({ preventScroll: true });
-  if (i === 4) { const h = document.getElementById('sum-h'); h.tabIndex = -1; h.focus({ preventScroll: true }); }
+  const f = steps[i].querySelector('.opt[aria-checked="true"]') || steps[i].querySelector('.opt[tabindex="0"], .opt');
+  const head = steps[i].querySelector('legend, h2'); head.tabIndex = -1; head.style.outline = 'none';
+  (viaKey && f ? f : head).focus({ preventScroll: true });
 }
 const WHEN = { coffee: 'утром с кофе', break: 'на перерыве', road: 'в дороге', stress: 'когда ты нервничаешь', drink: 'с алкоголем', bored: 'когда скучно' };
 function summary(){
@@ -913,7 +921,7 @@ function wStep(now){
   ping.classList.toggle('off', p < .05 || p > .55);
   haze.style.opacity = (curve(p) * .5).toFixed(3); haze.style.transform = 'scaleY(' + (.7 + curve(p) * .3).toFixed(3) + ')';
   const sec = Math.round(p * 240); wTime.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
-  if (p < 1) { const cue = Math.floor((now - wT0) / 2000) % 2 ? 'Выдох' : 'Вдох'; if (wCue.textContent !== cue) wCue.textContent = cue; waveRaf = requestAnimationFrame(wStep); }
+  if (p < 1) { const cue = Math.floor((now - wT0) / 2000) % 2 ? 'Выдох' : 'Вдох'; if (wCue.dataset.next !== cue) { wCue.dataset.next = cue; wCue.style.opacity = 0; setTimeout(() => { wCue.textContent = cue; wCue.style.opacity = 1; }, reduce ? 0 : 160); } waveRaf = requestAnimationFrame(wStep); }
   else { wState = 'done'; wavePassed = true; document.documentElement.dataset.sky = 'pale'; haze.style.opacity = 0; wCue.textContent = 'Волна прошла. Ник замолчал.'; wCue.classList.add('done'); ride.textContent = 'Ещё раз'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} }
 }
 ride.addEventListener('click', () => {
