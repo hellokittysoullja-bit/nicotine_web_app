@@ -120,12 +120,12 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
   column-gap:3rem;padding-block:calc(6rem + env(safe-area-inset-top)) clamp(3.5rem,9vh,6rem);align-items:center;pointer-events:none}
 .hero-inner > *{pointer-events:auto}
 .copy{grid-column:1;grid-row:1;max-width:46rem}
-.hero h1{font-family:var(--f-display);font-weight:500;font-size:clamp(3.25rem,7.4vw,7rem);line-height:.98;letter-spacing:-.025em;text-wrap:balance;display:grid}
+.hero h1{font-family:var(--f-display);font-weight:500;font-size:clamp(3.25rem,7.4vw,7rem);line-height:.98;letter-spacing:-.015em;text-wrap:balance;display:grid}
 .hero h1 span{grid-area:1/1;align-self:start;transition:opacity .12s ease-out}
 .hero h1 .after-h{opacity:0;transform:translateY(.5rem)}
 .hero.free h1 .before-h{opacity:0}
 .hero.free h1 .after-h{opacity:1;transform:none;transition:opacity .24s var(--ease-out) .14s,transform .24s var(--ease-out) .14s}
-.lead{display:grid;font-size:clamp(1.125rem,1.45vw,1.3125rem);line-height:1.5;max-width:31rem;margin-top:1.6rem;text-wrap:pretty}
+.lead{display:grid;font-size:clamp(1.1875rem,1.7vw,1.5rem);line-height:1.45;max-width:33rem;margin-top:1.6rem;text-wrap:pretty}
 .lead span{grid-area:1/1;transition:opacity .22s ease}
 .lead .after-l,.hero.free .lead .before-l{opacity:0}
 .lead .after-l{transform:translateY(.4rem)}
@@ -287,7 +287,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .calc label{display:block;font-weight:500;color:var(--muted)}
 .calc output{display:block;font:500 clamp(1.75rem,2.6vw,2.25rem)/1.1 var(--f-display);letter-spacing:-.015em;color:var(--text);margin:.35rem 0 .25rem}
 .year{font:500 clamp(4rem,10vw,8.5rem)/.92 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums;margin-top:clamp(2rem,4vw,3rem);white-space:nowrap}
-.year .per{font-size:.28em;letter-spacing:-.01em;margin-left:.3em;color:var(--muted)}
+.year .per{font-size:.4em;letter-spacing:-.01em;margin-left:.3em;color:var(--muted)}
 .year-row{display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem}
 @media (max-width:1100px){.year-row{grid-template-columns:minmax(0,1fr)}}
 .year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin:0;max-width:40rem;text-wrap:pretty}
@@ -668,7 +668,6 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:.1;transition:opacity .2s 
 
 <section class="final gutter" aria-labelledby="f-h" data-sky="clear">
   <div class="wrap">
-    <div class="nick-say" id="last-say"><span class="av" aria-hidden="true">С</span><p class="msg"><span class="sr">Смог: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">не спишь?</span></p></div>
     <h2 class="h2 rv" id="f-h">Смог зашепчет снова. Ты&nbsp;можешь <em>не&nbsp;слушать</em>.</h2>
     <button class="btn btn-act rv" id="again">Составить план — 2&nbsp;минуты</button>
     <p class="final-note rv">Сначала опрос и&nbsp;план. Оплата — только после.</p>
@@ -797,9 +796,10 @@ function build(){
   const tower = puffs.filter(p => p.layer === 'main' && Math.abs(p.x - sxp) < sr * 1.2);
   const towerTop = tower.length ? Math.min(...tower.map(p => p.y - p.rad)) : topY;
   const sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .2);
-  sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .7 - sy) / (sr * 2) * 100 * .55) + '%');
+  sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .7 - sy) / (sr * 2) * 100 * .3) + '%');
   sunEl.style.setProperty('--sx', sxp + 'px'); sunEl.style.setProperty('--sy', sy + 'px');
   geo = { W0, H0, H, base, R, sx: sxp, sy, sr, glow: css('--smog-glow') };
+  if (mobile() && !smogFrac && !freed) smogFrac = .12; // на телефоне Искра выглядывает в просвет, иначе её лицо скрыто тучей
   if (smogFrac) dissolveTo(smogFrac, true);
   draw(); noteRects();
 }
@@ -850,7 +850,7 @@ function frame(now){
   }
   draw(); updateNotes();
   const goneFrac = puffs.filter(p => p.gone).length / puffs.length;
-  if (!freed && touched && pressedStroke && now - startedAt > 250 && (goneFrac > (coarse ? .34 : .36) || notes.every(n => n.classList.contains('gone')))) armed = true;
+  if (!freed && touched && pressedStroke && now - startedAt > 150 && (goneFrac > (coarse ? .34 : .36) || notes.every(n => n.classList.contains('gone')))) armed = true;
   if (moving) rafId = requestAnimationFrame(frame);
 }
 function kick(){ if (!rafId) { last = performance.now(); rafId = requestAnimationFrame(frame); } }
@@ -1157,7 +1157,7 @@ function money(){
   const shoes = Math.ceil(12000 / d), sea = Math.ceil(60000 / d);
   document.getElementById('year-note').textContent = 'Через ' + shoes + ' ' + dayWord(shoes) + '\u00a0— новые кроссовки. Через ' + (sea > 365 ? 'год с лишним' : sea + ' ' + dayWord(sea)) + '\u00a0— неделя у\u00a0моря. За пять лет\u00a0— ' + rub.format(d * 365 * 5) + '.';
   const dd = Math.max(1, Math.ceil(349 / d));
-  document.getElementById('bridge').innerHTML = 'Подписка — 349 ₽ в месяц. <em>Меньше, чем смог берёт с тебя за ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + '.</em>';
+  document.getElementById('bridge').innerHTML = 'Подписка дешевле. <em>Смог берёт с тебя больше за ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + '.</em>';
 }
 spend.addEventListener('input', () => { money(); }); money();
 
