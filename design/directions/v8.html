@@ -66,7 +66,7 @@
   --storm-top:#081419;--storm-low:#16262B;color-scheme:dark}
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;overscroll-behavior-y:none;background:var(--sky-wash)}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;background:var(--sky-wash)}
 body{color:var(--text);font-family:var(--f-body);font-size:1.0625rem;line-height:1.55;font-feature-settings:"kern","liga"}
 button,a,[role="button"],input,summary{touch-action:manipulation}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;user-select:none;-webkit-user-select:none}
@@ -98,17 +98,18 @@ main,footer{position:relative;z-index:1}
 .hero{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;color:var(--ink);touch-action:pan-y}
 .sun{position:absolute;z-index:-3;pointer-events:none;border-radius:50%;
   left:var(--sx,82%);top:var(--sy,22%);width:var(--sr,15vmax);aspect-ratio:1;translate:-50% -50%;
-  background:radial-gradient(circle,#FFF3CF 0%,var(--sun-core) 30%,var(--sun) 70%,color-mix(in srgb,var(--sun) 80%,#FFF3CF) 100%);box-shadow:0 0 3px 1px color-mix(in srgb,var(--sun) 70%,#fff),0 0 60px 20px rgba(255,236,170,.5),0 0 220px 90px rgba(255,248,228,.28);
+  background:radial-gradient(circle,#FFF3CF 0%,var(--sun-core) 30%,var(--sun) 70%,color-mix(in srgb,var(--sun) 80%,#FFF3CF) 100%);box-shadow:0 0 3px 1px color-mix(in srgb,var(--sun) 70%,#fff),0 0 40px 10px rgba(255,236,170,.45);
   transition:transform 1.2s var(--ease-out);transform:translateY(var(--sun-hide,30%)) scale(.92)}
 .sun::before{content:"";position:absolute;inset:-110%;border-radius:50%;z-index:-1;
-  background:radial-gradient(circle closest-side,rgba(255,240,200,.5) 0%,rgba(255,248,230,.18) 45%,rgba(255,255,255,0) 100%);mix-blend-mode:screen;
+  background:radial-gradient(circle closest-side,rgba(255,240,200,.55) 0%,rgba(255,244,215,.3) 30%,rgba(255,248,230,.1) 60%,rgba(255,248,230,0) 100%);
   opacity:.25;transform:scale(.85);transition:opacity 1.2s var(--ease-out),transform 1.2s var(--ease-out)}
 .hero.free .sun{transform:translate(var(--sun-fx,0),var(--sun-fy,0));transition:transform .9s cubic-bezier(.22,1,.36,1) .06s}
-.who{transition:opacity .3s ease}.hero.free .who{opacity:0;transition-duration:.15s;transition-delay:.06s}
+.who{transition:opacity .2s var(--ease-out)}.hero.free .who{opacity:0;transition-duration:.15s;transition-delay:.06s}
 
 .hero.free .sun::before{opacity:1;transform:none}
 .hero.dragging{user-select:none;-webkit-user-select:none}
 #smog{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.hero::after{content:"";position:absolute;inset:auto 0 0;height:22vh;z-index:1;pointer-events:none;background:linear-gradient(in oklab 180deg,transparent,var(--sky-wash))}
 .hero.free #smog{opacity:0;transition:opacity .25s ease-out .55s}
 
 header.top{position:absolute;inset:0 0 auto 0;z-index:3;padding-top:env(safe-area-inset-top)}
@@ -140,14 +141,14 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .btn svg{width:1.15rem;height:1.15rem;flex:none}
 .btn-act{background:var(--act);color:var(--act-text);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
 .btn-ghost{color:var(--text);box-shadow:inset 0 0 0 1.5px var(--control)}
-.hint{display:flex;align-items:center;gap:.55rem;font-weight:500;font-size:.9375rem;opacity:0;transform:translateY(.25rem);transition:opacity .3s ease,transform .3s var(--ease-out)}
+.hint{display:flex;align-items:center;gap:.55rem;font-weight:500;font-size:.9375rem;opacity:0;transform:translateY(.25rem);transition:opacity .2s var(--ease-out),transform .2s var(--ease-out)}
 .hint.on{opacity:1;transform:none}
 .hint svg{width:1.4rem;height:1.4rem;flex:none}
 
 /* Переписка с Ником */
 .stage{grid-column:2;grid-row:1;margin-top:-4vh}
 .thread{width:100%;max-width:25rem}
-.who{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem .1rem;color:var(--ink);opacity:0;transition:opacity .3s ease}
+.who{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem .1rem;color:var(--ink);opacity:0;transition:opacity .2s var(--ease-out)}
 .who.in{opacity:1}
 .av{width:2.25rem;height:2.25rem;border-radius:50%;background:var(--nick);color:var(--nick-text);display:grid;place-items:center;font:600 .875rem/1 var(--f-body);box-shadow:0 0 0 2px rgba(255,255,255,.55)}
 .who b{font-weight:600;font-size:.9375rem}
@@ -205,7 +206,8 @@ input[type=range]::-moz-range-track{height:.375rem;border-radius:1rem;background
 input[type=range]::-moz-range-progress{height:.375rem;border-radius:1rem;background:currentColor}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--act);border:0;margin-top:-.75rem;
   box-shadow:inset 0 0 0 4px #fff,0 0 0 1px var(--act),0 2px 8px rgba(6,36,63,.25);transition:transform .14s var(--ease-out)}
-input[type=range]::-moz-range-thumb{width:1.75rem;height:1.75rem;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.22)}
+input[type=range]::-moz-range-thumb{width:1.75rem;height:1.75rem;border:0;border-radius:50%;background:var(--act);box-shadow:inset 0 0 0 4px #fff,0 0 0 1px var(--act),0 2px 8px rgba(6,36,63,.25);transition:transform .14s var(--ease-out)}
+input[type=range]:active::-moz-range-thumb{transform:scale(1.08)}
 input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 input[type=range]:focus-visible{outline:none}
 input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 2px var(--sky-wash),0 0 0 4px var(--act),0 2px 6px rgba(0,0,0,.22)}
@@ -256,6 +258,8 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .strip i{position:relative;background:color-mix(in oklab,var(--sky-mid) calc(var(--k) * 100%),#9AAAB3)}
 .strip i.miss{background:var(--nick)}
 .strip i.next{background:color-mix(in oklab,var(--sky-mid) 10%,transparent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .strip i.next{background:#1A2A4A;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}:root:not([data-theme=light]) .strip i.miss{background:#5A636B}}
+:root[data-theme=dark] .strip i.next{background:#1A2A4A;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}:root[data-theme=dark] .strip i.miss{background:#5A636B}
 .strip-n span.now{color:var(--text);font-weight:600}.strip-n span.now{position:relative}.strip-n span.now::after{content:"сегодня";position:absolute;left:50%;top:1.5em;translate:-50% 0;font-weight:400;color:var(--muted)}.strip-n{padding-bottom:1.4em}
 .strip-n{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));margin-top:.6rem;font-size:.8125rem;color:var(--muted)}
 .strip-n span{text-align:center;white-space:nowrap}
@@ -290,7 +294,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 @media (max-width:1100px){.year-row{grid-template-columns:minmax(0,1fr)}}
 .year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin-top:1.25rem;max-width:40rem;text-wrap:pretty}
 .bridge{margin-top:clamp(2.5rem,5vw,4rem);padding-top:1.5rem;border-top:1px solid var(--rule);font:500 clamp(1.375rem,2.1vw,1.75rem)/1.3 var(--f-display);letter-spacing:-.01em;max-width:36rem;text-wrap:pretty}
-.bridge em{color:var(--act)}
+.bridge em{font-style:normal;color:var(--muted)}
 
 /* ── Цена ── */
 .price{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
@@ -318,7 +322,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .faq details p{color:var(--muted);padding:0 2.5rem 1.25rem 0;max-width:40rem;text-wrap:pretty}
 
 /* ── Финал ── */
-.final{position:relative;color:var(--ink);text-align:center;background:linear-gradient(in oklab 180deg,transparent 0,var(--sky-low) 10rem,var(--sky-mid) 60%,var(--sky-top))}
+.final{position:relative;color:var(--ink);text-align:center;background:linear-gradient(in oklab 180deg,transparent 0,var(--sky-low) 10rem,var(--sky-mid) 55%,var(--sky-top) 82%,var(--bg))}
 html[data-sky="clear"] footer{background:var(--sky-top);color:var(--ink)}
 html[data-sky="clear"] footer .brand{color:var(--ink)}
 .final .wrap{display:flex;flex-direction:column;align-items:center;padding-block:clamp(7rem,16vw,12rem) clamp(5rem,10vw,8rem)}
@@ -350,6 +354,8 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl-top{position:relative;touch-action:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem .75rem 0}
 .icon-btn{width:2.75rem;height:2.75rem;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:background-color .15s ease,opacity .15s ease}
 .icon-btn svg{width:1.25rem;height:1.25rem}
+.icon-btn:active{background:var(--surface-2)}
+@media (hover:hover) and (pointer:fine){.icon-btn:hover{background:var(--surface-2)}}
 .icon-btn[hidden]{display:grid;visibility:hidden}
 .prog{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:.35rem;max-width:9rem}
 .prog[hidden]{display:grid;visibility:hidden}
@@ -390,9 +396,10 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl-foot .btn[hidden]{display:none}
 .pl-foot .btn.soon{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1.5px var(--control)}
 .pl-msg{min-height:1.4rem;font-size:.875rem;color:var(--muted);text-align:center;text-wrap:balance}
-.pl-msg:empty::before{content:"Ответы остаются в этом браузере."}
+.pl-msg:empty::before{content:"Ответы никуда не отправляются."}
 
 @media (max-width:860px){
+  dialog.plan::backdrop{transition:background-color .28s var(--ease-drawer)}
   .hero-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-content:start;column-gap:0;padding-top:calc(5.25rem + env(safe-area-inset-top));padding-bottom:2.5rem}
   .stage{grid-column:1;grid-row:1;margin-top:0;min-height:max(13rem,33svh);display:flex;flex-direction:column;justify-content:flex-start}
   .thread{max-width:none}
@@ -514,11 +521,11 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
       <div class="axis-note" aria-hidden="true"><span style="left:0">0</span><span style="left:25%">1</span><span style="left:50%">2</span><span style="left:75%">3</span><span style="left:100%">4 мин</span></div>
     </figure>
     <div class="wave-ctl">
-      <button class="btn ride" id="ride">Переждать волну</button>
+      <button class="btn ride" id="ride" aria-describedby="wave-src">Переждать волну</button>
       <span class="wave-time" id="w-time" aria-hidden="true">0:00</span>
       <span class="wave-cue idle" id="w-cue" aria-live="polite">Нажми и&nbsp;смотри, как волна спадает</span>
     </div>
-    <p class="src">Источник: NHS, «Quit smoking: dealing with cravings». В&nbsp;демо четыре минуты идут за двенадцать секунд, в&nbsp;приложении — в&nbsp;реальном времени.</p>
+    <p class="src" id="wave-src">Источник: NHS, «Quit smoking: dealing with cravings». В&nbsp;демо четыре минуты идут за двадцать секунд — два спокойных вдоха, в&nbsp;приложении — в&nbsp;реальном времени.</p>
   </div>
 </section>
 
@@ -749,10 +756,11 @@ function draw(){
   const v = og.createLinearGradient(0, base - H, 0, base + R * .06); v.addColorStop(0, 'rgba(30,34,38,0)'); v.addColorStop(1, 'rgba(24,28,32,.5)'); og.fillStyle = v; og.fillRect(0, 0, W0, H0);
   const rg = og.createRadialGradient(sx, sy, sr * .5, sx, sy, sr * 2.6); rg.addColorStop(0, `rgba(${glow},.55)`); rg.addColorStop(.45, `rgba(${glow},.14)`); rg.addColorStop(1, `rgba(${glow},0)`); og.fillStyle = rg; og.fillRect(0, 0, W0, H0);
   og.globalCompositeOperation = 'destination-out';
-  const fd = og.createLinearGradient(0, base - R * .14, 0, base + R * .14); fd.addColorStop(0, 'rgba(0,0,0,0)'); fd.addColorStop(.6, 'rgba(0,0,0,.55)'); fd.addColorStop(1, 'rgba(0,0,0,1)'); og.fillStyle = fd; og.fillRect(0, base - R * .14, W0, H0);
+  const fk = mobile() ? .24 : .14, fd = og.createLinearGradient(0, base - R * fk, 0, base + R * .14); fd.addColorStop(0, 'rgba(0,0,0,0)'); fd.addColorStop(.6, 'rgba(0,0,0,.55)'); fd.addColorStop(1, 'rgba(0,0,0,1)'); og.fillStyle = fd; og.fillRect(0, base - R * fk, W0, H0);
   // Неровный низ: мягкие выемки разной глубины, иначе граница читается ровной линией на всю ширину
   let sq = 7; const sr2 = () => (sq = sq * 16807 % 2147483647) / 2147483647;
   for (let ex = -R * .1; ex < W0 + R * .2; ex += R * (.12 + sr2() * .16)) { const er = R * (.1 + sr2() * .14), ey = base + R * .02 - sr2() * R * .1, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.85)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
+  if (mobile()) for (let ex = R * .03; ex < W0 + R * .2; ex += R * (.1 + sr2() * .14)) { const er = R * (.12 + sr2() * .14), ey = base - R * .06 - sr2() * R * .12, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.6)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
   g2.setTransform(1, 0, 0, 1, 0, 0); g2.clearRect(0, 0, cv.width, cv.height); g2.drawImage(off, 0, 0);
   // Серебряная кайма: край облака со стороны солнца — облако минус то же облако, сдвинутое от солнца
   const cxm = W0 * .5, cym = base - H * .4, vl = Math.hypot(cxm - sx, cym - sy) || 1, ddx = (cxm - sx) / vl * 7, ddy = (cym - sy) / vl * 7;
@@ -888,7 +896,7 @@ function choose(si, b, advance = true){
 }
 const nextB = document.getElementById('pl-next'), backB = document.getElementById('pl-back'), msg = document.getElementById('pl-msg'), prog = document.getElementById('prog');
 const ready = () => at === 4 || (at === 2 ? answers[2].size > 0 : answers[at] !== null);
-function syncFoot(){ nextB.hidden = !(at === 2 || at === 4); document.getElementById('pay').hidden = at !== 4; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === 4 ? 'Готово' : at === 3 ? 'Показать план' : 'Дальше'; }
+function syncFoot(){ nextB.hidden = !(at === 2 || at === 4 || ready()); document.getElementById('pay').hidden = at !== 4; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === 4 ? 'Готово' : at === 3 ? 'Показать план' : 'Дальше'; }
 function show(i){
   const back = i < at; at = i; steps.forEach((s, k) => { s.hidden = k !== i; s.classList.remove('enter', 'back'); }); if (plan.open) { void steps[i].offsetWidth; steps[i].classList.add('enter'); if (back) steps[i].classList.add('back'); } backB.hidden = i === 0; msg.textContent = '';
   [...prog.children].forEach((p, k) => p.classList.toggle('on', k <= Math.min(i, 3))); prog.setAttribute('aria-valuenow', Math.min(i + 1, 4)); prog.setAttribute('aria-valuetext', 'Вопрос ' + Math.min(i + 1, 4) + ' из 4'); prog.hidden = i === 4;
@@ -998,7 +1006,7 @@ function placePing(){ const pw = ping.offsetWidth, x = .3 * WW, y = (WH - 2) - c
   ping.style.setProperty('--px', Math.min(WW - pw / 2, Math.max(pw / 2, x)) + 'px'); ping.style.setProperty('--py', y + 'px'); }
 waveResize(); addEventListener('resize', waveResize);
 let wState = 'idle', wT0 = 0, wPausedAt = 0;
-const D = 12000;
+const D = 20000; // ровно два цикла дыхания (4 с вдох + 6 с выдох): конец демо совпадает с концом выдоха
 function wStep(now){
   const p = Math.min(1, (now - wT0) / D); waveP = p; drawWave(p);
   ping.classList.toggle('off', p < .05 || p > .55);
@@ -1044,7 +1052,7 @@ function money(){
   const s = rub.format(d); document.getElementById('spend-v').textContent = s + ' в день'; spend.setAttribute('aria-valuetext', s + ' в день');
   year.textContent = rub.format(d * 365);
   const shoes = Math.ceil(12000 / d), sea = Math.ceil(60000 / d);
-  document.getElementById('year-note').textContent = 'Через ' + shoes + ' ' + dayWord(shoes) + ' — новые кроссовки. Через ' + (sea > 365 ? 'год с лишним' : sea + ' ' + dayWord(sea)) + ' — неделя у моря. За пять лет — ' + rub.format(d * 365 * 5) + '.';
+  document.getElementById('year-note').textContent = 'Через ' + shoes + ' ' + dayWord(shoes) + '\u00a0— новые кроссовки. Через ' + (sea > 365 ? 'год с лишним' : sea + ' ' + dayWord(sea)) + '\u00a0— неделя у\u00a0моря. За пять лет — ' + rub.format(d * 365 * 5) + '.';
   const dd = Math.max(1, Math.ceil(349 / d));
   document.getElementById('bridge').innerHTML = 'Подписка — 349 ₽ в месяц. <em>Меньше, чем Ник берёт с тебя за ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + '.</em>';
 }
