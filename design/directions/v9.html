@@ -494,6 +494,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
   dialog.plan{margin:6.5rem auto auto max(1.5rem,calc((100vw - 76rem) / 2))}
   dialog.plan.in::backdrop{background:rgba(6,36,63,.12)}
 }
+@media (max-height:480px){.pl-msg{display:none}.step legend,.step h2{font-size:1.5rem}.opts{margin-top:.8rem;gap:.35rem}.opt{min-height:2.75rem}.pl-foot{padding-block:.6rem}}
 @media (prefers-reduced-motion:reduce){
   .sun,.eye,.tile{animation:none}
   .b,.hint,.sun,.sun::before,#smog,.hero h1 span,.lead span,.rv,.sky i,.nick-say{transition-duration:.2s!important;transition-delay:0s!important}
@@ -697,19 +698,19 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
     <div class="pl-body">
       <span class="sr" id="pl-title">План выхода из тумана</span>
       <fieldset class="step" data-step="0" data-kind="one"><legend>Чем питается смог?</legend>
-        <div class="opts" role="radiogroup" aria-label="Чем питается смог?"></div></fieldset>
+        <div class="opts" role="radiogroup"></div></fieldset>
       <fieldset class="step" data-step="1" data-kind="one" hidden><legend>Когда смог шепчет громче всего?</legend><p class="note">Выбери главное время.</p>
-        <div class="opts" role="radiogroup" aria-label="Когда смог шепчет громче всего?"></div></fieldset>
+        <div class="opts" role="radiogroup"></div></fieldset>
       <fieldset class="step" data-step="2" data-kind="slider" hidden><legend>Сколько в&nbsp;день уходит на&nbsp;никотин?</legend><p class="note">Примерно. Потом поправишь.</p>
         <div class="sl"><output id="sl-v" class="num" for="sl">250 ₽ в&nbsp;день</output>
           <input type="range" id="sl" min="50" max="1000" step="10" value="250" aria-label="Сколько в день уходит на никотин">
           <p class="sl-3y" id="sl-3y">За три года — 273&nbsp;750 ₽</p></div></fieldset>
       <fieldset class="step" data-step="3" data-kind="one" hidden><legend>Если&nbsp;… то&nbsp;я&nbsp;…</legend><p class="note">Решение, принятое заранее, легче выполнить в&nbsp;момент тяги.</p>
-        <div class="opts" role="radiogroup" aria-label="Что ты сделаешь вместо затяжки"></div></fieldset>
+        <div class="opts" role="radiogroup"></div></fieldset>
       <fieldset class="step" data-step="4" data-kind="one" hidden><legend>Когда выходим из&nbsp;тумана?</legend>
-        <div class="opts" role="radiogroup" aria-label="Когда выходим из тумана?"></div></fieldset>
+        <div class="opts" role="radiogroup"></div></fieldset>
       <fieldset class="step" data-step="5" data-kind="one" hidden><legend>Какой характер у&nbsp;твоей Искры в&nbsp;первые дни?</legend>
-        <div class="opts" role="radiogroup" aria-label="Характер Искры"></div></fieldset>
+        <div class="opts" role="radiogroup"></div></fieldset>
       <section class="step" data-step="6" hidden aria-labelledby="sum-h"><h2 id="sum-h">Твой разбор</h2><div class="bento" id="bento"></div></section>
     </div>
     <div class="pl-foot">
@@ -971,7 +972,7 @@ const IFW0 = { coffee: 'утром с кофе рука тянется ', stress
 const IFW = (t, ty) => (IFW0[t] || 'рука тянется ') + (TAIL[ty] || 'к никотину');
 const ACT = { wave: 'пройду «Волну» — несколько минут', water: 'выпью стакан холодной воды', sigh: 'сделаю три двойных вдоха и сменю обстановку на 2 минуты' };
 const MYTH = {
-  coffee: ['Кофе без дыма — не тот', 'Связку «кофе и затяжка» мозг выучил как привычку. Начни с малого: сначала кофе, потом пять минут ходьбы.'],
+  coffee: ['Без дыма кофе уже не тот', 'Кофе стал для привычки сигналом закурить. Сигнал можно менять: сначала кофе, потом пять минут ходьбы.'],
   stress: ['Затяжка снимает стресс', 'По данным наблюдений, затяжка гасит ломку от прошлой затяжки, а часть напряжения создаёт сама ломка (Parrott, 1999).'],
   bored: ['Затяжка заполняет паузу', 'Пауза остаётся, просто жест заполнял её. Нужен другой жест в руках: стакан воды, три глубоких вдоха.'],
   evening: ['Вечером это награда', 'Вечер и алкоголь — привычные спусковые крючки. Заранее выбранное «если — то» помогает чаще выполнить намерение (Gollwitzer, Sheeran, 2006).']};
@@ -1006,15 +1007,18 @@ sl.addEventListener('input', slSync);
 const nextB = document.getElementById('pl-next'), backB = document.getElementById('pl-back'), msg = document.getElementById('pl-msg'), prog = document.getElementById('prog');
 const ready = () => at === 2 || at === LAST || answers[at] !== null;
 function syncFoot(){ nextB.hidden = !ready(); document.getElementById('pay').hidden = true; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === LAST ? 'Готово' : at === 5 ? 'Показать разбор' : 'Дальше'; }
+const ringsDone = new Set();
+function syncOpeners(){ const t = DONE() ? 'Мой разбор' : began ? 'Продолжить план' : null; if (t) { document.getElementById('plan-open').textContent = t; document.getElementById('top-plan').textContent = t; } }
 function diagnose(){ sunEl.dataset.e = 'joy'; hero.classList.add('flash'); release('button'); }
 function show(i){
   const back = i < at; at = i; steps.forEach((s, k) => { s.hidden = k !== i; s.classList.remove('enter', 'back'); }); if (plan.open) { void steps[i].offsetWidth; steps[i].classList.add('enter'); if (back) steps[i].classList.add('back'); } backB.hidden = i === 0; msg.textContent = '';
   [...prog.children].forEach((p, k) => p.classList.toggle('on', k <= Math.min(i, 5))); prog.setAttribute('aria-valuenow', Math.min(i + 1, 6)); prog.setAttribute('aria-valuetext', 'Вопрос ' + Math.min(i + 1, 6) + ' из 6'); prog.hidden = i === LAST;
   if (i === 2) slSync();
+  if (i < LAST && freed) sunEl.dataset.e = 'curious';
   if (i === 3) steps[3].querySelector('legend').textContent = 'Если ' + IFW(answers[1], answers[0]) + ', то я…';
   if (!freed && i < LAST) dissolveTo(FR[i]);
   if (i === LAST) { summary(); if (!freed) diagnose(); }
-  syncFoot();
+  syncFoot(); syncOpeners();
   const f = steps[i].querySelector('.opt[aria-checked="true"]') || steps[i].querySelector('.opt[tabindex="0"], .opt, input');
   const head = steps[i].querySelector('legend, h2'); head.tabIndex = -1; head.style.outline = 'none';
   (viaKey && f ? f : head).focus({ preventScroll: true });
@@ -1033,17 +1037,18 @@ function summary(){
   const bt = document.getElementById('bento');
   bt.innerHTML =
     '<div class="tile" style="--i:0"><h3>Уходит в смог за год</h3><span class="big" id="b-year"></span><p class="src2">из твоих ответов: ' + rub.format(per) + ' в день, ' + TYPEW[answers[0]] + '</p></div>' +
-    '<div class="tile" style="--i:1"><h3>Рецепторы приходят в норму</h3><svg class="br" viewBox="0 0 120 48" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="120" y1="44" y2="44"/><path d="' + path + '"/></svg><p class="src2">6–12 недель (Cosgrove, 2009). Форма линии — иллюстрация.</p></div>' +
+    '<div class="tile" style="--i:1"><h3>Рецепторы приходят в норму</h3><svg class="br" viewBox="0 0 120 48" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="120" y1="44" y2="44"/><path d="' + path + '"/></svg><p class="src2">У курящих сигареты — 6–12 недель (Cosgrove, 2009). Форма линии — иллюстрация.</p></div>' +
     '<div class="tile w2" style="--i:2"><h3>Твоё «если — то»</h3><p></p><p class="src2">Старт — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : 'в понедельник, ') + date + '. Заранее выбранное действие связывает ситуацию с ответом (Gollwitzer, Sheeran, 2006).</p></div>' +
     '<div class="tile w2 plain" style="--i:3"><h3>Миф про твой триггер</h3><p><b></b></p><p></p></div>' +
     '<div class="tile w2" style="--i:4"><h3>Три кольца дня</h3><div class="rings"><svg viewBox="0 0 80 80" aria-hidden="true">' + ring(34, 'a', 0) + ring(26, 'b', 0) + ring(18, 'c', 0) + '</svg>' +
-    '<div><p style="margin:0">Сегодня небо чистое. Рецепторы приходят в норму за недели (Cosgrove, 2009). Кольца дня помогают держать ритм; здесь это демо — нажми.</p></div></div><div class="rbtns" style="margin-top:.8rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div>' +
+    '<div><p style="margin:0">Так будут выглядеть три кольца дня. Здесь это демо: нажми, чтобы замкнуть. В приложении их закрывают реальные действия.</p></div></div><div class="rbtns" style="margin-top:.8rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div>' +
     '<p class="src2" id="ring-msg" aria-live="polite" style="margin-top:.6rem">Сорвался — счётчик не обнуляется: разберём причину, и день не пропадёт.</p></div>' +
     '<div class="tile w2 plain" style="--i:5"><h3>Подписка</h3><span class="big">349 ₽ в месяц</span><p class="src2">Напомним за 2 дня до списания, отмена в одно нажатие. Оплату подключим к запуску — это прототип.</p></div>';
   const t = bt.querySelectorAll('.tile'); t[2].querySelector('p').textContent = 'Если ' + IFW(trig, answers[0]) + ', то я ' + (ACT[answers[3]] || '…') + '.';
   t[3].querySelector('b').textContent = 'Миф: ' + myth[0] + '.'; t[3].querySelectorAll('p')[1].textContent = myth[1];
   countTo(document.getElementById('b-year'), per * 365);
-  bt.querySelectorAll('[data-ring]').forEach(btn => btn.addEventListener('click', () => { const r = bt.querySelector('.rg-' + btn.dataset.ring); if (r.classList.contains('done')) return; r.classList.add('done'); btn.setAttribute('aria-pressed', 'true');
+  ringsDone.forEach(k => { bt.querySelector('.rg-' + k)?.classList.add('done'); bt.querySelector('[data-ring="' + k + '"]')?.setAttribute('aria-pressed', 'true'); });
+  bt.querySelectorAll('[data-ring]').forEach(btn => btn.addEventListener('click', () => { const r = bt.querySelector('.rg-' + btn.dataset.ring); if (r.classList.contains('done')) return; r.classList.add('done'); ringsDone.add(btn.dataset.ring); btn.setAttribute('aria-pressed', 'true');
     try { navigator.vibrate && navigator.vibrate(12); } catch {}
     if (bt.querySelectorAll('.rg.done').length === 3) { document.getElementById('ring-msg').textContent = 'Три кольца замкнуты.'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} } }));
 }
@@ -1058,7 +1063,8 @@ function openPlan(from, step){
   plan.showModal(); show(target); requestAnimationFrame(() => requestAnimationFrame(() => plan.classList.add('in')));
 }
 function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; plan.classList.add('out'); plan.classList.remove('in');
-  let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.style.transitionDuration = ''; plan.close(); (freed ? document.getElementById('plan-open') : (opener && opener !== document.body ? opener : document.getElementById('break')))?.focus?.({ preventScroll: true });
+  let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.style.transitionDuration = ''; plan.close(); if (freed) sunEl.dataset.e = 'joy'; syncOpeners();
+  (freed ? document.getElementById('plan-open') : (opener && opener !== document.body ? opener : document.getElementById('break')))?.focus?.({ preventScroll: true });
   if (!freed && began) { document.getElementById('break').textContent = 'Продолжить план'; document.getElementById('hint-t').textContent = 'или разгони остальное'; } };
   if (reduce) return fin(); const te = e => { if (e.target === plan && (e.propertyName === 'transform' || e.propertyName === 'opacity')) { plan.removeEventListener('transitionend', te); fin(); } }; plan.addEventListener('transitionend', te); setTimeout(fin, (parseFloat(plan.style.transitionDuration) * 1000 || (mobile() ? 280 : 210)) + 50); }
 document.getElementById('pl-close').addEventListener('click', closePlan);
