@@ -219,11 +219,11 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 /* ── Как это работает ── */
 .h2.sm{font-size:clamp(2.25rem,4.2vw,3.5rem)}
 .how-h{max-width:18ch;font-size:clamp(2.25rem,4.2vw,3.5rem)}
-.how-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem;max-width:46rem}
+.how-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem}
 .how-side{position:static}
 .talk{display:flex;flex-direction:column;gap:.6rem;padding-top:.5rem}
 @media (max-width:860px){.how-grid{grid-template-columns:minmax(0,1fr)}.how-side{position:static}}
-.talk p{max-width:min(36rem,88%);padding:.8rem 1.15rem;font-size:clamp(1.0625rem,1.4vw,1.25rem);line-height:1.4;text-wrap:pretty}
+.talk p{max-width:min(34rem,88%);padding:.8rem 1.15rem;font-size:clamp(1.0625rem,1.4vw,1.25rem);line-height:1.4;text-wrap:pretty}
 .t-nick{background:var(--nick);color:var(--nick-text);border-radius:1.4rem 1.4rem 1.4rem .4rem;width:fit-content;box-shadow:inset 0 0 0 1px var(--nick-ring)}
 .t-me{align-self:flex-end;background:var(--me);color:var(--me-text);border-radius:1.4rem 1.4rem .4rem 1.4rem;margin-bottom:1rem}
 .t-me b{display:block;font:500 clamp(1.25rem,1.8vw,1.5rem)/1.2 var(--f-display);letter-spacing:-.01em;margin-bottom:.2rem}
@@ -293,7 +293,12 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .calc output{display:block;font:500 clamp(1.75rem,2.6vw,2.25rem)/1.1 var(--f-display);letter-spacing:-.015em;color:var(--text);margin:.35rem 0 .25rem}
 .year{font:500 clamp(4rem,10vw,8.5rem)/.92 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums;margin-top:clamp(2rem,4vw,3rem);white-space:nowrap}
 .year .per{font-size:.4em;letter-spacing:-.01em;margin-left:.3em;color:var(--muted)}
-.year-row{display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem}
+.year-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22rem);gap:1rem clamp(2rem,5vw,5rem);align-items:end}
+.yl{list-style:none;display:grid;border-top:1px solid var(--rule)}
+.yl li{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--rule);font-variant-numeric:lining-nums tabular-nums}
+.yl b{font:500 1.375rem/1.2 var(--f-display)}
+.yl span{color:var(--muted);text-align:right;align-self:center}
+@media (max-width:1100px){.year-row{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:1100px){.year-row{grid-template-columns:minmax(0,1fr)}}
 .year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin:.9rem 0 0;max-width:40rem;text-wrap:pretty}
 .bridge{margin-top:clamp(2.5rem,5vw,4rem);padding-top:1.5rem;border-top:1px solid var(--rule);font:500 clamp(1.375rem,2.1vw,1.75rem)/1.3 var(--f-display);letter-spacing:-.01em;max-width:36rem;text-wrap:pretty}
@@ -635,7 +640,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
       <input type="range" id="spend" min="50" max="1000" step="10" value="250">
     </div>
     <div class="year-row"><p class="year rv"><span class="num" id="year">91 250 ₽</span><span class="per">в год</span></p>
-    <p class="year-note rv" id="year-note"></p></div>
+    <ul class="yl rv" id="year-note"></ul></div>
     <p class="bridge rv" id="bridge"></p>
   </div>
 </section>
@@ -1171,7 +1176,7 @@ function money(){
   const s = rub.format(d); document.getElementById('spend-v').textContent = s + ' в день'; spend.setAttribute('aria-valuetext', s + ' в день');
   year.textContent = rub.format(d * 365);
   const shoes = Math.ceil(12000 / d), sea = Math.ceil(60000 / d);
-  document.getElementById('year-note').textContent = 'Через ' + shoes + ' ' + dayWord(shoes) + '\u00a0— новые кроссовки. Через ' + (sea > 365 ? 'год с лишним' : sea + ' ' + dayWord(sea)) + '\u00a0— неделя у\u00a0моря. За пять лет\u00a0— ' + rub.format(d * 365 * 5) + '.';
+  document.getElementById('year-note').innerHTML = '<li><b>' + shoes + '\u00a0' + dayWord(shoes) + '</b><span>новые кроссовки</span></li><li><b>' + (sea > 365 ? 'год с\u00a0лишним' : sea + '\u00a0' + dayWord(sea)) + '</b><span>неделя у\u00a0моря</span></li><li><b>' + rub.format(d * 365 * 5) + '</b><span>за\u00a0пять лет</span></li>';
   const dd = Math.max(1, Math.ceil(349 / d));
   document.getElementById('bridge').innerHTML = 'Подписка дешевле. <em>Смог берёт с тебя больше за ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + '.</em>';
 }
