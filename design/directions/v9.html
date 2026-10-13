@@ -240,7 +240,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .haze{position:absolute;inset:0 0 2.5rem 0;pointer-events:none;opacity:0;transform-origin:bottom;transform:scaleY(.7);
   background:radial-gradient(60% 70% at 20% 100%,rgba(20,26,30,.9),transparent 70%),radial-gradient(55% 80% at 55% 100%,rgba(20,26,30,.85),transparent 70%),radial-gradient(50% 70% at 88% 100%,rgba(20,26,30,.8),transparent 70%)}
 .pk{position:absolute;left:30%;top:.2rem;translate:-50% 0;font-size:.875rem;color:var(--calm-muted)}
-.axis-note{position:relative;height:1.4rem;color:var(--calm-muted);font-size:.875rem;margin-top:.5rem}
+.axis-note{position:relative;height:1.5rem;color:var(--calm-text);font-size:.9375rem;margin-top:.5rem}
 .axis-note span{position:absolute;top:0;translate:-50% 0;white-space:nowrap}.axis-note span:first-child{translate:0 0}.axis-note span:last-child{translate:-100% 0}
 .wave-ctl{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:1.5rem 2rem;margin-top:1.75rem}
 .ride{background:var(--calm-line);color:#06292D;min-width:12rem}
@@ -261,7 +261,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .strip i.next{background:#1A2A4A;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}:root:not([data-theme=light]) .strip i.miss{background:#5A636B}}
 :root[data-theme=dark] .strip i.next{background:#1A2A4A;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}:root[data-theme=dark] .strip i.miss{background:#5A636B}
 .strip-n span.now{color:var(--text);font-weight:600}.strip-n span.now{position:relative}.strip-n span.miss{position:relative;color:var(--text);font-weight:600}.strip-n span.miss::after{content:"срыв";position:absolute;left:50%;top:1.5em;translate:-50% 0;font-weight:400;color:var(--muted)}.strip-n span.now::after{content:"сегодня";position:absolute;left:50%;top:1.5em;translate:-50% 0;font-weight:400;color:var(--muted)}.strip-n{padding-bottom:1.4em}
-.strip-n{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));margin-top:.6rem;font-size:.8125rem;color:var(--muted)}
+.strip-n{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));margin-top:.6rem;font-size:.875rem;color:var(--muted)}
 .strip-n span{text-align:center;white-space:nowrap}
 .slip-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2rem clamp(2.5rem,6vw,6rem);margin-top:clamp(2.5rem,5vw,4rem);align-items:start}
 .tally{font:500 clamp(2rem,3.4vw,2.75rem)/1.1 var(--f-display);letter-spacing:-.015em}
@@ -438,7 +438,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .sun{animation:breathe 9s ease-in-out infinite;--lid:.55}
 @keyframes breathe{0%{scale:1}28%{scale:1.03}39%{scale:1.05}100%{scale:1}}
 .eyes{position:absolute;inset:0;pointer-events:none;translate:var(--ex,0px) var(--ey,0px);transition:translate .14s var(--ease-out)}
-.eye{position:absolute;top:38%;width:10%;height:24%;border-radius:999px;background:#06243F;transform-origin:50% 60%;scale:calc(var(--wide,1) * var(--sz,1));
+.eye{position:absolute;top:37%;width:11.5%;height:27%;border-radius:999px;background:#06243F;transform-origin:50% 60%;scale:calc(var(--wide,1) * var(--sz,1));
   transition:height .2s var(--ease-out),top .2s var(--ease-out),border-radius .2s var(--ease-out),rotate .2s var(--ease-out),scale .2s var(--ease-out);animation:blink 5.2s infinite}
 .eye::after{content:"";position:absolute;top:14%;left:54%;width:30%;height:22%;border-radius:50%;background:#fff;opacity:.9}
 @keyframes blink{0%,92%,100%{transform:scaleY(var(--lid,1))}95%{transform:scaleY(.1)}}
@@ -451,14 +451,14 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .hero[data-off] .sun,.hero[data-off] .eye{animation-play-state:paused}
 .hero.flash .sun::before{animation:flash .9s var(--ease-out)}
 @keyframes flash{0%{opacity:.25;transform:scale(.85)}35%{opacity:1;transform:scale(1.25)}100%{opacity:1;transform:none}}
-.brow{position:absolute;top:30%;width:11%;height:2.4%;border-radius:999px;background:#06243F;opacity:.85;transition:rotate .2s var(--ease-out),translate .2s var(--ease-out),opacity .15s ease-out}
+.brow{position:absolute;top:29%;width:12%;height:3%;border-radius:999px;background:#06243F;opacity:.85;transition:rotate .2s var(--ease-out),translate .2s var(--ease-out),opacity .15s ease-out}
 .brow:nth-child(1){left:30.5%;rotate:-13deg}.brow:nth-child(2){left:57.5%;rotate:13deg}
 .eye:nth-child(3){left:32%}.eye:nth-child(4){left:58%}
 .sun[data-e=curious] .brow:nth-child(2){rotate:-6deg;translate:0 -70%}.sun[data-e=curious] .brow:nth-child(1){rotate:0deg}
 .sun[data-e=joy] .brow{opacity:0}
 [data-char=zen] .sun[data-e] .brow:nth-child(1),[data-char=warm] .sun[data-e] .brow:nth-child(1){rotate:-4deg}[data-char=zen] .sun[data-e] .brow:nth-child(2),[data-char=warm] .sun[data-e] .brow:nth-child(2){rotate:4deg}
 [data-char=zen] .sun[data-e] .brow,[data-char=warm] .sun[data-e] .brow{opacity:.85;translate:0 0}
-[data-char=fight] .sun[data-e] .brow:nth-child(1){rotate:12deg;opacity:.9}[data-char=fight] .sun[data-e] .brow:nth-child(2){rotate:-12deg;opacity:.9}
+[data-char=fight] .sun[data-e] .brow:nth-child(1){rotate:6deg;opacity:.9}[data-char=fight] .sun[data-e] .brow:nth-child(2){rotate:-6deg;opacity:.9}
 html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s var(--ease-out)}
 .hero-inner .copy{transition:opacity .2s var(--ease-out)}
 /* Опрос: ползунок, клавиши, разбор */
@@ -476,7 +476,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
 .tile h3{font-weight:600;font-size:.8125rem;line-height:1.25;color:var(--muted)}
 .tile .big{display:block;margin-top:.35rem;font:500 1.75rem/1 var(--f-display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.01em}
 .tile p{margin-top:.4rem;font-size:.9375rem;line-height:1.4;text-wrap:pretty}
-.tile .src2{color:var(--muted);font-size:.75rem;line-height:1.35}
+.tile .src2{color:var(--muted);font-size:.8125rem;line-height:1.35}
 .tile svg.br{display:block;width:100%;height:3rem;margin-top:.5rem;overflow:visible}
 .tile svg.br path{fill:none;stroke:var(--act);stroke-width:2.5;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .tile svg.br line{stroke:var(--muted);stroke-dasharray:2 4;opacity:.6;vector-effect:non-scaling-stroke}
