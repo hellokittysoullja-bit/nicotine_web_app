@@ -199,8 +199,8 @@ input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2.75
 input[type=range]::-webkit-slider-runnable-track{height:.375rem;border-radius:1rem;background:linear-gradient(90deg,currentColor var(--p),var(--rule) var(--p))}
 input[type=range]::-moz-range-track{height:.375rem;border-radius:1rem;background:var(--rule)}
 input[type=range]::-moz-range-progress{height:.375rem;border-radius:1rem;background:currentColor}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.75rem;height:1.75rem;border-radius:50%;background:#fff;border:0;margin-top:-.6875rem;
-  box-shadow:0 0 0 1px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.22);transition:transform .14s var(--ease-out)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--act);border:0;margin-top:-.625rem;
+  box-shadow:inset 0 0 0 4px #fff,0 0 0 1px var(--act),0 2px 8px rgba(6,36,63,.25);transition:transform .14s var(--ease-out)}
 input[type=range]::-moz-range-thumb{width:1.75rem;height:1.75rem;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.22)}
 input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 input[type=range]:focus-visible{outline:none}
@@ -209,14 +209,23 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 
 /* ── Как это работает ── */
 .how-h{max-width:18ch}
+.how-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
+.how-side{position:sticky;top:6rem}
+.talk{display:flex;flex-direction:column;gap:.6rem;padding-top:.5rem}
+@media (max-width:860px){.how-grid{grid-template-columns:minmax(0,1fr)}.how-side{position:static}}
+.talk p{max-width:min(36rem,88%);padding:.8rem 1.15rem;font-size:clamp(1.0625rem,1.4vw,1.25rem);line-height:1.4;text-wrap:pretty}
+.t-nick{background:var(--nick);color:var(--nick-text);border-radius:1.4rem 1.4rem 1.4rem .4rem;width:fit-content;box-shadow:inset 0 0 0 1px var(--nick-ring)}
+.t-me{align-self:flex-end;background:var(--me);color:var(--me-text);border-radius:1.4rem 1.4rem .4rem 1.4rem;margin-bottom:1rem}
+.t-me b{display:block;font:500 clamp(1.25rem,1.8vw,1.5rem)/1.2 var(--f-display);letter-spacing:-.01em;margin-bottom:.2rem}
 .steps{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,4rem);margin-top:clamp(3rem,6vw,5rem);counter-reset:s}
 .steps li{counter-increment:s;border-top:1px solid var(--rule);padding-top:1.5rem}
 .steps li::before{content:counter(s);display:block;font:500 clamp(3rem,5vw,4.5rem)/1 var(--f-display);font-variant-numeric:lining-nums;color:var(--act);margin-bottom:1.25rem}
 .steps p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
 
 /* ── Волна ── */
-.calm{color:var(--calm-text);background:linear-gradient(in oklab 180deg,color-mix(in oklab,var(--storm-top) 0%,transparent) 0,var(--storm-top) 4.5rem,var(--storm-low) calc(100% - 4.5rem),color-mix(in oklab,var(--storm-low) 0%,transparent) 100%);padding-block:clamp(9rem,14vw,12rem)}
+.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top) 0,var(--storm-low) calc(100% - 4.5rem),color-mix(in oklab,var(--storm-low) 0%,transparent) 100%);padding-block:clamp(9rem,14vw,12rem)}
 .calm .sub,.calm .src{color:var(--calm-muted)}
+.bank{position:absolute;left:0;right:0;bottom:calc(100% - 1.5rem);width:100%;height:10rem;pointer-events:none;display:block}
 .wave-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:2rem 4rem;align-items:end}
 .try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
 .try::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--calm-line)}
@@ -379,6 +388,8 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .actions > div{flex-direction:column;align-items:flex-start;gap:.75rem}
   .b{font-size:.9375rem;padding:.5rem .8rem;max-width:80%}
   .wave-head,.slip-row,.price,.faq-grid{grid-template-columns:minmax(0,1fr)}
+  .bank{height:6rem;bottom:calc(100% - 1rem)}
+  .calm{padding-top:6rem}
   .steps,.weeks{grid-template-columns:minmax(0,1fr);gap:2rem}
   .wave-ctl{grid-template-columns:1fr auto}
   .wave-ctl .ride{grid-column:1/-1;order:3;width:100%}
@@ -455,19 +466,23 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 <div id="content">
 <section class="section gutter" aria-labelledby="how-h" data-sky="pale">
   <div class="wrap">
-    <h2 class="h2 how-h rv" id="how-h">Как это работает</h2>
-    <ol class="steps">
-      <li class="rv"><h3 class="h3">Расскажи про Ника</h3><p>Две минуты вопросов. В конце — день расставания и&nbsp;план на первые две недели.</p></li>
-      <li class="rv"><h3 class="h3">Тянет — открой «Волну»</h3><p>Четыре минуты: дышишь и&nbsp;смотришь, как тяга поднимается и&nbsp;спадает.</p></li>
-      <li class="rv"><h3 class="h3">Смотри, что меняется</h3><p>Что происходит в&nbsp;мозге на этой неделе и&nbsp;сколько денег уже не&nbsp;ушло Нику.</p></li>
-    </ol>
+    <div class="how-grid"><div class="how-side rv"><h2 class="h2 how-h" id="how-h">Как это <em>работает</em></h2><p class="sub">Ник будет давить. Вот что ты ему ответишь — и&nbsp;чем приложение в&nbsp;этом поможет.</p></div>
+    <div class="talk" aria-label="Переписка: как это работает">
+      <p class="t-nick rv">ну и&nbsp;что ты будешь делать без меня?</p>
+      <p class="t-me rv"><b>Сначала — план.</b> Две минуты вопросов, и&nbsp;у&nbsp;меня есть день расставания и&nbsp;первые две недели по шагам.</p>
+      <p class="t-nick rv">а&nbsp;когда тебя накроет?</p>
+      <p class="t-me rv"><b>Открою «Волну».</b> Подышу и&nbsp;посмотрю, как тяга поднимается и&nbsp;спадает. Обычно это несколько минут.</p>
+      <p class="t-nick rv">и&nbsp;ради чего всё это?</p>
+      <p class="t-me rv"><b>Ради себя.</b> Каждый день видно, что меняется в&nbsp;голове и&nbsp;сколько денег не&nbsp;ушло тебе.</p>
+    </div></div>
   </div>
 </section>
 
-<section class="calm section gutter" aria-labelledby="w-h" data-sky="storm">
+<section class="calm section gutter" aria-labelledby="w-h" data-sky="pale">
+  <canvas class="bank" id="bank" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="wave-head rv">
-      <div><p class="try">Попробуй прямо здесь — это часть приложения</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;уходит</h2></div>
+      <div><p class="try">Попробуй прямо здесь — это часть приложения</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;<em>уходит</em></h2></div>
       <p class="sub">Когда Ник пишет, мы не&nbsp;спорим с&nbsp;ним. Переждать проще, чем кажется: тяга обычно уходит за несколько минут.</p>
     </div>
     <figure class="wave-fig rv" aria-labelledby="w-h">
@@ -507,7 +522,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 
 <section class="section gutter" aria-labelledby="b-h" data-sky="pale">
   <div class="wrap">
-    <h2 class="h2 rv" id="b-h">Мозг перестаёт его ждать</h2>
+    <h2 class="h2 rv" id="b-h">Мозг перестаёт его <em>ждать</em></h2>
     <div class="brain-line rv" id="brain-line" aria-hidden="true"><svg id="brain-svg"></svg><span class="base-l">уровень без никотина</span></div>
     <ol class="weeks">
       <li class="rv"><b>1-я неделя</b><p>Пик ломки. Раздражение и&nbsp;тяга — это голодные рецепторы, а&nbsp;не&nbsp;ты.</p></li>
@@ -573,7 +588,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 <section class="final gutter" aria-labelledby="f-h" data-sky="clear">
   <div class="wrap">
     <div class="nick-say" id="last-say"><span class="av" aria-hidden="true">Н</span><p class="msg"><span class="sr">Ник: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">не спишь?</span></p></div>
-    <h2 class="h2 rv" id="f-h">Ник напишет снова. Ты&nbsp;можешь не&nbsp;отвечать.</h2>
+    <h2 class="h2 rv" id="f-h">Ник напишет снова. Ты&nbsp;можешь <em>не&nbsp;отвечать</em>.</h2>
     <button class="btn btn-act rv" id="again">Составить план — 2&nbsp;минуты</button>
     <p class="final-note rv">Сначала опрос и&nbsp;план. Оплата — только после.</p>
   </div>
@@ -944,6 +959,22 @@ ride.addEventListener('click', () => {
   wT0 = now; wState = 'running'; ride.textContent = 'Пауза'; wCue.classList.remove('idle', 'done'); wCue.textContent = 'Вдох';
   waveRaf = requestAnimationFrame(wStep);
 });
+
+/* ── Гряда смога над «Волной»: та же погода, что у Ника ── */
+const bank = document.getElementById('bank');
+function drawBank(){
+  const W = bank.clientWidth, H = bank.clientHeight; bank.width = W; bank.height = H; const x = bank.getContext('2d'); x.clearRect(0, 0, W, H);
+  const top = css('--storm-top'), spr = makeSprites({ body: top, lit: css('--storm-low'), shade: top });
+  let q = 41; const r = () => (q = q * 16807 % 2147483647) / 2147483647;
+  const n = Math.ceil(W / (48 * Math.min(1, H / 160))) + 3;
+  for (let pass = 0; pass < 3; pass++) { x.globalAlpha = [.55, .8, 1][pass];
+    for (let i = 0; i < n; i++) { const rad = (26 + r() * (pass ? 26 : 40) + (r() < .15 ? 24 : 0)) * Math.min(1, H / 160), S = rad * 2.6, cx = (i - 1 + r()) * (W / (n - 3)), cy = H - rad * [.9, .55, .25][pass] - (pass ? 0 : 8);
+      x.drawImage(spr[(i + pass) % spr.length], cx - S / 2, cy - S / 2, S, S); } }
+  x.globalAlpha = 1; const g = x.createLinearGradient(0, H - 40, 0, H); g.addColorStop(0, top + '00'); g.addColorStop(1, top); x.fillStyle = g; x.fillRect(0, H - 40, W, 40);
+  x.fillStyle = top; x.fillRect(0, H - 4, W, 4);
+}
+drawBank(); let bkT = 0; addEventListener('resize', () => { clearTimeout(bkT); bkT = setTimeout(drawBank, 150); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawBank);
 
 /* ── Деньги ── */
 const rub = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
