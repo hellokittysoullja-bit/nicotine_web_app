@@ -214,8 +214,9 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 2px var(-
 input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky-wash),0 0 0 4px var(--act)}
 
 /* ── Как это работает ── */
-.how-h{max-width:18ch}
-.how-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:center}
+.h2.sm{font-size:clamp(2.25rem,4.2vw,3.5rem)}
+.how-h{max-width:18ch;font-size:clamp(2.25rem,4.2vw,3.5rem)}
+.how-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem;max-width:46rem}
 .how-side{position:static}
 .talk{display:flex;flex-direction:column;gap:.6rem;padding-top:.5rem}
 @media (max-width:860px){.how-grid{grid-template-columns:minmax(0,1fr)}.how-side{position:static}}
@@ -344,7 +345,7 @@ dialog.plan{border:0;padding:0;margin:6.5rem max(1.5rem,calc((100vw - 76rem) / 2
   opacity:0;transform:translateY(1rem) scale(.98);transition:opacity .22s var(--ease-out),transform .22s var(--ease-out),overlay .22s allow-discrete,display .22s allow-discrete}
 dialog.plan[open].in{opacity:1;transform:none}
 dialog.plan.out{transition-duration:.16s}
-html:has(dialog.plan[open]){overflow:hidden;scrollbar-gutter:stable;background:var(--sky-top)}
+html:has(dialog.plan[open]){overflow:hidden;scrollbar-gutter:stable}
 dialog.plan::backdrop{background:rgba(6,30,50,0);transition:background-color .22s ease-out}
 dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl{display:flex;flex-direction:column;max-height:inherit;height:100%}
@@ -470,6 +471,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
 .bento{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1rem}
 .tile{border-radius:1.1rem;background:var(--surface-2);padding:.85rem 1rem 1rem;min-width:0;box-shadow:inset 0 1px 0 color-mix(in srgb,var(--reward) 45%,transparent);animation:tilein .28s var(--ease-out) both;animation-delay:calc(var(--i) * 70ms + 450ms)}
 .tile.w2{grid-column:1/-1}
+.tile.plain{background:none;box-shadow:none;border-radius:0;border-top:1px solid var(--rule);padding-inline:0}
 @keyframes tilein{from{opacity:0;transform:translateY(10px)}}
 .tile h3{font-weight:600;font-size:.8125rem;line-height:1.25;color:var(--muted)}
 .tile .big{display:block;margin-top:.35rem;font:500 1.75rem/1 var(--f-display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.01em}
@@ -611,7 +613,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
     <div class="brain-line rv" id="brain-line" aria-hidden="true"><svg id="brain-svg"></svg><span class="base-l">уровень без никотина</span></div>
     <ol class="weeks">
       <li class="rv"><b>1-я неделя</b><p>Пик ломки. Раздражение и&nbsp;тяга — это голодные рецепторы, а&nbsp;не&nbsp;ты.</p></li>
-      <li class="rv"><b>4-я неделя</b><p>Физической тяги меньше. Смог давит привычками: кофе, перерыв, дорога домой.</p></li>
+      <li class="rv"><b>4-я неделя</b><p>Физической тяги меньше. Давят привычки: кофе, перерыв, дорога домой.</p></li>
       <li class="rv"><b>6–12 недель</b><p>В&nbsp;среднем рецепторов становится столько&nbsp;же, сколько у&nbsp;некурящих. Теперь туман ушёл и&nbsp;из&nbsp;головы.</p></li>
     </ol>
     <p class="src rv">Источник: Cosgrove и&nbsp;соавторы, 2009, Archives of&nbsp;General Psychiatry (ПЭТ). Избыток никотиновых рецепторов держится около четырёх недель и&nbsp;к&nbsp;6–12 неделям приходит к&nbsp;уровню некурящих. Форма линии между точками — иллюстрация.</p>
@@ -635,7 +637,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
 <section class="section gutter" aria-labelledby="p-h" data-sky="pale">
   <div class="wrap price">
     <div class="rv">
-      <h2 class="h2" id="p-h">Дешевле, чем смог</h2>
+      <h2 class="h2" id="p-h">Один тариф, без сюрпризов</h2>
       <p class="amount num">349 ₽<small>в месяц</small></p>
       <p class="terms">Подписка продлевается сама. За два дня до списания напомним, отменить можно в&nbsp;одно нажатие. Без таймеров и&nbsp;«последнего шанса»: цена одна и&nbsp;не&nbsp;сгорает.</p>
     </div>
@@ -644,7 +646,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
         <li><b>План выхода</b><span>День старта и&nbsp;первые две недели по шагам.</span></li>
         <li><b>«Волна» в&nbsp;одно нажатие</b><span>На минуты, когда тянет сильнее всего.</span></li>
         <li><b>Мозг по неделям</b><span>Что сейчас происходит и&nbsp;почему так тяжело.</span></li>
-        <li><b>Копилка</b><span>Сколько денег уже не&nbsp;ушло в&nbsp;смог.</span></li>
+        <li><b>Копилка</b><span>Сколько денег уже осталось у&nbsp;тебя.</span></li>
         <li><b>Страховка серии</b><span>Срыв не обнуляет счётчик, если разобрать причину. И&nbsp;план на следующий раз.</span></li>
       </ul>
       <button class="btn btn-act" id="start">Составить план — 2&nbsp;минуты</button>
@@ -655,7 +657,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
 <section class="section tight gutter" aria-labelledby="q-h" data-sky="pale">
   <div class="wrap faq-grid">
     <div class="rv">
-      <h2 class="h2" id="q-h">Что ещё важно знать</h2>
+      <h2 class="h2 sm" id="q-h">Что ещё важно знать</h2>
       <p class="privacy">В&nbsp;приложении ответы опроса и&nbsp;дневник срывов хранятся только на&nbsp;твоём устройстве и&nbsp;не&nbsp;уходят на наш сервер. Оплату обрабатывает платёжный сервис — подробнее в&nbsp;«Конфиденциальности».</p>
     </div>
     <div class="faq rv">
@@ -1031,11 +1033,11 @@ function summary(){
     '<div class="tile" style="--i:0"><h3>Уходит в смог за год</h3><span class="big" id="b-year"></span><p class="src2">из твоих ответов: ' + rub.format(per) + ' в день, ' + TYPEW[answers[0]] + '</p></div>' +
     '<div class="tile" style="--i:1"><h3>Рецепторы приходят в норму</h3><svg class="br" viewBox="0 0 120 48" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="120" y1="44" y2="44"/><path d="' + path + '"/></svg><p class="src2">6–12 недель (Cosgrove, 2009). Форма линии — иллюстрация.</p></div>' +
     '<div class="tile w2" style="--i:2"><h3>Твоё «если — то»</h3><p></p><p class="src2">Старт — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : 'в понедельник, ') + date + '. Заранее выбранное действие связывает ситуацию с ответом (Gollwitzer, Sheeran, 2006).</p></div>' +
-    '<div class="tile w2" style="--i:3"><h3>Миф про твой триггер</h3><p><b></b></p><p></p></div>' +
+    '<div class="tile w2 plain" style="--i:3"><h3>Миф про твой триггер</h3><p><b></b></p><p></p></div>' +
     '<div class="tile w2" style="--i:4"><h3>Три кольца дня</h3><div class="rings"><svg viewBox="0 0 80 80" aria-hidden="true">' + ring(34, 'a', 0) + ring(26, 'b', 0) + ring(18, 'c', 0) + '</svg>' +
     '<div><p style="margin:0">Сегодня небо чистое. Рецепторы приходят в норму за недели (Cosgrove, 2009). Кольца дня помогают держать ритм; здесь это демо — нажми.</p></div></div><div class="rbtns" style="margin-top:.8rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div>' +
     '<p class="src2" id="ring-msg" aria-live="polite" style="margin-top:.6rem">Сорвался — счётчик не обнуляется: разберём причину, и день не пропадёт.</p></div>' +
-    '<div class="tile w2" style="--i:5"><h3>Подписка</h3><span class="big">349 ₽ в месяц</span><p class="src2">Напомним за 2 дня до списания, отмена в одно нажатие. Оплату подключим к запуску — это прототип.</p></div>';
+    '<div class="tile w2 plain" style="--i:5"><h3>Подписка</h3><span class="big">349 ₽ в месяц</span><p class="src2">Напомним за 2 дня до списания, отмена в одно нажатие. Оплату подключим к запуску — это прототип.</p></div>';
   const t = bt.querySelectorAll('.tile'); t[2].querySelector('p').textContent = 'Если ' + IFW(trig, answers[0]) + ', то я ' + (ACT[answers[3]] || '…') + '.';
   t[3].querySelector('b').textContent = 'Миф: ' + myth[0] + '.'; t[3].querySelectorAll('p')[1].textContent = myth[1];
   countTo(document.getElementById('b-year'), per * 365);
