@@ -438,18 +438,27 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .eyes{position:absolute;inset:0;pointer-events:none;translate:var(--ex,0px) var(--ey,0px);transition:translate .14s var(--ease-out)}
 .eye{position:absolute;top:38%;width:10%;height:24%;border-radius:999px;background:#06243F;transform-origin:50% 60%;scale:calc(var(--wide,1) * var(--sz,1));
   transition:height .2s var(--ease-out),top .2s var(--ease-out),border-radius .2s var(--ease-out),rotate .2s var(--ease-out),scale .2s var(--ease-out);animation:blink 5.2s infinite}
-.eye:first-child{left:32%}.eye:last-child{left:58%}
 .eye::after{content:"";position:absolute;top:14%;left:54%;width:30%;height:22%;border-radius:50%;background:#fff;opacity:.9}
 @keyframes blink{0%,92%,100%{transform:scaleY(var(--lid,1))}95%{transform:scaleY(.1)}}
-.sun[data-e=curious]{--lid:1}.sun[data-e=curious] .eye:last-child{--sz:1.18}
+.sun[data-e=curious]{--lid:1}.sun[data-e=curious] .eye:nth-child(4){--sz:1.18}
 .sun[data-e=joy]{--lid:1}.sun[data-e=joy] .eye{height:11%;top:46%;border-radius:999px 999px 0 0}.sun[data-e=joy] .eye::after{display:none}
 [data-char=zen] .sun[data-e] .eye{height:11%;top:47%;border-radius:0 0 999px 999px}[data-char=zen] .sun[data-e] .eye::after{display:none}
-[data-char=fight] .sun[data-e] .eye{height:16%;top:43%;border-radius:999px}[data-char=fight] .sun[data-e] .eye:first-child{rotate:9deg}[data-char=fight] .sun[data-e] .eye:last-child{rotate:-9deg}[data-char=fight] .sun[data-e] .eye::after{display:none}
+[data-char=fight] .sun[data-e] .eye{height:16%;top:43%;border-radius:999px}[data-char=fight] .sun[data-e] .eye:nth-child(3){rotate:9deg}[data-char=fight] .sun[data-e] .eye:nth-child(4){rotate:-9deg}[data-char=fight] .sun[data-e] .eye::after{display:none}
 [data-char=warm] .sun[data-e] .eye{width:12%;height:28%;top:36%;border-radius:999px}[data-char=warm] .sun[data-e] .eye::after{display:block;width:36%;height:26%}
 [data-char=zen] .sun{animation-duration:12s}[data-char=fight] .sun{animation-duration:7s}
 .hero[data-off] .sun,.hero[data-off] .eye{animation-play-state:paused}
 .hero.flash .sun::before{animation:flash .9s var(--ease-out)}
 @keyframes flash{0%{opacity:.25;transform:scale(.85)}35%{opacity:1;transform:scale(1.25)}100%{opacity:1;transform:none}}
+.brow{position:absolute;top:30%;width:11%;height:2.4%;border-radius:999px;background:#06243F;opacity:.85;transition:rotate .2s var(--ease-out),translate .2s var(--ease-out),opacity .15s ease-out}
+.brow:nth-child(1){left:30.5%;rotate:-13deg}.brow:nth-child(2){left:57.5%;rotate:13deg}
+.eye:nth-child(3){left:32%}.eye:nth-child(4){left:58%}
+.sun[data-e=curious] .brow:nth-child(2){rotate:-6deg;translate:0 -70%}.sun[data-e=curious] .brow:nth-child(1){rotate:0deg}
+.sun[data-e=joy] .brow{opacity:0}
+[data-char=zen] .sun[data-e] .brow:nth-child(1),[data-char=warm] .sun[data-e] .brow:nth-child(1){rotate:-4deg}[data-char=zen] .sun[data-e] .brow:nth-child(2),[data-char=warm] .sun[data-e] .brow:nth-child(2){rotate:4deg}
+[data-char=zen] .sun[data-e] .brow,[data-char=warm] .sun[data-e] .brow{opacity:.85;translate:0 0}
+[data-char=fight] .sun[data-e] .brow:nth-child(1){rotate:12deg;opacity:.9}[data-char=fight] .sun[data-e] .brow:nth-child(2){rotate:-12deg;opacity:.9}
+html:has(dialog.plan[open]) .hero-inner .copy{opacity:.1;transition:opacity .2s var(--ease-out)}
+.hero-inner .copy{transition:opacity .2s var(--ease-out)}
 /* Опрос: ползунок, клавиши, разбор */
 .sl{margin-top:1.4rem;display:grid;gap:.4rem}
 .sl output{font:500 1.75rem/1.1 var(--f-display);font-variant-numeric:lining-nums tabular-nums}
@@ -498,7 +507,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 <a class="skip" href="#content">К содержанию</a>
 <main>
 <section class="hero" id="hero" aria-labelledby="h" data-sky="day">
-  <div class="sun" aria-hidden="true" data-e="smog"><div class="eyes"><i class="eye"></i><i class="eye"></i></div></div>
+  <div class="sun" aria-hidden="true" data-e="smog"><div class="eyes"><i class="brow"></i><i class="brow"></i><i class="eye"></i><i class="eye"></i></div></div>
   <canvas id="smog" aria-hidden="true"></canvas>
   <header class="top gutter"><div class="wrap">
     <a class="brand" href="#" lang="en" aria-label="Lumen, на главную">Lumen</a>
@@ -570,7 +579,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
       <span class="wave-time" id="w-time" aria-hidden="true">0:00</span>
       <span class="wave-cue idle" id="w-cue" aria-live="polite">Нажми и&nbsp;смотри, как волна спадает</span>
     </div>
-    <p class="src" id="wave-src">Источник: NHS, «Quit smoking: dealing with cravings». Дыхание — физиологический вздох: двойной вдох носом и&nbsp;долгий выдох ртом. Пять минут в&nbsp;день такой практики снижали частоту дыхания и&nbsp;улучшали настроение сильнее медитации (Balban и&nbsp;др., Cell Reports Medicine, 2023); длину фаз выбрали мы. В&nbsp;демо четыре минуты идут за&nbsp;восемнадцать секунд, в&nbsp;приложении — в&nbsp;реальном времени.</p>
+    <p class="src" id="wave-src">Источник: NHS, «Quit smoking: dealing with cravings». Дыхание — физиологический вздох: двойной вдох носом и&nbsp;долгий выдох ртом. Пять минут в&nbsp;день такой практики снижали частоту дыхания и&nbsp;улучшали настроение сильнее медитации (Balban и&nbsp;др., Cell Reports Medicine, 2023); длину фаз выбрали мы. В&nbsp;демо четыре минуты идут за&nbsp;восемнадцать секунд, в&nbsp;приложении — в&nbsp;реальном времени. Шкала времени условная: у каждого тяга длится по-своему.</p>
   </div>
 </section>
 
@@ -885,7 +894,7 @@ function stroke(e, isDown){
 }
 hero.addEventListener('pointerdown', e => { if (!e.target.closest('button,a')) hero.classList.add('dragging'); stroke(e, true); }, { passive: true });
 hero.addEventListener('pointermove', e => stroke(e, false), { passive: true });
-['pointerleave', 'pointerup', 'pointercancel'].forEach(ev => hero.addEventListener(ev, () => { hero.classList.remove('dragging'); if (armed && !freed && !began) begin('swipe'); prev = null; }));
+['pointerleave', 'pointerup', 'pointercancel'].forEach(ev => hero.addEventListener(ev, () => { hero.classList.remove('dragging'); if (ev === 'pointerup' && armed && !freed && !plan.open) { if (began) { sunEl.dataset.e = 'joy'; release('swipe'); } else begin('swipe'); } prev = null; }));
 
 const fav = document.querySelector('link[rel="icon"]'), title0 = document.title;
 const SUN_ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E9BEA'/%3E%3Ccircle cx='16' cy='16' r='8' fill='%23FFC94D'/%3E%3C/svg%3E";
@@ -910,7 +919,7 @@ function begin(how, from){
   began = true; touched = true; hero.classList.add('opened'); sunEl.dataset.e = 'curious';
   document.getElementById('hint').classList.remove('on'); dissolveTo(.3);
   try { navigator.vibrate && navigator.vibrate(12); } catch {}
-  openPlan(from || document.activeElement);
+  openPlan(from || document.getElementById('break'));
 }
 // Глаза следят за курсором и пальцем
 if (!reduce) { const eyes = sunEl.querySelector('.eyes'); let tk = 0;
@@ -950,16 +959,18 @@ const plan = document.getElementById('plan'), steps = [...plan.querySelectorAll(
 const Q = {
   0: [['cig', 'Сигареты'], ['vape', 'Вейп'], ['pouch', 'Никотиновые пакетики'], ['mix', 'Всего понемногу']],
   1: [['coffee', 'Утром, с кофе'], ['stress', 'Когда нервничаю'], ['bored', 'Когда скучно'], ['evening', 'Вечером или с алкоголем']],
-  3: [['wave', 'Пройду «Волну» — 90 секунд'], ['water', 'Выпью стакан холодной воды'], ['sigh', 'Сделаю три двойных вдоха и сменю обстановку на 2 минуты']],
+  3: [['wave', 'Пройду «Волну» — несколько минут'], ['water', 'Выпью стакан холодной воды'], ['sigh', 'Сделаю три двойных вдоха и сменю обстановку на 2 минуты']],
   4: [['0', 'Сегодня'], ['1', 'Завтра'], ['mon', 'В понедельник']],
   5: [['zen', 'Спокойный дзен'], ['fight', 'Боевой фокус'], ['warm', 'Тёплая поддержка']]};
-const IFW = { coffee: 'утром с кофе рука тянется за дымом', stress: 'я нервничаю и рука тянется за дымом', bored: 'мне скучно и рука тянется за дымом', evening: 'вечером рука тянется за дымом' };
-const ACT = { wave: 'пройду «Волну» — 90 секунд', water: 'выпью стакан холодной воды', sigh: 'сделаю три двойных вдоха и сменю обстановку на 2 минуты' };
+const TAIL = { cig: 'за сигаретой', vape: 'за вейпом', pouch: 'за пакетиком', mix: 'к никотину' };
+const IFW0 = { coffee: 'утром с кофе рука тянется ', stress: 'я нервничаю и рука тянется ', bored: 'мне скучно и рука тянется ', evening: 'вечером рука тянется ' };
+const IFW = (t, ty) => (IFW0[t] || 'рука тянется ') + (TAIL[ty] || 'к никотину');
+const ACT = { wave: 'пройду «Волну» — несколько минут', water: 'выпью стакан холодной воды', sigh: 'сделаю три двойных вдоха и сменю обстановку на 2 минуты' };
 const MYTH = {
-  coffee: ['Кофе без дыма — не тот', 'Связку «кофе и затяжка» мозг выучил сам, значит, её можно переучить. Начни с малого: сначала кофе, потом пять минут ходьбы.'],
-  stress: ['Затяжка снимает стресс', 'Она гасит ломку от прошлой затяжки, а часть напряжения создаёт сама эта ломка (Parrott, 1999).'],
+  coffee: ['Кофе без дыма — не тот', 'Связку «кофе и затяжка» мозг выучил как привычку. Начни с малого: сначала кофе, потом пять минут ходьбы.'],
+  stress: ['Затяжка снимает стресс', 'По данным наблюдений, затяжка гасит ломку от прошлой затяжки, а часть напряжения создаёт сама ломка (Parrott, 1999).'],
   bored: ['Затяжка заполняет паузу', 'Пауза остаётся, просто жест заполнял её. Нужен другой жест в руках: стакан воды, три глубоких вдоха.'],
-  evening: ['Вечером это награда', 'Вечер и алкоголь — привычные спусковые крючки. Заранее выбранное «если — то» работает лучше решения в момент тяги.']};
+  evening: ['Вечером это награда', 'Вечер и алкоголь — привычные спусковые крючки. Заранее выбранное «если — то» помогает чаще выполнить намерение (Gollwitzer, Sheeran, 2006).']};
 const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
 const answers = [null, null, 250, null, null, null];
 const LAST = 6, FR = [.3, .42, .5, .62, .72, .82, 1], DONE = () => [0, 1, 3, 4, 5].every(k => answers[k] !== null);
@@ -980,7 +991,7 @@ plan.addEventListener('keydown', e => { if (e.ctrlKey || e.metaKey || e.altKey |
 function choose(si, b, advance = true){
   [...b.parentElement.children].forEach(x => { const on = x === b; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); answers[si] = b.dataset.v;
   if (si === 5) document.documentElement.dataset.char = b.dataset.v;
-  clearTimeout(choose.t); if (advance) choose.t = setTimeout(() => { if (at === si) show(si + 1); }, reduce ? 0 : 200);
+  clearTimeout(choose.t); if (advance && si !== 5) choose.t = setTimeout(() => { if (at === si) show(si + 1); }, reduce ? 0 : 200);
   msg.textContent = ''; syncFoot();
 }
 const sl = document.getElementById('sl'), slV = document.getElementById('sl-v'), sl3 = document.getElementById('sl-3y');
@@ -990,13 +1001,13 @@ function slSync(){ const v = +sl.value; answers[2] = v; sl.style.setProperty('--
 sl.addEventListener('input', slSync);
 const nextB = document.getElementById('pl-next'), backB = document.getElementById('pl-back'), msg = document.getElementById('pl-msg'), prog = document.getElementById('prog');
 const ready = () => at === 2 || at === LAST || answers[at] !== null;
-function syncFoot(){ nextB.hidden = !ready(); document.getElementById('pay').hidden = at !== LAST; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === LAST ? 'Готово' : at === 5 ? 'Показать разбор' : 'Дальше'; }
+function syncFoot(){ nextB.hidden = !ready(); document.getElementById('pay').hidden = true; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === LAST ? 'Готово' : at === 5 ? 'Показать разбор' : 'Дальше'; }
 function diagnose(){ sunEl.dataset.e = 'joy'; hero.classList.add('flash'); release('button'); }
 function show(i){
   const back = i < at; at = i; steps.forEach((s, k) => { s.hidden = k !== i; s.classList.remove('enter', 'back'); }); if (plan.open) { void steps[i].offsetWidth; steps[i].classList.add('enter'); if (back) steps[i].classList.add('back'); } backB.hidden = i === 0; msg.textContent = '';
   [...prog.children].forEach((p, k) => p.classList.toggle('on', k <= Math.min(i, 5))); prog.setAttribute('aria-valuenow', Math.min(i + 1, 6)); prog.setAttribute('aria-valuetext', 'Вопрос ' + Math.min(i + 1, 6) + ' из 6'); prog.hidden = i === LAST;
   if (i === 2) slSync();
-  if (i === 3) steps[3].querySelector('legend').textContent = 'Если ' + (IFW[answers[1]] || 'рука тянется за дымом') + ', то я…';
+  if (i === 3) steps[3].querySelector('legend').textContent = 'Если ' + IFW(answers[1], answers[0]) + ', то я…';
   if (!freed && i < LAST) dissolveTo(FR[i]);
   if (i === LAST) { summary(); if (!freed) diagnose(); }
   syncFoot();
@@ -1006,8 +1017,10 @@ function show(i){
 }
 const TYPEW = { cig: 'сигареты', vape: 'вейп', pouch: 'пакетики', mix: 'всего понемногу' };
 function countTo(el, v){ el.textContent = rub.format(0); if (reduce) { el.textContent = rub.format(v); return; } const t0 = performance.now() + 450;
-  (function f(n){ const p = Math.min(1, Math.max(0, (n - t0) / 900)); el.textContent = rub.format(Math.round(v * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(f); })(performance.now()); }
+  (function f(n){ const p = Math.min(1, Math.max(0, (n - t0) / 600)); el.textContent = rub.format(Math.round(v * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(f); })(performance.now()); }
+let sumSig = '';
 function summary(){
+  const sig = answers.join('|'); if (sig === sumSig) return; sumSig = sig;
   const d = new Date(), w = answers[4];
   if (w === '1') d.setDate(d.getDate() + 1); else if (w === 'mon') d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7));
   const date = new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long' }).format(d), per = +answers[2], trig = answers[1] || 'coffee', myth = MYTH[trig];
@@ -1019,15 +1032,16 @@ function summary(){
     '<div class="tile" style="--i:1"><h3>Рецепторы приходят в норму</h3><svg class="br" viewBox="0 0 120 48" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="120" y1="44" y2="44"/><path d="' + path + '"/></svg><p class="src2">6–12 недель (Cosgrove, 2009). Форма линии — иллюстрация.</p></div>' +
     '<div class="tile w2" style="--i:2"><h3>Твоё «если — то»</h3><p></p><p class="src2">Старт — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : 'в понедельник, ') + date + '. Заранее выбранное действие связывает ситуацию с ответом (Gollwitzer, Sheeran, 2006).</p></div>' +
     '<div class="tile w2" style="--i:3"><h3>Миф про твой триггер</h3><p><b></b></p><p></p></div>' +
-    '<div class="tile w2" style="--i:4"><h3>Три кольца дня</h3><div class="rings"><svg viewBox="0 0 80 80" aria-hidden="true">' + ring(34, 'a', .35) + ring(26, 'b', 0) + ring(18, 'c', 0) + '</svg>' +
-    '<div><p style="margin:0">Сегодня небо чистое. Первые дни рецепторы перестраиваются. Замкни три кольца, чтобы закрепить результат.</p><div class="rbtns" style="margin-top:.6rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div></div></div>' +
-    '<p class="src2" id="ring-msg" aria-live="polite" style="margin-top:.6rem">Сорвался — счётчик не обнуляется: разберём причину, и день не пропадёт.</p></div>';
-  const t = bt.querySelectorAll('.tile'); t[2].querySelector('p').textContent = 'Если ' + (IFW[trig]) + ', то я ' + (ACT[answers[3]] || '…') + '.';
+    '<div class="tile w2" style="--i:4"><h3>Три кольца дня</h3><div class="rings"><svg viewBox="0 0 80 80" aria-hidden="true">' + ring(34, 'a', 0) + ring(26, 'b', 0) + ring(18, 'c', 0) + '</svg>' +
+    '<div><p style="margin:0">Сегодня небо чистое. Рецепторы приходят в норму за недели (Cosgrove, 2009). Кольца дня помогают держать ритм; здесь это демо — нажми.</p><div class="rbtns" style="margin-top:.6rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div></div></div>' +
+    '<p class="src2" id="ring-msg" aria-live="polite" style="margin-top:.6rem">Сорвался — счётчик не обнуляется: разберём причину, и день не пропадёт.</p></div>' +
+    '<div class="tile w2" style="--i:5"><h3>Подписка</h3><span class="big">349 ₽ в месяц</span><p class="src2">Напомним за 2 дня до списания, отмена в одно нажатие. Оплату подключим к запуску — это прототип.</p></div>';
+  const t = bt.querySelectorAll('.tile'); t[2].querySelector('p').textContent = 'Если ' + IFW(trig, answers[0]) + ', то я ' + (ACT[answers[3]] || '…') + '.';
   t[3].querySelector('b').textContent = 'Миф: ' + myth[0] + '.'; t[3].querySelectorAll('p')[1].textContent = myth[1];
   countTo(document.getElementById('b-year'), per * 365);
   bt.querySelectorAll('[data-ring]').forEach(btn => btn.addEventListener('click', () => { const r = bt.querySelector('.rg-' + btn.dataset.ring); if (r.classList.contains('done')) return; r.classList.add('done'); btn.setAttribute('aria-pressed', 'true');
     try { navigator.vibrate && navigator.vibrate(12); } catch {}
-    if (bt.querySelectorAll('.rg.done').length === 3) { document.getElementById('ring-msg').textContent = 'Все три кольца замкнуты. Первый день — твой.'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} } }));
+    if (bt.querySelectorAll('.rg.done').length === 3) { document.getElementById('ring-msg').textContent = 'Три кольца замкнуты.'; try { navigator.vibrate && navigator.vibrate([12, 60, 18]); } catch {} } }));
 }
 nextB.addEventListener('click', () => {
   if (!ready()) { msg.textContent = at === 2 ? 'Отметь хотя бы один вариант.' : 'Выбери один вариант.'; return; }
@@ -1040,7 +1054,8 @@ function openPlan(from, step){
   plan.showModal(); show(target); requestAnimationFrame(() => requestAnimationFrame(() => plan.classList.add('in')));
 }
 function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; plan.classList.add('out'); plan.classList.remove('in');
-  let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.style.transitionDuration = ''; plan.close(); (freed ? document.getElementById('plan-open') : opener)?.focus?.({ preventScroll: true }); };
+  let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.style.transitionDuration = ''; plan.close(); (freed ? document.getElementById('plan-open') : (opener && opener !== document.body ? opener : document.getElementById('break')))?.focus?.({ preventScroll: true });
+  if (!freed && began) { document.getElementById('break').textContent = 'Продолжить план'; document.getElementById('hint-t').textContent = 'или разгони остальное'; } };
   if (reduce) return fin(); const te = e => { if (e.target === plan && (e.propertyName === 'transform' || e.propertyName === 'opacity')) { plan.removeEventListener('transitionend', te); fin(); } }; plan.addEventListener('transitionend', te); setTimeout(fin, (parseFloat(plan.style.transitionDuration) * 1000 || (mobile() ? 280 : 210)) + 50); }
 document.getElementById('pl-close').addEventListener('click', closePlan);
 // Лист на телефоне смахивается вниз, как в iOS: тянется за пальцем (вверх — с сопротивлением), решение по скорости отпускания

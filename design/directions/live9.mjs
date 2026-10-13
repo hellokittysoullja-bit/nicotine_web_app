@@ -12,7 +12,7 @@ const info = p => p.evaluate(()=>({dlg:document.getElementById('plan').open, ste
   await p.click('#pl-next'); await p.waitForTimeout(400);
   console.log('if-legend:', await p.textContent('.step[data-step="3"] legend'));
   await p.keyboard.press('1'); await p.waitForTimeout(600); await p.keyboard.press('3'); await p.waitForTimeout(600); await p.screenshot({path:'v9-s5.png'});
-  await p.keyboard.press('2'); await p.waitForTimeout(1900);
+  await p.keyboard.press('2'); await p.waitForTimeout(300); await p.click('#pl-next'); await p.waitForTimeout(1900);
   console.log('diagnosis:', JSON.stringify(await info(p)), 'tiles:', await p.locator('.tile').count(), 'year:', await p.textContent('#b-year'));
   await p.click('[data-ring="b"]'); await p.screenshot({path:'v9-diag.png'});
   await p.click('#pl-next'); await p.waitForTimeout(500); console.log('closed:', !(await p.evaluate(()=>document.getElementById('plan').open)), 'focus->', await p.evaluate(()=>document.activeElement.id||document.activeElement.className));
