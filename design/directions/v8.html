@@ -191,7 +191,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .rv.seen{opacity:1;transform:none}
 
 /* Ник вклинивается в разговор: реплика с именем, сначала «печатает» */
-.nick-say{display:flex;align-items:flex-end;gap:.55rem;margin-bottom:1.5rem;opacity:0;transform:translateY(6px);transition:opacity .22s var(--ease-out),transform .22s var(--ease-out)}
+.nick-say{display:flex;align-items:center;gap:.55rem;margin-bottom:1.5rem;opacity:0;transform:translateY(6px);transition:opacity .22s var(--ease-out),transform .22s var(--ease-out)}
 .nick-say.on{opacity:1;transform:none}
 .nick-say .av{width:1.9rem;height:1.9rem;font-size:.9375rem;box-shadow:none}
 .nick-say .msg{background:var(--nick);color:var(--nick-text);border-radius:1.2rem 1.2rem 1.2rem .35rem;padding:.55rem .95rem;font-size:1.0625rem;line-height:1.35;box-shadow:inset 0 0 0 1px var(--nick-ring);min-height:2.5rem;display:flex;align-items:center}
@@ -216,7 +216,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 /* ── Как это работает ── */
 .how-h{max-width:18ch}
 .how-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
-.how-side{position:sticky;top:6rem}
+.how-side{position:sticky;top:6rem;align-self:start}
 .talk{display:flex;flex-direction:column;gap:.6rem;padding-top:.5rem}
 @media (max-width:860px){.how-grid{grid-template-columns:minmax(0,1fr)}.how-side{position:static}}
 .talk p{max-width:min(36rem,88%);padding:.8rem 1.15rem;font-size:clamp(1.0625rem,1.4vw,1.25rem);line-height:1.4;text-wrap:pretty}
@@ -229,10 +229,8 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .steps p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
 
 /* ── Волна ── */
-.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low));padding-block:clamp(9rem,14vw,12rem)}
+.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--sky-wash) 0,var(--storm-top) clamp(7rem,10vw,10rem),var(--storm-low) calc(100% - clamp(7rem,10vw,10rem)),var(--sky-wash) 100%);padding-block:clamp(9rem,14vw,12rem)}
 .calm .sub,.calm .src{color:var(--calm-muted)}
-.bank{position:absolute;left:0;right:0;bottom:calc(100% - 1.5rem);width:100%;height:10rem;pointer-events:none;display:block}
-.bank-out{bottom:auto;top:calc(100% - 1.5rem);height:7rem}
 .wave-head{display:grid;gap:1.25rem}.wave-head .sub{max-width:34rem}
 .try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
 .try::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--calm-line)}
@@ -292,7 +290,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .year .per{font-size:.28em;letter-spacing:-.01em;margin-left:.3em;color:var(--muted)}
 .year-row{display:grid;grid-template-columns:auto minmax(0,22rem);gap:1rem clamp(2rem,4vw,4rem);align-items:end}
 @media (max-width:1100px){.year-row{grid-template-columns:minmax(0,1fr)}}
-.year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin-top:1.25rem;max-width:40rem;text-wrap:pretty}
+.year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin:0 0 clamp(.6rem,1.4vw,1.4rem);align-self:end;max-width:40rem;text-wrap:pretty}
 .bridge{margin-top:clamp(2.5rem,5vw,4rem);padding-top:1.5rem;border-top:1px solid var(--rule);font:500 clamp(1.375rem,2.1vw,1.75rem)/1.3 var(--f-display);letter-spacing:-.01em;max-width:36rem;text-wrap:pretty}
 .bridge em{font-style:normal;color:var(--muted)}
 
@@ -410,10 +408,8 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .actions > div{flex-direction:column;align-items:flex-start;gap:.75rem}
   .b{font-size:.9375rem;padding:.5rem .8rem;max-width:80%}
   .wave-head,.slip-row,.price,.faq-grid{grid-template-columns:minmax(0,1fr)}
-  .bank{height:6rem;bottom:calc(100% - 1rem)}
-  .bank-out{bottom:auto;top:calc(100% - 1rem);height:4.5rem}
-  .calm{padding-bottom:6rem}
-  .calm{padding-top:6rem}
+  .calm{padding-bottom:8.5rem}
+  .calm{padding-top:8.5rem}
   .steps,.weeks{grid-template-columns:minmax(0,1fr);gap:2rem}
   .wave-ctl{grid-template-columns:auto 1fr}
   .wave-ctl .ride{grid-column:1/-1;order:3;width:100%}
@@ -507,8 +503,6 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 </section>
 
 <section class="calm section gutter" aria-labelledby="w-h" data-sky="pale">
-  <canvas class="bank" id="bank" aria-hidden="true"></canvas>
-  <canvas class="bank bank-out" id="bank-out" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="wave-head rv">
       <div><p class="try">Попробуй прямо здесь — это часть приложения</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;уходит</h2></div>
@@ -602,7 +596,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   <div class="wrap faq-grid">
     <div class="rv">
       <h2 class="h2" id="q-h">Что ещё важно знать</h2>
-      <p class="privacy">Ответы опроса и&nbsp;дневник срывов сохраняются в&nbsp;этом браузере и&nbsp;не&nbsp;уходят на наш сервер. Оплату обрабатывает платёжный сервис — подробнее в&nbsp;«Конфиденциальности».</p>
+      <p class="privacy">В&nbsp;приложении ответы опроса и&nbsp;дневник срывов хранятся только на&nbsp;твоём устройстве и&nbsp;не&nbsp;уходят на наш сервер. Оплату обрабатывает платёжный сервис — подробнее в&nbsp;«Конфиденциальности».</p>
     </div>
     <div class="faq rv">
       <details><summary>Уже были попытки бросить. Почему сейчас получится?<i aria-hidden="true"></i></summary><p>Попыток бывает много, и&nbsp;это нормально. Здесь срыв не&nbsp;обнуляет счётчик, а&nbsp;помогает понять, что именно сорвало, — и&nbsp;подготовиться к&nbsp;этому моменту в&nbsp;следующий раз.</p></details>
@@ -1023,24 +1017,6 @@ ride.addEventListener('click', () => {
   waveRaf = requestAnimationFrame(wStep);
 });
 
-/* ── Гряда смога над «Волной»: та же погода, что у Ника ── */
-const bank = document.getElementById('bank');
-function drawBank(){ paintBank(bank, css('--storm-top'), css('--storm-low'), 41, false); paintBank(document.getElementById('bank-out'), css('--storm-low'), css('--storm-low'), 77, true); }
-function paintBank(bank, top, lit, seed, flip){
-  const W = bank.clientWidth, H = bank.clientHeight; bank.width = W; bank.height = H; const x = bank.getContext('2d'); x.clearRect(0, 0, W, H);
-  if (flip) { x.translate(0, H); x.scale(1, -1); }
-  let q = seed; const r = () => (q = q * 16807 % 2147483647) / 2147483647, k = Math.min(1, H / 160);
-  // Туман, а не клубы: крупные мягкие пятна в два слоя глубины, центр каждого не выше 40% радиуса от линии гряды
-  const blob = (cx, cy, rad, col, a) => { const g = x.createRadialGradient(cx, cy, 0, cx, cy, rad); g.addColorStop(0, col); g.addColorStop(.35, col + '8c'); g.addColorStop(1, col + '00'); x.globalAlpha = a; x.fillStyle = g; x.fillRect(cx - rad, cy - rad, rad * 2, rad * 2); };
-  for (const [col, a, rmin, rvar, step] of [[lit, .5, 110, 70, 150], [top, .9, 80, 60, 110]]) {
-    // Неровный шаг (кучнее и реже) и разброс размеров по квадрату случайного — без сетки, которую видит глаз
-    const R0 = rmin * k; let cx = -step * k * r();
-    while (cx < W + rmin * k) { const t = r(), rad = R0 * (.7 + .6 * r()) + t * t * rvar * 1.6 * k, cy = H - rad * (.12 + r() * .3); blob(cx, cy, rad, col, a * (.8 + .2 * r())); cx += step * k * (.35 + r() * 1.15); } }
-  x.globalAlpha = 1; x.globalCompositeOperation = 'destination-in'; const m = x.createLinearGradient(0, 0, 0, Math.min(H, 120)); m.addColorStop(0, 'rgba(0,0,0,0)'); m.addColorStop(1, '#000'); x.fillStyle = m; x.fillRect(0, 0, W, H);
-  x.globalCompositeOperation = 'source-over'; const g = x.createLinearGradient(0, H * .55, 0, H); g.addColorStop(0, top + '00'); g.addColorStop(1, top); x.fillStyle = g; x.fillRect(0, H * .55, W, H * .45);
-}
-drawBank(); let bkT = 0; addEventListener('resize', () => { clearTimeout(bkT); bkT = setTimeout(drawBank, 150); });
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawBank);
 
 /* ── Деньги ── */
 const rub = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 });
@@ -1063,7 +1039,12 @@ const bl = document.getElementById('brain-line'), bs = document.getElementById('
 const LV = w => w <= 4 ? 1 - .14 * (w / 4) ** 2 : .86 * Math.exp(-Math.pow((w - 4) / 4.2, 2) * 1.4);
 function brain(){
   const W = bl.clientWidth, H = bl.clientHeight; bs.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  const X = w => w / 12 * W, Y = v => 4 + (H - 8) * (1 - v); let d = '';
+  const Y = v => 4 + (H - 8) * (1 - v); let X = w => w / 12 * W;
+  if (!mobile()) { // точка недели стоит ровно над своей подписью: ось кусочно-линейна между якорями (форма линии — иллюстрация, см. источник)
+    const r0 = bl.getBoundingClientRect().left, L = [...document.querySelectorAll('.weeks li')].map(li => li.getBoundingClientRect().left - r0 + 8);
+    const K = [[0, 0], [1, L[0]], [4, L[1]], [9, L[2]], [12, W]];
+    X = w => { for (let k = 1; k < K.length; k++) if (w <= K[k][0]) { const [a, xa] = K[k - 1], [b, xb] = K[k]; return xa + (xb - xa) * (w - a) / (b - a); } return W; }; }
+  let d = '';
   for (let w = 0; w <= 12.001; w += .1) d += (w ? 'L' : 'M') + X(w).toFixed(1) + ',' + Y(LV(w)).toFixed(1);
   bs.innerHTML = '<line class="base" x1="0" x2="' + W + '" y1="' + Y(0) + '" y2="' + Y(0) + '"/><path d="' + d + '"/>';
   bl.querySelectorAll('.dot').forEach(n => n.remove());
