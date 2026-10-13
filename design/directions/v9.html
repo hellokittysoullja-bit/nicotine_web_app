@@ -51,7 +51,7 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E9E2CC;--sun-core:#F7F3E6;
   --smog-body:#4C545B;--smog-lit:#7F878E;--smog-shade:#171B1F;--smog-glow:200,210,220;
-  --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.12);
+  --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.22);
   --ink:#F3F7FB;--on-ink:#06243F;--text:#E6EEF2;--muted:#A9BDC8;--rule:rgba(243,247,251,.16);
   --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E6EEF2;
   --surface:#122130;--surface-2:#182A3A;--control:#6E8896;--reward:#D9A23E;
@@ -59,7 +59,7 @@
 :root[data-theme="dark"]{
   --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E9E2CC;--sun-core:#F7F3E6;
   --smog-body:#4C545B;--smog-lit:#7F878E;--smog-shade:#171B1F;--smog-glow:200,210,220;
-  --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.12);
+  --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.22);
   --ink:#F3F7FB;--on-ink:#06243F;--text:#E6EEF2;--muted:#A9BDC8;--rule:rgba(243,247,251,.16);
   --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E6EEF2;
   --surface:#122130;--surface-2:#182A3A;--control:#6E8896;--reward:#D9A23E;
@@ -178,8 +178,8 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 }
 
 /* ── Секции ── */
-.section{padding-block:clamp(4.5rem,8vw,7.5rem)}
-.section.airy{padding-block:clamp(6rem,12vw,11rem) clamp(3rem,6vw,5rem)}
+.section{padding-block:clamp(3.5rem,6vw,5.5rem)}
+.section.airy{padding-block:clamp(5rem,9vw,8rem) clamp(2.5rem,5vw,4rem)}
 .section.tight{padding-block:clamp(3rem,5vw,4.5rem)}
 .airy .h2{font-size:clamp(2.6rem,6.4vw,5.75rem)}
 .eyebrow-n{display:none}
@@ -229,7 +229,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .steps p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
 
 /* ── Волна ── */
-.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--sky-wash) 0,var(--storm-top) clamp(7rem,10vw,10rem),var(--storm-low) calc(100% - clamp(7rem,10vw,10rem)),var(--sky-wash) 100%);padding-block:clamp(9rem,14vw,12rem)}
+.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low));padding-block:clamp(5rem,8vw,7rem)}
 .calm .sub,.calm .src{color:var(--calm-muted)}
 .wave-head{display:grid;gap:1.25rem}.wave-head .sub{max-width:34rem}
 .try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
@@ -283,14 +283,14 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 
 /* ── Деньги ── */
 .money-h{max-width:18ch}
-.calc{max-width:34rem;margin-top:clamp(2rem,4vw,3rem)}
+.calc{max-width:44rem;margin-top:clamp(2rem,4vw,3rem)}
 .calc label{display:block;font-weight:500;color:var(--muted)}
 .calc output{display:block;font:500 clamp(1.75rem,2.6vw,2.25rem)/1.1 var(--f-display);letter-spacing:-.015em;color:var(--text);margin:.35rem 0 .25rem}
 .year{font:500 clamp(4rem,10vw,8.5rem)/.92 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums;margin-top:clamp(2rem,4vw,3rem);white-space:nowrap}
 .year .per{font-size:.28em;letter-spacing:-.01em;margin-left:.3em;color:var(--muted)}
-.year-row{display:grid;grid-template-columns:auto minmax(0,22rem);gap:1rem clamp(2rem,4vw,4rem);align-items:end}
+.year-row{display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem}
 @media (max-width:1100px){.year-row{grid-template-columns:minmax(0,1fr)}}
-.year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin:0 0 clamp(.6rem,1.4vw,1.4rem);align-self:end;max-width:40rem;text-wrap:pretty}
+.year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin:0;max-width:40rem;text-wrap:pretty}
 .bridge{margin-top:clamp(2.5rem,5vw,4rem);padding-top:1.5rem;border-top:1px solid var(--rule);font:500 clamp(1.375rem,2.1vw,1.75rem)/1.3 var(--f-display);letter-spacing:-.01em;max-width:36rem;text-wrap:pretty}
 .bridge em{font-style:normal;color:var(--muted)}
 
@@ -408,8 +408,8 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .actions > div{flex-direction:column;align-items:flex-start;gap:.75rem}
   .b{font-size:.9375rem;padding:.5rem .8rem;max-width:80%}
   .wave-head,.slip-row,.price,.faq-grid{grid-template-columns:minmax(0,1fr)}
-  .calm{padding-bottom:8.5rem}
-  .calm{padding-top:8.5rem}
+  .calm{padding-bottom:5rem}
+  .calm{padding-top:5rem}
   .steps,.weeks{grid-template-columns:minmax(0,1fr);gap:2rem}
   .wave-ctl{grid-template-columns:auto 1fr}
   .wave-ctl .ride{grid-column:1/-1;order:3;width:100%}
@@ -618,7 +618,6 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:.1;transition:opacity .2s 
 
 <section class="section gutter" aria-labelledby="m-h" data-sky="pale">
   <div class="wrap">
-    <div class="nick-say"><span class="av" aria-hidden="true">С</span><p class="msg"><span class="sr">Смог: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">да ладно, это&nbsp;же копейки</span></p></div>
     <h2 class="h2 money-h rv" id="m-h">Сколько ты платишь смогу</h2>
     <div class="calc rv">
       <label for="spend">Уходит на никотин</label>
@@ -634,7 +633,6 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:.1;transition:opacity .2s 
 <section class="section gutter" aria-labelledby="p-h" data-sky="pale">
   <div class="wrap price">
     <div class="rv">
-      <div class="nick-say"><span class="av" aria-hidden="true">С</span><p class="msg"><span class="sr">Смог: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">они просто хотят твоих денег</span></p></div>
       <h2 class="h2" id="p-h">Дешевле, чем смог</h2>
       <p class="amount num">349 ₽<small>в месяц</small></p>
       <p class="terms">Подписка продлевается сама. За два дня до списания напомним, отменить можно в&nbsp;одно нажатие. Без таймеров и&nbsp;«последнего шанса»: цена одна и&nbsp;не&nbsp;сгорает.</p>
@@ -1157,7 +1155,7 @@ function money(){
   const s = rub.format(d); document.getElementById('spend-v').textContent = s + ' в день'; spend.setAttribute('aria-valuetext', s + ' в день');
   year.textContent = rub.format(d * 365);
   const shoes = Math.ceil(12000 / d), sea = Math.ceil(60000 / d);
-  document.getElementById('year-note').textContent = 'Через ' + shoes + ' ' + dayWord(shoes) + '\u00a0— новые кроссовки. Через ' + (sea > 365 ? 'год с лишним' : sea + ' ' + dayWord(sea)) + '\u00a0— неделя у\u00a0моря. За пять лет — ' + rub.format(d * 365 * 5) + '.';
+  document.getElementById('year-note').textContent = 'Через ' + shoes + ' ' + dayWord(shoes) + '\u00a0— новые кроссовки. Через ' + (sea > 365 ? 'год с лишним' : sea + ' ' + dayWord(sea)) + '\u00a0— неделя у\u00a0моря. За пять лет\u00a0— ' + rub.format(d * 365 * 5) + '.';
   const dd = Math.max(1, Math.ceil(349 / d));
   document.getElementById('bridge').innerHTML = 'Подписка — 349 ₽ в месяц. <em>Меньше, чем смог берёт с тебя за ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + '.</em>';
 }
