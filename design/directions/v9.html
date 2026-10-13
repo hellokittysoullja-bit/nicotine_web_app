@@ -438,9 +438,10 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .sun{animation:breathe 9s ease-in-out infinite;--lid:.55}
 @keyframes breathe{0%{scale:1}28%{scale:1.03}39%{scale:1.05}100%{scale:1}}
 .eyes{position:absolute;inset:0;pointer-events:none;translate:var(--ex,0px) var(--ey,0px);transition:translate .14s var(--ease-out)}
-.eye{position:absolute;top:37%;width:11.5%;height:27%;border-radius:999px;background:#06243F;transform-origin:50% 60%;scale:calc(var(--wide,1) * var(--sz,1));
+.eye{position:absolute;top:37%;width:11.5%;height:27%;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 .14em rgba(6,36,63,.28);overflow:hidden;transform-origin:50% 60%;scale:calc(var(--wide,1) * var(--sz,1));
   transition:height .2s var(--ease-out),top .2s var(--ease-out),border-radius .2s var(--ease-out),rotate .2s var(--ease-out),scale .2s var(--ease-out);animation:blink 5.2s infinite}
-.eye::after{content:"";position:absolute;top:14%;left:54%;width:30%;height:22%;border-radius:50%;background:#fff;opacity:.9}
+.eye::before{content:"";position:absolute;left:22%;top:26%;width:56%;height:52%;border-radius:50%;background:radial-gradient(circle at 70% 28%,#fff 0 14%,transparent 15%),#06243F;translate:var(--ppx,-18%) var(--ppy,12%);transition:translate .12s var(--ease-out)}
+.sun[data-e=joy] .eye,[data-char=zen] .sun[data-e] .eye{background:#06243F;box-shadow:none}.sun[data-e=joy] .eye::before,[data-char=zen] .sun[data-e] .eye::before{display:none}
 @keyframes blink{0%,92%,100%{transform:scaleY(var(--lid,1))}95%{transform:scaleY(.1)}}
 .sun[data-e=curious]{--lid:1}.sun[data-e=curious] .eye:nth-child(4){--sz:1.18}
 .sun[data-e=joy]{--lid:1}.sun[data-e=joy] .eye{height:11%;top:46%;border-radius:999px 999px 0 0}.sun[data-e=joy] .eye::after{display:none}
@@ -800,10 +801,10 @@ function build(){
   const tower = puffs.filter(p => p.layer === 'main' && Math.abs(p.x - sxp) < sr * 1.2);
   const towerTop = tower.length ? Math.min(...tower.map(p => p.y - p.rad)) : topY;
   const sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .2);
-  sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .7 - sy) / (sr * 2) * 100 * .3) + '%');
+  sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .7 - sy) / (sr * 2) * 100 * .1) + "%");
   sunEl.style.setProperty('--sx', sxp + 'px'); sunEl.style.setProperty('--sy', sy + 'px');
   geo = { W0, H0, H, base, R, sx: sxp, sy, sr, glow: css('--smog-glow') };
-  if (mobile() && !smogFrac && !freed) smogFrac = .12; // на телефоне Искра выглядывает в просвет, иначе её лицо скрыто тучей
+  if (!smogFrac && !freed) smogFrac = mobile() ? .12 : .08; // на телефоне Искра выглядывает в просвет, иначе её лицо скрыто тучей
   if (smogFrac) dissolveTo(smogFrac, true);
   draw(); noteRects();
 }
@@ -927,7 +928,8 @@ function begin(how, from){
 if (!reduce) { const eyes = sunEl.querySelector('.eyes'); let tk = 0;
   addEventListener('pointermove', e => { if (tk) return; const cx = e.clientX, cy = e.clientY; tk = requestAnimationFrame(() => { tk = 0; const r = sunEl.getBoundingClientRect(); if (!r.width || r.bottom < 0 || r.top > innerHeight) return;
     const dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2), d = Math.hypot(dx, dy) || 1, m = Math.min(1, d / (r.width * 1.5)) * r.width * .06;
-    eyes.style.setProperty('--ex', (dx / d * m).toFixed(1) + 'px'); eyes.style.setProperty('--ey', (dy / d * m * .8).toFixed(1) + 'px'); }); }, { passive: true }); }
+    const k = Math.min(1, d / (r.width * 1.2)); eyes.style.setProperty('--ex', (dx / d * m * .4).toFixed(1) + 'px'); eyes.style.setProperty('--ey', (dy / d * m * .3).toFixed(1) + 'px');
+    eyes.style.setProperty('--ppx', (dx / d * k * 38).toFixed(1) + '%'); eyes.style.setProperty('--ppy', (dy / d * k * 28).toFixed(1) + '%'); }); }, { passive: true }); }
 new IntersectionObserver(([e]) => hero.toggleAttribute('data-off', !e.isIntersecting)).observe(hero);
 
 function release(how){
