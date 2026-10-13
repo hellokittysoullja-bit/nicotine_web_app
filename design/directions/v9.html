@@ -470,6 +470,12 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 [data-char=fight] .sun[data-e] .brow:nth-child(1){rotate:6deg;opacity:.9}[data-char=fight] .sun[data-e] .brow:nth-child(2){rotate:-6deg;opacity:.9}
 html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s var(--ease-out)}
 .hero-inner .copy{transition:opacity .2s var(--ease-out)}
+.sun::after{content:"";position:absolute;inset:-42%;border-radius:50%;z-index:-1;pointer-events:none;opacity:0;transition:opacity .5s var(--ease-out) .25s;
+  background:repeating-conic-gradient(from -4deg,rgba(255,226,140,.55) 0 3deg,transparent 3deg 15deg);-webkit-mask:radial-gradient(circle closest-side,transparent 46%,#000 54%,transparent 98%);mask:radial-gradient(circle closest-side,transparent 46%,#000 54%,transparent 98%)}
+.hero.free .sun::after{opacity:.75}
+.eyes::before,.eyes::after{content:"";position:absolute;top:60%;width:11%;height:7%;border-radius:50%;background:rgba(255,120,90,.28)}
+.eyes::before{left:23%}.eyes::after{left:66%}
+.sun[data-e=joy] .eyes::before,.sun[data-e=joy] .eyes::after{background:rgba(255,110,80,.4)}
 /* Опрос: ползунок, клавиши, разбор */
 .sl{margin-top:1.4rem;display:grid;gap:.4rem}
 .sl output{font:500 1.75rem/1.1 var(--f-display);font-variant-numeric:lining-nums tabular-nums}
@@ -542,7 +548,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
 
     <div class="copy">
       <h1 id="h"><span class="before-h">Выйди из&nbsp;<em>тумана</em></span><span class="after-h" aria-hidden="true">Небо снова <em>твоё</em></span></h1>
-      <p class="lead"><span class="before-l">Каждая тяга — голос смога: «одну, и&nbsp;станет спокойнее». Мы поможем не&nbsp;слушать.</span><span class="after-l" aria-hidden="true">Хорошо. Теперь пара вопросов — чтобы план был про тебя, а&nbsp;не&nbsp;про всех.</span></p>
+      <p class="lead"><span class="before-l">Каждая тяга — голос смога: «одну, и&nbsp;станет спокойнее». Мы поможем не&nbsp;слушать.</span><span class="after-l" aria-hidden="true">Хорошо. Дальше — план: он про тебя, а&nbsp;не&nbsp;про всех.</span></p>
       <div class="actions">
         <div class="before-a">
           <button class="btn btn-act" id="break">Рассеять смог</button>
