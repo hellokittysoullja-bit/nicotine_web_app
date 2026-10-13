@@ -177,6 +177,9 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 
 /* ── Секции ── */
 .section{padding-block:clamp(4.5rem,8vw,7.5rem)}
+.section.airy{padding-block:clamp(6rem,12vw,11rem)}
+.section.tight{padding-block:clamp(3rem,5vw,4.5rem)}
+.airy .h2{font-size:clamp(2.75rem,6.6vw,6rem)}
 .eyebrow-n{display:none}
 .h2{font-family:var(--f-display);font-weight:500;font-size:clamp(2.4rem,5.4vw,4.75rem);line-height:1.02;letter-spacing:-.022em;text-wrap:balance}
 .h3{font-family:var(--f-display);font-weight:500;font-size:clamp(1.5rem,2.3vw,2rem);line-height:1.15;letter-spacing:-.015em}
@@ -529,7 +532,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   </div>
 </section>
 
-<section class="section gutter" aria-labelledby="b-h" data-sky="pale">
+<section class="section airy gutter" aria-labelledby="b-h" data-sky="pale">
   <div class="wrap">
     <h2 class="h2 rv" id="b-h">Мозг перестаёт его <em>ждать</em></h2>
     <div class="brain-line rv" id="brain-line" aria-hidden="true"><svg id="brain-svg"></svg><span class="base-l">уровень без никотина</span></div>
@@ -578,7 +581,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   </div>
 </section>
 
-<section class="section gutter" aria-labelledby="q-h" data-sky="pale">
+<section class="section tight gutter" aria-labelledby="q-h" data-sky="pale">
   <div class="wrap faq-grid">
     <div class="rv">
       <h2 class="h2" id="q-h">Что ещё важно знать</h2>
