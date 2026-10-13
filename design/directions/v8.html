@@ -98,10 +98,10 @@ main,footer{position:relative;z-index:1}
 .hero{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;color:var(--ink);touch-action:pan-y}
 .sun{position:absolute;z-index:-3;pointer-events:none;border-radius:50%;
   left:var(--sx,82%);top:var(--sy,22%);width:var(--sr,15vmax);aspect-ratio:1;translate:-50% -50%;
-  background:radial-gradient(circle,var(--sun-core) 0%,var(--sun) 62%,var(--sun) 100%);box-shadow:0 0 1.5px var(--sun),0 0 60px 18px color-mix(in oklab,var(--sun) 40%,transparent),0 0 180px 70px color-mix(in oklab,var(--sun-core) 20%,transparent);
+  background:radial-gradient(circle,var(--sun-core) 0%,var(--sun) 62%,var(--sun) 100%);box-shadow:0 0 1.5px var(--sun),0 0 50px 14px rgba(255,236,170,.45),0 0 170px 60px rgba(255,248,228,.22);
   transition:transform 1.2s var(--ease-out),filter 1.2s var(--ease-out);transform:translateY(var(--sun-hide,30%)) scale(.92);filter:saturate(.75) brightness(.96)}
 .sun::before{content:"";position:absolute;inset:-110%;border-radius:50%;z-index:-1;
-  background:radial-gradient(circle closest-side,color-mix(in oklab,var(--sun) 55%,transparent) 0%,color-mix(in oklab,var(--sun) 22%,transparent) 45%,transparent 100%);
+  background:radial-gradient(circle closest-side,rgba(255,240,200,.5) 0%,rgba(255,248,230,.18) 45%,rgba(255,255,255,0) 100%);mix-blend-mode:screen;
   opacity:.25;transform:scale(.85);transition:opacity 1.2s var(--ease-out),transform 1.2s var(--ease-out)}
 .hero.free .sun{transform:translate(var(--sun-fx,0),var(--sun-fy,0));filter:none;transition:transform .9s cubic-bezier(.22,1,.36,1) .06s,filter .9s ease-out .06s}
 .who{transition:opacity .3s ease}.hero.free .who{opacity:0;transition-duration:.15s;transition-delay:.06s}
@@ -223,9 +223,10 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .steps p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
 
 /* ── Волна ── */
-.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top) 0,var(--storm-low) calc(100% - 4.5rem),color-mix(in oklab,var(--storm-low) 0%,transparent) 100%);padding-block:clamp(9rem,14vw,12rem)}
+.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low));padding-block:clamp(9rem,14vw,12rem)}
 .calm .sub,.calm .src{color:var(--calm-muted)}
 .bank{position:absolute;left:0;right:0;bottom:calc(100% - 1.5rem);width:100%;height:10rem;pointer-events:none;display:block}
+.bank-out{bottom:auto;top:calc(100% - 1.5rem);height:7rem}
 .wave-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:2rem 4rem;align-items:end}
 .try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
 .try::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--calm-line)}
@@ -250,7 +251,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .strip{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));height:clamp(9rem,16vw,12rem);border-radius:.75rem;overflow:hidden;margin-top:clamp(2.5rem,5vw,4rem);}
 .strip i{position:relative;background:linear-gradient(180deg,color-mix(in oklab,var(--sky-top) calc(var(--k) * 100%),#8FA9B6),color-mix(in oklab,var(--sky-low) calc(var(--k) * 100%),#C9D6DC))}
 .strip i + i{box-shadow:inset 1px 0 0 rgba(255,255,255,.18)}
-.strip i.miss{background:radial-gradient(120% 60% at 50% 30%,#8A9298,#4E565C 70%),#5A6268}
+.strip i.miss{background:var(--nick)}
 .strip i.next{background:color-mix(in oklab,var(--sky-mid) 10%,transparent)}
 .strip i.today::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--act)}
 .strip-n{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));margin-top:.6rem;font-size:.8125rem;color:var(--muted)}
@@ -389,6 +390,8 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .b{font-size:.9375rem;padding:.5rem .8rem;max-width:80%}
   .wave-head,.slip-row,.price,.faq-grid{grid-template-columns:minmax(0,1fr)}
   .bank{height:6rem;bottom:calc(100% - 1rem)}
+  .bank-out{bottom:auto;top:calc(100% - 1rem);height:4.5rem}
+  .calm{padding-bottom:6rem}
   .calm{padding-top:6rem}
   .steps,.weeks{grid-template-columns:minmax(0,1fr);gap:2rem}
   .wave-ctl{grid-template-columns:1fr auto}
@@ -480,6 +483,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 
 <section class="calm section gutter" aria-labelledby="w-h" data-sky="pale">
   <canvas class="bank" id="bank" aria-hidden="true"></canvas>
+  <canvas class="bank bank-out" id="bank-out" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="wave-head rv">
       <div><p class="try">Попробуй прямо здесь — это часть приложения</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;<em>уходит</em></h2></div>
@@ -552,7 +556,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   <div class="wrap price">
     <div class="rv">
       <div class="nick-say"><span class="av" aria-hidden="true">Н</span><p class="msg"><span class="sr">Ник: </span><span class="nl-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="nl-msg">они просто хотят твоих денег</span></p></div>
-      <h2 class="h2" id="p-h">Сколько стоит</h2>
+      <h2 class="h2" id="p-h">Дешевле, чем <em>Ник</em></h2>
       <p class="amount num">349 ₽<small>в месяц</small></p>
       <p class="terms">Подписка продлевается сама. За два дня до списания напомним, отменить можно в&nbsp;одно нажатие. Без таймеров и&nbsp;«последнего шанса»: цена одна и&nbsp;не&nbsp;сгорает.</p>
     </div>
@@ -662,13 +666,13 @@ else {
 const cv = document.getElementById('smog'), g2 = cv.getContext('2d');
 const sunEl = hero.querySelector('.sun');
 let rect, puffs = [], freed = false, touched = false, pressedStroke = false, lastDx = -1, startedAt = 0;
-let geo = null, sprites = [], spriteKey = '', off = null, og = null, DPR = 1;
+let geo = null, sprites = [], spriteKey = '', off = null, og = null, rimC = null, rg2 = null, DPR = 1;
 
 function makeSprites(pal){
   let s = 11; const r = () => (s = s * 16807 % 2147483647) / 2147483647;
   return [0, 1, 2, 3, 4, 5].map(() => {
     const S = 256, c = document.createElement('canvas'); c.width = c.height = S; const x = c.getContext('2d');
-    const lumps = []; for (let i = 0; i < 24; i++) { const a = r() * Math.PI * 2, d = Math.sqrt(r()) * .3; lumps.push([.5 + Math.cos(a) * d, .53 + Math.sin(a) * d * .78, .12 + r() * .16]); }
+    const lumps = []; for (let i = 0; i < 24; i++) { const a = r() * Math.PI * 2, d = Math.sqrt(r()) * .26; lumps.push([.5 + Math.cos(a) * d, .52 + Math.sin(a) * d * .78, .11 + r() * .12]); }
     lumps.sort((a, b) => a[1] - b[1]);
     for (const [u, v, q] of lumps) { const gr = x.createRadialGradient(u * S, v * S, 0, u * S, v * S, q * S);
       gr.addColorStop(0, pal.body); gr.addColorStop(.7, pal.body + 'cc'); gr.addColorStop(1, pal.body + '00'); x.fillStyle = gr; x.beginPath(); x.arc(u * S, v * S, q * S, 0, 7); x.fill(); }
@@ -687,6 +691,7 @@ function build(){
   cv.width = Math.round(W0 * DPR); cv.height = Math.round(H0 * DPR);
   if (!off) { off = document.createElement('canvas'); og = off.getContext('2d'); }
   off.width = cv.width; off.height = cv.height;
+  if (!rimC) { rimC = document.createElement('canvas'); rg2 = rimC.getContext('2d'); } rimC.width = cv.width; rimC.height = cv.height;
   const pal = { body: css('--smog-body'), lit: css('--smog-lit'), shade: css('--smog-shade') }, key = pal.body + pal.lit + pal.shade;
   if (key !== spriteKey) { sprites = makeSprites(pal); spriteKey = key; }
   const W = L.w * W0, H = L.h * H0, x0 = L.cx * W0 - W / 2, base = L.cy * H0 + H * .5, R = Math.min(W, H * 2.2);
@@ -728,6 +733,13 @@ function draw(){
   og.globalCompositeOperation = 'destination-out';
   const fd = og.createLinearGradient(0, base + R * .02, 0, base + R * .13); fd.addColorStop(0, 'rgba(0,0,0,0)'); fd.addColorStop(1, 'rgba(0,0,0,1)'); og.fillStyle = fd; og.fillRect(0, base + R * .02, W0, H0);
   g2.setTransform(1, 0, 0, 1, 0, 0); g2.clearRect(0, 0, cv.width, cv.height); g2.drawImage(off, 0, 0);
+  // Серебряная кайма: край облака со стороны солнца — облако минус то же облако, сдвинутое от солнца
+  const cxm = W0 * .5, cym = base - H * .4, vl = Math.hypot(cxm - sx, cym - sy) || 1, ddx = (cxm - sx) / vl * 7, ddy = (cym - sy) / vl * 7;
+  rg2.setTransform(1, 0, 0, 1, 0, 0); rg2.globalCompositeOperation = 'source-over'; rg2.clearRect(0, 0, rimC.width, rimC.height); rg2.drawImage(off, 0, 0);
+  rg2.globalCompositeOperation = 'destination-out'; rg2.drawImage(off, ddx * DPR, ddy * DPR);
+  rg2.globalCompositeOperation = 'source-in'; const rl = rg2.createRadialGradient(sx * DPR, sy * DPR, 0, sx * DPR, sy * DPR, sr * 3.2 * DPR);
+  rl.addColorStop(0, 'rgba(255,246,222,.95)'); rl.addColorStop(.5, 'rgba(255,246,222,.4)'); rl.addColorStop(1, 'rgba(255,246,222,0)'); rg2.fillStyle = rl; rg2.fillRect(0, 0, rimC.width, rimC.height);
+  g2.globalCompositeOperation = 'lighter'; g2.globalAlpha = .9; g2.drawImage(rimC, 0, 0); g2.globalAlpha = 1; g2.globalCompositeOperation = 'source-over';
 }
 let nRects = [];
 function noteRects(){ nRects = notes.map(n => n.getBoundingClientRect()); }
@@ -962,10 +974,12 @@ ride.addEventListener('click', () => {
 
 /* ── Гряда смога над «Волной»: та же погода, что у Ника ── */
 const bank = document.getElementById('bank');
-function drawBank(){
+function drawBank(){ paintBank(bank, css('--storm-top'), css('--storm-low'), 41, false); paintBank(document.getElementById('bank-out'), css('--storm-low'), css('--storm-low'), 77, true); }
+function paintBank(bank, top, lit, seed, flip){
   const W = bank.clientWidth, H = bank.clientHeight; bank.width = W; bank.height = H; const x = bank.getContext('2d'); x.clearRect(0, 0, W, H);
-  const top = css('--storm-top'), spr = makeSprites({ body: top, lit: css('--storm-low'), shade: top });
-  let q = 41; const r = () => (q = q * 16807 % 2147483647) / 2147483647;
+  if (flip) { x.translate(0, H); x.scale(1, -1); }
+  const spr = makeSprites({ body: top, lit, shade: top });
+  let q = seed; const r = () => (q = q * 16807 % 2147483647) / 2147483647;
   const n = Math.ceil(W / (48 * Math.min(1, H / 160))) + 3;
   for (let pass = 0; pass < 3; pass++) { x.globalAlpha = [.55, .8, 1][pass];
     for (let i = 0; i < n; i++) { const rad = (26 + r() * (pass ? 26 : 40) + (r() < .15 ? 24 : 0)) * Math.min(1, H / 160), S = rad * 2.6, cx = (i - 1 + r()) * (W / (n - 3)), cy = H - rad * [.9, .55, .25][pass] - (pass ? 0 : 8);
