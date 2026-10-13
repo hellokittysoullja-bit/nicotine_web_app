@@ -341,6 +341,7 @@ dialog.plan{border:0;padding:0;margin:6.5rem max(1.5rem,calc((100vw - 76rem) / 2
   opacity:0;transform:translateY(1rem) scale(.98);transition:opacity .22s var(--ease-out),transform .22s var(--ease-out),overlay .22s allow-discrete,display .22s allow-discrete}
 dialog.plan[open].in{opacity:1;transform:none}
 dialog.plan.out{transition-duration:.16s}
+html:has(dialog.plan[open]){overflow:hidden;scrollbar-gutter:stable}
 dialog.plan::backdrop{background:rgba(6,30,50,0);transition:background-color .22s ease-out}
 dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl{display:flex;flex-direction:column;max-height:inherit;height:100%}
@@ -357,6 +358,11 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl-body{padding:1rem 1.75rem 0;overflow:auto;overscroll-behavior:contain}
 .step{border:0;min-width:0}
 .step[hidden]{display:none}
+.step.enter{animation:stepin .18s var(--ease-out) both}
+.step.enter.back{animation-name:stepback}
+@keyframes stepin{from{opacity:0;transform:translateX(8px)}}
+@keyframes stepback{from{opacity:0;transform:translateX(-8px)}}
+@media (prefers-reduced-motion:reduce){.step.enter{animation:none}}
 .step legend,.step h2{font-family:var(--f-display);font-weight:500;font-size:clamp(1.75rem,4vw,2.125rem);line-height:1.1;letter-spacing:-.015em;padding:0;text-wrap:balance}
 .step .note{color:var(--muted);margin-top:.5rem;font-size:.9375rem}
 .opts{display:grid;gap:.5rem;margin-top:1.4rem}
@@ -370,10 +376,10 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .opt[aria-checked="true"] .mk{border-color:var(--act);background:var(--act)}
 .opt[aria-checked="true"] .mk svg{opacity:1}
 .sum{list-style:none;margin-top:.75rem;display:grid}
-.sum li{padding:.7rem 0;border-bottom:1px solid var(--rule)}
+.sum li{padding:.55rem 0;border-bottom:1px solid var(--rule)}
 .sum li:last-child{border-bottom:0}
 .sum b{display:block;font-weight:600}
-.sum span{color:var(--muted);font-size:.9375rem}
+.sum span{color:var(--muted);font-size:.9375rem;line-height:1.35}
 .pay[hidden]{display:none}
 .pay{display:grid;gap:.35rem;margin-top:.5rem;padding:1rem 1.1rem;border-radius:1rem;background:var(--surface-2)}
 .pay b{font:500 1.75rem/1 var(--f-display);font-variant-numeric:lining-nums}
@@ -382,6 +388,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl-foot .btn{width:100%}
 .pl-foot .btn[aria-disabled="true"]{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1.5px var(--control);cursor:default}
 .pl-foot .btn[hidden]{display:none}
+.pl-foot .btn.soon{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1.5px var(--control)}
 .pl-msg{min-height:1.4rem;font-size:.875rem;color:var(--muted);text-align:center;text-wrap:balance}
 .pl-msg:empty::before{content:"Ответы остаются в этом браузере."}
 
@@ -428,6 +435,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .sun,.hero.free .sun{transition-property:filter,opacity!important;transform:none!important}
   .actions > div{transition-property:opacity!important;transition-duration:.15s!important;transition-delay:0s!important}
   dialog.plan,dialog.plan[open].in{transform:none!important}
+  dialog.plan.drag{transform:var(--dy)!important}
 }
 </style>
 </head>
@@ -878,9 +886,9 @@ function choose(si, b, advance = true){
 }
 const nextB = document.getElementById('pl-next'), backB = document.getElementById('pl-back'), msg = document.getElementById('pl-msg'), prog = document.getElementById('prog');
 const ready = () => at === 4 || (at === 2 ? answers[2].size > 0 : answers[at] !== null);
-function syncFoot(){ nextB.hidden = !(at === 2 || at === 4); document.getElementById('pay').hidden = at !== 4; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === 4 ? 'Оплата — скоро' : at === 3 ? 'Показать план' : 'Дальше'; }
+function syncFoot(){ nextB.hidden = !(at === 2 || at === 4); nextB.classList.toggle('soon', at === 4); document.getElementById('pay').hidden = at !== 4; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === 4 ? 'Оплата появится скоро' : at === 3 ? 'Показать план' : 'Дальше'; }
 function show(i){
-  at = i; steps.forEach((s, k) => s.hidden = k !== i); backB.hidden = i === 0; msg.textContent = '';
+  const back = i < at; at = i; steps.forEach((s, k) => { s.hidden = k !== i; s.classList.remove('enter', 'back'); }); if (plan.open) { void steps[i].offsetWidth; steps[i].classList.add('enter'); if (back) steps[i].classList.add('back'); } backB.hidden = i === 0; msg.textContent = '';
   [...prog.children].forEach((p, k) => p.classList.toggle('on', k <= Math.min(i, 3))); prog.setAttribute('aria-valuenow', Math.min(i + 1, 4)); prog.hidden = i === 4;
   if (i === 1 && spendTouched && answers[1] === null) { const v = +spend.value, opts = [...steps[1].querySelectorAll('.opt')]; const near = opts.reduce((a, o) => Math.abs(+o.dataset.v - v) < Math.abs(+a.dataset.v - v) ? o : a); [...opts].forEach(x => { const on = x === near; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); answers[1] = near.dataset.v; steps[1].querySelector('.note').textContent = 'Как в калькуляторе выше — можно поменять.'; }
   if (i === 4) summary(); syncFoot();
@@ -914,18 +922,33 @@ function openPlan(from, step){
   plan.showModal(); show(target); requestAnimationFrame(() => requestAnimationFrame(() => plan.classList.add('in')));
 }
 function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; plan.classList.add('out'); plan.classList.remove('in');
-  let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.close(); opener && opener.focus?.({ preventScroll: true }); };
+  let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.style.transitionDuration = ''; plan.close(); opener && opener.focus?.({ preventScroll: true }); };
   if (reduce) return fin(); const te = e => { if (e.target === plan && (e.propertyName === 'transform' || e.propertyName === 'opacity')) { plan.removeEventListener('transitionend', te); fin(); } }; plan.addEventListener('transitionend', te); setTimeout(fin, mobile() ? 300 : 210); }
 document.getElementById('pl-close').addEventListener('click', closePlan);
-// Лист на телефоне смахивается вниз, как в iOS: тянется за пальцем, закрывается после четверти высоты или быстрым жестом
-{ const top = document.getElementById('pl-top'); let y0 = 0, t0 = 0, dy = 0, on = false;
-  top.addEventListener('pointerdown', e => { if (!mobile() || e.target.closest('button')) return; on = true; y0 = e.clientY; t0 = performance.now(); dy = 0; plan.classList.add('drag'); top.setPointerCapture(e.pointerId); });
-  top.addEventListener('pointermove', e => { if (!on) return; dy = Math.max(0, e.clientY - y0); plan.style.transform = `translateY(${dy}px)`; });
-  const end = () => { if (!on) return; on = false; plan.classList.remove('drag'); const v = dy / Math.max(1, performance.now() - t0);
-    if (dy > plan.offsetHeight * .25 || v > .5) { plan.style.transform = ''; closePlan(); } else { plan.style.transform = ''; } };
-  top.addEventListener('pointerup', end); top.addEventListener('pointercancel', end); }
+// Лист на телефоне смахивается вниз, как в iOS: тянется за пальцем (вверх — с сопротивлением), решение по скорости отпускания
+{ const top = document.getElementById('pl-top'), body = plan.querySelector('.pl-body'); let y0 = 0, dy = 0, on = false, armed = false, samples = [];
+  const setY = v => { plan.style.setProperty('--dy', `translateY(${v}px)`); plan.style.transform = `translateY(${v}px)`; if (reduce) plan.style.opacity = String(1 - Math.max(0, v) / plan.offsetHeight); };
+  const start = (e, fromBody) => { if (!mobile() || e.target.closest('button')) return; if (fromBody && body.scrollTop > 0) return;
+    on = !fromBody; armed = fromBody; y0 = e.clientY; dy = 0; samples = [[performance.now(), e.clientY]]; if (on) { plan.classList.add('drag'); e.currentTarget.setPointerCapture(e.pointerId); } };
+  const move = e => { if (armed) { const d = e.clientY - y0; if (d > 6 && body.scrollTop <= 0) { armed = false; on = true; y0 = e.clientY; plan.classList.add('drag'); } else if (d < -6) armed = false; }
+    if (!on) return; const raw = e.clientY - y0; dy = raw < 0 ? -Math.sqrt(-raw) * 2 : raw; setY(dy);
+    samples.push([performance.now(), e.clientY]); while (samples.length > 2 && samples[0][0] < performance.now() - 80) samples.shift(); };
+  const end = () => { armed = false; if (!on) return; on = false; plan.classList.remove('drag');
+    const [t1, y1] = samples[0], [t2, y2] = samples[samples.length - 1], v = Math.min(3, (y2 - y1) / Math.max(16, t2 - t1)), H = plan.offsetHeight;
+    if (dy + v * 200 > H * .5 || (v > .6 && dy > 32)) { plan.style.transitionDuration = Math.max(160, Math.min(300, (H - dy) / Math.max(v, .5))) + 'ms'; plan.style.transform = ''; plan.style.opacity = ''; closePlan(); }
+    else { plan.style.transform = ''; plan.style.opacity = ''; } };
+  top.addEventListener('pointerdown', e => start(e, false));
+  top.addEventListener('pointermove', move); top.addEventListener('pointerup', end); top.addEventListener('pointercancel', end);
+  // Из содержимого — только когда список уже наверху и палец тянет вниз; иначе обычная прокрутка
+  body.addEventListener('touchstart', e => { if (!mobile() || body.scrollTop > 0) return; armed = true; y0 = e.touches[0].clientY; dy = 0; samples = [[performance.now(), y0]]; }, { passive: true });
+  body.addEventListener('touchmove', e => { const y = e.touches[0].clientY;
+    if (armed) { const d = y - y0; if (d > 6 && body.scrollTop <= 0) { armed = false; on = true; y0 = y; plan.classList.add('drag'); } else if (d < -6) armed = false; }
+    if (!on) return; e.preventDefault(); dy = Math.max(0, y - y0); setY(dy); samples.push([performance.now(), y]); while (samples.length > 2 && samples[0][0] < performance.now() - 80) samples.shift(); }, { passive: false });
+  body.addEventListener('touchend', end); body.addEventListener('touchcancel', end); }
 plan.addEventListener('cancel', e => { e.preventDefault(); closePlan(); });
-plan.addEventListener('click', e => { if (e.target === plan) closePlan(); });
+const outside = e => { const r = plan.getBoundingClientRect(); return e.target === plan && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom); };
+let downOut = false; plan.addEventListener('pointerdown', e => { downOut = outside(e); });
+plan.addEventListener('click', e => { if (downOut && outside(e)) closePlan(); downOut = false; });
 document.getElementById('plan-open').addEventListener('click', e => openPlan(e.currentTarget));
 document.getElementById('top-plan').addEventListener('click', e => openPlan(e.currentTarget));
 document.getElementById('start').addEventListener('click', e => openPlan(e.currentTarget));
