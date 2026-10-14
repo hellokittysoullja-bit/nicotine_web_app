@@ -408,15 +408,24 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 
 @media (max-width:860px){
   dialog.plan::backdrop{transition:background-color .28s var(--ease-drawer)}
-  .hero-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-content:start;column-gap:0;padding-top:calc(5.25rem + env(safe-area-inset-top));padding-bottom:2.5rem}
-  .stage{grid-column:1;grid-row:1;margin-top:0;min-height:max(19rem,43svh);display:flex;flex-direction:column;justify-content:flex-end}
+  .hero{min-height:100dvh}
+  .hero-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;align-content:start;column-gap:0;min-height:100dvh;padding-top:calc(4.75rem + env(safe-area-inset-top));padding-bottom:calc(1.25rem + env(safe-area-inset-bottom));text-align:center}
+  .copy{display:contents}
+  .hero h1{grid-column:1;grid-row:1;font-size:clamp(2.4rem,10.5vw,3.1rem);line-height:1.02}
+  .lead{grid-column:1;grid-row:2;margin:.6rem auto 0;max-width:32ch;font-size:1rem;line-height:1.4;text-align:center}
+  .stage{grid-column:1;grid-row:3;margin-top:0;padding-top:14.6rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:0}
   .thread{max-width:none}
-  .copy{grid-column:1;grid-row:2;padding-top:.5rem}
-  .hero h1{font-size:clamp(2.75rem,12.5vw,3.75rem)}
-  .lead{margin-top:1rem}
-  .actions{margin-top:1.5rem}
-  .actions > div{flex-direction:column;align-items:flex-start;gap:.75rem}
-  .b{font-size:.9375rem;padding:.5rem .8rem;max-width:80%}
+  .who{justify-content:center;margin:0 0 .5rem}
+  .ask{font-size:.8125rem;font-weight:500;opacity:.85}
+  .bubbles{align-items:stretch;gap:.5rem}
+  .b{max-width:none;width:100%;min-height:3rem;border-radius:.875rem;padding:0 1rem;font-size:1rem;background:rgba(15,23,42,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,201,77,.3)}
+  .b.last{border-bottom-left-radius:.875rem}
+  .actions{grid-column:1;grid-row:4;margin-top:1rem}
+  .actions > div{flex-direction:column;align-items:stretch;gap:.5rem}
+  .actions .btn{width:100%;min-height:3.5rem;font-size:1.0625rem}
+  .hint{display:none}
+  .hero-note{grid-column:1;grid-row:5;margin-top:.7rem;font-size:.8125rem;text-align:center;white-space:nowrap}
+  .login{border-radius:999px;margin-right:0;padding-inline:.75rem;background:rgba(255,255,255,.32);font-size:.8125rem;font-weight:600}
   .wave-head,.slip-row,.price,.faq-grid{grid-template-columns:minmax(0,1fr)}
   .calm{padding-bottom:5rem}
   .calm{padding-top:5rem}
@@ -442,40 +451,38 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .lead{font-size:1rem}
 }
 
-/* ── Искра: глаза, дыхание, эмоции ── */
+/* ── Искра: лицо из двух глаз с бликами, дыхание, эмоции ── */
 .sun{animation:breathe 9s ease-in-out infinite;--lid:.55}
 @keyframes breathe{0%{scale:1}28%{scale:1.03}39%{scale:1.05}100%{scale:1}}
 .eyes{position:absolute;inset:0;pointer-events:none;translate:var(--ex,0px) var(--ey,0px);transition:translate .14s var(--ease-out)}
-.eye{position:absolute;top:35%;width:14%;height:31%;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 .14em rgba(6,36,63,.28);overflow:hidden;transform-origin:50% 60%;scale:calc(var(--wide,1) * var(--sz,1));
-  transition:height .2s var(--ease-out),top .2s var(--ease-out),border-radius .2s var(--ease-out),rotate .2s var(--ease-out),scale .2s var(--ease-out);animation:blink 5.2s infinite}
-.eye::before{content:"";position:absolute;left:22%;top:26%;width:56%;height:52%;border-radius:50%;background:radial-gradient(circle at 70% 28%,#fff 0 14%,transparent 15%),#06243F;translate:var(--ppx,-18%) var(--ppy,12%);transition:translate .12s var(--ease-out)}
-.sun[data-e=joy] .eye,[data-char=zen] .sun[data-e] .eye{background:#06243F;box-shadow:none}.sun[data-e=joy] .eye::before,[data-char=zen] .sun[data-e] .eye::before{display:none}
+.face{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.eye{transform-box:fill-box;transform-origin:center;scale:calc(var(--wide,1) * var(--sz,1));transition:scale .2s var(--ease-out),rotate .2s var(--ease-out);animation:blink 5.2s infinite}
+.eye .ball,.eye .cl1,.eye .cl2{transition:opacity .15s ease-out}
+.eye .arc{opacity:0;transition:opacity .15s ease-out}
 @keyframes blink{0%,92%,100%{transform:scaleY(var(--lid,1))}95%{transform:scaleY(.1)}}
-.sun[data-e=curious]{--lid:1}.sun[data-e=curious] .eye:nth-child(4){--sz:1.18}
-.sun[data-e=joy]{--lid:1}.sun[data-e=joy] .eye{height:11%;top:46%;border-radius:999px 999px 0 0}.sun[data-e=joy] .eye::after{display:none}
-[data-char=zen] .sun[data-e] .eye{height:11%;top:47%;border-radius:0 0 999px 999px}[data-char=zen] .sun[data-e] .eye::after{display:none}
-[data-char=fight] .sun[data-e] .eye{height:16%;top:43%;border-radius:999px}[data-char=fight] .sun[data-e] .eye:nth-child(3){rotate:9deg}[data-char=fight] .sun[data-e] .eye:nth-child(4){rotate:-9deg}[data-char=fight] .sun[data-e] .eye::after{display:none}
-[data-char=warm] .sun[data-e] .eye{width:12%;height:28%;top:36%;border-radius:999px}[data-char=warm] .sun[data-e] .eye::after{display:block;width:36%;height:26%}
+.sun[data-e=curious]{--lid:1}.sun[data-e=curious] .eye-r{--sz:1.12}
+.sun[data-e=joy]{--lid:1}
+.sun[data-e=joy] .ball,.sun[data-e=joy] .cl1,.sun[data-e=joy] .cl2,[data-char=zen] .sun[data-e] .ball,[data-char=zen] .sun[data-e] .cl1,[data-char=zen] .sun[data-e] .cl2{opacity:0}
+.sun[data-e=joy] .arc.up{opacity:1}
+[data-char=zen] .sun[data-e] .arc.up{opacity:0}[data-char=zen] .sun[data-e] .arc.dn{opacity:1}
+[data-char=fight] .sun[data-e] .eye{--lid:.72}[data-char=fight] .sun[data-e] .eye-l{rotate:7deg}[data-char=fight] .sun[data-e] .eye-r{rotate:-7deg}
+[data-char=warm] .sun[data-e] .eye{--sz:1.16}
 [data-char=zen] .sun{animation-duration:12s}[data-char=fight] .sun{animation-duration:7s}
 .hero[data-off] .sun,.hero[data-off] .eye{animation-play-state:paused}
 .hero.flash .sun::before{animation:flash .9s var(--ease-out)}
 @keyframes flash{0%{opacity:.25;transform:scale(.85)}35%{opacity:1;transform:scale(1.25)}100%{opacity:1;transform:none}}
-.brow{position:absolute;top:26%;width:15%;height:3.2%;border-radius:999px;background:#06243F;opacity:.85;transition:rotate .2s var(--ease-out),translate .2s var(--ease-out),opacity .15s ease-out}
-.brow:nth-child(1){left:28.5%;rotate:-13deg}.brow:nth-child(2){left:57.5%;rotate:13deg}
-.eye:nth-child(3){left:30%}.eye:nth-child(4){left:56%}
-.sun[data-e=curious] .brow:nth-child(2){rotate:-6deg;translate:0 -70%}.sun[data-e=curious] .brow:nth-child(1){rotate:0deg}
-.sun[data-e=joy] .brow{opacity:0}
-[data-char=zen] .sun[data-e] .brow:nth-child(1),[data-char=warm] .sun[data-e] .brow:nth-child(1){rotate:-4deg}[data-char=zen] .sun[data-e] .brow:nth-child(2),[data-char=warm] .sun[data-e] .brow:nth-child(2){rotate:4deg}
-[data-char=zen] .sun[data-e] .brow,[data-char=warm] .sun[data-e] .brow{opacity:.85;translate:0 0}
-[data-char=fight] .sun[data-e] .brow:nth-child(1){rotate:6deg;opacity:.9}[data-char=fight] .sun[data-e] .brow:nth-child(2){rotate:-6deg;opacity:.9}
-html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s var(--ease-out)}
-.hero-inner .copy{transition:opacity .2s var(--ease-out)}
-.sun::after{content:"";position:absolute;inset:-42%;border-radius:50%;z-index:-1;pointer-events:none;opacity:0;transition:opacity .5s var(--ease-out) .25s;
-  background:repeating-conic-gradient(from -4deg,rgba(255,226,140,.55) 0 3deg,transparent 3deg 15deg);-webkit-mask:radial-gradient(circle closest-side,transparent 46%,#000 54%,transparent 98%);mask:radial-gradient(circle closest-side,transparent 46%,#000 54%,transparent 98%)}
-.hero.free .sun::after{opacity:.75}
-.eyes::before,.eyes::after{content:"";position:absolute;top:60%;width:11%;height:7%;border-radius:50%;background:rgba(255,120,90,.28)}
-.eyes::before{left:23%}.eyes::after{left:66%}
-.sun[data-e=joy] .eyes::before,.sun[data-e=joy] .eyes::after{background:rgba(255,110,80,.4)}
+html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-inner .copy > *{opacity:0}
+.hero-inner .copy,.hero-inner .copy > *{transition:opacity .2s var(--ease-out)}
+.b{border:0;font-family:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;gap:.6rem}
+.b::after{content:"›";margin-left:auto;padding-left:.4rem;opacity:.6;font-size:1.25em;line-height:1}
+@media (hover:hover) and (pointer:fine){.b.in:hover{filter:brightness(1.12)}}
+.b.in:active{transform:scale(.985)}
+.ask{font-weight:600;font-size:.9375rem;color:var(--ink)}
+.who .st{display:none}
+.hero-note{margin-top:1.1rem;font-size:.9375rem;color:var(--ink);opacity:.85}
+.trg{margin-top:.5rem;font-size:.9375rem;color:var(--muted)}
+.trg b{color:var(--text);font-weight:600}
+.lnk{color:var(--act);font-weight:600;text-decoration:underline;text-underline-offset:.2em;min-height:2.75rem;padding:0 .3rem}
 /* Опрос: ползунок, клавиши, разбор */
 .sl{margin-top:1.4rem;display:grid;gap:.4rem}
 .sl output{font:500 1.75rem/1.1 var(--f-display);font-variant-numeric:lining-nums tabular-nums}
@@ -526,7 +533,10 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
 <a class="skip" href="#content">К содержанию</a>
 <main>
 <section class="hero" id="hero" aria-labelledby="h" data-sky="day">
-  <div class="sun" aria-hidden="true" data-e="smog"><div class="eyes"><i class="brow"></i><i class="brow"></i><i class="eye"></i><i class="eye"></i></div></div>
+  <div class="sun" aria-hidden="true" data-e="smog"><div class="eyes"><svg class="face" viewBox="0 0 120 120" aria-hidden="true">
+    <g transform="translate(42 66)"><g class="eye eye-l"><rect class="ball" x="-8" y="-11" width="16" height="22" rx="8" fill="#1E1815"/><ellipse class="cl1" cx="-3" cy="-4" rx="3.2" ry="4.2" transform="rotate(-20 -3 -4)" fill="#fff" opacity=".95"/><circle class="cl2" cx="3" cy="5" r="1.6" fill="#FFF8D6" opacity=".75"/><path class="arc up" d="M -8 2 Q 0 -9 8 2" stroke="#1E1815" stroke-width="4.5" stroke-linecap="round" fill="none"/><path class="arc dn" d="M -8 -2 Q 0 9 8 -2" stroke="#1E1815" stroke-width="4.5" stroke-linecap="round" fill="none"/></g></g>
+    <g transform="translate(78 66)"><g class="eye eye-r"><rect class="ball" x="-8" y="-11" width="16" height="22" rx="8" fill="#1E1815"/><ellipse class="cl1" cx="-3" cy="-4" rx="3.2" ry="4.2" transform="rotate(-20 -3 -4)" fill="#fff" opacity=".95"/><circle class="cl2" cx="3" cy="5" r="1.6" fill="#FFF8D6" opacity=".75"/><path class="arc up" d="M -8 2 Q 0 -9 8 2" stroke="#1E1815" stroke-width="4.5" stroke-linecap="round" fill="none"/><path class="arc dn" d="M -8 -2 Q 0 9 8 -2" stroke="#1E1815" stroke-width="4.5" stroke-linecap="round" fill="none"/></g></g>
+  </svg></div></div>
   <canvas id="smog" aria-hidden="true"></canvas>
   <header class="top gutter"><div class="wrap">
     <a class="brand" href="#" lang="en" aria-label="Lumen, на главную">Lumen</a>
@@ -536,11 +546,11 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
   <div class="gutter"><div class="wrap hero-inner">
     <div class="stage" id="stage">
       <div class="thread" id="thread" aria-live="polite">
-        <div class="who" id="who"><span class="av" aria-hidden="true">С</span><b>Смог</b><span class="st" id="st">шепчет…</span></div>
+        <div class="who" id="who"><span class="ask">Что смог шепчет чаще всего?</span><span class="st" id="st"></span></div>
         <div class="bubbles">
-          <p class="b">только одну под кофе</p>
-          <p class="b">сдам проект и сразу брошу</p>
-          <p class="b last">одна затяжка снимет стресс</p>
+          <button type="button" class="b" data-t="coffee">только одну под кофе</button>
+          <button type="button" class="b" data-t="bored">просто скучно, одну можно</button>
+          <button type="button" class="b last" data-t="stress">одна затяжка снимет стресс</button>
           <span class="typing" id="typing" aria-hidden="true"><i></i><i></i><i></i></span>
         </div>
       </div>
@@ -551,7 +561,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
       <p class="lead"><span class="before-l">Каждая тяга — голос смога: «одну, и&nbsp;станет спокойнее». Мы поможем не&nbsp;слушать.</span><span class="after-l" aria-hidden="true">Хорошо. Дальше — план: он про тебя, а&nbsp;не&nbsp;про всех.</span></p>
       <div class="actions">
         <div class="before-a">
-          <button class="btn btn-act" id="break">Рассеять смог</button>
+          <button class="btn btn-act" id="break">Рассеять смог <span aria-hidden="true">→</span></button>
           <span class="hint" id="hint" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0v3.5a6 6 0 0 1-6 6h-.8a5 5 0 0 1-4-2l-2.6-3.4a1.5 1.5 0 0 1 2.3-1.9L9 13"/></svg>
             <span id="hint-t">или разгони облако</span>
@@ -561,7 +571,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
           <button class="btn btn-act" id="plan-open" tabindex="-1">Составить план — 2&nbsp;минуты</button>
         </div>
       </div>
-      <p class="hero-note">Две минуты вопросов, потом твой план. Оплата — только после него, отмена в&nbsp;одно нажатие.</p>
+      <p class="hero-note">Разбор сразу на&nbsp;экране.</p>
     </div>
   </div></div>
   <p class="sr" id="status" aria-live="polite"></p>
@@ -720,7 +730,7 @@ html:has(dialog.plan[open]) .hero-inner .copy{opacity:0;transition:opacity .2s v
         <div class="sl"><output id="sl-v" class="num" for="sl">250 ₽ в&nbsp;день</output>
           <input type="range" id="sl" min="50" max="1000" step="10" value="250" aria-label="Сколько в день уходит на никотин">
           <p class="sl-3y" id="sl-3y">За три года — 273&nbsp;750 ₽</p></div></fieldset>
-      <fieldset class="step" data-step="3" data-kind="one" hidden><legend>Если&nbsp;… то&nbsp;я&nbsp;…</legend><p class="note">Решение, принятое заранее, легче выполнить в&nbsp;момент тяги.</p>
+      <fieldset class="step" data-step="3" data-kind="one" hidden><legend>Если&nbsp;… то&nbsp;я&nbsp;…</legend><p class="trg" id="trg"></p><p class="note">Решение, принятое заранее, легче выполнить в&nbsp;момент тяги.</p>
         <div class="opts" role="radiogroup"></div></fieldset>
       <fieldset class="step" data-step="4" data-kind="one" hidden><legend>Когда выходим из&nbsp;тумана?</legend>
         <div class="opts" role="radiogroup"></div></fieldset>
@@ -786,7 +796,11 @@ function makeSprites(pal){
     return c;
   });
 }
-function layout(){ return mobile() ? { cx: .52, cy: .22, w: 1.2, h: .3, peak: .74 } : { cx: .69, cy: .44, w: .52, h: .46, peak: .66 }; }
+function layout(){
+  if (mobile()) { const st = document.getElementById('stage').getBoundingClientRect(), H0 = hero.getBoundingClientRect().height, top = st.top - hero.getBoundingClientRect().top;
+    return { cx: .5, cy: (top + 128) / H0, w: 1.15, h: 190 / H0, peak: .5 }; }
+  return { cx: .69, cy: .44, w: .52, h: .46, peak: .66 };
+}
 function build(){
   rect = hero.getBoundingClientRect();
   const W0 = rect.width, H0 = rect.height, L = layout();
@@ -933,19 +947,19 @@ function dissolveTo(f, instant){
   kick(); if (reduce || instant) draw();
 }
 // Первое касание: туча расходится на треть, Искра открывает глаза, сразу открывается опрос
-function begin(how, from){
-  if (freed || began) { openPlan(from); return; }
+function begin(how, from, step){
+  if (freed || began) { openPlan(from, step); return; }
   began = true; touched = true; hero.classList.add('opened'); sunEl.dataset.e = 'curious';
   document.getElementById('hint').classList.remove('on'); dissolveTo(.3);
   try { navigator.vibrate && navigator.vibrate(12); } catch {}
-  openPlan(from || document.getElementById('break'));
+  openPlan(from || document.getElementById('break'), step);
 }
+notes.forEach(n => n.addEventListener('click', () => { const o = steps[1].querySelector('.opt[data-v="' + n.dataset.t + '"]'); if (o) choose(1, o, false); begin('chip', n, 3); }));
 // Глаза следят за курсором и пальцем
 if (!reduce) { const eyes = sunEl.querySelector('.eyes'); let tk = 0;
   addEventListener('pointermove', e => { if (tk) return; const cx = e.clientX, cy = e.clientY; tk = requestAnimationFrame(() => { tk = 0; const r = sunEl.getBoundingClientRect(); if (!r.width || r.bottom < 0 || r.top > innerHeight) return;
     const dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2), d = Math.hypot(dx, dy) || 1, m = Math.min(1, d / (r.width * 1.5)) * r.width * .06;
-    const k = Math.min(1, d / (r.width * 1.2)); eyes.style.setProperty('--ex', (dx / d * m * .4).toFixed(1) + 'px'); eyes.style.setProperty('--ey', (dy / d * m * .3).toFixed(1) + 'px');
-    eyes.style.setProperty('--ppx', (dx / d * k * 38).toFixed(1) + '%'); eyes.style.setProperty('--ppy', (dy / d * k * 28).toFixed(1) + '%'); }); }, { passive: true }); }
+    eyes.style.setProperty('--ex', (dx / d * m * .4).toFixed(1) + 'px'); eyes.style.setProperty('--ey', (dy / d * m * .3).toFixed(1) + 'px'); }); }, { passive: true }); }
 new IntersectionObserver(([e]) => hero.toggleAttribute('data-off', !e.isIntersecting)).observe(hero);
 
 function release(how){
@@ -983,6 +997,7 @@ const Q = {
   4: [['0', 'Сегодня'], ['1', 'Завтра'], ['mon', 'В понедельник']],
   5: [['zen', 'Спокойный дзен'], ['fight', 'Боевой фокус'], ['warm', 'Тёплая поддержка']]};
 const TAIL = { cig: 'за сигаретой', vape: 'за вейпом', pouch: 'за пакетиком', mix: 'к никотину' };
+const REVEAL = { 'cig:': '', '0:cig': 'Сигарета — это ещё и ритуал: руки, пауза, выход. Разберём и его.', '0:vape': 'Вейп можно затянуть десятки раз в день, поэтому триггеров у него больше.', '0:pouch': 'Пакетик незаметен для окружающих — привычку труднее заметить самому.', '0:mix': 'Разное по настроению: разберём, что чаще.', '1:coffee': 'Кофе и затяжка стали парой по привычке. Пару можно разбить.', '1:stress': 'Под нервы тянет сильнее. Для этого есть «Волна».', '1:bored': 'Скука — повод для привычки, а не потребность.', '1:evening': 'Вечер даёт больше свободного времени для тяги.', '3:wave': 'Хороший выбор: «Волна» всегда под рукой.', '3:water': 'Простое действие, которое легко выполнить.', '3:sigh': 'Смена обстановки разрывает привычную цепочку.', '4:0': 'Начать сегодня можно.', '4:1': 'Завтра — тоже хороший день.', '4:mon': 'Понедельник так понедельник.' };
 const IFW0 = { coffee: 'утром с кофе рука тянется ', stress: 'я нервничаю и рука тянется ', bored: 'мне скучно и рука тянется ', evening: 'вечером рука тянется ' };
 const IFW = (t, ty) => (IFW0[t] || 'рука тянется ') + (TAIL[ty] || 'к никотину');
 const ACT = { wave: 'пройду «Волну» — несколько минут', water: 'выпью стакан холодной воды', sigh: 'сделаю три двойных вдоха и сменю обстановку на 2 минуты' };
@@ -993,7 +1008,7 @@ const MYTH = {
   evening: ['Вечером это награда', 'Вечер и алкоголь — привычные спусковые крючки. Заранее выбранное «если — то» помогает чаще выполнить намерение (Gollwitzer, Sheeran, 2006).']};
 const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
 const answers = [null, null, 250, null, null, null];
-const LAST = 6, FR = [.3, .42, .5, .62, .72, .82, 1], DONE = () => [0, 1, 3, 4, 5].every(k => answers[k] !== null);
+const LAST = 6, FR = [.3, .42, .5, .62, .72, .82, 1], DONE = () => [1, 3, 4, 5].every(k => answers[k] !== null);
 let at = 0, opener = null;
 steps.forEach((stp, si) => {
   const box = stp.querySelector('.opts'); if (!box || !Q[si]) return;
@@ -1012,7 +1027,7 @@ function choose(si, b, advance = true){
   [...b.parentElement.children].forEach(x => { const on = x === b; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); answers[si] = b.dataset.v;
   if (si === 5) document.documentElement.dataset.char = b.dataset.v;
   clearTimeout(choose.t); if (advance && si !== 5) choose.t = setTimeout(() => { if (at === si) show(si + 1); }, reduce ? 0 : 200);
-  msg.textContent = ''; syncFoot();
+  msg.textContent = REVEAL[si + ':' + b.dataset.v] || ''; syncFoot();
 }
 const sl = document.getElementById('sl'), slV = document.getElementById('sl-v'), sl3 = document.getElementById('sl-3y');
 function slSync(){ const v = +sl.value; answers[2] = v; sl.style.setProperty('--p', ((v - 50) / 950 * 100) + '%');
@@ -1023,13 +1038,16 @@ const nextB = document.getElementById('pl-next'), backB = document.getElementByI
 const ready = () => at === 2 || at === LAST || answers[at] !== null;
 function syncFoot(){ nextB.hidden = !ready(); document.getElementById('pay').hidden = true; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === LAST ? 'Готово' : at === 5 ? 'Показать разбор' : 'Дальше'; }
 const ringsDone = new Set();
-function syncOpeners(){ const t = DONE() ? 'Мой разбор' : began ? 'Продолжить план' : null; if (t) { document.getElementById('plan-open').textContent = t; document.getElementById('top-plan').textContent = t; } }
+function syncOpeners(){ const n = [0, 1, 3, 4, 5].filter(k => answers[k] !== null).length, m = mobile();
+  const t = DONE() ? 'Мой разбор' : began ? 'Продолжить план' : null; if (t) document.getElementById('plan-open').textContent = t;
+  document.getElementById('top-plan').textContent = DONE() ? 'Мой разбор' : began ? (m ? n + ' из 6' : 'Продолжить план') : (m ? '≈1 мин' : 'Составить план'); }
 function diagnose(){ sunEl.dataset.e = 'joy'; hero.classList.add('flash'); release('button'); }
 function show(i){
   const back = i < at; at = i; steps.forEach((s, k) => { s.hidden = k !== i; s.classList.remove('enter', 'back'); }); if (plan.open) { void steps[i].offsetWidth; steps[i].classList.add('enter'); if (back) steps[i].classList.add('back'); } backB.hidden = i === 0; msg.textContent = '';
   [...prog.children].forEach((p, k) => p.classList.toggle('on', k <= Math.min(i, 5))); prog.setAttribute('aria-valuenow', Math.min(i + 1, 6)); prog.setAttribute('aria-valuetext', 'Вопрос ' + Math.min(i + 1, 6) + ' из 6'); prog.hidden = i === LAST;
   if (i === 2) slSync();
   if (i < LAST && freed) sunEl.dataset.e = 'curious';
+  if (i === 3) { const tl = (Q[1].find(q => q[0] === answers[1]) || [0, ''])[1]; document.getElementById('trg').innerHTML = tl ? 'Триггер: <b></b> <button type="button" class="lnk" id="trg-chg">сменить</button>' : ''; const bb = document.querySelector('#trg b'); if (bb) bb.textContent = tl.toLowerCase(); const ch = document.getElementById('trg-chg'); if (ch) ch.addEventListener('click', () => show(1)); }
   if (i === 3) steps[3].querySelector('legend').textContent = 'Если ' + IFW(answers[1], answers[0]) + ', то я…';
   if (!freed && i < LAST) dissolveTo(FR[i]);
   if (i === LAST) { summary(); if (!freed) diagnose(); }
@@ -1051,7 +1069,7 @@ function summary(){
   const C = r => (2 * Math.PI * r).toFixed(1), ring = (r, cls, p) => '<circle class="rg rg-t" cx="40" cy="40" r="' + r + '"/><circle class="rg rg-' + cls + '" cx="40" cy="40" r="' + r + '" stroke="var(--act)" stroke-dasharray="' + C(r) + '" stroke-dashoffset="' + (C(r) * (1 - p)).toFixed(1) + '"/>';
   const bt = document.getElementById('bento');
   bt.innerHTML =
-    '<div class="tile" style="--i:0"><h3>Уходит в смог за год</h3><span class="big" id="b-year"></span><p class="src2">из твоих ответов: ' + rub.format(per) + ' в день, ' + TYPEW[answers[0]] + '</p></div>' +
+    '<div class="tile" style="--i:0"><h3>Уходит в смог за год</h3><span class="big" id="b-year"></span><p class="src2">из твоих ответов: ' + rub.format(per) + ' в день, ' + (TYPEW[answers[0]] || 'никотин') + '</p></div>' +
     '<div class="tile" style="--i:1"><h3>Рецепторы приходят в норму</h3><svg class="br" viewBox="0 0 120 48" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="120" y1="44" y2="44"/><path d="' + path + '"/></svg><p class="src2">У курящих сигареты — 6–12 недель (Cosgrove, 2009). Форма линии — иллюстрация.</p></div>' +
     '<div class="tile w2" style="--i:2"><h3>Твоё «если — то»</h3><p></p><p class="src2">Старт — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : 'в понедельник, ') + date + '. Заранее выбранное действие связывает ситуацию с ответом (Gollwitzer, Sheeran, 2006).</p></div>' +
     '<div class="tile w2 plain" style="--i:3"><h3>Миф про твой триггер</h3><p><b></b></p><p></p></div>' +
@@ -1109,6 +1127,7 @@ let downOut = false; plan.addEventListener('pointerdown', e => { downOut = outsi
 plan.addEventListener('click', e => { if (downOut && outside(e)) closePlan(); downOut = false; });
 document.getElementById('plan-open').addEventListener('click', e => begin('button', e.currentTarget));
 document.getElementById('top-plan').addEventListener('click', e => begin('button', e.currentTarget));
+syncOpeners();
 document.getElementById('start').addEventListener('click', e => begin('button', e.currentTarget));
 document.getElementById('again').addEventListener('click', e => begin('button', e.currentTarget));
 
