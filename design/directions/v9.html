@@ -475,6 +475,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 @keyframes breathe{0%{scale:1}28%{scale:1.03}39%{scale:1.05}100%{scale:1}}
 .eyes{position:absolute;inset:0;pointer-events:none;translate:var(--ex,0px) var(--ey,0px);transition:translate .14s var(--ease-out)}
 .face{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.sun[data-e=smog] .face{opacity:0}.face{transition:opacity .25s var(--ease-out)}
 .eye{transform-box:fill-box;transform-origin:center;scale:calc(var(--wide,1) * var(--sz,1.2));transition:scale .2s var(--ease-out),rotate .2s var(--ease-out);animation:blink 5.2s infinite}
 .eye .ball,.eye .cl1,.eye .cl2{transition:opacity .15s ease-out}
 .eye .arc{opacity:0;transition:opacity .15s ease-out}
@@ -856,11 +857,11 @@ function build(){
   const sxp = Math.min(W0 - sr * .9, px + sr * .3);
   const tower = puffs.filter(p => p.layer === 'main' && Math.abs(p.x - sxp) < sr * 1.2);
   const towerTop = tower.length ? Math.min(...tower.map(p => p.y - p.rad)) : topY;
-  const sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .2) + (mobile() ? 0 : sr * .6);
+  const sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .2) + (mobile() ? sr * .7 : sr * .6);
   sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .7 - sy) / (sr * 2) * 100 * .1) + "%");
   sunEl.style.setProperty('--sx', sxp + 'px'); sunEl.style.setProperty('--sy', sy + 'px');
   geo = { W0, H0, H, base, R, sx: sxp, sy, sr, glow: css('--smog-glow') };
-  if (!smogFrac && !freed) smogFrac = mobile() ? .12 : 0; // на телефоне Искра выглядывает в просвет, иначе её лицо скрыто тучей
+  if (!smogFrac && !freed) smogFrac = 0; // на телефоне Искра выглядывает в просвет, иначе её лицо скрыто тучей
   if (smogFrac) dissolveTo(smogFrac, true);
   draw(); noteRects();
 }
