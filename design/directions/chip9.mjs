@@ -1,0 +1,13 @@
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const p = await (await b.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true })).newPage();
+const errs = []; p.on('pageerror', e => errs.push(e.message));
+await p.goto('file://' + process.cwd() + '/v9.html'); await p.waitForTimeout(800);
+console.log('badge:', await p.textContent('#top-plan'));
+await p.click('.b[data-t="coffee"]'); await p.waitForTimeout(600);
+console.log('step visible legend:', await p.evaluate(() => document.querySelector('dialog.plan .step:not([hidden]) legend')?.textContent));
+console.log('trigger row:', await p.textContent('#trg'));
+console.log('badge after:', await p.textContent('#top-plan'));
+await p.click('#trg-chg'); await p.waitForTimeout(400);
+console.log('checked:', await p.evaluate(() => document.querySelector('dialog.plan .step:not([hidden]) .opt[aria-checked="true"]')?.textContent));
+console.log('errors:', errs.join('|') || 'none'); await b.close();
