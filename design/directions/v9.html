@@ -327,6 +327,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 
 /* ── Цена ── */
 section[aria-labelledby="p-h"]{background:color-mix(in srgb,var(--act) 7%,transparent);box-shadow:0 28px 64px -36px rgba(14,116,128,.4),inset 0 0 0 1px color-mix(in srgb,var(--act) 14%,transparent);border-radius:2rem;max-width:calc(76rem + 2 * clamp(1.25rem,4vw,3rem));margin-inline:auto}
+@media (max-width:860px){section[aria-labelledby="p-h"]{margin-inline:.5rem;border-radius:1.5rem}}
 .price{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
 .amount{margin-top:1.5rem;font:500 clamp(3.25rem,6vw,5rem)/1 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums}
 .amount small{font-size:max(1rem,.3em);letter-spacing:0;color:var(--muted);margin-left:.25em}
@@ -607,7 +608,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
           <button class="btn btn-act" id="plan-open" tabindex="-1">Составить план</button>
         </div>
       </div>
-      <p class="hero-note">Разбор сразу на&nbsp;экране.</p>
+      <p class="hero-note">Шесть коротких вопросов, оплата — после плана.</p>
     </div>
   </div></div>
   <p class="sr" id="status" aria-live="polite"></p>
@@ -616,7 +617,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 <div id="content">
 <section class="section gutter" aria-labelledby="how-h" data-sky="pale">
   <div class="wrap">
-    <div class="how-grid"><div class="how-side rv"><h2 class="h2 how-h" id="how-h">Как это работает</h2><p class="sub">Смог будет шептать. Вот что ты ему ответишь — и&nbsp;чем приложение в&nbsp;этом поможет.</p><div class="final-sun how-sun" aria-hidden="true"><svg viewBox="0 0 120 120"><g fill="#1E1815"><rect x="38" y="55" width="16" height="22" rx="8"/><rect x="74" y="55" width="16" height="22" rx="8"/></g><g fill="#fff"><circle cx="45" cy="61" r="3.2"/><circle cx="81" cy="61" r="3.2"/><circle cx="50" cy="70" r="1.5"/><circle cx="86" cy="70" r="1.5"/></g></svg></div></div>
+    <div class="how-grid"><div class="how-side rv"><h2 class="h2 how-h" id="how-h">Как это работает</h2><p class="sub">Смог шепчет. Ты отвечаешь. Приложение помогает.</p><div class="final-sun how-sun" aria-hidden="true"><svg viewBox="0 0 120 120"><g fill="#1E1815"><rect x="38" y="55" width="16" height="22" rx="8"/><rect x="74" y="55" width="16" height="22" rx="8"/></g><g fill="#fff"><circle cx="45" cy="61" r="3.2"/><circle cx="81" cy="61" r="3.2"/><circle cx="50" cy="70" r="1.5"/><circle cx="86" cy="70" r="1.5"/></g></svg></div></div>
     <div class="talk" aria-label="Переписка: как это работает">
       <p class="who-l rv">Смог</p>
       <p class="t-nick rv">ну и&nbsp;что ты будешь делать без меня?</p>
@@ -728,8 +729,8 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
       <p class="privacy">В&nbsp;приложении ответы опроса и&nbsp;дневник срывов хранятся только на&nbsp;твоём устройстве и&nbsp;не&nbsp;уходят на наш сервер. Оплату обрабатывает платёжный сервис — подробнее в&nbsp;«Конфиденциальности».</p>
     </div>
     <div class="faq rv">
-            <details open><summary>Как отменить подписку?<i aria-hidden="true"></i></summary><p>В&nbsp;настройках, одним нажатием, без вопросов «а&nbsp;может, останешься». За два дня до каждого списания пришлём напоминание.</p></details>
-      <details><summary>Это лечение?<i aria-hidden="true"></i></summary><p>Нет. Lumen помогает бросить и&nbsp;не&nbsp;заменяет врача.</p></details>
+            <details open><summary>Это лечение?<i aria-hidden="true"></i></summary><p>Нет. Lumen помогает бросить и&nbsp;не&nbsp;заменяет врача.</p></details>
+      <details><summary>Как отменить подписку?<i aria-hidden="true"></i></summary><p>В&nbsp;настройках, одним нажатием, без вопросов «а&nbsp;может, останешься». За два дня до каждого списания пришлём напоминание.</p></details>
       <details><summary>Уже были попытки бросить. Почему сейчас получится?<i aria-hidden="true"></i></summary><p>Попыток бывает много, и&nbsp;это нормально. Здесь срыв не&nbsp;обнуляет счётчик, а&nbsp;помогает понять, что именно сорвало, — и&nbsp;подготовиться к&nbsp;этому моменту в&nbsp;следующий раз.</p></details>
       <details><summary>Подходит для вейпа и&nbsp;пакетиков?<i aria-hidden="true"></i></summary><p>Да. Смог один и&nbsp;тот&nbsp;же — никотин. Неважно, в&nbsp;чём он приходит.</p></details>
       <details><summary>Можно вместе с&nbsp;пластырем или жвачкой?<i aria-hidden="true"></i></summary><p>Да. Никотинозаместительную терапию обсуди с&nbsp;врачом: приложение её не&nbsp;заменяет, но&nbsp;помогает с&nbsp;привычками и&nbsp;тягой.</p></details>
@@ -743,7 +744,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 
     <h2 class="h2 rv" id="f-h">Смог зашепчет снова. Ты&nbsp;можешь <em>не&nbsp;слушать</em>.</h2>
     <button class="btn btn-act rv" id="again">Составить план</button>
-    <p class="final-note rv">Сначала опрос и&nbsp;план. Оплата — только после.</p>
+    <p class="final-note rv">Сначала опрос, оплата — после плана.</p>
   </div>
 </section>
 </div>
