@@ -110,10 +110,10 @@ main,footer{position:relative;z-index:1}
 
 .hero.free .sun::before{opacity:1;transform:none}
 .hero.dragging{user-select:none;-webkit-user-select:none}
-#smog{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;transition:transform .55s var(--ease-out)}
+#smog,#smog-gl{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;transition:transform .55s var(--ease-out)}
 .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .9 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>")}
 .hero::after{content:"";position:absolute;inset:auto 0 0;height:22vh;z-index:1;pointer-events:none;background:linear-gradient(in oklab 180deg,transparent,var(--sky-wash))}
-.hero.free #smog{opacity:0;transition:opacity .25s ease-out .55s}
+.hero.free #smog,.hero.free #smog-gl{opacity:0;transition:opacity .25s ease-out .55s}
 
 header.top{position:absolute;inset:0 0 auto 0;z-index:3;padding-top:env(safe-area-inset-top)}
 header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:4.75rem}
@@ -440,7 +440,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 
 @media (max-width:860px){
   html:has(dialog.plan[open]) .hero{--lift:min(7.5rem,14dvh)}
-  html:has(dialog.plan[open]) #smog{transform:translateY(calc(var(--lift) * -1))}
+  html:has(dialog.plan[open]) #smog,html:has(dialog.plan[open]) #smog-gl{transform:translateY(calc(var(--lift) * -1))}
   dialog.plan::backdrop{transition:background-color .28s var(--ease-drawer)}
   .hero{min-height:100dvh}
   .hero-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;align-content:start;column-gap:0;min-height:100dvh;padding-top:calc(4.75rem + env(safe-area-inset-top));padding-bottom:calc(1.25rem + env(safe-area-inset-bottom));text-align:center}
@@ -556,7 +556,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 @media (max-height:480px){.pl-msg{display:none}.step legend,.step h2{font-size:1.5rem}.opts{margin-top:.8rem;gap:.35rem}.opt{min-height:2.75rem}.pl-foot{padding-block:.6rem}}
 @media (prefers-reduced-motion:reduce){
   .sun,.eye,.tile{animation:none}
-  .b,.hint,.sun,.sun::before,#smog,.hero h1 span,.lead span,.rv,.sky i,.nick-say{transition-duration:.2s!important;transition-delay:0s!important}
+  .b,.hint,.sun,.sun::before,#smog,#smog-gl,.hero h1 span,.lead span,.rv,.sky i,.nick-say{transition-duration:.2s!important;transition-delay:0s!important}
   .typing i,.nl-dots i{animation:none;opacity:.7}
   .b,.b.gone,.rv,.nick-say{transform:none!important;filter:none!important}
   .sun,.hero.free .sun{transition-property:opacity!important;transform:none!important}
@@ -589,6 +589,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
     <g transform="translate(78 66)"><g class="eye eye-r"><rect class="ball" x="-8" y="-11" width="16" height="22" rx="8" fill="#1E1815"/><ellipse class="cl1" cx="-3" cy="-4" rx="3.2" ry="4.2" transform="rotate(-20 -3 -4)" fill="#fff" opacity=".95"/><circle class="cl2" cx="3" cy="5" r="1.6" fill="#FFF8D6" opacity=".75"/><path class="arc up" d="M -8 2 Q 0 -9 8 2" stroke="#1E1815" stroke-width="4.5" stroke-linecap="round" fill="none"/><path class="arc dn" d="M -8 -2 Q 0 9 8 -2" stroke="#1E1815" stroke-width="4.5" stroke-linecap="round" fill="none"/></g></g>
   </svg></div></div>
   <canvas id="smog" aria-hidden="true"></canvas>
+  <canvas id="smog-gl" aria-hidden="true"></canvas>
   <header class="top gutter"><div class="wrap">
     <a class="brand" href="#" lang="en" aria-label="Lumen, на главную">Lumen</a>
     <button class="login" id="top-plan" type="button">Составить план</button>
@@ -832,8 +833,122 @@ else {
   setTimeout(() => { if (!touched && !freed) document.getElementById('hint').classList.add('on'); }, tt + 1800);
 }
 
+/* ── Рендерер облака на WebGL: те же спрайты и те же проходы, что и в 2D, но на видеокарте ── */
+const CloudGL = (() => {
+  const NMAX = 32;
+  const VS_P = 'attribute vec2 a;uniform vec2 uCss,uC;uniform float uS;uniform vec4 uUV;uniform float uFlip;varying vec2 vUV;void main(){vec2 pos=uC+a*uS*.5;gl_Position=vec4(pos.x/uCss.x*2.-1.,1.-pos.y/uCss.y*2.,0.,1.);vec2 t=vec2((a.x*uFlip+1.)*.5,(a.y+1.)*.5);vUV=vec2(mix(uUV.x,uUV.z,t.x),mix(uUV.y,uUV.w,t.y));}';
+  const FS_P = 'precision highp float;uniform sampler2D uAtlas;uniform float uOp;varying vec2 vUV;void main(){gl_FragColor=texture2D(uAtlas,vUV)*uOp;}';
+  const VS_Q = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+  const FS_K = 'precision highp float;uniform sampler2D uT;uniform vec2 uCss;void main(){gl_FragColor=texture2D(uT,vec2(gl_FragCoord.x/uCss.x,gl_FragCoord.y/uCss.y));}';
+  const FS_Q = `precision highp float;
+uniform sampler2D uFbo;uniform vec2 uCss,uSun;uniform vec4 uCore;uniform vec3 uBody;uniform float uCoreA;uniform vec4 uG;uniform vec3 uGlow;uniform float uFk,uSr,uNn;uniform vec2 uDd;uniform vec4 uN[${NMAX}];
+vec4 src(vec2 q){if(q.x<0.||q.y<0.||q.x>uCss.x||q.y>uCss.y)return vec4(0.);return texture2D(uFbo,vec2(q.x/uCss.x,1.-q.y/uCss.y));}
+float coreAt(vec2 q){if(uCoreA<=.02)return 0.;float t=length((q-uCore.xy)/uCore.zw);return clamp((1.-t)/.28,0.,1.)*uCoreA;}
+float mulAt(vec2 q){
+ float base=uG.x,R=uG.y;float y0=base-R*uFk,y1=base+R*.14;float tt=clamp((q.y-y0)/(y1-y0),0.,1.);
+ float fa=tt<.6?mix(0.,.4,tt/.6):mix(.4,1.,(tt-.6)/.4);float m=1.-fa;
+ for(int i=0;i<${NMAX};i++){if(float(i)>=uNn)break;vec4 n=uN[i];float d=length(q-n.xy)/n.z;if(d<1.)m*=1.-n.w*(1.-d);}
+ return m;}
+void main(){
+ vec2 p=vec2(gl_FragCoord.x,uCss.y-gl_FragCoord.y);
+ vec4 c=src(p);float a=c.a;
+ float ca=coreAt(p);
+ if(a<=0.&&ca<=0.){gl_FragColor=vec4(0.);return;}
+ float base=uG.x,R=uG.y,H=uG.z;
+ float t=clamp((p.y-(base-H))/((base+R*.06)-(base-H)),0.,1.);
+ float s=mix(0.,.5,t);vec3 sc=mix(vec3(30.,34.,38.),vec3(24.,28.,32.),t)/255.;
+ vec3 D=c.rgb*(1.-s)+sc*s*a;
+ float d=length(p-uSun),r0=uSr*.5,r1=uSr*2.6;float u=clamp((d-r0)/(r1-r0),0.,1.);
+ float g=u<.45?mix(.55,.14,u/.45):mix(.14,0.,(u-.45)/.55);
+ if(d<r0)g=.55;
+ D=D*(1.-g)+uGlow*g*a;
+ float m=mulAt(p);D*=m;a*=m;
+ D+=uBody*ca*(1.-a);a=a+ca*(1.-a);
+ // серебряная кайма: облако минус то же облако, сдвинутое от солнца
+ vec2 q=p-uDd;vec4 c1=src(q);float A1m=c1.a*(c1.a>0.?mulAt(q):0.);float A1=A1m+coreAt(q)*(1.-A1m);
+ float rimA=a*(1.-A1);
+ float d2=length(p-uSun)/(uSr*3.2);float ga=d2<.5?mix(.95,.4,d2/.5):mix(.4,0.,clamp((d2-.5)/.5,0.,1.));
+ float ex=ceil(abs(uDd.x))+2.,ey=ceil(abs(uDd.y))+2.;
+ if(p.x<ex||p.x>uCss.x-ex||p.y<ey)rimA=0.;
+ vec3 sil=vec3(255.,246.,222.)/255.;
+ vec4 rim=vec4(sil*ga*rimA,ga*rimA)*.5;
+ gl_FragColor=min(vec4(D,a)+rim,1.);}`;
+  function create(canvas, onRestore) {
+    try {
+      let gl, P = {}, tex = null, fbo = null, fbt = null, fbo2 = null, fbt2 = null, W0 = 0, H0 = 0, atlas = null, cfg = null, dead = false, vbuf = null, tri = null;
+      const compile = (vs, fs, names) => { const mk = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) { console.error('cloud shader: ' + gl.getShaderInfoLog(o)); return null; } return o; };
+        const v = mk(gl.VERTEX_SHADER, vs), f = mk(gl.FRAGMENT_SHADER, fs); if (!v || !f) return null; const pr = gl.createProgram(); gl.attachShader(pr, v); gl.attachShader(pr, f); gl.linkProgram(pr);
+        if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { console.error('cloud link: ' + gl.getProgramInfoLog(pr)); return null; }
+        const o = { pr }; names.forEach(n => o[n] = gl.getUniformLocation(pr, n)); o.a = gl.getAttribLocation(pr, 'a'); return o; };
+      const init = () => {
+        gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false });
+        if (!gl) return false; const hp = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT); if (!hp || hp.precision < 23) return false;
+        // Программный рендер (нет видеокарты) медленнее 2D-пути: остаёмся на нём
+        { const dbg = gl.getExtension('WEBGL_debug_renderer_info'), rn = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : ''; if (/swiftshader|llvmpipe|software|basic render/i.test(rn) && !/[?&]gl=force/.test(location.search)) return false; }
+        P.p = compile(VS_P, FS_P, ['uCss', 'uC', 'uS', 'uUV', 'uFlip', 'uAtlas', 'uOp']); 
+        P.q = compile(VS_Q, FS_Q, ['uFbo', 'uCss', 'uSun', 'uG', 'uGlow', 'uFk', 'uSr', 'uNn', 'uDd', 'uN', 'uCore', 'uBody', 'uCoreA']); P.k = compile(VS_Q, FS_K, ['uT', 'uCss']); if (!P.p || !P.q || !P.k) return false;
+        vbuf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, vbuf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+        tri = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, tri); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+        W0 = H0 = 0; tex = null; return true; };
+      if (!init()) return null;
+      canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); dead = true; });
+      canvas.addEventListener('webglcontextrestored', () => { if (init()) { dead = false; fbt = null; onRestore && onRestore(); } });
+      const api = {
+        setSprites(list) {
+          if (dead) return; const S = 256, c = document.createElement('canvas'); c.width = S * 3; c.height = S * 2; const x = c.getContext('2d');
+          list.forEach((s, i) => x.drawImage(s, (i % 3) * S, Math.floor(i / 3) * S)); atlas = c; tex = null; },
+        resize(w, h) {
+          if (dead) return; W0 = w; H0 = h; canvas.width = w; canvas.height = h;
+          if (fbt) { gl.deleteTexture(fbt); gl.deleteFramebuffer(fbo); gl.deleteTexture(fbt2); gl.deleteFramebuffer(fbo2); }
+          const mkT = () => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; };
+          fbt2 = mkT(); fbo2 = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fbo2); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, fbt2, 0);
+          fbt = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, fbt); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, fbt, 0); gl.bindFramebuffer(gl.FRAMEBUFFER, null); },
+        configure(c) { cfg = c; },
+        render(list, core) {
+          if (dead || !cfg || !W0) return;
+          if (!tex && atlas) { tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex); gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, atlas); gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); }
+          if (!tex) return;
+          // 1) клубы в буфер
+          gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.viewport(0, 0, W0, H0); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+          gl.useProgram(P.p.pr); gl.bindBuffer(gl.ARRAY_BUFFER, vbuf); gl.enableVertexAttribArray(P.p.a); gl.vertexAttribPointer(P.p.a, 2, gl.FLOAT, false, 0, 0);
+          gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex); gl.uniform1i(P.p.uAtlas, 0); gl.uniform2f(P.p.uCss, W0, H0);
+          const e = .5 / 768, ev = .5 / 512;
+          for (let i = 0; i < list.length; i += 6) { const si = list[i + 4], u0 = (si % 3) / 3, v0 = Math.floor(si / 3) / 2;
+            gl.uniform2f(P.p.uC, list[i], list[i + 1]); gl.uniform1f(P.p.uS, list[i + 2]); gl.uniform1f(P.p.uOp, list[i + 3]); gl.uniform1f(P.p.uFlip, list[i + 5] ? -1 : 1);
+            gl.uniform4f(P.p.uUV, u0 + e, v0 + ev, u0 + 1 / 3 - e, v0 + .5 - ev); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
+          // 2) уплотнение массы: слой дорисовывается под себя же дважды, края остаются мягкими, но солнце не просвечивает
+          gl.disable(gl.BLEND); gl.bindFramebuffer(gl.FRAMEBUFFER, fbo2); gl.viewport(0, 0, W0, H0); gl.useProgram(P.k.pr); gl.bindBuffer(gl.ARRAY_BUFFER, tri); gl.enableVertexAttribArray(P.k.a); gl.vertexAttribPointer(P.k.a, 2, gl.FLOAT, false, 0, 0);
+          gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, fbt); gl.uniform1i(P.k.uT, 0); gl.uniform2f(P.k.uCss, W0, H0); gl.drawArrays(gl.TRIANGLES, 0, 3);
+          gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.enable(gl.BLEND); gl.blendFunc(gl.ONE_MINUS_DST_ALPHA, gl.ONE); gl.bindTexture(gl.TEXTURE_2D, fbt2);
+          gl.drawArrays(gl.TRIANGLES, 0, 3); gl.drawArrays(gl.TRIANGLES, 0, 3);
+          // 3) тень, свет солнца, растворение низа, серебряная кайма
+          gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, W0, H0); gl.disable(gl.BLEND); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.useProgram(P.q.pr); gl.bindBuffer(gl.ARRAY_BUFFER, tri); gl.enableVertexAttribArray(P.q.a); gl.vertexAttribPointer(P.q.a, 2, gl.FLOAT, false, 0, 0);
+          gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, fbt); gl.uniform1i(P.q.uFbo, 0);
+          gl.uniform2f(P.q.uCss, W0, H0); gl.uniform2f(P.q.uSun, cfg.sx, cfg.sy); gl.uniform4f(P.q.uG, cfg.base, cfg.R, cfg.H, 0); gl.uniform3fv(P.q.uGlow, cfg.glow);
+          gl.uniform4f(P.q.uCore, core ? core.cx : 0, core ? core.cy : 0, core ? Math.max(1, core.rx) : 1, core ? Math.max(1, core.ry) : 1); gl.uniform3fv(P.q.uBody, cfg.body); gl.uniform1f(P.q.uCoreA, core ? core.a : 0);
+          gl.uniform1f(P.q.uFk, cfg.fk); gl.uniform1f(P.q.uSr, cfg.sr); gl.uniform1f(P.q.uNn, cfg.notches.length / 4); gl.uniform2f(P.q.uDd, cfg.ddx, cfg.ddy); gl.uniform4fv(P.q.uN, cfg.nArr);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+        },
+        get dead() { return dead; }
+      };
+      return api;
+    } catch (err) { console.error('cloud init: ' + err); return null; }
+  }
+  return { create };
+})();
+
 /* ── Облако: серый смог из мягких клубов, свет солнца сзади ── */
 const cv = document.getElementById('smog'), g2 = cv.getContext('2d');
+const glc = document.getElementById('smog-gl'); let GL = null; if (!/[?&]gl=0/.test(location.search)) { try { GL = CloudGL.create(glc, () => { if (!freed) build(); }); } catch { GL = null; } }
+if (GL) cv.style.display = 'none'; else glc.style.display = 'none';
+const hex3 = h => { h = h.replace('#', ''); if (h.length === 3) h = h.replace(/./g, '$&$&'); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255); };
 const sunEl = hero.querySelector('.sun');
 let dispFrac = 0, parT = [0, 0], parC = [0, 0];
 let rect, puffs = [], smogFrac = 0, began = false, freed = false, touched = false, pressedStroke = false, lastDx = -1, startedAt = 0;
@@ -868,7 +983,8 @@ function build(){
   off.width = cv.width; off.height = cv.height;
   if (!rimC) { rimC = document.createElement('canvas'); rg2 = rimC.getContext('2d'); } rimC.width = cv.width; rimC.height = cv.height;
   const pal = { body: css('--smog-body'), lit: css('--smog-lit'), shade: css('--smog-shade') }, key = pal.body + pal.lit + pal.shade;
-  if (key !== spriteKey) { sprites = makeSprites(pal); spriteKey = key; }
+  if (key !== spriteKey) { sprites = makeSprites(pal); spriteKey = key; if (GL) GL.setSprites(sprites); }
+  if (GL) GL.resize(cv.width, cv.height);
   const W = L.w * W0, H = L.h * H0, x0 = L.cx * W0 - W / 2, base = L.cy * H0 + H * .5, R = Math.min(W, H * 2.2);
   const env = u => Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, u))), .6) * (.5 + .5 * Math.exp(-Math.pow((u - L.peak) / .18, 2)));
   const px = x0 + W * L.peak, topY = base - H, sr = R * (mobile() ? .16 : .15);
@@ -883,7 +999,7 @@ function build(){
   list.forEach(([layer, u, hgt, sc], i) => {
     const e = env(u) * sc, rad = R * (.075 + .1 * e) * (1 - hgt * .3);
     puffs.push({ x: x0 + W * u + (layer === 'back' ? R * .03 : 0), y: base - rad * .5 - hgt * e * H * .78 - (layer === 'back' ? H * .06 : 0),
-      rad, ox: 0, oy: 0, vx: 0, vy: 0, gone: false, op: 1, sc: 1, layer, z: layer === 'back' ? 4 : (hgt < .4 ? 9 : 14), sp: sprites[i % sprites.length], spin: r() < .5 });
+      rad, ox: 0, oy: 0, vx: 0, vy: 0, gone: false, op: 1, sc: 1, layer, si: i % sprites.length, z: layer === 'back' ? 4 : (hgt < .4 ? 9 : 14), sp: sprites[i % sprites.length], spin: r() < .5 });
   });
   const sxp = Math.min(W0 - sr * .9, px + sr * .3);
   const tower = puffs.filter(p => p.layer === 'main' && Math.abs(p.x - sxp) < sr * 1.2);
@@ -891,7 +1007,12 @@ function build(){
   const sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .2) + (mobile() ? sr * .7 : sr * .6);
   sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .7 - sy) / (sr * 2) * 100 * .1) + "%");
   sunEl.style.setProperty('--sx', sxp + 'px'); sunEl.style.setProperty('--sy', sy + 'px');
-  geo = { W0, H0, H, base, R, sx: sxp, sy, sr, glow: css('--smog-glow'), body: pal.body };
+  geo = { W0, H0, H, base, R, sx: sxp, sy, sr, glow: css('--smog-glow'), body: pal.body, near: puffs.filter(p => p.layer === 'main' && Math.hypot(p.x - sxp, p.y - sy) < sr * 2.4) };
+  if (GL) { let sq = 7; const sr2 = () => (sq = sq * 16807 % 2147483647) / 2147483647, nt = [];
+    for (let ex = -R * .1; ex < W0 + R * .2; ex += R * (.12 + sr2() * .16)) { const er = R * (.1 + sr2() * .14), ey = base + R * .07 - sr2() * R * .05; nt.push(ex, ey, er, .85); }
+    if (mobile()) for (let ex = R * .03; ex < W0 + R * .2; ex += R * (.1 + sr2() * .14)) { const er = R * (.12 + sr2() * .14), ey = base - R * .06 - sr2() * R * .12; nt.push(ex, ey, er, .6); }
+    const cxm = W0 * .5, cym = base - H * .4, vl = Math.hypot(cxm - sxp, cym - sy) || 1, nArr = new Float32Array(32 * 4); nArr.set(nt.slice(0, 128));
+    GL.configure({ body: hex3(pal.body), glow: geo.glow.split(',').map(v => +v / 255), sx: sxp, sy, sr, base, R, H, fk: mobile() ? .24 : .09, notches: nt.slice(0, 128), nArr, ddx: (cxm - sxp) / vl * 7, ddy: (cym - sy) / vl * 7 }); }
   if (!smogFrac && !freed) smogFrac = 0; // на телефоне Искра выглядывает в просвет, иначе её лицо скрыто тучей
   if (smogFrac) dissolveTo(smogFrac, true);
   draw(); noteRects();
@@ -899,6 +1020,13 @@ function build(){
 /* Кадр облака: клубы в отдельный слой, на нём тень снизу и серебряный край от солнца, низ растворяется */
 function draw(){
   if (!geo) return; const { W0, H0, H, base, R, sx, sy, sr, glow } = geo;
+  if (GL) {
+    const list = [];
+    for (const p of puffs) { if (p.op <= .003) continue;
+      const side = Math.max(-1, Math.min(1, (p.x - sx) / (R * .45))), dz = p.layer === 'back' ? .6 : (p.z > 10 ? 1.25 : 1);
+      list.push(p.x + p.ox + side * dispFrac * R * .13 * dz + parC[0] * p.z, p.y + p.oy + dispFrac * R * .035 * dz + parC[1] * p.z * .6, p.rad * 2.6 * p.sc, p.op, p.si, p.spin ? 1 : 0); }
+    const nr = geo.near || []; let al = 0; for (const p of nr) al += p.gone ? 0 : Math.max(0, p.op); const cs = nr.length ? Math.min(1, Math.max(0, (al / nr.length - .3) / .5)) : 0;
+    GL.render(list, { a: cs, cx: sx, cy: sy + sr * .62, rx: sr * 1.3 * cs, ry: sr * .85 * cs }); return; }
   og.setTransform(DPR, 0, 0, DPR, 0, 0); og.globalCompositeOperation = 'source-over'; og.globalAlpha = 1; og.clearRect(0, 0, W0, H0);
   for (const p of puffs) { if (p.op <= .003) continue;
     // Занавес: оставшиеся клубы расступаются от оси солнца и чуть оседают; параллакс по глубине слоя
@@ -920,7 +1048,7 @@ function draw(){
   let sq = 7; const sr2 = () => (sq = sq * 16807 % 2147483647) / 2147483647;
   for (let ex = -R * .1; ex < W0 + R * .2; ex += R * (.12 + sr2() * .16)) { const er = R * (.1 + sr2() * .14), ey = base + R * .07 - sr2() * R * .05, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.85)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
   if (mobile()) for (let ex = R * .03; ex < W0 + R * .2; ex += R * (.1 + sr2() * .14)) { const er = R * (.12 + sr2() * .14), ey = base - R * .06 - sr2() * R * .12, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.6)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
-  { const cs = Math.min(1, Math.max(0, (.6 - smogFrac) / .32)); if (cs > .3) { const cx = sx, cy = sy + sr * .62, rx = sr * 1.3 * cs, ry = sr * .85 * cs; og.save(); og.globalCompositeOperation = 'destination-over'; og.translate(cx, cy); og.scale(1, ry / rx); const cg = og.createRadialGradient(0, 0, 0, 0, 0, rx); cg.addColorStop(0, geo.body); cg.addColorStop(.72, geo.body); cg.addColorStop(1, geo.body + '00'); og.fillStyle = cg; og.beginPath(); og.arc(0, 0, rx, 0, 7); og.fill(); og.restore(); og.globalCompositeOperation = 'source-over'; } }
+  { const nr = geo.near || []; let al = 0; for (const p of nr) al += p.gone ? 0 : Math.max(0, p.op); const cs = nr.length ? Math.min(1, Math.max(0, (al / nr.length - .3) / .5)) : 0; if (cs > .02) { og.save(); og.globalAlpha = cs; const cx = sx, cy = sy + sr * .62, rx = sr * 1.3 * cs, ry = sr * .85 * cs; og.save(); og.globalCompositeOperation = 'destination-over'; og.translate(cx, cy); og.scale(1, ry / rx); const cg = og.createRadialGradient(0, 0, 0, 0, 0, rx); cg.addColorStop(0, geo.body); cg.addColorStop(.72, geo.body); cg.addColorStop(1, geo.body + '00'); og.fillStyle = cg; og.beginPath(); og.arc(0, 0, rx, 0, 7); og.fill(); og.restore(); og.restore(); og.globalCompositeOperation = 'source-over'; } }
   g2.setTransform(1, 0, 0, 1, 0, 0); g2.clearRect(0, 0, cv.width, cv.height); g2.drawImage(off, 0, 0);
   // Серебряная кайма: край облака со стороны солнца — облако минус то же облако, сдвинутое от солнца
   const cxm = W0 * .5, cym = base - H * .4, vl = Math.hypot(cxm - sx, cym - sy) || 1, ddx = (cxm - sx) / vl * 7, ddy = (cym - sy) / vl * 7;
