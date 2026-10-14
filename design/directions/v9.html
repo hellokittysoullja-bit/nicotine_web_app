@@ -182,8 +182,8 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 
 /* ── Секции ── */
 .section{padding-block:clamp(3.5rem,6vw,5.5rem)}
-.section.airy{padding-block:clamp(5rem,9vw,8rem) clamp(2.5rem,5vw,4rem)}
-.section.tight{padding-block:clamp(3rem,5vw,4.5rem)}
+.section.airy{padding-block:clamp(3.5rem,6vw,5.5rem)}
+.section.tight{padding-block:clamp(3.5rem,6vw,5.5rem)}
 .airy .h2{font-size:clamp(2.5rem,5vw,4.5rem)}
 .eyebrow-n{display:none}
 .h2{font-family:var(--f-display);font-weight:500;font-size:clamp(2.4rem,5vw,4.5rem);line-height:1.02;letter-spacing:-.022em;text-wrap:balance}
@@ -286,6 +286,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .brain-line path{fill:none;stroke:var(--act);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .brain-line .base{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 6;opacity:.6}
 .brain-line .dot{position:absolute;width:1rem;height:1rem;border-radius:50%;background:var(--act);translate:-50% -50%}
+.brain-line .dot::after{content:"";position:absolute;left:50%;top:100%;height:var(--lh,0);border-left:1px dotted var(--muted);opacity:.7}
 .brain-line .base-l{position:absolute;right:0;bottom:-1.6rem;font-size:.875rem;color:var(--muted)}
 .weeks{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,4rem);margin-top:2.5rem}
 .weeks b{display:block;font:500 clamp(1.5rem,2.3vw,2rem)/1.15 var(--f-display);letter-spacing:-.015em}
@@ -1247,7 +1248,7 @@ function brain(){
   bs.innerHTML = '<line class="base" x1="0" x2="' + W + '" y1="' + Y(0) + '" y2="' + Y(0) + '"/><path d="' + d + '"/>';
   bl.querySelectorAll('.dot').forEach(n => n.remove());
   const cols = mobile() ? [1, 4, 9] : [1, 4, 9];
-  cols.forEach(w => { const i = document.createElement('i'); i.className = 'dot'; i.style.left = X(w) + 'px'; i.style.top = Y(LV(w)) + 'px'; bl.appendChild(i); });
+  cols.forEach(w => { const i = document.createElement('i'); i.className = 'dot'; i.style.left = X(w) + 'px'; i.style.top = Y(LV(w)) + 'px'; i.style.setProperty('--lh', (H - Y(LV(w)) + 8) + 'px'); bl.appendChild(i); });
 }
 brain(); addEventListener('resize', brain);
 
