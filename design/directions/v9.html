@@ -241,7 +241,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 
 /* ── Волна ── */
 .calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low));padding-block:var(--sy)}
-.calm .sub{color:var(--calm-muted)}.calm .src{color:color-mix(in srgb,var(--calm-text) 80%,transparent);font-size:1rem}
+.calm .sub{color:var(--calm-muted)}.calm .src{color:color-mix(in srgb,var(--calm-text) 90%,transparent);font-size:1rem}
 .wave-head{display:grid;gap:1.25rem}.wave-head .sub{max-width:34rem}
 .try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
 .try::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--calm-line)}
@@ -323,7 +323,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 
 
 /* ── Цена ── */
-section[aria-labelledby="p-h"]{background:color-mix(in srgb,var(--act) 7%,transparent);border-radius:2rem;max-width:calc(76rem + 2 * clamp(1.25rem,4vw,3rem));margin-inline:auto}
+section[aria-labelledby="p-h"]{background:color-mix(in srgb,var(--act) 7%,transparent);box-shadow:0 28px 64px -36px rgba(14,116,128,.4),inset 0 0 0 1px color-mix(in srgb,var(--act) 14%,transparent);border-radius:2rem;max-width:calc(76rem + 2 * clamp(1.25rem,4vw,3rem));margin-inline:auto}
 .price{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
 .amount{margin-top:1.5rem;font:500 clamp(3.25rem,6vw,5rem)/1 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums}
 .amount small{font-size:max(1rem,.3em);letter-spacing:0;color:var(--muted);margin-left:.25em}
@@ -334,6 +334,7 @@ section[aria-labelledby="p-h"]{background:color-mix(in srgb,var(--act) 7%,transp
 .gets span{color:var(--muted)}
 .terms{color:var(--muted);font-size:1rem;margin-top:1.25rem;max-width:30rem}
 .price .btn{margin-top:1.75rem}
+.gets b::before{content:"✓";color:var(--act);margin-right:.5rem;font-weight:700}
 .perday{margin-top:.9rem;color:var(--muted);font-size:1.0625rem}
 .price .amount{font-size:clamp(4.5rem,9vw,7.5rem);margin-top:1rem}
 
@@ -410,7 +411,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .opt .mk{width:1.25rem;height:1.25rem;border-radius:50%;border:1.5px solid var(--control);flex:none;display:grid;place-items:center;transition:border-color .15s ease,background-color .15s ease}
 .opt[role="checkbox"] .mk{border-radius:.35rem}
 .opt .mk svg{width:.8rem;height:.8rem;color:var(--act-text);opacity:0;transition:opacity .12s ease}
-.opt[aria-checked="true"]{border-color:var(--act);background:color-mix(in oklab,var(--act) 8%,transparent)}
+.opt[aria-checked="true"]{border-color:var(--act);box-shadow:inset 0 0 0 1px var(--act);background:color-mix(in oklab,var(--act) 14%,transparent)}
 .opt[aria-checked="true"] .mk{border-color:var(--act);background:var(--act)}
 .opt[aria-checked="true"] .mk svg{opacity:1}
 .opt[aria-checked="true"] .mk{animation:mkpop .18s var(--ease-out)}@keyframes mkpop{from{scale:.88}to{scale:1}}
@@ -430,7 +431,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl-foot .btn[hidden]{display:none}
 .pl-foot .btn.soon{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1.5px var(--control)}
 .pl-msg{min-height:1.4rem;font-size:.875rem;color:var(--muted);text-align:center;text-wrap:balance}
-.pl-msg:empty::before{content:"Ответы никуда не отправляются."}
+.pl-msg:empty::before{content:"Ответы остаются на этом устройстве."}
 
 @media (max-width:860px){
   html:has(dialog.plan[open]) .hero{--lift:min(7.5rem,14dvh)}
@@ -691,7 +692,6 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
     <div class="year-row"><p class="year rv"><span class="num" id="year">91 250 ₽</span><span class="per">в год</span></p>
     <ul class="yl rv" id="year-note"></ul></div>
     <p class="bridge rv" id="bridge"></p>
-    <button class="link cta-inline" id="m-start" type="button">Составить план →</button>
   </div>
 </section>
 
@@ -1169,7 +1169,6 @@ plan.addEventListener('click', e => { if (downOut && outside(e)) closePlan(); do
 document.getElementById('plan-open').addEventListener('click', e => begin('button', e.currentTarget));
 document.getElementById('top-plan').addEventListener('click', e => begin('button', e.currentTarget));
 syncOpeners();
-document.getElementById('m-start').addEventListener('click', e => begin('button', e.currentTarget));
 document.getElementById('start').addEventListener('click', e => begin('button', e.currentTarget));
 document.getElementById('again').addEventListener('click', e => begin('button', e.currentTarget));
 
