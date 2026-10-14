@@ -411,6 +411,8 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .opt[aria-checked="true"]{border-color:var(--act);background:color-mix(in oklab,var(--act) 8%,transparent)}
 .opt[aria-checked="true"] .mk{border-color:var(--act);background:var(--act)}
 .opt[aria-checked="true"] .mk svg{opacity:1}
+.opt[aria-checked="true"] .mk{animation:mkpop .18s var(--ease-out)}@keyframes mkpop{from{scale:.88}to{scale:1}}
+@media (prefers-reduced-motion:reduce){.opt[aria-checked="true"] .mk{animation:none}}
 .sum{list-style:none;margin-top:.75rem;display:grid}
 .sum li{padding:.55rem 0;border-bottom:1px solid var(--rule)}
 .sum li:last-child{border-bottom:0}
@@ -1057,6 +1059,7 @@ steps.forEach((stp, si) => {
 plan.addEventListener('keydown', e => { if (e.ctrlKey || e.metaKey || e.altKey || !/^[1-9]$/.test(e.key) || e.target.closest('input')) return;
   const b = steps[at].querySelectorAll('.opt')[+e.key - 1]; if (!b) return; e.preventDefault(); viaKey = true; b.focus(); choose(at, b); });
 function choose(si, b, advance = true){
+  if (answers[si] !== b.dataset.v) { try { navigator.vibrate && navigator.vibrate(6); } catch {} }
   [...b.parentElement.children].forEach(x => { const on = x === b; x.setAttribute('aria-checked', String(on)); x.tabIndex = on ? 0 : -1; }); answers[si] = b.dataset.v;
   if (si === 5) document.documentElement.dataset.char = b.dataset.v;
   clearTimeout(choose.t); if (advance && si !== 5) choose.t = setTimeout(() => { if (at === si) show(si + 1); }, reduce ? 0 : 200);
