@@ -177,7 +177,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
   .opt:hover{border-color:var(--text)}
   .login:hover{background:color-mix(in oklab,var(--ink) 10%,transparent)}
   .link:hover{text-decoration-thickness:2px}
-  .faq summary:hover{color:var(--act)}
+  .faq summary:hover{color:var(--act);background:rgba(14,116,128,.05)}
 }
 
 /* ── Секции ── */
@@ -282,7 +282,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .brain-line path{fill:none;stroke:var(--act);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .brain-line .base{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 6;opacity:.6}
 .brain-line .dot{position:absolute;width:1rem;height:1rem;border-radius:50%;background:var(--act);translate:-50% -50%}
-.brain-line .base-l{position:absolute;right:0;bottom:-1.6rem;font-size:.8125rem;color:var(--muted)}
+.brain-line .base-l{position:absolute;right:0;bottom:-1.6rem;font-size:.875rem;color:var(--muted)}
 .weeks{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,4rem);margin-top:2.5rem}
 .weeks b{display:block;font:500 clamp(1.5rem,2.3vw,2rem)/1.15 var(--f-display);letter-spacing:-.015em}
 .weeks p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
@@ -321,8 +321,10 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .gets li:first-child{border-top:1px solid var(--rule)}
 .gets b{font-weight:600}
 .gets span{color:var(--muted)}
-.terms{color:var(--muted);font-size:.9375rem;margin-top:1.25rem;max-width:30rem}
-.price .btn{margin-top:2rem}
+.terms{color:var(--muted);font-size:1rem;margin-top:1.25rem;max-width:30rem}
+.price .btn{margin-top:1.75rem}
+.perday{margin-top:.6rem;color:var(--muted);font-size:1.0625rem}
+.price .amount{font-size:clamp(4.5rem,9vw,7.5rem);margin-top:1rem}
 
 /* ── Вопросы ── */
 .faq-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
@@ -676,8 +678,10 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 <section class="section gutter" aria-labelledby="p-h" data-sky="pale">
   <div class="wrap price">
     <div class="rv">
-      <h2 class="h2" id="p-h">Одна цена, и она не меняется</h2>
+      <h2 class="h2 sm" id="p-h">Одна цена, и она не меняется</h2>
       <p class="amount num">349 ₽<small>в месяц</small></p>
+      <p class="perday">Это около 12 ₽ в день.</p>
+      <button class="btn btn-act" id="start">Составить план</button>
       <p class="terms">Подписка продлевается сама. За два дня до списания напомним, отменить можно в&nbsp;одно нажатие. Без таймеров и&nbsp;«последнего шанса»: цена одна и&nbsp;не&nbsp;сгорает.</p>
     </div>
     <div class="rv">
@@ -688,7 +692,6 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
         <li><b>Копилка</b><span>Сколько денег ты не потратил на никотин.</span></li>
         <li><b>Серия без обнуления</b><span>Срыв не обнуляет счётчик, если разобрать причину. И&nbsp;план на следующий раз.</span></li>
       </ul>
-      <button class="btn btn-act" id="start">Составить план</button>
     </div>
   </div>
 </section>
