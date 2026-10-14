@@ -114,7 +114,7 @@ main,footer{position:relative;z-index:1}
 
 header.top{position:absolute;inset:0 0 auto 0;z-index:3;padding-top:env(safe-area-inset-top)}
 header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:4.75rem}
-.login{background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1px rgba(6,36,63,.15);display:inline-flex;align-items:center;min-height:2.75rem;padding-inline:.85rem;margin-right:0;color:var(--ink);font-weight:500;font-size:.9375rem;text-decoration:none;border-radius:999px;transition:background-color .15s ease}
+.login{background:color-mix(in srgb,var(--ink) 12%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 25%,transparent);display:inline-flex;align-items:center;min-height:2.75rem;padding-inline:.85rem;margin-right:0;color:var(--ink);font-weight:500;font-size:.9375rem;text-decoration:none;border-radius:999px;transition:background-color .15s ease}
 
 .hero-inner{position:relative;z-index:2;min-height:100svh;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);
   column-gap:3rem;padding-block:calc(6rem + env(safe-area-inset-top)) clamp(3.5rem,9vh,6rem);align-items:center;pointer-events:none}
@@ -146,7 +146,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .hint svg{width:1.4rem;height:1.4rem;flex:none}
 
 /* Переписка с Ником */
-.stage{grid-column:2;grid-row:1;margin-top:-4vh}
+.stage{grid-column:2;grid-row:1;margin-top:0;align-self:end}
 .thread{width:100%;max-width:22rem}
 .who{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem .1rem;color:var(--ink);opacity:0;transition:opacity .2s var(--ease-out)}
 .who.in{opacity:1}
@@ -437,7 +437,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .who{justify-content:center;margin:0 0 .5rem}
   .ask{font-size:.8125rem;font-weight:500;opacity:.85}
   .bubbles{align-items:stretch;gap:.5rem}
-  .b{max-width:none;width:100%;min-height:3rem;border-radius:.875rem;padding:0 1rem;font-size:1rem;background:rgba(15,23,42,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,201,77,.3)}
+  .b{max-width:none;width:100%;min-height:3rem;border-radius:.875rem;padding:0 1rem;font-size:1rem;background:rgba(24,34,46,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 6px 18px -8px rgba(6,36,63,.45),inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,201,77,.3)}
   .b.last{border-bottom-left-radius:.875rem}
   .actions{grid-column:1;grid-row:4;margin-top:1rem}
   .actions > div{flex-direction:column;align-items:stretch;gap:.5rem}
@@ -492,7 +492,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 @keyframes flash{0%{opacity:.25;transform:scale(.85)}35%{opacity:1;transform:scale(1.25)}100%{opacity:1;transform:none}}
 html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-inner .copy > *{opacity:0}
 .hero-inner .copy,.hero-inner .copy > *{transition:opacity .2s var(--ease-out)}
-.b{border:0;font-family:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;gap:.6rem;max-width:none;width:100%;min-height:3rem;border-radius:.875rem;padding:0 1rem;font-size:1rem;white-space:nowrap;background:rgba(15,23,42,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,201,77,.3)}
+.b{border:0;font-family:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;gap:.6rem;max-width:none;width:100%;min-height:3rem;border-radius:.875rem;padding:0 1rem;font-size:1rem;white-space:nowrap;background:rgba(24,34,46,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 6px 18px -8px rgba(6,36,63,.45),inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,201,77,.3)}
 .b.last{border-bottom-left-radius:.875rem}
 .b::after{content:"›";margin-left:auto;padding-left:.4rem;opacity:.6;font-size:1.25em;line-height:1}
 @media (hover:hover) and (pointer:fine){.b.in:hover{filter:brightness(1.12)}}
@@ -825,7 +825,7 @@ function makeSprites(pal){
 function layout(){
   if (mobile()) { const st = document.getElementById('stage').getBoundingClientRect(), H0 = hero.getBoundingClientRect().height, top = st.top - hero.getBoundingClientRect().top;
     return { cx: .5, cy: (top + 128) / H0, w: 1.15, h: 190 / H0, peak: .5 }; }
-  return { cx: .69, cy: .44, w: .52, h: .46, peak: .66 };
+  return { cx: .69, cy: .38, w: .52, h: .46, peak: .66 };
 }
 function build(){
   rect = hero.getBoundingClientRect();
