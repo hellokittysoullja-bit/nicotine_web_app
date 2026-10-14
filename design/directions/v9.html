@@ -825,7 +825,7 @@ function makeSprites(pal){
 function layout(){
   if (mobile()) { const st = document.getElementById('stage').getBoundingClientRect(), H0 = hero.getBoundingClientRect().height, top = st.top - hero.getBoundingClientRect().top;
     return { cx: .5, cy: (top + 128) / H0, w: 1.15, h: 190 / H0, peak: .5 }; }
-  return { cx: .69, cy: .38, w: .52, h: .46, peak: .66 };
+  return { cx: .69, cy: .4, w: .52, h: .46, peak: .66 };
 }
 function build(){
   rect = hero.getBoundingClientRect();
@@ -856,11 +856,11 @@ function build(){
   const sxp = Math.min(W0 - sr * .9, px + sr * .3);
   const tower = puffs.filter(p => p.layer === 'main' && Math.abs(p.x - sxp) < sr * 1.2);
   const towerTop = tower.length ? Math.min(...tower.map(p => p.y - p.rad)) : topY;
-  const sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .2);
+  const sy = Math.max((mobile() ? 92 : 100) + sr, towerTop + sr * .2) + (mobile() ? 0 : sr * .6);
   sunEl.style.setProperty('--sun-hide', Math.max(0, (towerTop + sr * .7 - sy) / (sr * 2) * 100 * .1) + "%");
   sunEl.style.setProperty('--sx', sxp + 'px'); sunEl.style.setProperty('--sy', sy + 'px');
   geo = { W0, H0, H, base, R, sx: sxp, sy, sr, glow: css('--smog-glow') };
-  if (!smogFrac && !freed) smogFrac = mobile() ? .12 : .08; // на телефоне Искра выглядывает в просвет, иначе её лицо скрыто тучей
+  if (!smogFrac && !freed) smogFrac = mobile() ? .12 : 0; // на телефоне Искра выглядывает в просвет, иначе её лицо скрыто тучей
   if (smogFrac) dissolveTo(smogFrac, true);
   draw(); noteRects();
 }
