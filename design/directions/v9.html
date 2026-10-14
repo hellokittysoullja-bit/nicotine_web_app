@@ -399,6 +399,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .prog i{height:.25rem;border-radius:1rem;background:var(--rule);transition:background-color .2s ease}
 .prog i.on{background:var(--act)}
 .pl-body{padding:1rem 1.75rem 0;overflow:auto;overscroll-behavior:contain}
+.pl-body.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 2rem),transparent);mask-image:linear-gradient(#000 calc(100% - 2rem),transparent)}
 .step{border:0;min-width:0}
 .step[hidden]{display:none}
 .step.enter{animation:stepin .18s var(--ease-out) both}
@@ -595,7 +596,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 
     <div class="copy">
       <h1 id="h"><span class="before-h">Выйди из&nbsp;<em>тумана</em></span><span class="after-h" aria-hidden="true">Небо снова <em>твоё</em></span></h1>
-      <p class="lead"><span class="before-l">Сигареты, вейп, пакетики. Каждая тяга — голос смога: «одну, и&nbsp;станет спокойнее». Мы поможем не&nbsp;слушать.</span><span class="after-l" aria-hidden="true">Хорошо. Дальше — план: он про тебя, а&nbsp;не&nbsp;про всех.</span></p>
+      <p class="lead"><span class="before-l">Сигареты, вейп, пакетики. Каждая тяга — голос смога: «одну, и&nbsp;станет спокойнее». Мы помогаем не&nbsp;поддаться.</span><span class="after-l" aria-hidden="true">Хорошо. Дальше — план: он про тебя, а&nbsp;не&nbsp;про всех.</span></p>
       <div class="actions">
         <div class="before-a">
           <button class="btn btn-act" id="break">Рассеять смог <span aria-hidden="true">→</span></button>
@@ -1158,6 +1159,8 @@ function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; 
   if (reduce) return fin(); const te = e => { if (e.target === plan && (e.propertyName === 'transform' || e.propertyName === 'opacity')) { plan.removeEventListener('transitionend', te); fin(); } }; plan.addEventListener('transitionend', te); setTimeout(fin, (parseFloat(plan.style.transitionDuration) * 1000 || (mobile() ? 280 : 210)) + 50); }
 document.getElementById('pl-close').addEventListener('click', closePlan);
 // Лист на телефоне смахивается вниз, как в iOS: тянется за пальцем (вверх — с сопротивлением), решение по скорости отпускания
+{ const pb = plan.querySelector('.pl-body'), more = () => pb.classList.toggle('more', pb.scrollHeight - pb.scrollTop - pb.clientHeight > 8);
+  pb.addEventListener('scroll', more, { passive: true }); new MutationObserver(() => requestAnimationFrame(more)).observe(pb, { subtree: true, attributes: true, childList: true }); addEventListener('resize', more); }
 { const top = document.getElementById('pl-top'), body = plan.querySelector('.pl-body'); let y0 = 0, dy = 0, on = false, armed = false, samples = [];
   const setY = v => { plan.style.setProperty('--dy', `translateY(${v}px)`); plan.style.transform = `translateY(${v}px)`; if (reduce) plan.style.opacity = String(1 - Math.max(0, v) / plan.offsetHeight); };
   const start = (e, fromBody) => { if (!mobile() || e.target.closest('button')) return; if (fromBody && body.scrollTop > 0) return;
