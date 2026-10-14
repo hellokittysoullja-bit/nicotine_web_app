@@ -147,7 +147,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 
 /* Переписка с Ником */
 .stage{grid-column:2;grid-row:1;margin-top:-4vh}
-.thread{width:100%;max-width:25rem}
+.thread{width:100%;max-width:22rem}
 .who{display:flex;align-items:center;gap:.6rem;margin:0 0 .7rem .1rem;color:var(--ink);opacity:0;transition:opacity .2s var(--ease-out)}
 .who.in{opacity:1}
 .av{width:2.25rem;height:2.25rem;border-radius:50%;background:var(--nick);color:var(--nick-text);display:grid;place-items:center;font:600 .875rem/1 var(--f-body);box-shadow:0 0 0 2px rgba(255,255,255,.55)}
@@ -156,7 +156,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .src2,.strip-n{opacity:1}
 .hero-note{margin-top:1.4rem;max-width:26rem;font-size:.9375rem;line-height:1.45;color:var(--ink);opacity:.85;text-wrap:pretty}
 .who .st{font-size:.9375rem;opacity:1;color:var(--ink)}
-.bubbles{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.22rem}
+.bubbles{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:.5rem}
 .b{max-width:min(100%,17.5rem);text-wrap:pretty;background:var(--nick);color:var(--nick-text);padding:.6rem .95rem .64rem;font-size:1.0625rem;line-height:1.35;
   border-radius:1.25rem;box-shadow:inset 0 0 0 1px var(--nick-ring),0 6px 18px rgba(0,0,0,.25);
   opacity:0;transform:translateY(.4rem) scale(.97);transform-origin:left bottom;
@@ -222,6 +222,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .how-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem}
 .how-side{position:static}
 .talk{display:flex;flex-direction:column;gap:.6rem;padding-top:.5rem}
+@media (min-width:861px){.how-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(3rem,7vw,7rem);align-items:start}.how-side{position:sticky;top:6rem}.talk p{max-width:100%}.talk .t-me{margin-left:12%}}
 @media (max-width:860px){.how-grid{grid-template-columns:minmax(0,1fr)}.how-side{position:static}}
 .talk p{max-width:min(34rem,88%);padding:.8rem 1.15rem;font-size:clamp(1.0625rem,1.4vw,1.25rem);line-height:1.4;text-wrap:pretty}
 .t-nick{background:var(--nick);color:var(--nick-text);border-radius:1.4rem 1.4rem 1.4rem .4rem;width:fit-content;box-shadow:inset 0 0 0 1px var(--nick-ring)}
@@ -307,7 +308,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 /* ── Цена ── */
 .price{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
 .amount{margin-top:1.5rem;font:500 clamp(3.25rem,6vw,5rem)/1 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums}
-.amount small{font-size:.24em;letter-spacing:0;color:var(--muted);margin-left:.25em}
+.amount small{font-size:max(1rem,.3em);letter-spacing:0;color:var(--muted);margin-left:.25em}
 .gets{list-style:none;display:grid;gap:0}
 .gets li{padding:1rem 0;border-bottom:1px solid var(--rule);display:grid;gap:.15rem}
 .gets li:first-child{border-top:1px solid var(--rule)}
@@ -337,7 +338,10 @@ html[data-sky="clear"] footer .brand{color:var(--ink)}
 .final .nick-say{justify-content:center}
 .final .h2{font-size:clamp(2.5rem,5.4vw,4.75rem);max-width:15ch}
 .final .btn{margin-top:2.5rem}
-.final-note{margin-top:1rem;font-size:.9375rem;opacity:.9}
+.final-note{margin-top:1rem;font-size:1rem;opacity:.9}
+.final-sun{position:absolute;right:clamp(2rem,12vw,12rem);top:50%;translate:0 -50%;width:clamp(9rem,17vw,15rem);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 30%,#FFE9A8 0,#FFD25A 38%,#FFB93E 72%,#F5A52C 100%);box-shadow:0 0 5rem 1.2rem rgba(255,201,77,.45),inset 0 -1.2rem 2rem rgba(240,150,30,.35);pointer-events:none}
+.final-sun svg{width:100%;height:100%;display:block}
+@media (max-width:860px){.final-sun{position:static;translate:none;margin:0 0 1.75rem;width:7.5rem;order:-1}}
 
 footer{color:var(--muted);padding-block:2.5rem calc(2.5rem + env(safe-area-inset-bottom));font-size:.875rem;background:var(--sky-wash)}
 footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:1rem 3rem;align-items:start}
@@ -456,7 +460,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 @keyframes breathe{0%{scale:1}28%{scale:1.03}39%{scale:1.05}100%{scale:1}}
 .eyes{position:absolute;inset:0;pointer-events:none;translate:var(--ex,0px) var(--ey,0px);transition:translate .14s var(--ease-out)}
 .face{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.eye{transform-box:fill-box;transform-origin:center;scale:calc(var(--wide,1) * var(--sz,1));transition:scale .2s var(--ease-out),rotate .2s var(--ease-out);animation:blink 5.2s infinite}
+.eye{transform-box:fill-box;transform-origin:center;scale:calc(var(--wide,1) * var(--sz,1.2));transition:scale .2s var(--ease-out),rotate .2s var(--ease-out);animation:blink 5.2s infinite}
 .eye .ball,.eye .cl1,.eye .cl2{transition:opacity .15s ease-out}
 .eye .arc{opacity:0;transition:opacity .15s ease-out}
 @keyframes blink{0%,92%,100%{transform:scaleY(var(--lid,1))}95%{transform:scaleY(.1)}}
@@ -473,11 +477,12 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 @keyframes flash{0%{opacity:.25;transform:scale(.85)}35%{opacity:1;transform:scale(1.25)}100%{opacity:1;transform:none}}
 html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-inner .copy > *{opacity:0}
 .hero-inner .copy,.hero-inner .copy > *{transition:opacity .2s var(--ease-out)}
-.b{border:0;font-family:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;gap:.6rem}
+.b{border:0;font-family:inherit;text-align:left;cursor:pointer;display:flex;align-items:center;gap:.6rem;max-width:none;width:100%;min-height:3rem;border-radius:.875rem;padding:0 1rem;font-size:1rem;white-space:nowrap;background:rgba(15,23,42,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,201,77,.3)}
+.b.last{border-bottom-left-radius:.875rem}
 .b::after{content:"›";margin-left:auto;padding-left:.4rem;opacity:.6;font-size:1.25em;line-height:1}
 @media (hover:hover) and (pointer:fine){.b.in:hover{filter:brightness(1.12)}}
 .b.in:active{transform:scale(.985)}
-.ask{font-weight:600;font-size:.9375rem;color:var(--ink)}
+.ask{font-weight:600;font-size:1rem;color:var(--ink)}
 .who .st{display:none}
 .hero-note{margin-top:1.1rem;font-size:.9375rem;color:var(--ink);opacity:.85}
 .trg{margin-top:.5rem;font-size:.9375rem;color:var(--muted)}
@@ -568,7 +573,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
           </span>
         </div>
         <div class="after-a" aria-hidden="true">
-          <button class="btn btn-act" id="plan-open" tabindex="-1">Составить план — 2&nbsp;минуты</button>
+          <button class="btn btn-act" id="plan-open" tabindex="-1">Составить план</button>
         </div>
       </div>
       <p class="hero-note">Разбор сразу на&nbsp;экране.</p>
@@ -583,7 +588,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
     <div class="how-grid"><div class="how-side rv"><h2 class="h2 how-h" id="how-h">Как это работает</h2><p class="sub">Смог будет шептать. Вот что ты ему ответишь — и&nbsp;чем приложение в&nbsp;этом поможет.</p></div>
     <div class="talk" aria-label="Переписка: как это работает">
       <p class="t-nick rv">ну и&nbsp;что ты будешь делать без меня?</p>
-      <p class="t-me rv"><b>Сначала — план.</b> Две минуты вопросов, и&nbsp;у&nbsp;меня есть день старта и&nbsp;первые две недели по шагам.</p>
+      <p class="t-me rv"><b>Сначала — план.</b> Несколько вопросов, и&nbsp;у&nbsp;меня есть день старта и&nbsp;первые две недели по шагам.</p>
       <p class="t-nick rv">а&nbsp;когда тебя накроет?</p>
       <p class="t-me rv"><b>Открою «Волну».</b> Подышу и&nbsp;посмотрю, как тяга поднимается и&nbsp;спадает. Обычно это несколько минут.</p>
       <p class="t-nick rv">и&nbsp;ради чего всё это?</p>
@@ -595,7 +600,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 <section class="calm section gutter" aria-labelledby="w-h" data-sky="pale">
   <div class="wrap">
     <div class="wave-head rv">
-      <div><p class="try">Попробуй прямо здесь — это часть приложения</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;уходит</h2></div>
+      <div><p class="try">Попробуй прямо здесь</p><h2 class="h2" id="w-h">Тяга накатывает и&nbsp;уходит</h2></div>
       <p class="sub">Когда смог шепчет, мы не&nbsp;спорим с&nbsp;ним. Переждать проще, чем кажется: тяга обычно уходит за несколько минут.</p>
     </div>
     <figure class="wave-fig rv" aria-labelledby="w-h">
@@ -639,9 +644,9 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
     <h2 class="h2 rv" id="b-h">Мозг перестаёт его ждать</h2>
     <div class="brain-line rv" id="brain-line" aria-hidden="true"><svg id="brain-svg"></svg><span class="base-l">уровень без никотина</span></div>
     <ol class="weeks">
-      <li class="rv"><b>1-я неделя</b><p>Пик ломки. Раздражение и&nbsp;тяга — это голодные рецепторы, а&nbsp;не&nbsp;ты.</p></li>
+      <li class="rv"><b>1-я неделя</b><p>Самая трудная неделя. Раздражение и&nbsp;тяга — это голодные рецепторы, а&nbsp;не&nbsp;ты.</p></li>
       <li class="rv"><b>4-я неделя</b><p>Физической тяги меньше. Давят привычки: кофе, перерыв, дорога домой.</p></li>
-      <li class="rv"><b>6–12 недель</b><p>В&nbsp;среднем рецепторов становится столько&nbsp;же, сколько у&nbsp;некурящих. Теперь туман ушёл и&nbsp;из&nbsp;головы.</p></li>
+      <li class="rv"><b>6–12 недель</b><p>В&nbsp;среднем рецепторов становится столько&nbsp;же, сколько у&nbsp;некурящих. Тяга обычно уже заметно слабее.</p></li>
     </ol>
     <p class="src rv">Источник: Cosgrove и&nbsp;соавторы, 2009, Archives of&nbsp;General Psychiatry (ПЭТ). Избыток никотиновых рецепторов держится около четырёх недель и&nbsp;к&nbsp;6–12 неделям приходит к&nbsp;уровню некурящих. Форма линии между точками — иллюстрация.</p>
   </div>
@@ -664,7 +669,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 <section class="section gutter" aria-labelledby="p-h" data-sky="pale">
   <div class="wrap price">
     <div class="rv">
-      <h2 class="h2" id="p-h">Один тариф, без сюрпризов</h2>
+      <h2 class="h2" id="p-h">Одна цена, и она не меняется</h2>
       <p class="amount num">349 ₽<small>в месяц</small></p>
       <p class="terms">Подписка продлевается сама. За два дня до списания напомним, отменить можно в&nbsp;одно нажатие. Без таймеров и&nbsp;«последнего шанса»: цена одна и&nbsp;не&nbsp;сгорает.</p>
     </div>
@@ -673,10 +678,10 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
         <li><b>План выхода</b><span>День старта и&nbsp;первые две недели по шагам.</span></li>
         <li><b>«Волна» в&nbsp;одно нажатие</b><span>На минуты, когда тянет сильнее всего.</span></li>
         <li><b>Мозг по неделям</b><span>Что сейчас происходит и&nbsp;почему так тяжело.</span></li>
-        <li><b>Копилка</b><span>Сколько денег уже осталось у&nbsp;тебя.</span></li>
-        <li><b>Страховка серии</b><span>Срыв не обнуляет счётчик, если разобрать причину. И&nbsp;план на следующий раз.</span></li>
+        <li><b>Копилка</b><span>Сколько денег ты не потратил на никотин.</span></li>
+        <li><b>Серия без обнуления</b><span>Срыв не обнуляет счётчик, если разобрать причину. И&nbsp;план на следующий раз.</span></li>
       </ul>
-      <button class="btn btn-act" id="start">Составить план — 2&nbsp;минуты</button>
+      <button class="btn btn-act" id="start">Составить план</button>
     </div>
   </div>
 </section>
@@ -688,19 +693,21 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
       <p class="privacy">В&nbsp;приложении ответы опроса и&nbsp;дневник срывов хранятся только на&nbsp;твоём устройстве и&nbsp;не&nbsp;уходят на наш сервер. Оплату обрабатывает платёжный сервис — подробнее в&nbsp;«Конфиденциальности».</p>
     </div>
     <div class="faq rv">
-      <details open><summary>Уже были попытки бросить. Почему сейчас получится?<i aria-hidden="true"></i></summary><p>Попыток бывает много, и&nbsp;это нормально. Здесь срыв не&nbsp;обнуляет счётчик, а&nbsp;помогает понять, что именно сорвало, — и&nbsp;подготовиться к&nbsp;этому моменту в&nbsp;следующий раз.</p></details>
+            <details open><summary>Как отменить подписку?<i aria-hidden="true"></i></summary><p>В&nbsp;настройках, одним нажатием, без вопросов «а&nbsp;может, останешься». За два дня до каждого списания пришлём напоминание.</p></details>
+      <details><summary>Уже были попытки бросить. Почему сейчас получится?<i aria-hidden="true"></i></summary><p>Попыток бывает много, и&nbsp;это нормально. Здесь срыв не&nbsp;обнуляет счётчик, а&nbsp;помогает понять, что именно сорвало, — и&nbsp;подготовиться к&nbsp;этому моменту в&nbsp;следующий раз.</p></details>
       <details><summary>Подходит для вейпа и&nbsp;пакетиков?<i aria-hidden="true"></i></summary><p>Да. Смог один и&nbsp;тот&nbsp;же — никотин. Неважно, в&nbsp;чём он приходит.</p></details>
       <details><summary>Можно вместе с&nbsp;пластырем или жвачкой?<i aria-hidden="true"></i></summary><p>Да. Никотинозаместительную терапию обсуди с&nbsp;врачом: приложение её не&nbsp;заменяет, но&nbsp;помогает с&nbsp;привычками и&nbsp;тягой.</p></details>
       <details><summary>Это лечение?<i aria-hidden="true"></i></summary><p>Нет. Lumen помогает бросить и&nbsp;не&nbsp;заменяет врача.</p></details>
-      <details><summary>Как отменить подписку?<i aria-hidden="true"></i></summary><p>В&nbsp;настройках, одним нажатием, без вопросов «а&nbsp;может, останешься». За два дня до каждого списания пришлём напоминание.</p></details>
     </div>
   </div>
 </section>
 
 <section class="final gutter" aria-labelledby="f-h" data-sky="clear">
   <div class="wrap">
+    <div class="final-sun" aria-hidden="true"><svg viewBox="0 0 120 120"><g fill="#1E1815"><rect x="34" y="55" width="16" height="22" rx="8"/><rect x="70" y="55" width="16" height="22" rx="8"/></g><g fill="#fff"><circle cx="39" cy="61" r="3.2"/><circle cx="75" cy="61" r="3.2"/><circle cx="44" cy="70" r="1.5"/><circle cx="80" cy="70" r="1.5"/></g></svg></div>
+
     <h2 class="h2 rv" id="f-h">Смог зашепчет снова. Ты&nbsp;можешь <em>не&nbsp;слушать</em>.</h2>
-    <button class="btn btn-act rv" id="again">Составить план — 2&nbsp;минуты</button>
+    <button class="btn btn-act rv" id="again">Составить план</button>
     <p class="final-note rv">Сначала опрос и&nbsp;план. Оплата — только после.</p>
   </div>
 </section>
