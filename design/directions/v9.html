@@ -183,9 +183,10 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 }
 
 /* ── Секции ── */
-.section{padding-block:clamp(3.5rem,6vw,5.5rem)}
-.section.airy{padding-block:clamp(3.5rem,6vw,5.5rem)}
-.section.tight{padding-block:clamp(3.5rem,6vw,5.5rem)}
+:root{--sy:clamp(4rem,7vw,6.5rem)}
+.section{padding-block:var(--sy)}
+.section.airy{padding-block:var(--sy)}
+.section.tight{padding-block:var(--sy)}
 .airy .h2{font-size:clamp(2.5rem,5vw,4.5rem)}
 .eyebrow-n{display:none}
 .h2{font-family:var(--f-display);font-weight:500;font-size:clamp(2.5rem,4.6vw,4rem);line-height:1.02;letter-spacing:-.022em;text-wrap:balance}
@@ -239,7 +240,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .steps p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
 
 /* ── Волна ── */
-.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low));padding-block:clamp(5rem,8vw,7rem)}
+.calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low));padding-block:var(--sy)}
 .calm .sub{color:var(--calm-muted)}.calm .src{color:color-mix(in srgb,var(--calm-text) 80%,transparent);font-size:1rem}
 .wave-head{display:grid;gap:1.25rem}.wave-head .sub{max-width:34rem}
 .try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
