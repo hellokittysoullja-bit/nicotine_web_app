@@ -300,7 +300,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .calc label{display:block;font-weight:500;color:var(--muted)}
 .calc output{display:block;font:500 clamp(1.75rem,2.6vw,2.25rem)/1.1 var(--f-display);letter-spacing:-.015em;color:var(--text);margin:.35rem 0 .25rem}
 .rng{display:flex;justify-content:space-between;font-size:.875rem;color:var(--muted);margin-top:-.3rem}
-.year{font:500 clamp(4rem,10vw,8.5rem)/.92 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums;margin-top:clamp(2rem,4vw,3rem);white-space:nowrap}
+.year{font:500 clamp(4rem,8vw,7rem)/.92 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums;margin-top:clamp(2rem,4vw,3rem);white-space:nowrap}
 .year .per{font-size:.4em;letter-spacing:-.01em;margin-left:.15em;color:var(--muted)}
 .year-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22rem);gap:1rem clamp(2rem,5vw,5rem);align-items:end}
 .yl{list-style:none;display:grid;border-top:1px solid var(--rule)}
@@ -311,6 +311,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 @media (max-width:1100px){.year-row{grid-template-columns:minmax(0,1fr)}}
 .year-note{font-size:clamp(1.125rem,1.6vw,1.375rem);margin:.9rem 0 0;max-width:40rem;text-wrap:pretty}
 .bridge{margin-top:clamp(2.5rem,5vw,4rem);padding-top:1.5rem;border-top:1px solid var(--rule);font:500 clamp(1.375rem,2.1vw,1.75rem)/1.3 var(--f-display);letter-spacing:-.01em;max-width:36rem;text-wrap:pretty}
+.cta-inline{grid-column:1/-1;justify-self:start;margin-top:1rem;font-size:1.0625rem;font-weight:600;color:var(--act);min-height:2.75rem;cursor:pointer;background:none;border:0;padding:0}
 .bridge em{font-style:normal;color:var(--muted)}
 @media (min-width:1101px){
   .money{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-areas:"h h" "c l" "y l" "b b";column-gap:clamp(3rem,7vw,7rem);align-items:start}
@@ -321,7 +322,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 
 
 /* ── Цена ── */
-section[aria-labelledby="p-h"]{background:color-mix(in srgb,var(--act) 7%,transparent);border-radius:2rem;margin-inline:clamp(.5rem,2vw,1.5rem)}
+section[aria-labelledby="p-h"]{background:color-mix(in srgb,var(--act) 7%,transparent);border-radius:2rem;max-width:calc(76rem + 2 * clamp(1.25rem,4vw,3rem));margin-inline:auto}
 .price{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
 .amount{margin-top:1.5rem;font:500 clamp(3.25rem,6vw,5rem)/1 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums}
 .amount small{font-size:max(1rem,.3em);letter-spacing:0;color:var(--muted);margin-left:.25em}
@@ -357,13 +358,13 @@ html[data-sky="clear"] footer .brand{color:var(--ink)}
 .final .h2{font-size:clamp(2.5rem,5.4vw,4.75rem);max-width:15ch}
 .final .btn{margin-top:2.5rem}
 .final-note{margin-top:1rem;font-size:1rem;opacity:.9}
-.final-sun{position:absolute;right:clamp(2rem,12vw,12rem);top:50%;translate:0 -50%;width:clamp(9rem,21vw,19rem);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 30%,#FFE9A8 0,#FFD25A 38%,#FFB93E 72%,#F5A52C 100%);box-shadow:0 0 5rem 1.2rem rgba(255,201,77,.45),inset 0 -1.2rem 2rem rgba(240,150,30,.35);pointer-events:none}
+.final-sun{position:absolute;right:clamp(2rem,12vw,12rem);top:50%;translate:0 -50%;width:clamp(9rem,17vw,15rem);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 30%,#FFE9A8 0,#FFD25A 38%,#FFB93E 72%,#F5A52C 100%);box-shadow:0 0 5rem 1.2rem rgba(255,201,77,.45),inset 0 -1.2rem 2rem rgba(240,150,30,.35);pointer-events:none}
 .final-sun svg{width:100%;height:100%;display:block}
 @media (max-width:860px){.final-sun{position:static;translate:none;margin:0 0 1.75rem;width:7.5rem;order:-1}}
 
 footer{color:var(--muted);padding-block:2.5rem calc(2.5rem + env(safe-area-inset-bottom));font-size:.9375rem;border-top:1px solid var(--rule);background:var(--sky-wash)}
 footer .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr) auto;gap:1rem 3rem;align-items:start}
-footer p{max-width:34rem}
+footer p{max-width:40rem}
 footer nav{display:flex;gap:.25rem 1rem;flex-wrap:wrap;margin-top:-.75rem}
 footer a{color:inherit;display:inline-flex;align-items:center;min-height:2.75rem}
 .link{text-underline-offset:.2em;text-decoration-thickness:1px}
@@ -437,8 +438,8 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .hero{min-height:100dvh}
   .hero-inner{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;align-content:start;column-gap:0;min-height:100dvh;padding-top:calc(4.75rem + env(safe-area-inset-top));padding-bottom:calc(1.25rem + env(safe-area-inset-bottom));text-align:center}
   .copy{display:contents}
-  .hero h1{grid-column:1;grid-row:1;font-size:clamp(2.4rem,10.5vw,3.1rem);line-height:1.02}
-  .lead{grid-column:1;grid-row:2;margin:.6rem auto 0;max-width:32ch;font-size:1rem;line-height:1.4;text-align:center}
+  .hero h1{grid-column:1;grid-row:1;font-size:clamp(2.75rem,12.4vw,3.4rem);line-height:1.02}
+  .lead{grid-column:1;grid-row:2;margin:.9rem auto 0;max-width:32ch;font-size:1rem;line-height:1.4;text-align:center}
   .stage{grid-column:1;grid-row:3;margin-top:0;padding-top:14.6rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:0}
   .thread{max-width:none}
   .who{justify-content:center;margin:0 0 .5rem}
@@ -652,7 +653,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
       <div class="strip-n" id="strip-n" aria-hidden="true"></div>
     </div>
     <div class="slip-row">
-      <p class="tally rv">23 дня из 24 без никотина<span>Серый день 17-го никуда не&nbsp;делся. Остальные 23 — тоже. Это пример, не твои данные.</span></p>
+      <p class="tally rv">23 дня из 24 без никотина<span>День 17 остался серым — и остаётся в&nbsp;истории. Остальные 23 тоже твои. Это пример, не твои данные.</span></p>
       <div class="rv">
         <div class="exchange" aria-label="Переписка после срыва">
           <p class="x-nick">ну всё, ты снова со мной 🙂</p>
@@ -689,6 +690,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
     <div class="year-row"><p class="year rv"><span class="num" id="year">91 250 ₽</span><span class="per">в год</span></p>
     <ul class="yl rv" id="year-note"></ul></div>
     <p class="bridge rv" id="bridge"></p>
+    <button class="link cta-inline" id="m-start" type="button">Составить план →</button>
   </div>
 </section>
 
@@ -1166,6 +1168,7 @@ plan.addEventListener('click', e => { if (downOut && outside(e)) closePlan(); do
 document.getElementById('plan-open').addEventListener('click', e => begin('button', e.currentTarget));
 document.getElementById('top-plan').addEventListener('click', e => begin('button', e.currentTarget));
 syncOpeners();
+document.getElementById('m-start').addEventListener('click', e => begin('button', e.currentTarget));
 document.getElementById('start').addEventListener('click', e => begin('button', e.currentTarget));
 document.getElementById('again').addEventListener('click', e => begin('button', e.currentTarget));
 

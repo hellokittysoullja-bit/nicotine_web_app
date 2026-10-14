@@ -21,7 +21,7 @@ const info = p => p.evaluate(()=>({dlg:document.getElementById('plan').open, ste
 { const ctx = await b.newContext({ viewport:{width:390,height:844}, hasTouch:true, isMobile:true, deviceScaleFactor:2 }); const p = await ctx.newPage(); p.on('pageerror',e=>errs.push(e.message));
   await p.goto(url); await p.waitForTimeout(5000); const c = await ctx.newCDPSession(p);
   const tp=(type,x,y)=>c.send('Input.dispatchTouchEvent',{type,touchPoints:type==='touchEnd'?[]:[{x,y,radiusX:12,radiusY:12}]});
-  await tp('touchStart',60,330); for(let i=1;i<=14;i++){await tp('touchMove',60+i*22,330-i*3); await p.waitForTimeout(16);} await tp('touchEnd'); await p.waitForTimeout(900);
+  await tp('touchStart',60,410); for(let i=1;i<=14;i++){await tp('touchMove',60+i*22,410-i*3); await p.waitForTimeout(16);} await tp('touchEnd'); await p.waitForTimeout(900);
   console.log('mobile swipe:', JSON.stringify(await info(p))); await p.screenshot({path:'v9-mob-s0.png'});
 }
 console.log('errors:', errs.length?errs:'none'); await b.close();
