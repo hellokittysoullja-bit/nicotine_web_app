@@ -241,7 +241,9 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 
 /* ── Волна ── */
 .calm{color:var(--calm-text);position:relative;background:linear-gradient(in oklab 180deg,var(--storm-top),var(--storm-low));padding-block:var(--sy)}
-.calm .sub{color:var(--calm-muted)}.calm .src{color:color-mix(in srgb,var(--calm-text) 90%,transparent);font-size:1rem}
+.calm .sub{color:var(--calm-muted)}.src-more{display:inline}
+@media (max-width:860px){.src-more{display:none}}
+.calm .src{color:color-mix(in srgb,var(--calm-text) 90%,transparent);font-size:1rem}
 .wave-head{display:grid;gap:1.25rem}.wave-head .sub{max-width:34rem}
 .try{display:inline-flex;align-items:center;gap:.5rem;font-size:.9375rem;font-weight:500;color:var(--calm-muted);margin-bottom:1rem}
 .try::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--calm-line)}
@@ -643,7 +645,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
       <span class="wave-time" id="w-time" aria-hidden="true">0:00</span>
       <span class="wave-cue idle" id="w-cue" aria-live="polite">Нажми и&nbsp;смотри, как волна спадает</span>
     </div>
-    <p class="src" id="wave-src">Источник: NHS, «Quit smoking: dealing with cravings». Дыхание — физиологический вздох (Balban и&nbsp;др., Cell Reports Medicine, 2023), длину фаз выбрали мы. Шкала условная: в демо четыре минуты идут за восемнадцать секунд.</p>
+    <p class="src" id="wave-src">Источник: NHS, «Quit smoking: dealing with cravings». <span class="src-more">Дыхание — физиологический вздох (Balban и&nbsp;др., Cell Reports Medicine, 2023), длину фаз выбрали мы. </span>Шкала условная: в демо четыре минуты идут за восемнадцать секунд.</p>
   </div>
 </section>
 
