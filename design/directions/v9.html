@@ -831,7 +831,7 @@ function makeSprites(pal){
     x.globalCompositeOperation = 'source-atop';
     for (const [u, v, q] of lumps) { const lx = (u + q * .35) * S, ly = (v - q * .45) * S, gr = x.createRadialGradient(lx, ly, 0, lx, ly, q * S * .95);
       gr.addColorStop(0, pal.lit + 'e0'); gr.addColorStop(.6, pal.lit + '30'); gr.addColorStop(1, pal.lit + '00'); x.fillStyle = gr; x.fillRect(0, 0, S, S); }
-    const sh = x.createLinearGradient(0, S * .35, 0, S * .86); sh.addColorStop(0, pal.shade + '00'); sh.addColorStop(1, pal.shade + 'd0'); x.fillStyle = sh; x.fillRect(0, 0, S, S);
+    const sh = x.createLinearGradient(0, S * .35, 0, S * .86); sh.addColorStop(0, pal.shade + '00'); sh.addColorStop(1, pal.shade + 'f0'); x.fillStyle = sh; x.fillRect(0, 0, S, S);
     return c;
   });
 }
@@ -890,10 +890,10 @@ function draw(){
   const v = og.createLinearGradient(0, base - H, 0, base + R * .06); v.addColorStop(0, 'rgba(30,34,38,0)'); v.addColorStop(1, 'rgba(24,28,32,.5)'); og.fillStyle = v; og.fillRect(0, 0, W0, H0);
   const rg = og.createRadialGradient(sx, sy, sr * .5, sx, sy, sr * 2.6); rg.addColorStop(0, `rgba(${glow},.55)`); rg.addColorStop(.45, `rgba(${glow},.14)`); rg.addColorStop(1, `rgba(${glow},0)`); og.fillStyle = rg; og.fillRect(0, 0, W0, H0);
   og.globalCompositeOperation = 'destination-out';
-  const fk = mobile() ? .24 : .09, fd = og.createLinearGradient(0, base - R * fk, 0, base + R * .14); fd.addColorStop(0, 'rgba(0,0,0,0)'); fd.addColorStop(.6, 'rgba(0,0,0,.55)'); fd.addColorStop(1, 'rgba(0,0,0,1)'); og.fillStyle = fd; og.fillRect(0, base - R * fk, W0, H0);
+  const fk = mobile() ? .24 : .09, fd = og.createLinearGradient(0, base - R * fk, 0, base + R * .14); fd.addColorStop(0, 'rgba(0,0,0,0)'); fd.addColorStop(.6, 'rgba(0,0,0,.4)'); fd.addColorStop(1, 'rgba(0,0,0,1)'); og.fillStyle = fd; og.fillRect(0, base - R * fk, W0, H0);
   // Неровный низ: мягкие выемки разной глубины, иначе граница читается ровной линией на всю ширину
   let sq = 7; const sr2 = () => (sq = sq * 16807 % 2147483647) / 2147483647;
-  for (let ex = -R * .1; ex < W0 + R * .2; ex += R * (.12 + sr2() * .16)) { const er = R * (.1 + sr2() * .14), ey = base + R * .02 - sr2() * R * .1, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.85)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
+  for (let ex = -R * .1; ex < W0 + R * .2; ex += R * (.12 + sr2() * .16)) { const er = R * (.1 + sr2() * .14), ey = base + R * .07 - sr2() * R * .05, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.85)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
   if (mobile()) for (let ex = R * .03; ex < W0 + R * .2; ex += R * (.1 + sr2() * .14)) { const er = R * (.12 + sr2() * .14), ey = base - R * .06 - sr2() * R * .12, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.6)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
   g2.setTransform(1, 0, 0, 1, 0, 0); g2.clearRect(0, 0, cv.width, cv.height); g2.drawImage(off, 0, 0);
   // Серебряная кайма: край облака со стороны солнца — облако минус то же облако, сдвинутое от солнца
