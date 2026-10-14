@@ -260,7 +260,8 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .slip-h{max-width:16ch}
 .strip{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));height:clamp(9rem,16vw,12rem);gap:2px;border-radius:.75rem;overflow:hidden;margin-top:clamp(2.5rem,5vw,4rem);}
 .strip i{position:relative;background:color-mix(in oklab,var(--sky-top) calc(var(--k) * 100%),var(--sky-low))}
-.strip i.miss{background:var(--nick)}
+.strip i.miss{background:#6C7883}
+.strip i:nth-child(24)::after{content:"";position:absolute;left:50%;top:.55rem;width:.6rem;height:.6rem;margin-left:-.3rem;border-radius:50%;background:#FFC94D;box-shadow:0 0 .8rem .15rem rgba(255,201,77,.7)}
 .strip i.next{background:color-mix(in oklab,var(--sky-mid) 10%,transparent)}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .strip i.next{background:#1A2A4A;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}:root:not([data-theme=light]) .strip i.miss{background:#5A636B}}
 :root[data-theme=dark] .strip i.next{background:#1A2A4A;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}:root[data-theme=dark] .strip i.miss{background:#5A636B}
@@ -348,12 +349,12 @@ html[data-sky="clear"] footer .brand{color:var(--ink)}
 .final .h2{font-size:clamp(2.5rem,5.4vw,4.75rem);max-width:15ch}
 .final .btn{margin-top:2.5rem}
 .final-note{margin-top:1rem;font-size:1rem;opacity:.9}
-.final-sun{position:absolute;right:clamp(2rem,12vw,12rem);top:50%;translate:0 -50%;width:clamp(9rem,17vw,15rem);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 30%,#FFE9A8 0,#FFD25A 38%,#FFB93E 72%,#F5A52C 100%);box-shadow:0 0 5rem 1.2rem rgba(255,201,77,.45),inset 0 -1.2rem 2rem rgba(240,150,30,.35);pointer-events:none}
+.final-sun{position:absolute;right:clamp(2rem,12vw,12rem);top:50%;translate:0 -50%;width:clamp(9rem,21vw,19rem);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 30%,#FFE9A8 0,#FFD25A 38%,#FFB93E 72%,#F5A52C 100%);box-shadow:0 0 5rem 1.2rem rgba(255,201,77,.45),inset 0 -1.2rem 2rem rgba(240,150,30,.35);pointer-events:none}
 .final-sun svg{width:100%;height:100%;display:block}
 @media (max-width:860px){.final-sun{position:static;translate:none;margin:0 0 1.75rem;width:7.5rem;order:-1}}
 
-footer{color:var(--muted);padding-block:2.5rem calc(2.5rem + env(safe-area-inset-bottom));font-size:.875rem;background:var(--sky-wash)}
-footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:1rem 3rem;align-items:start}
+footer{color:var(--muted);padding-block:2.5rem calc(2.5rem + env(safe-area-inset-bottom));font-size:.9375rem;border-top:1px solid var(--rule);background:var(--sky-wash)}
+footer .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr) auto;gap:1rem 3rem;align-items:start}
 footer p{max-width:34rem}
 footer nav{display:flex;gap:.25rem 1rem;flex-wrap:wrap;margin-top:-.75rem}
 footer a{color:inherit;display:inline-flex;align-items:center;min-height:2.75rem}
@@ -1174,7 +1175,7 @@ function drawWave(p){
   wx.setTransform(WD, 0, 0, WD, 0, 0); wx.clearRect(0, 0, W, H);
   const pt = q => [q * W, base - curve(q) * (base - padY)];
   // весь путь волны — тихий контур, чтобы видно было, что впереди
-  if (p === 0) { const gi = wx.createLinearGradient(0, padY, 0, base); gi.addColorStop(0, 'rgba(108,201,209,.16)'); gi.addColorStop(1, 'rgba(108,201,209,0)'); wx.fillStyle = gi; wx.beginPath(); wx.moveTo(0, base); for (let q = 0; q <= 1.0001; q += .004) { const [x2, y2] = pt(q); wx.lineTo(x2, y2); } wx.lineTo(W, base); wx.closePath(); wx.fill(); }
+  if (p === 0) { const gi = wx.createLinearGradient(0, padY, 0, base); gi.addColorStop(0, 'rgba(108,201,209,.32)'); gi.addColorStop(1, 'rgba(108,201,209,0)'); wx.fillStyle = gi; wx.beginPath(); wx.moveTo(0, base); for (let q = 0; q <= 1.0001; q += .004) { const [x2, y2] = pt(q); wx.lineTo(x2, y2); } wx.lineTo(W, base); wx.closePath(); wx.fill(); }
   wx.strokeStyle = p > 0 ? 'rgba(230,238,238,.28)' : 'rgba(230,238,238,.6)'; wx.lineWidth = 2; wx.setLineDash([]); wx.lineCap = 'round'; wx.beginPath();
   for (let q = 0; q <= 1.0001; q += .004) { const [x, y] = pt(q); q === 0 ? wx.moveTo(x, y) : wx.lineTo(x, y); } wx.stroke(); wx.setLineDash([]);
   if (p > 0) {
