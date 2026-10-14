@@ -202,7 +202,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .nick-say.on{opacity:1;transform:none}
 .nick-say .av{width:1.9rem;height:1.9rem;font-size:.9375rem;box-shadow:none}
 .nick-say .msg{background:var(--nick);color:var(--nick-text);border-radius:1.2rem 1.2rem 1.2rem .35rem;padding:.55rem .95rem;font-size:1.0625rem;line-height:1.35;box-shadow:inset 0 0 0 1px var(--nick-ring);min-height:2.5rem;display:flex;align-items:center}
-.nick-say .msg small{display:block;font-size:.75rem;font-weight:600;opacity:.7}
+.nick-say .msg small{display:block;font-size:.8125rem;font-weight:600;opacity:.7}
 .nick-say:not(.sent) .nl-msg{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .nick-say.sent .nl-dots{display:none}
 .nl-dots{display:inline-flex;gap:.28rem;padding:.2rem .1rem}
@@ -262,7 +262,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .wave-cue.done{color:var(--reward)}
 .wave-time{font:500 clamp(2rem,3.4vw,3rem)/1 var(--f-display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.02em;color:var(--calm-text)}
 .nick-ping{position:absolute;left:var(--px,28%);top:var(--py,8%);translate:-50% -100%;white-space:nowrap;background:var(--nick);color:var(--nick-text);border-radius:1.2rem 1.2rem 1.2rem .35rem;padding:.5rem .9rem;font-size:.9375rem;box-shadow:inset 0 0 0 1px var(--nick-ring);transition:opacity .2s ease-out,transform .2s var(--ease-out)}
-.nick-ping small{display:block;font-size:.75rem;font-weight:600;opacity:.7}
+.nick-ping small{display:block;font-size:.8125rem;font-weight:600;opacity:.7}
 .nick-ping.off{opacity:0;transform:translateY(-.4rem)}
 
 /* ── Срыв: месяц как полоса неба ── */
@@ -305,7 +305,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .calc output{display:block;font:500 clamp(1.75rem,2.6vw,2.25rem)/1.1 var(--f-display);letter-spacing:-.015em;color:var(--text);margin:.35rem 0 .25rem}
 .rng{display:flex;justify-content:space-between;font-size:.875rem;color:var(--muted);margin-top:-.3rem}
 .year{font:500 clamp(4rem,8vw,7rem)/.92 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums tabular-nums;margin-top:clamp(2rem,4vw,3rem);white-space:nowrap}
-.year .per{font-size:.4em;letter-spacing:-.01em;margin-left:.15em;color:var(--muted)}
+.year .per{display:block;white-space:normal;font-size:.4em;letter-spacing:-.01em;margin-left:.15em;color:var(--muted)}
 .year-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22rem);gap:1rem clamp(2rem,5vw,5rem);align-items:end}
 .yl{list-style:none;display:grid;border-top:1px solid var(--rule)}
 .yl li{display:grid;grid-template-columns:minmax(7rem,9rem) 1fr;align-items:baseline;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--rule);font-variant-numeric:lining-nums tabular-nums}
@@ -330,7 +330,7 @@ section[aria-labelledby="p-h"]{background:color-mix(in srgb,var(--act) 7%,transp
 @media (max-width:860px){section[aria-labelledby="p-h"]{margin-inline:.5rem;border-radius:1.5rem}}
 .price{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:2.5rem clamp(2.5rem,6vw,6rem);align-items:start}
 .amount{margin-top:1.5rem;font:500 clamp(3.25rem,6vw,5rem)/1 var(--f-display);letter-spacing:-.03em;font-variant-numeric:lining-nums}
-.amount small{font-size:max(1rem,.3em);letter-spacing:0;color:var(--muted);margin-left:.25em}
+.amount small{font-size:max(1.25rem,.3em);letter-spacing:0;color:var(--ink);margin-left:.25em}
 .gets{list-style:none;display:grid;gap:0}
 .gets li{padding:1rem 0;border-bottom:1px solid var(--rule);display:grid;gap:.15rem}
 .gets li:first-child{border-top:1px solid var(--rule)}
@@ -532,10 +532,10 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 .tile.w2{grid-column:1/-1}
 .tile.plain{background:none;box-shadow:none;border-radius:0;border-top:1px solid var(--rule);padding-inline:0}
 @keyframes tilein{from{opacity:0;transform:translateY(10px)}}
-.tile h3{font-weight:600;font-size:.8125rem;line-height:1.25;color:var(--muted)}
+.tile h3{font-weight:600;font-size:.9375rem;line-height:1.25;color:var(--muted)}
 .tile .big{display:block;margin-top:.35rem;font:500 1.75rem/1 var(--f-display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.01em}
 .tile p{margin-top:.4rem;font-size:.9375rem;line-height:1.4;text-wrap:pretty}
-.tile .src2{color:var(--muted);font-size:.8125rem;line-height:1.35}
+.tile .src2{color:var(--muted);font-size:.9375rem;line-height:1.35}
 .tile svg.br{display:block;width:100%;height:3rem;margin-top:.5rem;overflow:visible}
 .tile svg.br path{fill:none;stroke:var(--act);stroke-width:2.5;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .tile svg.br line{stroke:var(--muted);stroke-dasharray:2 4;opacity:.6;vector-effect:non-scaling-stroke}
@@ -695,7 +695,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
       <input type="range" id="spend" min="50" max="1000" step="10" value="250">
       <div class="rng" aria-hidden="true"><span>50&nbsp;₽</span><span>1&nbsp;000&nbsp;₽</span></div>
     </div>
-    <div class="year-row"><p class="year rv"><span class="num" id="year">91 250 ₽</span><span class="per">в год, если не менять расход</span></p>
+    <div class="year-row"><p class="year rv"><span class="num" id="year">91 250 ₽</span><span class="per">в год<br>при таком расходе</span></p>
     <ul class="yl rv" id="year-note"></ul></div>
     <p class="bridge rv" id="bridge"></p>
   </div>
@@ -821,6 +821,7 @@ else {
 /* ── Облако: серый смог из мягких клубов, свет солнца сзади ── */
 const cv = document.getElementById('smog'), g2 = cv.getContext('2d');
 const sunEl = hero.querySelector('.sun');
+let dispFrac = 0, parT = [0, 0], parC = [0, 0];
 let rect, puffs = [], smogFrac = 0, began = false, freed = false, touched = false, pressedStroke = false, lastDx = -1, startedAt = 0;
 let geo = null, sprites = [], spriteKey = '', off = null, og = null, rimC = null, rg2 = null, DPR = 1;
 
@@ -868,7 +869,7 @@ function build(){
   list.forEach(([layer, u, hgt, sc], i) => {
     const e = env(u) * sc, rad = R * (.075 + .1 * e) * (1 - hgt * .3);
     puffs.push({ x: x0 + W * u + (layer === 'back' ? R * .03 : 0), y: base - rad * .5 - hgt * e * H * .78 - (layer === 'back' ? H * .06 : 0),
-      rad, ox: 0, oy: 0, vx: 0, vy: 0, gone: false, op: 1, sc: 1, layer, sp: sprites[i % sprites.length], spin: r() < .5 });
+      rad, ox: 0, oy: 0, vx: 0, vy: 0, gone: false, op: 1, sc: 1, layer, z: layer === 'back' ? 4 : (hgt < .4 ? 9 : 14), sp: sprites[i % sprites.length], spin: r() < .5 });
   });
   const sxp = Math.min(W0 - sr * .9, px + sr * .3);
   const tower = puffs.filter(p => p.layer === 'main' && Math.abs(p.x - sxp) < sr * 1.2);
@@ -887,9 +888,12 @@ function draw(){
   og.setTransform(DPR, 0, 0, DPR, 0, 0); og.globalCompositeOperation = 'source-over'; og.globalAlpha = 1; og.clearRect(0, 0, W0, H0);
   { const cs = Math.min(1, Math.max(0, (.6 - smogFrac) / .32)); if (cs > .3) { const cx = sx, cy = sy + sr * .62, rx = sr * 1.3 * cs, ry = sr * .85 * cs; og.save(); og.translate(cx, cy); og.scale(1, ry / rx); const cg = og.createRadialGradient(0, 0, 0, 0, 0, rx); cg.addColorStop(0, geo.body); cg.addColorStop(.72, geo.body); cg.addColorStop(1, geo.body + '00'); og.fillStyle = cg; og.beginPath(); og.arc(0, 0, rx, 0, 7); og.fill(); og.restore(); } }
   for (const p of puffs) { if (p.op <= .003) continue;
+    // Занавес: оставшиеся клубы расступаются от оси солнца и чуть оседают; параллакс по глубине слоя
+    const side = Math.max(-1, Math.min(1, (p.x - sx) / (R * .45))), dz = p.layer === 'back' ? .6 : (p.z > 10 ? 1.25 : 1);
+    const ex = p.ox + side * dispFrac * R * .13 * dz + parC[0] * p.z, ey = p.oy + dispFrac * R * .035 * dz + parC[1] * p.z * .6;
     const S = p.rad * 2.6 * p.sc; og.globalAlpha = p.op;
-    if (p.spin) { og.save(); og.translate(p.x + p.ox, p.y + p.oy); og.scale(-1, 1); og.drawImage(p.sp, -S / 2, -S / 2, S, S); og.restore(); }
-    else og.drawImage(p.sp, p.x + p.ox - S / 2, p.y + p.oy - S / 2, S, S); }
+    if (p.spin) { og.save(); og.translate(p.x + ex, p.y + ey); og.scale(-1, 1); og.drawImage(p.sp, -S / 2, -S / 2, S, S); og.restore(); }
+    else og.drawImage(p.sp, p.x + ex - S / 2, p.y + ey - S / 2, S, S); }
   og.globalAlpha = 1; og.globalCompositeOperation = 'source-atop';
   const v = og.createLinearGradient(0, base - H, 0, base + R * .06); v.addColorStop(0, 'rgba(30,34,38,0)'); v.addColorStop(1, 'rgba(24,28,32,.5)'); og.fillStyle = v; og.fillRect(0, 0, W0, H0);
   const rg = og.createRadialGradient(sx, sy, sr * .5, sx, sy, sr * 2.6); rg.addColorStop(0, `rgba(${glow},.55)`); rg.addColorStop(.45, `rgba(${glow},.14)`); rg.addColorStop(1, `rgba(${glow},0)`); og.fillStyle = rg; og.fillRect(0, 0, W0, H0);
@@ -927,6 +931,10 @@ function frame(now){
     p.ox += p.vx * dt; p.oy += p.vy * dt;
     if (Math.abs(p.vx) + Math.abs(p.vy) > .05 || (p.gone && p.op > 0) || Math.abs(p.ox) + Math.abs(p.oy) > .3) moving = true;
   }
+  const k = 1 - Math.pow(.9, dt);
+  const dF = smogFrac - dispFrac; dispFrac = Math.abs(dF) < .002 ? smogFrac : dispFrac + dF * k * .6;
+  parC[0] += (parT[0] - parC[0]) * k * .7; parC[1] += (parT[1] - parC[1]) * k * .7;
+  if (Math.abs(dF) >= .002 || Math.abs(parT[0] - parC[0]) + Math.abs(parT[1] - parC[1]) > .003) moving = true;
   draw(); updateNotes();
   const goneFrac = puffs.filter(p => p.gone).length / puffs.length;
   if (!freed && touched && pressedStroke && now - startedAt > 150 && (goneFrac > (coarse ? .34 : .36) || notes.every(n => n.classList.contains('gone')))) armed = true;
@@ -970,8 +978,9 @@ function stroke(e, isDown){
   prev = [x, y]; prevT = now; kick();
 }
 hero.addEventListener('pointerdown', e => { if (!e.target.closest('button,a')) hero.classList.add('dragging'); stroke(e, true); }, { passive: true });
-hero.addEventListener('pointermove', e => stroke(e, false), { passive: true });
-['pointerleave', 'pointerup', 'pointercancel'].forEach(ev => hero.addEventListener(ev, () => { hero.classList.remove('dragging'); if (ev === 'pointerup' && armed && !freed && !plan.open) { if (began) { sunEl.dataset.e = 'joy'; release('swipe'); } else begin('swipe'); } prev = null; }));
+hero.addEventListener('pointermove', e => { stroke(e, false);
+  if (!reduce && !freed && e.pointerType === 'mouse') { parT = [(e.clientX - rect.left) / rect.width * 2 - 1, (e.clientY - rect.top) / rect.height * 2 - 1]; kick(); } }, { passive: true });
+['pointerleave', 'pointerup', 'pointercancel'].forEach(ev => hero.addEventListener(ev, () => { if (ev === 'pointerleave') { parT = [0, 0]; kick(); } hero.classList.remove('dragging'); if (ev === 'pointerup' && armed && !freed && !plan.open) { if (began) { sunEl.dataset.e = 'joy'; release('swipe'); } else begin('swipe'); } prev = null; }));
 
 const fav = document.querySelector('link[rel="icon"]'), title0 = document.title;
 const SUN_ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E9BEA'/%3E%3Ccircle cx='16' cy='16' r='8' fill='%23FFC94D'/%3E%3C/svg%3E";
@@ -980,7 +989,7 @@ document.addEventListener('visibilitychange', () => { document.title = document.
 
 // Смог редеет по шагам опроса: ближние к Искре клубы уходят первыми. Доля только растёт.
 function dissolveTo(f, instant){
-  smogFrac = Math.max(smogFrac, f); if (!geo || !puffs.length) return;
+  smogFrac = Math.max(smogFrac, f); if (reduce || instant) dispFrac = smogFrac; if (!geo || !puffs.length) return;
   const live = puffs.filter(p => !p.gone), need = Math.round(puffs.length * smogFrac) - (puffs.length - live.length); if (need <= 0) return;
   live.sort((a, b) => Math.hypot(a.x - geo.sx, a.y - geo.sy) - Math.hypot(b.x - geo.sx, b.y - geo.sy));
   let s2 = 11 + need; const rr = () => (s2 = s2 * 16807 % 2147483647) / 2147483647;
@@ -1085,7 +1094,7 @@ function syncFoot(){ nextB.hidden = !ready(); document.getElementById('pay').hid
 const ringsDone = new Set();
 function syncOpeners(){ const n = [0, 1, 3, 4, 5].filter(k => answers[k] !== null).length, m = mobile();
   const t = DONE() ? 'Мой разбор' : began ? 'Продолжить план' : null; if (t) document.getElementById('plan-open').textContent = t;
-  document.getElementById('top-plan').textContent = DONE() ? 'Мой разбор' : began ? (m ? n + ' из 6' : 'Продолжить план') : (m ? '≈1 мин' : 'Составить план'); }
+  document.getElementById('top-plan').textContent = DONE() ? 'Мой разбор' : began ? (m ? Math.min(at + 1, 6) + ' из 6' : 'Продолжить план') : (m ? '≈1 мин' : 'Составить план'); }
 function diagnose(){ sunEl.dataset.e = 'joy'; hero.classList.add('flash'); release('button'); }
 function show(i){
   const back = i < at; at = i; steps.forEach((s, k) => { s.hidden = k !== i; s.classList.remove('enter', 'back'); }); if (plan.open) { void steps[i].offsetWidth; steps[i].classList.add('enter'); if (back) steps[i].classList.add('back'); } backB.hidden = i === 0; msg.textContent = '';
