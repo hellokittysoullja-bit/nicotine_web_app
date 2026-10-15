@@ -851,9 +851,11 @@ float mulAt(vec2 q){
  return m;}
 void main(){
  vec2 p=vec2(gl_FragCoord.x,uCss.y-gl_FragCoord.y);
- vec4 c=src(p);float a=c.a;
+ vec4 c=src(p);
  float ca=coreAt(p);
- if(a<=0.&&ca<=0.){gl_FragColor=vec4(0.);return;}
+ c.rgb+=uBody*ca*(1.-c.a);c.a=c.a+ca*(1.-c.a);
+ float a=c.a;
+ if(a<=0.){gl_FragColor=vec4(0.);return;}
  float base=uG.x,R=uG.y,H=uG.z;
  float t=clamp((p.y-(base-H))/((base+R*.06)-(base-H)),0.,1.);
  float s=mix(0.,.5,t);vec3 sc=mix(vec3(30.,34.,38.),vec3(24.,28.,32.),t)/255.;
@@ -863,9 +865,8 @@ void main(){
  if(d<r0)g=.55;
  D=D*(1.-g)+uGlow*g*a;
  float m=mulAt(p);D*=m;a*=m;
- D+=uBody*ca*(1.-a);a=a+ca*(1.-a);
  // серебряная кайма: облако минус то же облако, сдвинутое от солнца
- vec2 q=p-uDd;vec4 c1=src(q);float A1m=c1.a*(c1.a>0.?mulAt(q):0.);float A1=A1m+coreAt(q)*(1.-A1m);
+ vec2 q=p-uDd;vec4 c1=src(q);float cq=coreAt(q);float A1=(c1.a+cq*(1.-c1.a))*mulAt(q);
  float rimA=a*(1.-A1);
  float d2=length(p-uSun)/(uSr*3.2);float ga=d2<.5?mix(.95,.4,d2/.5):mix(.4,0.,clamp((d2-.5)/.5,0.,1.));
  float ex=ceil(abs(uDd.x))+2.,ey=ceil(abs(uDd.y))+2.;
@@ -1025,7 +1026,7 @@ function draw(){
     for (const p of puffs) { if (p.op <= .003) continue;
       const side = Math.max(-1, Math.min(1, (p.x - sx) / (R * .45))), dz = p.layer === 'back' ? .6 : (p.z > 10 ? 1.25 : 1);
       list.push(p.x + p.ox + side * dispFrac * R * .13 * dz + parC[0] * p.z, p.y + p.oy + dispFrac * R * .035 * dz + parC[1] * p.z * .6, p.rad * 2.6 * p.sc, p.op, p.si, p.spin ? 1 : 0); }
-    const nr = geo.near || []; let al = 0; for (const p of nr) al += p.gone ? 0 : Math.max(0, p.op); const cs = nr.length ? Math.min(1, Math.max(0, (al / nr.length - .3) / .5)) : 0;
+    const nr = geo.near || []; let al = 0; for (const p of nr) al += Math.max(0, p.op); const cs = nr.length ? Math.min(1, Math.max(0, (al / nr.length - .3) / .5)) : 0;
     GL.render(list, { a: cs, cx: sx, cy: sy + sr * .62, rx: sr * 1.3 * cs, ry: sr * .85 * cs }); return; }
   og.setTransform(DPR, 0, 0, DPR, 0, 0); og.globalCompositeOperation = 'source-over'; og.globalAlpha = 1; og.clearRect(0, 0, W0, H0);
   for (const p of puffs) { if (p.op <= .003) continue;
@@ -1039,6 +1040,7 @@ function draw(){
   if (!solC) { solC = document.createElement('canvas'); sg = solC.getContext('2d'); } if (solC.width !== off.width || solC.height !== off.height) { solC.width = off.width; solC.height = off.height; }
   sg.setTransform(1, 0, 0, 1, 0, 0); sg.globalCompositeOperation = 'copy'; sg.drawImage(off, 0, 0);
   og.setTransform(1, 0, 0, 1, 0, 0); og.globalAlpha = 1; og.globalCompositeOperation = 'destination-over'; og.drawImage(solC, 0, 0); og.drawImage(solC, 0, 0); og.setTransform(DPR, 0, 0, DPR, 0, 0);
+  { const nr = geo.near || []; let al = 0; for (const p of nr) al += Math.max(0, p.op); const cs = nr.length ? Math.min(1, Math.max(0, (al / nr.length - .3) / .5)) : 0; if (cs > .02) { og.save(); og.globalAlpha = cs; const cx = sx, cy = sy + sr * .62, rx = sr * 1.3 * cs, ry = sr * .85 * cs; og.save(); og.globalCompositeOperation = 'destination-over'; og.translate(cx, cy); og.scale(1, ry / rx); const cg = og.createRadialGradient(0, 0, 0, 0, 0, rx); cg.addColorStop(0, geo.body); cg.addColorStop(.72, geo.body); cg.addColorStop(1, geo.body + '00'); og.fillStyle = cg; og.beginPath(); og.arc(0, 0, rx, 0, 7); og.fill(); og.restore(); og.restore(); og.globalCompositeOperation = 'source-over'; } }
   og.globalAlpha = 1; og.globalCompositeOperation = 'source-atop';
   const v = og.createLinearGradient(0, base - H, 0, base + R * .06); v.addColorStop(0, 'rgba(30,34,38,0)'); v.addColorStop(1, 'rgba(24,28,32,.5)'); og.fillStyle = v; og.fillRect(0, 0, W0, H0);
   const rg = og.createRadialGradient(sx, sy, sr * .5, sx, sy, sr * 2.6); rg.addColorStop(0, `rgba(${glow},.55)`); rg.addColorStop(.45, `rgba(${glow},.14)`); rg.addColorStop(1, `rgba(${glow},0)`); og.fillStyle = rg; og.fillRect(0, 0, W0, H0);
@@ -1048,7 +1050,6 @@ function draw(){
   let sq = 7; const sr2 = () => (sq = sq * 16807 % 2147483647) / 2147483647;
   for (let ex = -R * .1; ex < W0 + R * .2; ex += R * (.12 + sr2() * .16)) { const er = R * (.1 + sr2() * .14), ey = base + R * .07 - sr2() * R * .05, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.85)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
   if (mobile()) for (let ex = R * .03; ex < W0 + R * .2; ex += R * (.1 + sr2() * .14)) { const er = R * (.12 + sr2() * .14), ey = base - R * .06 - sr2() * R * .12, eg = og.createRadialGradient(ex, ey, 0, ex, ey, er); eg.addColorStop(0, 'rgba(0,0,0,.6)'); eg.addColorStop(1, 'rgba(0,0,0,0)'); og.fillStyle = eg; og.fillRect(ex - er, ey - er, er * 2, er * 2); }
-  { const nr = geo.near || []; let al = 0; for (const p of nr) al += p.gone ? 0 : Math.max(0, p.op); const cs = nr.length ? Math.min(1, Math.max(0, (al / nr.length - .3) / .5)) : 0; if (cs > .02) { og.save(); og.globalAlpha = cs; const cx = sx, cy = sy + sr * .62, rx = sr * 1.3 * cs, ry = sr * .85 * cs; og.save(); og.globalCompositeOperation = 'destination-over'; og.translate(cx, cy); og.scale(1, ry / rx); const cg = og.createRadialGradient(0, 0, 0, 0, 0, rx); cg.addColorStop(0, geo.body); cg.addColorStop(.72, geo.body); cg.addColorStop(1, geo.body + '00'); og.fillStyle = cg; og.beginPath(); og.arc(0, 0, rx, 0, 7); og.fill(); og.restore(); og.restore(); og.globalCompositeOperation = 'source-over'; } }
   g2.setTransform(1, 0, 0, 1, 0, 0); g2.clearRect(0, 0, cv.width, cv.height); g2.drawImage(off, 0, 0);
   // Серебряная кайма: край облака со стороны солнца — облако минус то же облако, сдвинутое от солнца
   const cxm = W0 * .5, cym = base - H * .4, vl = Math.hypot(cxm - sx, cym - sy) || 1, ddx = (cxm - sx) / vl * 7, ddy = (cym - sy) / vl * 7;
@@ -1073,6 +1074,12 @@ function frame(now){
   for (const p of puffs) {
     if (!p.gone) { p.vx += -p.ox * .045 * dt; p.vy += -p.oy * .045 * dt; p.vx *= Math.pow(.86, dt); p.vy *= Math.pow(.86, dt);
       if (Math.hypot(p.ox, p.oy) > p.rad * 1.15 + 30) p.gone = true; }
+    else if (p.slow) {
+      if (now < p.t0) { p.vx = p.vy = 0; }
+      else { if (!p.act) { p.act = true; p.vx = p.sv[0]; p.vy = p.sv[1]; }
+        const u = Math.min(1, (now - p.t0) / p.dur), q = Math.min(1, Math.max(0, (u - .4) / .6)); p.op = 1 - q * q * (3 - 2 * q); p.sc = 1 - .45 * (1 - Math.pow(1 - u, 2.2));
+        const d = Math.pow(.972, dt); p.vx = p.vx * d + Math.sin(now * .0012 + p.ph) * .012 * dt; p.vy = p.vy * d - .01 * dt; }
+    }
     else { p.vx *= Math.pow(.95, dt); p.vy = p.vy * Math.pow(.95, dt) - .04 * dt; p.sc += .022 * dt * (1 + p.sc * .2); p.op = Math.max(0, p.op - (p.fade || .028) * dt); }
     p.ox += p.vx * dt; p.oy += p.vy * dt;
     if (Math.abs(p.vx) + Math.abs(p.vy) > .05 || (p.gone && p.op > 0) || Math.abs(p.ox) + Math.abs(p.oy) > .3) moving = true;
@@ -1139,10 +1146,14 @@ function dissolveTo(f, instant){
   const live = puffs.filter(p => !p.gone), need = Math.round(puffs.length * smogFrac) - (puffs.length - live.length); if (need <= 0) return;
   live.sort((a, b) => Math.hypot(a.x - geo.sx, a.y - geo.sy) - Math.hypot(b.x - geo.sx, b.y - geo.sy));
   let s2 = 11 + need; const rr = () => (s2 = s2 * 16807 % 2147483647) / 2147483647;
-  for (const p of live.slice(0, need)) {
+  const t0 = performance.now();
+  for (const [idx, p] of live.slice(0, need).entries()) {
     if (reduce || instant) { p.gone = true; p.op = 0; continue; }
     let ux = p.x + p.ox - geo.sx, uy = p.y + p.oy - geo.sy, l = Math.hypot(ux, uy) || 1; ux /= l; uy /= l; if (mobile()) uy = Math.max(-.35, Math.min(.35, uy)); l = Math.hypot(ux, uy) || 1;
-    const k = 5 + rr() * 4; p.vx = ux / l * k; p.vy = uy / l * k - .8; p.fade = .03 + rr() * .012; p.gone = true; }
+    p.slow = true; p.gone = true; p.act = false; p.ph = rr() * 6.28;
+    // Фронт растворения идёт от солнца наружу; клубы сносит ветер вправо-вверх, а не разрывает во все стороны
+    p.t0 = t0 + (idx / Math.max(1, need)) * 640 + rr() * 160; p.dur = 1000 + rr() * 650;
+    const w = (.8 + rr() * .5) * 1.7; p.sv = [(mobile() ? .55 : .9) * w + ux / l * .5, -.34 * w + uy / l * .35 - .1]; }
   kick(); if (reduce || instant) draw();
 }
 // Первое касание: туча расходится на треть, Искра открывает глаза, сразу открывается опрос
