@@ -446,6 +446,15 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .sum b{display:block;font-weight:600}
 .sum span{color:var(--muted);font-size:.9375rem;line-height:1.35}
 .pay-note{color:var(--muted);font-size:.875rem;text-align:center}
+/* Сводка воронки (?funnel) — служебная, только для теста */
+.funnel{position:fixed;z-index:50;left:1rem;bottom:1rem;width:min(24rem,calc(100vw - 2rem));max-height:80svh;overflow:auto;padding:1rem 1.1rem;border-radius:1rem;background:var(--surface);color:var(--text);box-shadow:0 12px 40px -12px rgba(6,36,63,.45),inset 0 0 0 1px var(--rule);font-size:.875rem}
+.funnel h2{font:600 1rem/1.3 var(--f-body)}
+.funnel p{margin-top:.5rem;color:var(--muted)}
+.funnel table{width:100%;margin-top:.6rem;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.funnel th{text-align:left;font-weight:500;padding:.3rem 0;border-bottom:1px solid var(--rule)}
+.funnel td{text-align:right;padding:.3rem 0 .3rem .6rem;border-bottom:1px solid var(--rule)}
+.funnel div{display:flex;gap:.5rem;margin-top:.8rem}
+.funnel .btn{min-height:2.75rem;padding:0 1rem;font-size:.875rem}
 .pay-note[hidden],.lead-box[hidden]{display:none}
 .lead-box{display:grid;gap:.6rem;min-width:0}
 .lead-box label{font-size:.9375rem;line-height:1.4;text-wrap:pretty}
@@ -856,8 +865,33 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 (() => {
 // Воронка: view → open → step → summary → pay_click → lead (+ close с шагом). Никуда не уходит, пока не задан CONFIG.send
 const CONFIG = { waitlist: '', send: null };
-const track = (e, p = {}) => { const ev = { e, ...p, t: Date.now() }; (window.lumenFunnel ||= []).push(ev); try { CONFIG.send && CONFIG.send(ev); } catch {} };
+// События копятся и на этом устройстве (до 2000): для теста на живых людях без аккаунтов. Сводка — ссылка с ?funnel
+const FUNNEL = /[?&]funnel\b/.test(location.search), SID = Date.now().toString(36) + Math.random().toString(36).slice(2, 6), FK = 'lumen-funnel';
+const track = (e, p = {}) => { if (FUNNEL) return; const ev = { e, ...p, s: SID, t: Date.now() }; (window.lumenFunnel ||= []).push(ev);
+  try { const a = JSON.parse(localStorage.getItem(FK) || '[]'); a.push(ev); localStorage.setItem(FK, JSON.stringify(a.slice(-2000))); } catch {}
+  try { CONFIG.send && CONFIG.send(ev); } catch {} };
 track('view', { w: innerWidth });
+if (FUNNEL) addEventListener('load', () => {
+  let a = []; try { a = JSON.parse(localStorage.getItem(FK) || '[]'); } catch {}
+  const by = new Map(); a.forEach(ev => { if (!by.has(ev.s)) by.set(ev.s, []); by.get(ev.s).push(ev); });
+  const ses = [...by.values()], n = ses.length || 1, has = (x, f) => x.some(f);
+  const rows = [['Открыли страницу', x => has(x, v => v.e === 'view')], ['Начали опрос', x => has(x, v => v.e === 'open')],
+    ...[1, 2, 3, 4, 5].map(i => ['Дошли до вопроса ' + (i + 1), x => has(x, v => v.e === 'step' && v.i >= i)]),
+    ['Увидели разбор и цену', x => has(x, v => v.e === 'summary')], ['Нажали «Хочу за 349 ₽»', x => has(x, v => v.e === 'pay_click')], ['Оставили почту', x => has(x, v => v.e === 'lead')]];
+  const from = {}; ses.forEach(x => x.filter(v => v.e === 'open').forEach(v => from[v.from] = (from[v.from] || 0) + 1));
+  const quit = {}; ses.forEach(x => { const c = x.filter(v => v.e === 'close' && !v.lead).pop(); if (c && !has(x, v => v.e === 'summary')) quit[c.at + 1] = (quit[c.at + 1] || 0) + 1; });
+  const SRC = { break: 'кнопка на первом экране', 'top-plan': 'шапка', start: 'блок цены', again: 'финал', 'plan-open': 'кнопка после разгона', cloud: 'жест по облаку', coffee: 'фраза «под кофе»', bored: 'фраза «скучно»', stress: 'фраза «стресс»' };
+  const box = document.createElement('section'); box.className = 'funnel'; box.setAttribute('aria-label', 'Воронка на этом устройстве');
+  box.innerHTML = '<h2>Воронка на этом устройстве</h2><p>Сессий: ' + ses.length + '. Данные только из этого браузера.</p><table><tbody>' +
+    rows.map(([t, f]) => { const k = ses.filter(f).length; return '<tr><th scope="row">' + t + '</th><td>' + k + '</td><td>' + Math.round(k / n * 100) + '%</td></tr>'; }).join('') + '</tbody></table>' +
+    '<p>Откуда начинали: ' + (Object.entries(from).map(([k, v]) => (SRC[k] || k) + ' — ' + v).join(', ') || 'пока нет') + '</p>' +
+    '<p>Закрыли опрос на вопросе: ' + (Object.entries(quit).map(([k, v]) => k + ' — ' + v).join(', ') || 'пока нет') + '</p>' +
+    '<div><button type="button" class="btn btn-ghost" data-f="copy">Скопировать данные</button><button type="button" class="btn btn-ghost" data-f="reset">Сбросить</button></div>';
+  box.addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return;
+    if (b.dataset.f === 'copy') { navigator.clipboard?.writeText(JSON.stringify(a)).then(() => b.textContent = 'Скопировано', () => b.textContent = 'Не вышло'); }
+    else { try { localStorage.removeItem(FK); } catch {} location.reload(); } });
+  document.body.appendChild(box);
+});
 const hero = document.getElementById('hero');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarse = matchMedia('(pointer: coarse)').matches;
