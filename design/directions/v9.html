@@ -297,6 +297,10 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .weeks{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,4rem);margin-top:2.5rem}
 .weeks b{display:block;font:500 clamp(1.5rem,2.3vw,2rem)/1.15 var(--f-display);letter-spacing:-.015em}
 .weeks p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
+.basis{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,4rem);margin-top:2.5rem}
+.basis b{display:block;font:500 clamp(1.375rem,2vw,1.75rem)/1.15 var(--f-display);letter-spacing:-.015em}
+.basis p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
+.basis + .src{margin-top:2rem}
 
 /* ── Деньги ── */
 .money-h{max-width:18ch}
@@ -426,11 +430,20 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .sum li:last-child{border-bottom:0}
 .sum b{display:block;font-weight:600}
 .sum span{color:var(--muted);font-size:.9375rem;line-height:1.35}
-.pay[hidden]{display:none}
-.pay{display:grid;gap:.35rem;margin-top:.5rem;padding:1rem 1.1rem;border-radius:1rem;background:var(--surface-2)}
-.pay b{font:500 1.75rem/1 var(--f-display);font-variant-numeric:lining-nums}
-.pay span{color:var(--muted);font-size:.875rem}
-.pl-foot{padding:1.25rem 1.75rem calc(1.5rem + env(safe-area-inset-bottom));display:grid;gap:.6rem}
+.pay-note{color:var(--muted);font-size:.875rem;text-align:center}
+.pay-note[hidden],.lead-box[hidden]{display:none}
+.lead-box{display:grid;gap:.6rem;min-width:0}
+.lead-box label{font-size:.9375rem;line-height:1.4;text-wrap:pretty}
+.lead-row{display:flex;gap:.5rem;min-width:0}
+.lead-row input{flex:1;min-width:0;width:100%;min-height:3.5rem;padding:0 1rem;border-radius:999px;border:1.5px solid var(--control);background:var(--surface);color:var(--text);font:inherit;font-size:1rem}
+.lead-row input:focus-visible{outline:2px solid var(--act);outline-offset:2px}
+.lead-row input[aria-invalid=true]{border-color:var(--danger,#C2453D)}
+.pl-foot .lead-row .btn{width:auto;flex:none;padding-inline:1.25rem}
+.tl{list-style:none;margin-top:.7rem;display:grid;gap:.45rem;padding-left:1.1rem;border-left:2px solid var(--rule)}
+.tl li{font-size:.9375rem;line-height:1.35;position:relative}
+.tl li::before{content:"";position:absolute;left:calc(-1.1rem - 5px);top:.45em;width:8px;height:8px;border-radius:50%;background:var(--act)}
+.tl b{font-weight:600}
+.pl-foot{padding:1.25rem 1.75rem calc(1.5rem + env(safe-area-inset-bottom));display:grid;grid-template-columns:minmax(0,1fr);gap:.6rem}
 .pl-foot .btn{width:100%}
 .pl-foot .btn[aria-disabled="true"]{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1.5px var(--control);cursor:default}
 .pl-foot .btn[hidden]{display:none}
@@ -458,12 +471,12 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
   .actions > div{flex-direction:column;align-items:stretch;gap:.5rem}
   .actions .btn{width:100%;min-height:3.5rem;font-size:1.0625rem}
   .hint{display:none}
-  .hero-note{grid-column:1;grid-row:5;margin-top:.7rem;font-size:.8125rem;text-align:center;white-space:nowrap}
+  .hero-note{grid-column:1;grid-row:5;margin:.7rem auto 0;max-width:30ch;font-size:.8125rem;text-align:center;text-wrap:balance}
   .login{border-radius:999px;margin-right:0;padding-inline:.75rem;background:rgba(255,255,255,.32);font-size:.8125rem;font-weight:600}
   .wave-head,.slip-row,.price,.faq-grid{grid-template-columns:minmax(0,1fr)}
   .calm{padding-bottom:5rem}
   .calm{padding-top:5rem}
-  .steps,.weeks{grid-template-columns:minmax(0,1fr);gap:2rem}
+  .steps,.weeks,.basis{grid-template-columns:minmax(0,1fr);gap:2rem}
   .wave-ctl{grid-template-columns:auto 1fr}
   .wave-ctl .ride{grid-column:1/-1;order:3;width:100%}
   .strip-n span{visibility:hidden}.strip-n span.k{visibility:visible}
@@ -610,10 +623,10 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 
     <div class="copy">
       <h1 id="h"><span class="before-h">Выйди из&nbsp;<em>тумана</em></span><span class="after-h" aria-hidden="true">Небо снова <em>твоё</em></span></h1>
-      <p class="lead"><span class="before-l">Сигареты, вейп, пакетики. Каждая тяга — голос смога: «одну, и&nbsp;станет спокойнее». Мы помогаем не&nbsp;поддаться.</span><span class="after-l" aria-hidden="true">Хорошо. Дальше — план: он про тебя, а&nbsp;не&nbsp;про всех.</span></p>
+      <p class="lead"><span class="before-l">Приложение, которое помогает бросить сигареты, вейп и&nbsp;пакетики. Смог шепчет «одну» — мы поможем переждать.</span><span class="after-l" aria-hidden="true">Хорошо. Дальше — план: он про тебя, а&nbsp;не&nbsp;про всех.</span></p>
       <div class="actions">
         <div class="before-a">
-          <button class="btn btn-act" id="break">Рассеять смог <span aria-hidden="true">→</span></button>
+          <button class="btn btn-act" id="break">Составить план <span aria-hidden="true">→</span></button>
           <span class="hint" id="hint" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0v3.5a6 6 0 0 1-6 6h-.8a5 5 0 0 1-4-2l-2.6-3.4a1.5 1.5 0 0 1 2.3-1.9L9 13"/></svg>
             <span id="hint-t">или разгони облако</span>
@@ -623,7 +636,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
           <button class="btn btn-act" id="plan-open" tabindex="-1">Составить план</button>
         </div>
       </div>
-      <p class="hero-note">Шесть коротких вопросов, оплата — после плана.</p>
+      <p class="hero-note">6 вопросов, разбор — бесплатно. Потом 349&nbsp;₽ в&nbsp;месяц.</p>
     </div>
   </div></div>
   <p class="sr" id="status" aria-live="polite"></p>
@@ -664,7 +677,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
       <span class="wave-time" id="w-time" aria-hidden="true">0:00</span>
       <span class="wave-cue idle" id="w-cue" aria-live="polite">Нажми и&nbsp;смотри, как волна спадает</span>
     </div>
-    <p class="src" id="wave-src">Источник: NHS, «Quit smoking: dealing with cravings». <span class="src-more">Дыхание — физиологический вздох (Balban и&nbsp;др., Cell Reports Medicine, 2023), длину фаз выбрали мы. </span>Шкала условная: в демо четыре минуты идут за восемнадцать секунд.</p>
+    <p class="src" id="wave-src">Источник: NHS Better Health, «Understand your smoking triggers and cravings»: тяга обычно длится несколько минут. <span class="src-more">Дыхание — физиологический вздох (Balban и&nbsp;др., Cell Reports Medicine, 2023), длину фаз выбрали мы. </span>Шкала условная: в демо четыре минуты идут за восемнадцать секунд.</p>
   </div>
 </section>
 
@@ -716,6 +729,18 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
   </div>
 </section>
 
+<section class="section gutter" aria-labelledby="e-h" data-sky="pale">
+  <div class="wrap">
+    <h2 class="h2 sm rv" id="e-h">На чём это построено</h2>
+    <ol class="basis">
+      <li class="rv"><b>«Если — то»</b><p>Решение, принятое заранее, легче выполнить в&nbsp;момент тяги. Мета-анализ 94&nbsp;проверок, эффект средней силы (Gollwitzer, Sheeran, 2006).</p></li>
+      <li class="rv"><b>Переждать, а&nbsp;не&nbsp;спорить</b><p>В&nbsp;испытании на 2415&nbsp;людях приложение с&nbsp;таким подходом (ACT): через год не&nbsp;курили 28% против 21% с&nbsp;обычным приложением (Bricker и&nbsp;др., 2020).</p></li>
+      <li class="rv"><b>Срыв — часть пути</b><p>До&nbsp;успешного отказа в&nbsp;среднем около 30&nbsp;попыток (Chaiton и&nbsp;др., 2016). Поэтому счётчик не&nbsp;обнуляется.</p></li>
+    </ol>
+    <p class="src rv">Это данные о&nbsp;методах, а&nbsp;не&nbsp;о&nbsp;Lumen. Своих результатов у&nbsp;нас пока нет — покажем их после запуска.</p>
+  </div>
+</section>
+
 <section class="section gutter" aria-labelledby="p-h" data-sky="pale">
   <div class="wrap price">
     <div class="rv">
@@ -741,7 +766,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
   <div class="wrap faq-grid">
     <div class="rv">
       <h2 class="h2 sm" id="q-h">Что ещё важно знать</h2>
-      <p class="privacy">В&nbsp;приложении ответы опроса и&nbsp;дневник срывов хранятся только на&nbsp;твоём устройстве и&nbsp;не&nbsp;уходят на наш сервер. Оплату обрабатывает платёжный сервис — подробнее в&nbsp;«Конфиденциальности».</p>
+      <p class="privacy">В&nbsp;приложении ответы опроса и&nbsp;дневник срывов хранятся только на&nbsp;твоём устройстве и&nbsp;не&nbsp;уходят на наш сервер. Почту, если оставишь, используем только для письма о&nbsp;запуске. Оплату обрабатывает платёжный сервис — подробнее в&nbsp;«Конфиденциальности».</p>
     </div>
     <div class="faq rv">
             <details open><summary>Это лечение?<i aria-hidden="true"></i></summary><p>Нет. Lumen помогает бросить и&nbsp;не&nbsp;заменяет врача.</p></details>
@@ -759,7 +784,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 
     <h2 class="h2 rv" id="f-h">Смог зашепчет снова. Ты&nbsp;можешь <em>не&nbsp;слушать</em>.</h2>
     <button class="btn btn-act rv" id="again">Составить план</button>
-    <p class="final-note rv">Сначала опрос, оплата — после плана.</p>
+    <p class="final-note rv">6 вопросов, разбор — бесплатно. Потом 349&nbsp;₽ в&nbsp;месяц.</p>
   </div>
 </section>
 </div>
@@ -767,7 +792,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 
 <footer class="gutter"><div class="wrap">
   <span class="brand" lang="en">Lumen</span>
-  <p>18+. Lumen помогает бросить и&nbsp;не&nbsp;заменяет врача. Никотинозаместительную терапию обсуди с&nbsp;врачом. Источники: Cosgrove 2009; NHS, Quit smoking; Balban 2023; Gollwitzer, Sheeran 2006; Parrott 1999.</p>
+  <p>18+. Lumen помогает бросить и&nbsp;не&nbsp;заменяет врача. Никотинозаместительную терапию обсуди с&nbsp;врачом. Источники: Cosgrove 2009; NHS Better Health; Balban 2023; Gollwitzer, Sheeran 2006; Bricker 2020; Chaiton 2016; Taylor 2014.</p>
   <nav aria-label="Документы"><a class="link" href="#">Поддержка</a><a class="link" href="#">Конфиденциальность</a><a class="link" href="#">Условия</a></nav>
 </div></footer>
 
@@ -797,8 +822,12 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
       <section class="step" data-step="6" hidden aria-labelledby="sum-h"><h2 id="sum-h">Твой разбор</h2><div class="bento" id="bento"></div></section>
     </div>
     <div class="pl-foot">
-      <div class="pay" id="pay" hidden><b>349 ₽</b><span>в месяц. Напомним за 2&nbsp;дня до&nbsp;списания, отмена в&nbsp;одно нажатие. Оплату подключим к&nbsp;запуску — это прототип.</span></div>
+      <div class="lead-box" id="lead" hidden>
+        <label for="lead-mail">Оплату подключим к&nbsp;запуску. Оставь почту — напишем один раз, когда откроемся.</label>
+        <div class="lead-row"><input type="email" id="lead-mail" name="email" autocomplete="email" inputmode="email" placeholder="you@mail.ru" spellcheck="false"><button type="button" class="btn btn-act" id="lead-send">Напомнить</button></div>
+      </div>
       <button type="button" class="btn btn-act" id="pl-next" aria-disabled="true">Дальше</button>
+      <p class="pay-note" id="pay" hidden>Оплата откроется к&nbsp;запуску — сейчас ничего не&nbsp;спишем.</p>
       <p class="pl-msg" id="pl-msg" aria-live="polite"></p>
     </div>
   </form>
@@ -806,6 +835,10 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 
 <script>
 (() => {
+// Воронка: view → open → step → summary → pay_click → lead (+ close с шагом). Никуда не уходит, пока не задан CONFIG.send
+const CONFIG = { waitlist: '', send: null };
+const track = (e, p = {}) => { const ev = { e, ...p, t: Date.now() }; (window.lumenFunnel ||= []).push(ev); try { CONFIG.send && CONFIG.send(ev); } catch {} };
+track('view', { w: innerWidth });
 const hero = document.getElementById('hero');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarse = matchMedia('(pointer: coarse)').matches;
@@ -1216,7 +1249,7 @@ const IFW = (t, ty) => (IFW0[t] || 'рука тянется ') + (TAIL[ty] || '�
 const ACT = { wave: 'пройду «Волну» — несколько минут', water: 'выпью стакан холодной воды', sigh: 'сделаю три двойных вдоха и сменю обстановку на 2 минуты' };
 const MYTH = {
   coffee: ['Без дыма кофе уже не тот', 'Кофе стал для привычки сигналом закурить. Сигнал можно менять: сначала кофе, потом пять минут ходьбы.'],
-  stress: ['Затяжка снимает стресс', 'По данным наблюдений, затяжка гасит ломку от прошлой затяжки, а часть напряжения создаёт сама ломка (Parrott, 1999).'],
+  stress: ['Затяжка снимает стресс', 'Затяжка гасит ломку от прошлой затяжки — отсюда облегчение. У тех, кто бросил, стресс со временем ниже, чем у тех, кто продолжает (Taylor и др., BMJ, 2014).'],
   bored: ['Затяжка заполняет паузу', 'Пауза остаётся, просто жест заполнял её. Нужен другой жест в руках: стакан воды, три глубоких вдоха.'],
   evening: ['Вечером это награда', 'Вечер и алкоголь — привычные спусковые крючки. Заранее выбранное «если — то» помогает чаще выполнить намерение (Gollwitzer, Sheeran, 2006).']};
 const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
@@ -1249,13 +1282,16 @@ function slSync(){ const v = +sl.value; answers[2] = v; sl.style.setProperty('--
   slV.textContent = rub.format(v) + ' в день'; sl3.textContent = 'За три года — ' + rub.format(v * 365 * 3);
   sunEl.querySelector('.eyes').style.setProperty('--wide', (1 + (v - 50) / 950 * .35).toFixed(3)); spend.value = v; money(); }
 sl.addEventListener('input', slSync);
+const leadBox = document.getElementById('lead'), leadMail = document.getElementById('lead-mail');
 const nextB = document.getElementById('pl-next'), backB = document.getElementById('pl-back'), msg = document.getElementById('pl-msg'), prog = document.getElementById('prog');
 const ready = () => at === 2 || at === LAST || answers[at] !== null;
-function syncFoot(){ nextB.hidden = !ready(); document.getElementById('pay').hidden = true; nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = at === LAST ? 'Готово' : at === 5 ? 'Показать разбор' : 'Дальше'; }
+let leadAt = 0; // 0 — цена, 1 — почта, 2 — записали
+function syncFoot(){ const end = at === LAST; nextB.hidden = !ready() || (end && leadAt === 1); document.getElementById('pay').hidden = !(end && leadAt === 0); leadBox.hidden = !(end && leadAt === 1);
+  nextB.setAttribute('aria-disabled', String(!ready())); nextB.textContent = end ? (leadAt === 0 ? 'Оформить за 349 ₽ в месяц' : 'Готово') : at === 5 ? 'Показать разбор' : 'Дальше'; }
 const ringsDone = new Set();
 function syncOpeners(){ const n = [0, 1, 3, 4, 5].filter(k => answers[k] !== null).length, m = mobile();
   const t = DONE() ? 'Мой разбор' : began ? 'Продолжить план' : null; if (t) document.getElementById('plan-open').textContent = t;
-  document.getElementById('top-plan').textContent = DONE() ? 'Мой разбор' : began ? (m ? Math.min(at + 1, 6) + ' из 6' : 'Продолжить план') : (m ? '≈1 мин' : 'Составить план'); }
+  document.getElementById('top-plan').textContent = DONE() ? 'Мой разбор' : began ? (m ? Math.min(at + 1, 6) + ' из 6' : 'Продолжить план') : 'Составить план'; }
 function diagnose(){ sunEl.dataset.e = 'joy'; hero.classList.add('flash'); release('button'); }
 function show(i){
   const back = i < at; at = i; steps.forEach((s, k) => { s.hidden = k !== i; s.classList.remove('enter', 'back'); }); if (plan.open) { void steps[i].offsetWidth; steps[i].classList.add('enter'); if (back) steps[i].classList.add('back'); } backB.hidden = i === 0; msg.textContent = '';
@@ -1267,7 +1303,7 @@ function show(i){
   if (!freed && i < LAST) dissolveTo(FR[i]);
   if (began && !freed && i > 0) { sunEl.classList.add('pulse'); setTimeout(() => sunEl.classList.remove('pulse'), 350); }
   if (began && geo && !freed) hero.style.setProperty('--rise', geo.sr * (.5 + .08 * Math.min(i, 5)) + 'px');
-  if (i === LAST) { summary(); if (!freed) diagnose(); }
+  if (i === LAST) { summary(); if (!freed) diagnose(); track('summary'); } else if (plan.open) track('step', { i });
   syncFoot(); syncOpeners();
   const f = steps[i].querySelector('.opt[aria-checked="true"]') || steps[i].querySelector('.opt[tabindex="0"], .opt, input');
   const head = steps[i].querySelector('legend, h2'); head.tabIndex = -1; head.style.outline = 'none';
@@ -1293,7 +1329,8 @@ function summary(){
     '<div class="tile w2" style="--i:4"><h3>Три кольца дня</h3><div class="rings"><svg viewBox="0 0 80 80" aria-hidden="true">' + ring(34, 'a', 0) + ring(26, 'b', 0) + ring(18, 'c', 0) + '</svg>' +
     '<div><p style="margin:0">Так будут выглядеть три кольца дня. Здесь это демо: нажми, чтобы замкнуть. В приложении их закрывают реальные действия.</p></div></div><div class="rbtns" style="margin-top:.8rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div>' +
     '<p class="src2" id="ring-msg" aria-live="polite" style="margin-top:.6rem">Сорвался — счётчик не обнуляется: разберём причину, и день не пропадёт.</p></div>' +
-    '<div class="tile w2 plain" style="--i:5"><h3>Подписка</h3><span class="big">349 ₽ в месяц</span><p class="src2">Напомним за 2 дня до списания, отмена в одно нажатие. Оплату подключим к запуску — это прототип.</p></div>';
+    '<div class="tile w2 plain" style="--i:5"><h3>Подписка</h3><span class="big">349 ₽ в месяц</span><p class="src2">Около 12 ₽ в день. Сейчас на никотин уходит ' + rub.format(per) + ' в день.</p>' +
+    '<ol class="tl"><li><b>Сразу</b> — план, «Волна», копилка</li><li><b>За 2 дня до списания</b> — напомним</li><li><b>В любой день</b> — отмена в одно нажатие</li></ol></div>';
   const t = bt.querySelectorAll('.tile'); t[2].querySelector('p').textContent = 'Если ' + IFW(trig, answers[0]) + ', то я ' + (ACT[answers[3]] || '…') + '.';
   t[3].querySelector('b').textContent = 'Миф: ' + myth[0] + '.'; t[3].querySelectorAll('p')[1].textContent = myth[1];
   countTo(document.getElementById('b-year'), per * 365);
@@ -1304,15 +1341,28 @@ function summary(){
 }
 nextB.addEventListener('click', () => {
   if (!ready()) { msg.textContent = at === 2 ? 'Отметь хотя бы один вариант.' : 'Выбери один вариант.'; return; }
-  if (at < LAST) show(at + 1); else closePlan();
+  if (at < LAST) show(at + 1);
+  else if (leadAt === 0) { track('pay_click'); leadAt = 1; syncFoot(); leadMail.focus({ preventScroll: true }); plan.querySelector('.pl-body').scrollTo({ top: 1e5, behavior: reduce ? 'auto' : 'smooth' }); }
+  else closePlan();
 });
+// Почта до запуска: честная замена оплаты. Без адреса сервера — остаётся в этом браузере
+function sendLead(){
+  const v = leadMail.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { leadMail.setAttribute('aria-invalid', 'true'); msg.textContent = 'Проверь почту: в ней нет «@» или домена.'; leadMail.focus(); return; }
+  leadMail.removeAttribute('aria-invalid'); track('lead');
+  const done = sent => { leadAt = 2; syncFoot(); msg.textContent = sent ? 'Записали. Одно письмо — когда откроемся.' : 'Записали. Это прототип: адрес остался в этом браузере и никуда не отправлен.'; nextB.focus({ preventScroll: true }); };
+  if (CONFIG.waitlist) fetch(CONFIG.waitlist, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: v, from: 'v9' }) }).then(r => done(r.ok), () => { msg.textContent = 'Не получилось отправить. Проверь сеть и попробуй ещё раз.'; });
+  else { try { localStorage.setItem('lumen-lead', v); } catch {} done(false); }
+}
+document.getElementById('lead-send').addEventListener('click', sendLead);
+leadMail.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendLead(); } });
 backB.addEventListener('click', () => show(Math.max(0, at - 1)));
 function openPlan(from, step){
-  opener = from || document.activeElement; if (plan.open) return;
+  opener = from || document.activeElement; if (plan.open) return; track('open', { from: from?.dataset?.t || from?.id || 'cloud', step: step ?? null });
   const target = step ?? (DONE() ? LAST : at);
   plan.showModal(); show(target); requestAnimationFrame(() => requestAnimationFrame(() => plan.classList.add('in')));
 }
-function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; plan.classList.add('out'); plan.classList.remove('in');
+function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; track('close', { at, lead: leadAt }); plan.classList.add('out'); plan.classList.remove('in');
   let done = false; const fin = () => { if (done) return; done = true; plan.classList.remove('out'); plan.style.transitionDuration = ''; plan.close(); if (freed) sunEl.dataset.e = 'joy'; syncOpeners();
   (freed ? document.getElementById('plan-open') : (opener && opener !== document.body ? opener : document.getElementById('break')))?.focus?.({ preventScroll: true });
   if (!freed && began) { document.getElementById('break').textContent = 'Продолжить план'; document.getElementById('hint-t').textContent = 'или разгони остальное'; } };
