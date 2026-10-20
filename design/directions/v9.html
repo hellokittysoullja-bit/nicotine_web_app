@@ -48,7 +48,7 @@
   --ink:#06243F;--on-ink:#FFFFFF;
   --text:#0F2430;--muted:#3B5563;--rule:rgba(6,36,63,.14);
   --act:#0E7480;--act-text:#FFFFFF;--me:#CDEEEF;--me-text:#132125;
-  --surface:#FFFFFF;--surface-2:#F1F6F7;--control:#6B858F;--reward:#F0B23F;
+  --surface:#FFFFFF;--surface-2:#F1F6F7;--danger:#B3362C;--control:#6B858F;--reward:#F0B23F;
   --storm-top:#26343A;--storm-low:#3A4A50;--calm-text:#E6EEEE;--calm-muted:#BCCBCD;--calm-line:#6CC9D1;
   --f-display:"Literata",Georgia,"Times New Roman",serif;
   --f-body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -63,7 +63,7 @@
   --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.22);
   --ink:#F3F7FB;--on-ink:#06243F;--text:#E6EEF2;--muted:#A9BDC8;--rule:rgba(243,247,251,.16);
   --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E6EEF2;
-  --surface:#122130;--surface-2:#182A3A;--control:#6E8896;--reward:#D9A23E;
+  --surface:#122130;--surface-2:#182A3A;--danger:#F2A099;--control:#6E8896;--reward:#D9A23E;
   --storm-top:#081419;--storm-low:#16262B;color-scheme:dark}}
 :root[data-theme="dark"]{
   --sky-top:#081A3D;--sky-mid:#103470;--sky-low:#2A64A8;--sky-pale:#0D2245;--sky-wash:#091936;--sun:#E9E2CC;--sun-core:#F7F3E6;
@@ -71,7 +71,7 @@
   --nick:#353E46;--nick-text:#EEF1F3;--nick-ring:rgba(255,255,255,.22);
   --ink:#F3F7FB;--on-ink:#06243F;--text:#E6EEF2;--muted:#A9BDC8;--rule:rgba(243,247,251,.16);
   --act:#6CC9D1;--act-text:#06292D;--me:#1C4A50;--me-text:#E6EEF2;
-  --surface:#122130;--surface-2:#182A3A;--control:#6E8896;--reward:#D9A23E;
+  --surface:#122130;--surface-2:#182A3A;--danger:#F2A099;--control:#6E8896;--reward:#D9A23E;
   --storm-top:#081419;--storm-low:#16262B;color-scheme:dark}
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -168,7 +168,7 @@ header.top .wrap{display:flex;justify-content:space-between;align-items:center;h
 .who b{font-weight:600;font-size:.9375rem}
 .calm .src,.calm .sub{color:var(--calm-text);opacity:.88}
 .src2,.strip-n{opacity:1}
-.hero-note{margin-top:1.4rem;max-width:26rem;font-size:.9375rem;line-height:1.45;color:var(--ink);opacity:.85;text-wrap:pretty}
+.hero-note{margin-top:1.4rem;max-width:none;font-size:.9375rem;line-height:1.45;color:var(--ink);opacity:.85;text-wrap:pretty}
 .who .st{font-size:.9375rem;opacity:1;color:var(--ink)}
 .bubbles{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:.5rem}
 .b{max-width:min(100%,17.5rem);text-wrap:pretty;background:var(--nick);color:var(--nick-text);padding:.6rem .95rem .64rem;font-size:1.0625rem;line-height:1.35;
@@ -312,8 +312,8 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 2px var(--sky
 .basis b{display:block;font:500 clamp(1.375rem,2vw,1.75rem)/1.15 var(--f-display);letter-spacing:-.015em}
 .basis p{color:var(--muted);margin-top:.6rem;max-width:22rem;text-wrap:pretty}
 .basis + .src{margin-top:2rem}
-.basis .fig{display:block;margin-bottom:.9rem;font:500 clamp(2.75rem,4.4vw,3.75rem)/1 var(--f-display);letter-spacing:-.025em;color:var(--act);font-variant-numeric:lining-nums tabular-nums}
-.basis .fig i{font-style:italic;font-size:.55em;color:var(--muted);letter-spacing:0}
+.basis .fig{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:.5rem;margin-top:.9rem;color:var(--text);max-width:none}
+.basis .fig .num{font:500 clamp(2.75rem,4.4vw,3.5rem)/1 var(--f-display);letter-spacing:-.025em;color:var(--act);font-variant-numeric:lining-nums tabular-nums}
 .basis small{display:block;margin-top:.6rem;font-size:.875rem;color:var(--muted)}
 
 /* ── Деньги ── */
@@ -406,7 +406,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .pl{display:flex;flex-direction:column;max-height:inherit;height:100%}
 .pl-body{flex:1}
 .grab{display:none}
-.pl-top{position:relative;touch-action:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem .75rem 0}
+.pl-top{position:relative;z-index:1;touch-action:none;background:var(--surface);box-shadow:0 1px 0 transparent;transition:box-shadow .15s ease-out;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem .75rem 0}
 .icon-btn{width:2.75rem;height:2.75rem;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:background-color .15s ease,opacity .15s ease}
 .icon-btn svg{width:1.25rem;height:1.25rem}
 .icon-btn:active{background:var(--surface-2)}
@@ -417,6 +417,7 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .prog i{height:.25rem;border-radius:1rem;background:var(--rule);transition:background-color .2s ease}
 .prog i.on{background:var(--act)}
 .pl-body{padding:1rem 1.75rem 0;overflow:auto;overscroll-behavior:contain}
+.pl-top.edge{box-shadow:0 1px 0 var(--rule)}
 .pl-body.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 2rem),transparent);mask-image:linear-gradient(#000 calc(100% - 2rem),transparent)}
 .step{border:0;min-width:0}
 .step[hidden]{display:none}
@@ -451,7 +452,10 @@ dialog.plan.in::backdrop{background:rgba(6,36,63,.28)}
 .lead-row{display:grid;gap:.5rem;min-width:0}
 .lead-row input{flex:1;min-width:0;width:100%;min-height:3.5rem;padding:0 1rem;border-radius:999px;border:1.5px solid var(--control);background:var(--surface);color:var(--text);font:inherit;font-size:1rem}
 .lead-row input:focus-visible{outline:none;border-color:var(--act);box-shadow:0 0 0 1px var(--act)}
-.lead-row input[aria-invalid=true]{border-color:var(--danger,#C2453D)}
+.lead-row input[aria-invalid=true],.lead-row input[aria-invalid=true]:focus-visible{border-color:var(--danger);box-shadow:0 0 0 1px var(--danger)}
+.lead-err{display:flex;align-items:center;gap:.4rem;color:var(--danger);font-size:.875rem;font-weight:500}
+.lead-err[hidden]{display:none}
+.lead-err svg{width:1.1rem;height:1.1rem;flex:none}
 .tl{list-style:none;margin-top:.7rem;display:grid;gap:.45rem;padding-left:1.1rem;border-left:2px solid var(--rule)}
 .tl li{font-size:.9375rem;line-height:1.35;position:relative}
 .tl li::before{content:"";position:absolute;left:calc(-1.1rem - 5px);top:.45em;width:8px;height:8px;border-radius:50%;background:var(--act)}
@@ -570,7 +574,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
 .rings{display:grid;grid-template-columns:7.5rem 1fr;gap:1.1rem;align-items:center;margin-top:.5rem}
 .rings svg{width:7.5rem;height:7.5rem}
 .rg{fill:none;stroke-width:6;stroke-linecap:round;transform:rotate(-90deg);transform-origin:40px 40px;transition:stroke-dashoffset .28s var(--ease-out),stroke .28s var(--ease-out)}
-.rg-t{stroke:var(--rule)}
+.rg-t{stroke:color-mix(in srgb,var(--act) 25%,transparent)}
 .rg.done{stroke:var(--reward)!important;stroke-dashoffset:0!important}
 .rbtns{display:flex;flex-wrap:wrap;gap:.4rem}
 .rbtn{min-height:2.75rem;padding:0 .9rem;border-radius:999px;border:1.5px solid var(--control);font-weight:600;font-size:.875rem;transition:background-color .15s ease,border-color .15s ease}
@@ -626,7 +630,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
   <div class="gutter"><div class="wrap hero-inner">
     <div class="stage" id="stage">
       <div class="thread" id="thread" aria-live="polite">
-        <div class="who" id="who"><span class="ask">Что смог шепчет чаще всего?</span><span class="st" id="st"></span></div>
+        <div class="who" id="who"><span class="ask">Когда тянет сильнее всего?</span><span class="st" id="st"></span></div>
         <div class="bubbles">
           <button type="button" class="b" data-t="coffee"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v2M12 3v2"/></svg><span>«Только одну под кофе»</span></button>
           <button type="button" class="b" data-t="bored"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10M7 21h10M8 3v3.5a4 4 0 0 0 1.6 3.2L12 12l2.4-2.3A4 4 0 0 0 16 6.5V3M8 21v-3.5a4 4 0 0 1 1.6-3.2L12 12l2.4 2.3A4 4 0 0 1 16 17.5V21"/></svg><span>«Просто скучно, одну можно»</span></button>
@@ -669,7 +673,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
       <p class="t-nick rv">а&nbsp;когда тебя накроет?</p>
       <p class="t-me rv"><b>Открою «Волну».</b> Подышу и&nbsp;посмотрю, как тяга поднимается и&nbsp;спадает. Обычно это несколько минут.</p>
       <p class="t-nick rv">и&nbsp;ради чего всё это?</p>
-      <p class="t-me rv"><b>Ради себя.</b> Каждый день видно, что меняется в&nbsp;голове и&nbsp;сколько денег не&nbsp;ушло тебе.</p>
+      <p class="t-me rv"><b>Ради себя.</b> Каждый день видно, что меняется в&nbsp;голове и&nbsp;сколько денег осталось у&nbsp;меня.</p>
     </div></div>
   </div>
 </section>
@@ -748,9 +752,9 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
   <div class="wrap">
     <h2 class="h2 sm rv" id="e-h">На чём это построено</h2>
     <ol class="basis">
-      <li class="rv"><span class="fig num">94</span><b>«Если — то»</b><p>проверки в&nbsp;мета-анализе: решение, принятое заранее, легче выполнить в&nbsp;момент тяги.</p><small>Gollwitzer, Sheeran, 2006</small></li>
-      <li class="rv"><span class="fig num">28% <i>и</i> 21%</span><b>Переждать, а&nbsp;не&nbsp;спорить</b><p>не&nbsp;курили через год: приложение, где тягу пережидают (ACT), против обычного. Испытание на 2415&nbsp;людях.</p><small>Bricker и&nbsp;др., 2020</small></li>
-      <li class="rv"><span class="fig num">≈30</span><b>Срыв — часть пути</b><p>попыток в&nbsp;среднем до&nbsp;успешного отказа. Поэтому счётчик не&nbsp;обнуляется.</p><small>Chaiton и&nbsp;др., 2016</small></li>
+      <li class="rv"><b>«Если — то»</b><p class="fig"><span class="num">94</span> проверки в&nbsp;мета-анализе</p><p>Решение, принятое заранее, легче выполнить в&nbsp;момент тяги.</p><small>Gollwitzer, Sheeran, 2006</small></li>
+      <li class="rv"><b>Переждать, а&nbsp;не&nbsp;спорить</b><p class="fig"><span class="num">28%</span> против 21%</p><p>не&nbsp;курили через год: приложение, где тягу пережидают (ACT), против обычного. Испытание на 2415&nbsp;людях.</p><small>Bricker и&nbsp;др., 2020</small></li>
+      <li class="rv"><b>Срыв — часть пути</b><p class="fig"><span class="num">≈30</span> попыток до&nbsp;успешного отказа</p><p>Столько в&nbsp;среднем. Поэтому счётчик не&nbsp;обнуляется.</p><small>Chaiton и&nbsp;др., 2016</small></li>
     </ol>
     <p class="src rv">Это данные о&nbsp;методах, а&nbsp;не&nbsp;о&nbsp;Lumen. Своих результатов у&nbsp;нас пока нет — покажем их после запуска.</p>
   </div>
@@ -839,7 +843,7 @@ html:has(dialog.plan[open]) .hero-inner .copy,html:has(dialog.plan[open]) .hero-
     <div class="pl-foot">
       <div class="lead-box" id="lead" hidden>
         <label for="lead-mail">Оплату подключим к&nbsp;запуску. Оставь почту — напишем один раз, когда откроемся.</label>
-        <div class="lead-row"><input type="email" id="lead-mail" name="email" autocomplete="email" inputmode="email" placeholder="имя@mail.ru" spellcheck="false"><button type="button" class="btn btn-act" id="lead-send">Написать мне о&nbsp;запуске</button></div>
+        <div class="lead-row"><input type="email" id="lead-mail" name="email" autocomplete="email" inputmode="email" placeholder="имя@mail.ru" spellcheck="false" aria-describedby="lead-err"><p class="lead-err" id="lead-err" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg><span></span></p><button type="button" class="btn btn-act" id="lead-send">Написать мне о&nbsp;запуске</button></div>
       </div>
       <button type="button" class="btn btn-act" id="pl-next" aria-disabled="true">Дальше</button>
       <p class="pay-note" id="pay" hidden>Оплата откроется к&nbsp;запуску — сейчас ничего не&nbsp;спишем.</p>
@@ -1343,15 +1347,15 @@ function summary(){
   bt.innerHTML =
     '<div class="tile" style="--i:0"><h3>За год на никотин уходит</h3><span class="big" id="b-year"></span><p class="src2">из твоих ответов: ' + rub.format(per) + ' в день, ' + (TYPEW[answers[0]] || 'никотин') + '</p></div>' +
     '<div class="tile" style="--i:1"><h3>Рецепторы приходят в норму</h3><svg class="br" viewBox="0 0 120 48" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="120" y1="44" y2="44"/><path d="' + path + '"/></svg><p class="src2">У курящих сигареты — 6–12 недель (Cosgrove, 2009). Форма линии — иллюстрация.</p></div>' +
-    '<div class="tile w2" style="--i:2"><h3>Твоё «если — то»</h3><p></p><p class="src2">Старт — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : 'в понедельник, ') + date + '. Заранее выбранное действие связывает ситуацию с ответом (Gollwitzer, Sheeran, 2006).</p></div>' +
-    '<div class="tile w2 plain" style="--i:3"><h3>Миф про твой триггер</h3><p><b></b></p><p></p></div>' +
-    '<div class="tile w2" style="--i:4"><h3>Три кольца дня</h3><div class="rings"><svg viewBox="0 0 80 80" aria-hidden="true">' + ring(34, 'a', 0) + ring(26, 'b', 0) + ring(18, 'c', 0) + '</svg>' +
+    '<div class="tile w2" style="--i:2"><h3>Три кольца дня</h3><div class="rings"><svg viewBox="0 0 80 80" aria-hidden="true">' + ring(34, 'a', 0) + ring(26, 'b', 0) + ring(18, 'c', 0) + '</svg>' +
     '<div><p style="margin:0">Так будут выглядеть три кольца дня. Здесь это демо: нажми, чтобы замкнуть. В приложении их закрывают реальные действия.</p></div></div><div class="rbtns" style="margin-top:.8rem"><button type="button" class="rbtn" data-ring="a" aria-pressed="false">Дыхание</button><button type="button" class="rbtn" data-ring="b" aria-pressed="false">Чек-ин</button><button type="button" class="rbtn" data-ring="c" aria-pressed="false">Миф дня</button></div>' +
-    '<p class="src2" id="ring-msg" aria-live="polite" style="margin-top:.6rem">Сорвался — счётчик не обнуляется: разберём причину, и день не пропадёт.</p></div>' +
+    '<p class="src2" id="ring-msg" aria-live="polite" style="margin-top:.6rem">Сорвался — счётчик не обнуляется. Разберём, что сорвало.</p></div>' +
+    '<div class="tile w2" style="--i:3"><h3>Твоё «если — то»</h3><p></p><p class="src2">Старт — ' + (w === '0' ? 'сегодня, ' : w === '1' ? 'завтра, ' : 'в понедельник, ') + date + '. Заранее выбранное действие связывает ситуацию с ответом (Gollwitzer, Sheeran, 2006).</p></div>' +
+    '<div class="tile w2 plain" style="--i:4"><h3>Миф про твой триггер</h3><p><b></b></p><p></p></div>' +
     '<div class="tile w2 plain" style="--i:5"><h3>Подписка</h3><span class="big">349 ₽ в месяц</span><p class="src2">Около 12 ₽ в день. Сейчас на никотин уходит ' + rub.format(per) + ' в день.</p>' +
     '<ol class="tl"><li><b>Сразу</b> — план, «Волна», копилка</li><li><b>За 2 дня до списания</b> — напомним</li><li><b>В любой день</b> — отмена в одно нажатие</li></ol></div>';
-  const t = bt.querySelectorAll('.tile'); t[2].querySelector('p').textContent = 'Если ' + IFW(trig, answers[0]) + ', то я ' + (ACT[answers[3]] || '…') + '.';
-  t[3].querySelector('b').textContent = 'Миф: ' + myth[0] + '.'; t[3].querySelectorAll('p')[1].textContent = myth[1];
+  const t = bt.querySelectorAll('.tile'); t[3].querySelector('p').textContent = 'Если ' + IFW(trig, answers[0]) + ', то я ' + (ACT[answers[3]] || '…') + '.';
+  t[4].querySelector('b').textContent = 'Миф: ' + myth[0] + '.'; t[4].querySelectorAll('p')[1].textContent = myth[1];
   countTo(document.getElementById('b-year'), per * 365);
   ringsDone.forEach(k => { bt.querySelector('.rg-' + k)?.classList.add('done'); bt.querySelector('[data-ring="' + k + '"]')?.setAttribute('aria-pressed', 'true'); });
   bt.querySelectorAll('[data-ring]').forEach(btn => btn.addEventListener('click', () => { const r = bt.querySelector('.rg-' + btn.dataset.ring); if (r.classList.contains('done')) return; r.classList.add('done'); ringsDone.add(btn.dataset.ring); btn.setAttribute('aria-pressed', 'true');
@@ -1367,8 +1371,9 @@ nextB.addEventListener('click', () => {
 // Почта до запуска: честная замена оплаты. Без адреса сервера — остаётся в этом браузере
 function sendLead(){
   const v = leadMail.value.trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { leadMail.setAttribute('aria-invalid', 'true'); msg.textContent = 'Проверь почту: в ней нет «@» или домена.'; leadMail.focus(); return; }
-  leadMail.removeAttribute('aria-invalid'); track('lead');
+  const err = document.getElementById('lead-err');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { leadMail.setAttribute('aria-invalid', 'true'); err.querySelector('span').textContent = 'Проверь почту: в ней нет «@» или домена.'; err.hidden = false; leadMail.focus(); return; }
+  leadMail.removeAttribute('aria-invalid'); err.hidden = true; track('lead');
   const done = sent => { leadAt = 2; syncFoot(); msg.textContent = sent ? 'Записали. Одно письмо — когда откроемся.' : 'Записали. Это прототип: адрес остался в этом браузере и никуда не отправлен.'; nextB.focus({ preventScroll: true }); };
   if (CONFIG.waitlist) fetch(CONFIG.waitlist, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: v, from: 'v9' }) }).then(r => done(r.ok), () => { msg.textContent = 'Не получилось отправить. Проверь сеть и попробуй ещё раз.'; });
   else { try { localStorage.setItem('lumen-lead', v); } catch {} done(false); }
@@ -1388,7 +1393,7 @@ function closePlan(){ if (!plan.open || plan.classList.contains('out')) return; 
   if (reduce) return fin(); const te = e => { if (e.target === plan && (e.propertyName === 'transform' || e.propertyName === 'opacity')) { plan.removeEventListener('transitionend', te); fin(); } }; plan.addEventListener('transitionend', te); setTimeout(fin, (parseFloat(plan.style.transitionDuration) * 1000 || (mobile() ? 280 : 210)) + 50); }
 document.getElementById('pl-close').addEventListener('click', closePlan);
 // Лист на телефоне смахивается вниз, как в iOS: тянется за пальцем (вверх — с сопротивлением), решение по скорости отпускания
-{ const pb = plan.querySelector('.pl-body'), more = () => pb.classList.toggle('more', pb.scrollHeight - pb.scrollTop - pb.clientHeight > 8);
+{ const pb = plan.querySelector('.pl-body'), more = () => { pb.classList.toggle('more', pb.scrollHeight - pb.scrollTop - pb.clientHeight > 8); document.getElementById('pl-top').classList.toggle('edge', pb.scrollTop > 0); };
   pb.addEventListener('scroll', more, { passive: true }); new MutationObserver(() => requestAnimationFrame(more)).observe(pb, { subtree: true, attributes: true, childList: true }); addEventListener('resize', more); }
 { const top = document.getElementById('pl-top'), body = plan.querySelector('.pl-body'); let y0 = 0, dy = 0, on = false, armed = false, samples = [];
   const setY = v => { plan.style.setProperty('--dy', `translateY(${v}px)`); plan.style.transform = `translateY(${v}px)`; if (reduce) plan.style.opacity = String(1 - Math.max(0, v) / plan.offsetHeight); };
@@ -1491,7 +1496,7 @@ function money(){
   const shoes = Math.ceil(12000 / d), sea = Math.ceil(60000 / d);
   document.getElementById('year-note').innerHTML = '<li><b>' + shoes + '\u00a0' + dayWord(shoes) + '</b><span>новые кроссовки</span></li><li><b>' + (sea > 365 ? 'год с\u00a0лишним' : sea + '\u00a0' + dayWord(sea)) + '</b><span>неделя у\u00a0моря</span></li><li><b>' + rub.format(d * 365 * 5) + '</b><span>за\u00a0пять лет</span></li>';
   const dd = Math.max(1, Math.ceil(349 / d));
-  document.getElementById('bridge').innerHTML = 'Подписка дешевле. <em>Смог берёт с тебя больше за ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + '.</em>';
+  document.getElementById('bridge').innerHTML = 'Месяц приложения стоит меньше, <em>чем ' + (NUMW[dd] || dd + ' ' + dayWord(dd)) + ' на никотин.</em>';
 }
 spend.addEventListener('input', () => { money(); if (began && !freed) dissolveTo(.46 + (+spend.value - 50) / 950 * .06); }); money();
 
